@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="44.713" height="50.363" viewBox="0 0 44.713 50.363">
+  <defs>
+    <filter id="Path_24" x="0" y="0" width="44.713" height="50.363" filterUnits="userSpaceOnUse">
+      <feOffset dy="4" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#31c4be" flood-opacity="0.329"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="watch" transform="translate(12 8)">
+    <g id="Group_479" data-name="Group 479" transform="translate(0)">
+      <g id="Group_478" data-name="Group 478">
+        <g transform="matrix(1, 0, 0, 1, -12, -8)" filter="url(#Path_24)">
+          <path id="Path_24-2" data-name="Path 24" d="M66.783,12.24h0A9.409,9.409,0,0,0,62.5,5.259L61.181,0H53.649L52.333,5.263a9.4,9.4,0,0,0,0,15.836l1.316,5.263h7.532L62.5,21.1a9.41,9.41,0,0,0,4.287-6.981h1.931V12.24Zm-9.368,8.474a7.532,7.532,0,1,1,7.532-7.532A7.541,7.541,0,0,1,57.415,20.713Z" transform="translate(-36 8)" fill="#31c4be"/>
+        </g>
+      </g>
+    </g>
+    <g id="Group_481" data-name="Group 481" transform="translate(8.474 8.474)">
+      <g id="Group_480" data-name="Group 480">
+        <path id="Path_25" data-name="Path 25" d="M193.883,148.78V144H192v5.36l2.376,3.429,1.539-1.065Z" transform="translate(-192 -144)" fill="#31c4be"/>
+      </g>
+    </g>
+  </g>
+</svg>

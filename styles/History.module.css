@@ -1,0 +1,143 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    min-height: 80.0rem;
+    /* margin-top: 100px; */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    /* min-height: 50.0rem; */
+}
+
+.breadcrumbs {
+    color: var(--text-color);
+    font-size: 1.6rem;
+    font-family: 'helvetica';
+    opacity: 0.8;
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    font-size: 1.8rem;
+    font-family: fira-go;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-top: 3.8rem;
+    cursor: pointer;
+
+    max-width: 22.0rem;
+    /* flex-shrink: 1; */
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4.7rem;
+    gap: 2.4rem;
+}
+
+.itemWrapper {
+    display: flex;
+}
+
+.itemImage {
+    height: 28.9rem;
+    width: 28.9rem;
+    object-fit: cover;
+    margin-right: 2.1rem;
+}
+.itemTextContainer {
+    display: flex;
+    flex-direction: column;
+}
+.itemName {
+    color: var(--text-color);
+    font-size: 2.4rem;
+    margin-bottom: 1.2rem;
+    font-family: fira-go;
+    font-weight: 600;
+}
+
+
+
+.addressTitle {
+    color: var(--text-color);
+    font-size: 2.0rem;
+    /* font-weight: bold; */
+    font-family: 'BPG WEB 002 CAPS';
+    margin-bottom: 1.8rem;
+}
+
+.addressItem {
+    display: flex;
+    margin-bottom: 1.5rem;
+    gap: 1.4rem;
+    
+    position: relative;
+}
+
+.addressItemText {
+    color: var(--text-color);
+    font-size: 2.0rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.address, .zip {
+    opacity: 0.5;
+    margin-bottom: .5rem;
+}
+
+.city {
+    font-weight: 600;
+    font-family: fira-go;
+    margin-bottom: .2rem;
+}
+
+.paymentMethod {
+    display: flex;
+    width: 100%;
+    max-width: 29.8rem;
+    height: 6.8rem;
+    align-items: center;
+    padding: 1.5rem;
+
+    border-radius: 1.4rem;
+    border: .2rem solid rgba(34, 213, 174, .25)
+}
+
+.paymentIcon {
+    margin-right: 2.4rem;
+
+}
+
+.cardNumber {
+    color: var(--text-color);
+    font-size: 1.6rem;
+    font-family: 'helvetica';
+}
+
+.divider {
+    display: flex;
+    border-bottom: .1rem solid rgba(34, 34, 34, .1);
+    margin-top: 5.1rem;
+    margin-bottom: 2.8rem;
+}
+
+.descriptionTitle {
+    font-size: 1.8rem;
+    font-family: 'helvetica';
+
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 1.8rem;
+}
+
+.descriptionText {
+    font-size: 1.8rem;
+    font-family: 'helvetica';
+    color: var(--text-color);
+}

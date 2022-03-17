@@ -1,0 +1,52 @@
+@font-face {
+    font-family: fira-go;
+    src: url('FiraGO-Regular.eot');
+    src: url('FiraGO-Regular.eot?#iefix') format('embedded-opentype'),
+        url('FiraGO-Regular.woff2') format('woff2'),
+        url('FiraGO-Regular.woff') format('woff'),
+        url('FiraGO-Regular.otf') format('opentype'),
+        url('FiraGO-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: fira-go;
+    src: url('FiraGO-Medium.eot');
+    src: url('FiraGO-Medium.eot?#iefix') format('embedded-opentype'),
+        url('FiraGO-Medium.woff2') format('woff2'),
+        url('FiraGO-Medium.woff') format('woff'),
+        url('FiraGO-Medium.otf') format('opentype'),
+        url('FiraGO-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: fira-go;
+    src: url('FiraGO-SemiBold.eot');
+    src: url('FiraGO-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('FiraGO-SemiBold.woff2') format('woff2'),
+        url('FiraGO-SemiBold.woff') format('woff'),
+        url('FiraGO-SemiBold.otf') format('opentype'),
+        url('FiraGO-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: fira-go;
+    src: url('FiraGO-Bold.eot');
+    src: url('FiraGO-Bold.eot?#iefix') format('embedded-opentype'),
+        url('FiraGO-Bold.woff2') format('woff2'),
+        url('FiraGO-Bold.woff') format('woff'),
+        url('FiraGO-SemiBold.otf') format('opentype'),
+        url('FiraGO-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+

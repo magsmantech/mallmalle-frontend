@@ -1,0 +1,250 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* grid-auto-rows: 30.0rem; */
+  grid-template-areas:
+      'a a b c'
+      'a a d e';
+  height: 57.2rem;
+  grid-gap: 3.2rem;
+  margin-bottom: 11.8rem;
+}
+
+
+.sectionTitle {
+  font-size: 3.2rem;
+  margin: 0 0 6.4rem 0;
+  color: var(--text-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-feature-settings: "case" on;
+  font-family: fira-go;
+}
+
+.saleItemWrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-position: center bottom;
+  background-size: cover;
+  position: relative;
+  border-radius: 1.4rem;
+  padding: 2.4rem;
+  overflow: hidden;
+}
+
+.saleItemImg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: all 150ms ease-in-out;
+}
+
+.saleItemWrapper.big {
+  padding: 4.4rem;
+}
+
+.saleItemWrapper:hover .saleItemImg{
+  /* background-size: 120%; */
+  transform: scale(1.15);
+}
+
+.saleItemWrapper:hover .iconBackgroundSecond {
+  transform: scale(1.2);
+  background-color: transparent;
+  transition: all ease-in-out 150ms;
+}
+
+.saleItemWrapper:hover .iconBackgroundFirst {
+  background-color: transparent;
+}
+
+.gradient {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.64));
+  z-index: 1;
+  border-radius: 1.4rem;
+}
+
+.saleItemWrapper.gradientOverlay .gradient {
+  background-image: var(--header-gradient);
+  opacity: 0.45;  
+}
+
+
+.label {
+  color: white;
+  border-radius: 7.2rem;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.37);
+  /* padding: 2.4rem 3.4rem;  */
+  height: 6.7rem;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  width: 20.0rem;
+  backdrop-filter: blur(1.5rem);
+}
+
+.saleItemWrapper.gradientOverlay .label {
+  background-color: rgba(0, 0, 0, 0.37);
+}
+
+
+.labelText {
+  font-size: 1.6rem;
+  /* font-family: 'BPG WEB 002 Caps'; */
+  text-transform: uppercase;
+  font-feature-settings: "case" on;
+  font-weight: 600;
+
+}
+
+.big .label {
+  /* padding: 3.4rem 4.4rem; */
+  width: 29.8rem;
+
+  height: 10.0rem;
+}
+
+
+.big .labelText {
+  font-size: 2.4rem;
+  font-family: fira-go;
+}
+
+.iconBackgroundSecond {
+  height: 4.5rem;
+  width: 4.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(34, 213, 174, 0.3);
+  /* opacity: 0.3; */
+  border-radius: 50%;
+  margin-right: .7rem;
+  margin-left: 1.1rem;
+}
+
+.iconBackgroundFirst {
+  height: 3.3rem;
+  width: 3.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #22D5AE;
+  border-radius: 50%;
+}
+
+.big .iconBackgroundSecond {
+  height: 6.8rem;
+  width: 6.8rem;
+
+  margin-right: 1.5rem;
+  margin-left: 1.6rem;
+}
+
+.big .iconBackgroundFirst {
+  height: 5.0rem;
+  width: 5.0rem;
+}
+
+.itemsContainer {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 3.2rem;
+  margin-bottom: 10.4rem;
+
+}
+
+.middleContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 31.3rem;
+  grid-gap: 3.2rem;
+  margin-bottom: 10.4rem;
+
+}
+
+
+.dividerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 6.4rem;
+}
+
+.divider {
+  position: absolute;
+  border-bottom: .1rem solid #E1CDB4;
+  opacity: 0.5;
+  left: 0;
+  right: 0;
+  top: 60%;
+}
+
+.dividerImage {
+  z-index: 1;
+  width: 29.0rem;
+}
+
+
+.productItemImgWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.4rem;
+  height: 30.7rem;
+
+}
+
+.productItemImg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 150ms ease-in-out;
+
+}
+
+.productItemImg:hover {
+  transform: scale(1.15);
+}
+
+.scrollToTopButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7.4rem;
+  width: 7.4rem;
+  border-radius: 50%;
+  background-color: #22D5AE;
+  border: .6rem solid #D5FFF7;
+  position: fixed;
+  right: 4.0rem;
+  bottom: 4.0rem;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.scrollButtonIcon {
+  transform: rotate(-90deg);
+  width: auto;
+  height: 3.0rem;
+}

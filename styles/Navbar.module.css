@@ -1,0 +1,123 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 16.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    padding: 0 4.0rem;
+    color: white;
+    background-image: var(--header-gradient);
+}
+
+.wrapper> * {
+    transform: translateY(-0.8rem);
+}
+
+.curve {
+    position: fixed;
+    top: 14.2rem;
+    left: 0;
+    right: 0;
+    height: 4.5rem;
+    border-radius: 2.4rem 2.4rem 0 0;
+    background-color: white;
+    z-index: 12;
+    box-sizing: border-box;
+}
+
+.logo {
+    cursor: pointer;
+    height: auto;
+    width: 31.5rem;
+}
+.search-wrapper {
+    display: flex;
+    border-radius: 3.0rem;
+    border: .3rem solid rgba(255, 255, 255, 0.2);
+    color: white;
+    height: 6.4rem;
+    align-items: center;
+    padding: 2.0rem;
+    width: 96.7rem;
+    flex-shrink: 1;
+}
+
+.searchInput {
+    background-color: transparent;
+    color: white;
+    outline: 0;
+    -webkit-appearance: none;
+    box-shadow: none;
+    border: 0;
+    height: 100%;
+    width: 100%;
+    margin-left: 1.6rem;
+    font-size: 1.8rem;
+    font-family: 'helvetica';
+    text-transform: uppercase;
+    font-feature-settings: 'case' on;
+}
+
+.searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);    
+    font-size: 1.8rem;
+}
+
+
+/* .language-switcher-wrapper {
+    di
+} */
+
+
+.toggleWrapper {
+    width: 7.2rem;
+    min-width: 7.2rem;
+
+    height: 4.0rem;
+    padding: .4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4.0rem;
+    margin-left: 2.5rem;
+    cursor: pointer;
+}
+
+.toggleBall {
+    position: absolute;
+    width: 3.2rem;
+    height: 3.2rem;
+    background-color: #607189;
+    border-radius: 50%;
+    left: .4rem;
+    /* right: auto; */
+    transition: left 150ms linear;
+}
+
+.active {
+    background-color: #6696d8;
+    /* left: auto; */
+    left: 3.6rem;
+}
+
+.divider {
+    height: 100%;
+    border-right: .1rem solid rgba(255, 255, 255, 0.2);
+    margin: 0 2.0rem 0 5.0rem;
+}
+
+/* .ItemWrappers {
+    display: contents;
+} */
+
+@media(max-width: 60.0rem) {
+    .ItemWrappers {
+        display: none;
+    }
+}

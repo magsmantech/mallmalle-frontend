@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="444" height="238" viewBox="0 0 444 238">
+  <g id="Group_836" data-name="Group 836" transform="translate(-505 -456)">
+    <g id="Rectangle_832" data-name="Rectangle 832" transform="translate(505 456)" fill="rgba(34,213,174,0.09)" stroke="rgba(34,213,174,0.13)" stroke-width="3">
+      <rect width="444" height="238" rx="12" stroke="none"/>
+      <rect x="1.5" y="1.5" width="441" height="235" rx="10.5" fill="none"/>
+    </g>
+    <g id="Group_823" data-name="Group 823" transform="translate(-11 9)">
+      <g id="vuesax_bold_card-add" data-name="vuesax/bold/card-add" transform="translate(540 15)">
+        <g id="card-add" transform="translate(172 508)">
+          <path id="Vector" d="M0,2.629V13.491a8.97,8.97,0,0,0,8.965,8.994H34.323A9.007,9.007,0,0,0,43.31,13.47V2.629A2.62,2.62,0,0,0,40.69,0H2.62A2.62,2.62,0,0,0,0,2.629ZM12.993,15.208H8.662a1.629,1.629,0,0,1,0-3.259h4.331a1.629,1.629,0,0,1,0,3.259Zm14.076,0H18.407a1.629,1.629,0,0,1,0-3.259h8.662a1.629,1.629,0,0,1,0,3.259Z" transform="translate(4.345 22.128)" fill="#424f60"/>
+          <path id="Vector-2" data-name="Vector" d="M24.984,2.629V8.994a2.624,2.624,0,0,1-2.629,2.629H2.629A2.647,2.647,0,0,1,0,8.951,8.975,8.975,0,0,1,8.994,0H22.355A2.624,2.624,0,0,1,24.984,2.629Z" transform="translate(4.345 7.387)" fill="#424f60"/>
+          <path id="Vector-3" data-name="Vector" d="M10.8,0H4.41A4.055,4.055,0,0,0,0,4.41V10.8a4.055,4.055,0,0,0,4.41,4.41H10.8a4.055,4.055,0,0,0,4.41-4.41V4.41A4.055,4.055,0,0,0,10.8,0ZM12.84,8.538a1.405,1.405,0,0,1-.891.391H8.886l.022,3.02a1.374,1.374,0,0,1-.413.934,1.283,1.283,0,0,1-.891.369,1.307,1.307,0,0,1-1.3-1.3V8.907l-3.042.022A1.326,1.326,0,0,1,1.955,7.6a1.307,1.307,0,0,1,1.3-1.3L6.3,6.322V3.281a1.3,1.3,0,1,1,2.607,0L8.886,6.3h3.063a1.307,1.307,0,0,1,1.3,1.3A1.479,1.479,0,0,1,12.84,8.538Z" transform="translate(32.447 4.345)" fill="#424f60"/>
+          <path id="Vector-4" data-name="Vector" d="M0,0H52V52H0Z" fill="none" opacity="0"/>
+        </g>
+      </g>
+      <text id="ბარათის_დამატება" data-name="ბარათის დამატება" transform="translate(642 605)" fill="#424f60" font-size="18" font-family="SegoeUI-Bold, Segoe UI" font-weight="700" letter-spacing="0.012em"><tspan x="0" y="0">ბარათის</tspan><tspan y="0" font-family="NotoSans-Bold, Noto Sans"> </tspan><tspan y="0">დამატება</tspan></text>
+    </g>
+  </g>
+</svg>

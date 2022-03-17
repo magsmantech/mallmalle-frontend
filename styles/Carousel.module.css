@@ -1,0 +1,25 @@
+.slider {
+    height: 42.3rem;
+    position: relative;
+    margin-bottom: 8.9rem;
+    
+}
+
+.slide {
+    /* height: 50.0rem; */
+    display: flex;
+    border-radius: 2.8rem;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    position: relative;
+}
+
+
+.slideImage {
+    object-fit: cover;
+    object-position: center bottom;
+}
+.next {
+    position: absolute;
+}

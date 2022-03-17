@@ -1,0 +1,73 @@
+.wrapper:hover .child {
+    z-index: 2;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 32;
+    background-color: black;
+    opacity: 0.4;
+}
+
+.filterSideBar {
+    width: 49.0rem;
+    position: fixed;
+    top: 14.2rem;
+    bottom: 0;
+    right: 0;
+    z-index: 34;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding: 4.0rem 3.2rem 15.0rem 3.2rem;
+
+}
+
+.filterSideBar::-webkit-scrollbar {
+    display: none;
+}
+
+.filterTitle {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 3.0rem;
+    font-family: 'BPG WEB 002 CAPS';
+    /* text-transform: uppercase;
+    font-feature-settings: "case" on; */
+}
+
+.radioButtonLabel {
+    /* font-family: noto-sans; */
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.divider {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 4.2rem 0;
+    border-bottom: .1rem solid rgba(34, 34, 34, 0.2);
+}
+
+
+.filterFooter {
+    position: fixed;
+    bottom: 0;
+    display: grid;
+    margin: 0 -3.2rem;
+    grid-template-columns: 1fr 1fr;
+    padding: 3.0rem ;
+    background-color: white;
+    width: 100%;
+    max-width: 49.0rem;
+    box-shadow: 0 -.8rem .8rem .0rem rgba(0, 0, 0, 0.08);
+    z-index: 2;
+
+    grid-gap: 2.4rem;
+}

@@ -1,0 +1,53 @@
+
+.swiper {
+    overflow: visible!important;
+  }
+  /* .swiper-pagination {
+    margin-bottom: -4.0rem;
+  } */
+  
+  .swiper-pagination-bullet {
+    /* height: .6rem;
+    width: 1.2rem; */
+    --swiper-pagination-bullet-width: 1.8rem;
+    border-radius: 1.2rem!important;
+    --swiper-pagination-bullet-horizontal-gap: 0.5rem;
+    --swiper-pagination-bullet-height: 0.6rem;
+  
+  }
+  .swiper-pagination-bullet-active{
+    --swiper-pagination-bullet-width: 3.6rem;
+  }
+  
+  .swiper-button-next::after {
+    display: none;
+  }
+  
+  .swiper-button-prev::after {
+    display: none;
+  }
+  
+  .swiper-button-prev {
+    margin-left: 2.0rem;
+    height: 5.6rem!important;
+    width: 5.6rem!important;
+    background-color: white;
+  
+    border: .6rem solid #EDEDED;
+    color: var(--text-color)!important;
+    border-radius: 50%;
+  }
+  
+  .swiper-button-next {
+    height: 5.6rem!important;
+    width: 5.6rem!important;
+    background-color: white;
+    margin-right: 2.0rem;
+    color: var(--text-color)!important;
+    border-radius: 50%;
+  
+    border: .6rem solid #EDEDED;
+  }
+  .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: -5.0rem!important;
+  }

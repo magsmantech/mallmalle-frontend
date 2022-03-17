@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 60.0rem;
+    padding: 3.4rem;
+    background-color: #F8FEFF;
+    border: .2rem solid rgba(0, 210, 255, 0.09);
+    border-radius: 1.4rem;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 6.4rem;
+    width: 6.4rem;
+    border-radius: 1.2rem;
+    background-image: linear-gradient(15deg, rgba(34, 210, 175, 0.14) 0%, rgba(56, 133, 209, 0.14) 100%);
+    margin-right: 2.4rem;
+}
+
+.header {
+    display: flex;
+    margin-bottom: 2.4rem;
+}
+
+.headerText {
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+}
+
+.name {
+    color: var(--text-color);
+    font-size: 2.4rem;
+    margin-bottom: 1.0rem;
+    font-weight: 600;
+    font-family: fira-go;
+}
+
+.orderNo {
+    color: var(--text-color);
+    font-size: 1.6rem;
+    font-family: 'helvetica';
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.addressTitle {
+    color: var(--text-color);
+    font-size: 2.0rem;
+    font-weight: bold;
+    margin-bottom: 1.8rem;
+    font-family: fira-go;
+}
+
+.addressItem {
+    display: flex;
+    position: relative;
+    margin-bottom: 1.5rem;
+    gap: 1.4rem;
+}
+
+.addressItemText {
+    color: var(--text-color);
+    font-size: 2.0rem;
+    display: flex;
+    flex-direction: column;
+    font-family: fira-go;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.city {
+    font-weight: 600;
+}
+
+.address, .zip {
+    opacity: 0.5;
+    font-family: fira-go;
+}
+
+.paymentItem {
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.5;
+    font-size: 1.8rem;
+    font-family: fira-go;
+    color: var(--text-color);
+    margin-bottom: .4rem;
+    font-weight: 500;
+}
+
+.paymentItem:first-of-type {
+    opacity: 1;
+    font-size: 2.0rem;
+    font-family: 'BPG WEB 002 CAPS';
+}
+
+.divider {
+    border-bottom: .1rem solid rgba(42, 114, 129, .3);
+    margin: 4.4rem -3.4rem 3.0rem -3.4rem;
+    display: flex;
+}
+
+
+.paymentWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3.6rem;
+}

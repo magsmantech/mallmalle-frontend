@@ -1,0 +1,245 @@
+.wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 21;
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(39.8rem, 1fr));
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    
+    background-color: white;
+    padding: 4.7rem 3.4rem 0 4.2rem;
+    width: 100%;
+    max-width: 39.8rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4.5rem;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    /* padding-top: 4.7rem; */
+    margin-right: -3.4rem;
+}
+
+.content-title {
+    color: #607189;
+    font-size: 2.4rem;
+    font-weight: 500;
+    /* font-family: 'BPG WEB 002 Caps'; */
+    font-family: fira-go;
+    text-transform: uppercase;
+    font-feature-settings: "case" on;
+  
+}
+
+.itemsContainer {
+    margin-top: 3.5rem;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-gap: 2.8rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: .8rem 0 0 .8rem;
+    cursor: pointer;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.6rem;
+    height: 5.6rem;
+    background-color: #EDEDED;
+    border-radius: .8rem;
+    cursor: pointer;
+}
+
+.item .iconWrapper {
+    margin-right: 2.0rem;
+}
+
+.itemIconWoman {
+    color: #CB21F4;
+    fill: #CB21F4;
+
+}
+
+.itemIconMan {
+    fill: #5F8EE5;
+}
+
+.itemIconChild {
+    fill: #FFA700;
+}
+
+.itemIconOther {
+    fill: #4D79AF;
+}
+.itemIconBoxes {
+    fill: #EA1313;
+}
+
+.itemIconClothes {
+    fill: #D5AD40;
+}
+
+.itemIconShoes {
+    fill: #5F8EE5;
+}
+
+.itemIconAccessories {
+    fill: #31C4BE;
+}
+
+.itemIconToys {
+    fill: #31C4BE;
+}
+
+.itemTitle {
+    display: inline-flex;
+    color: var(--text-color);
+    font-size: 2.0rem;
+    /* font-family: 'helvetica'; */
+    /* font-family: 'BPG WEB 002 Caps'; */
+    text-transform: uppercase;
+    font-feature-settings: "case" on;
+    font-weight: 500;
+    /* font-family: fira-go; */
+  
+}
+.item:hover {
+    background-color: #1FD5AE;
+}
+
+.item:hover .iconWrapper {
+    background-color: transparent;
+}
+
+.item:hover .itemTitle,
+.item:hover .itemIconWoman,
+.item:hover .itemIconMan,
+.item:hover .itemIconChild,
+.item:hover .itemIconOther,
+.item:hover .itemIconBoxes,
+.item:hover .itemIconClothes,
+.item:hover .itemIconShoes,
+.item:hover .itemIconAccessories {
+    fill: white;
+    color: white;
+}
+
+.submenuTitle {
+    display: inline-flex;
+    color: #607189;
+    font-size: 3.2rem;
+    /* font-family: 'BPG WEB 002 Caps'; */
+    text-transform: uppercase;
+    font-family: fira-go;
+    font-weight: 600;
+    font-feature-settings: "case" on;
+    margin-bottom: 1.6rem;
+  
+}
+
+.submenuSubtitle {
+    display: inline-flex;
+    font-size: 1.6rem;
+    font-family: fira-go;
+
+    /* font-family: 'helvetica'; */
+    color: #607189;
+    text-transform: uppercase;
+    font-feature-settings: "case" on;
+    font-weight: 500;
+    opacity: 0.5;
+}
+
+
+.detailMenuTitle {
+    font-size:  2.4rem;
+    font-weight: 600;
+    /* font-family: 'BPG WEB 002 Caps'; */
+    text-transform: uppercase;
+    font-feature-settings: "case" on;
+    font-family: fira-go;
+    color: var(--text-color);
+}
+
+.detailMenuitem {
+    color: var(--text-color);
+    font-size: 2.0rem;
+    margin-bottom: 1.6rem;
+    cursor: pointer;
+}
+
+.detailMenuitem:hover {
+    text-decoration: underline;
+}
+
+.promoItemBackground {
+    display: flex;
+    flex-direction: column;
+    height: 23.2rem;
+    width: 100%;
+    border-radius: 1.4rem;
+    justify-content: flex-end;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1.8rem;
+    position: relative;
+}
+
+.promoItemText {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    font-size: 1.6rem;
+    font-family: 'helvetica';
+    z-index: 1;
+}
+
+.promoItemOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+    border-radius: 1.4rem;
+}
+
+.promoItemsWrapper {
+    display: grid;
+    margin-top: 1.6rem;
+    grid-template-columns: 1fr;
+    grid-gap: 2.0rem;
+}
+
+.promoItemTextSale, .promoItemTextTime {
+    font-family: fira-go;
+    font-weight: 600;
+}
+
+.promoItemTextSale {
+    text-transform: uppercase;
+    font-feature-settings: "case" on;
+}
