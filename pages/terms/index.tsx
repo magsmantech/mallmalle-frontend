@@ -47,6 +47,8 @@ const Home: NextPage = () => {
                 <span className={styles.item}>დაბრუნების და გაცვლის პოლიტიკა</span>
                 <span className={styles.item}>კონფიდენციალურობა</span>
                 <span className={styles.item}>დახმარება</span>
+                <span className={styles.item}>MallMalle-ს შესახებ</span>
+                <span className={styles.item}>კონტაქტი</span>
             </div>
     </>
   );
