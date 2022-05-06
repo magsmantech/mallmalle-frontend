@@ -8,6 +8,8 @@ import Button from './styled/button';
 
 import ProfileIcon from '../public/icons/react-icons/profile';
 import EditIcon from '../public/icons/react-icons/edit';
+import { calculateCartPrices, Cart } from '../domain/shop';
+import api from '../features/api';
 
 const CustomButton = styled.button`
     
@@ -33,7 +35,25 @@ const CustomButton = styled.button`
     border-left: rgba(66, 79, 96, 0.3) solid 0.1rem;
 `;
 
-const OrderDetails = () => {
+const OrderDetails: React.FC<{
+    cart?: Cart;
+    selectedAddressId?: number;
+ }> = ({ 
+     cart,
+     selectedAddressId,
+     }) => {
+
+    const cartPrices = calculateCartPrices(cart);
+    const {
+      itemsSubtotalOriginalPrice,
+      itemsSubtotal,
+      hasDiscount,
+      shippingCost,
+      cartTotal,
+    } = cartPrices;
+
+    const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
+
     return(
         <>
             <div className={styles.container}>
@@ -81,23 +101,37 @@ const OrderDetails = () => {
 
                         <div className={styles.paymentItem}>
                             <span>სრული თანხა</span>
-                            <span style={{fontFamily: 'fira-go', fontWeight: 600, fontSize: '2.4rem'}}>$ 405</span>
+                            <span style={{fontFamily: 'fira-go', fontWeight: 600, fontSize: '2.4rem'}}>$ {cartTotal}</span>
                         </div>
+                        {cartPrices.hasDiscount ? (
+                          <div className={styles.paymentItem}>
+                              <span>ფასდაკლება</span>
+                              <span >-$ {itemsSubtotal}</span>
+                          </div>
+                        ) : null}
                         <div className={styles.paymentItem}>
-                            <span>ფასდაკლება</span>
-                            <span >-$ 105</span>
-                        </div>
-                        <div className={styles.paymentItem}>
-                            <span>3 ნივთი</span>
-                            <span>$ 205</span>
+                            <span>{cart?.items?.length} ნივთი</span>
+                            <span>$ {itemsSubtotalOriginalPrice}</span>
                         </div>
                         <div className={styles.paymentItem}>
                             <span>მიტანა</span>
-                            <span>$ 5</span>
+                            <span>$ {shippingCost}</span>
                         </div>
                     </div>
 
-                    <Button>გადახდაზე გადასვალა</Button>
+                    <Button onClick={async () => {
+                        if(!selectedAddressId){
+                            alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
+                            return;
+                        }
+                        const { data: response } = await createOrder({ addressId: selectedAddressId });
+                        if('success' in response && response.success){
+                          // TODO redirect to payment
+                          alert(response.success + ' -- TODO redirect to card payment URL');
+                        } else {
+                            alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
+                        }
+                    }}>გადახდაზე გადასვალა</Button>
             </div>
         </>
     )

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios"
 import config from '../config.json';
+import { getToken } from '../state/store';
 
 export const apiCall = (url: string, method: Method='GET', data: any={}): Promise<AxiosResponse<any, any>> => {
     const options: AxiosRequestConfig = {
@@ -8,7 +9,7 @@ export const apiCall = (url: string, method: Method='GET', data: any={}): Promis
         data: data,
     }
 
-    const token = localStorage.getItem('access_token');
+    const token = getToken();
     console.log('token', token);
     if (token) {
         options.headers = {

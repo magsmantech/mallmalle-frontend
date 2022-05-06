@@ -48,7 +48,3 @@ export const getFilteredItems =async (categoryId: number, params: any) => {
     // }
     return await apiCall(`products/${categoryId}/filters`, 'GET', params);
 }
-
-export const getBag = async () => {
-    return await apiCall('bag');
-}

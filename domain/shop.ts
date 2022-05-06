@@ -1,4 +1,9 @@
 
+export const roundToCents = (amount: number | undefined) => {
+  if(!amount) return 0;
+  return Math.round(amount * 100) / 100;
+}
+
 export type Product = {
   "id": number;// 1
   "product_name": string;// "ქალის მოსაცმელი";
@@ -42,18 +47,76 @@ export type ProductVariation = {
   "color_variation": ColorVariation;
 };
 
-export const calculateProductPrices = (product: Product | null, sizeIndex = 0) => {
-  const originalPrice = product?.variations[sizeIndex]?.price;
+/**
+ * 
+ * @param product 
+ * @param variationId variation ID inside product.variations
+ * @returns 
+ */
+export const calculateProductPrices = (product: Product | null, variationId = 0) => {
+  const selectedVariation = product?.variations.find(v => v.id == variationId);
+  const originalPrice = parseFloat(product?.variations.find(v => v.id == variationId)?.price || '0');
   const finalPrice = product 
   ? (
     product?.discount.length > 0
-      ? originalPrice
+      ? product?.discount?.reduce((carryPrice, newDiscount) => carryPrice * (100 - newDiscount.value) / 100, originalPrice)
       : originalPrice
     )
   : null;
+  console.log('calculateProductPrices', { product, variationId, originalPrice, finalPrice });
   return {
+    selectedVariation,
+    selectedSize: selectedVariation?.size_variation,
+    selectedColor: selectedVariation?.color_variation,
     hasDiscount: finalPrice != originalPrice,
     originalPrice,
     finalPrice,
   };
 }
+
+
+export type Cart = {
+  // res.summary = 37 (total price)
+  summary: number;
+  items: CartItem[];
+}
+
+export type CartItem = {
+  "id": number;// 14,
+  "product_id": number;// 1,
+  "variation_id": number;// 3,
+  "quantity": number;// 1,
+  "total": number;// 1,
+  "product": Product;
+}
+
+export const calculateCartPrices = (cart: Cart | undefined) => {
+  const processedCartItems = cart?.items?.map(item => calculateProductPrices(item.product, item.variation_id));
+  const itemsSubtotalOriginalPrice = roundToCents(processedCartItems?.reduce((carry, productPrices) => carry + productPrices?.originalPrice, 0));
+  const itemsSubtotal = roundToCents(processedCartItems?.reduce((carry, productPrices) => carry + (productPrices?.finalPrice || 0), 0) || 0);
+  const hasDiscount = processedCartItems?.some(ci => ci.hasDiscount);
+  // TODO is it always 5?
+  const shippingCost = roundToCents(5);
+  const cartTotal = itemsSubtotal + shippingCost;
+  return {
+    itemsSubtotalOriginalPrice,
+    itemsSubtotal,
+    hasDiscount,
+    shippingCost,
+    cartTotal,
+  };
+}
+
+export type Address = {
+  "id": number;// 154,
+  "is_primary": 1 | 0;
+  "user_id": number;// 144,
+  "full_name": string | null,
+  "address_1": string;// "rustaveli 35",
+  "address_2": string | null,
+  "country": string;// "georgia",
+  "state": string | null,
+  "city": string;// "tbilisi",
+  "zip": string;// "0179",
+  "mobile": string | null
+};

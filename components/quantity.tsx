@@ -24,22 +24,33 @@ const ItemWrapper = styled.div`
     display: flex;
     align-items: center;
 `;
-const Quantity = () => {
-    const [quantity, setQuantity] = useState(1);
+const Quantity: React.FC<{
+    value: number;
+    onChange: (newValue: number) => void;
+    maxAllowed?: number;
+}> = ({
+    value,
+    onChange,
+    maxAllowed = 5,
+}) => {
+    const [quantity, setQuantity] = useState(value);
     const [allowLess, setAllowLess] = useState(true);
     const [allowMore, setAllowMore] = useState(true);
 
+    const setNewQuantityValue = (newQuantity: number) => {
+        setQuantity(newQuantity);
+        onChange(newQuantity);
+    }
 
     useEffect(() => {
         if (quantity === 1) {
             setAllowLess(false);
-        } else if (quantity === 5) {
+        } else if (quantity === maxAllowed) {
             setAllowMore(false);
         } else {
             setAllowMore(true);
             setAllowLess(true);
         }
-
     }, [quantity])
 
     const iconColor = (allowed: boolean): string => {
@@ -51,13 +62,13 @@ const Quantity = () => {
 
     return (<>
         <ItemWrapper>
-            <IconWrapper onClick={()=>setQuantity(quantity-1)}>
+            <IconWrapper onClick={()=>setNewQuantityValue(quantity-1)}>
                 <HiMinus size={'1.6rem'} color={iconColor(allowLess)}/>
             </IconWrapper>
             <Number>
                 {quantity}
             </Number>
-            <IconWrapper onClick={()=>setQuantity(quantity+1)}>
+            <IconWrapper onClick={()=>setNewQuantityValue(quantity+1)}>
                 <HiPlus size={'1.6rem'} color={iconColor(allowMore)}/>
             </IconWrapper>
         </ItemWrapper>

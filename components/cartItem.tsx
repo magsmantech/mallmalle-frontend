@@ -1,8 +1,6 @@
 import styled from "styled-components";
+import { calculateProductPrices, CartItem } from "../domain/shop";
 
-
-
-type ItemType = any;
 
 const ItemName= styled.span`
 color: var(--text-color);
@@ -49,14 +47,23 @@ max-width: 40.0rem;
 `;
 
 
-const Item = ({name, size, color, style}: ItemType) =>
-<ItemWrapper style={{...style}}>
-    <ItemImg src={'/assets/photo-3.jpg'}/>
-    <ItemTextWrapper>
-        <ItemName>{name}</ItemName>
-        <div style={{marginBottom: '.5rem'}}><ItemLabel>ზომა:</ItemLabel> <ItemValue>{size}</ItemValue></div>
-        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{color}</ItemValue></div>
-    </ItemTextWrapper>
-</ItemWrapper>;
+const Item = ({ item, style } : { item: CartItem } & { style: any }) => {
+    const { product, product_id, variation_id, quantity, total } = item;
+    const {
+      selectedVariation,
+      selectedSize,
+      selectedColor,
+    } = calculateProductPrices(item.product, variation_id);
+    return (
+    <ItemWrapper style={{...style}}>
+      <ItemImg src={'/assets/photo-3.jpg'}/>
+      <ItemTextWrapper>
+        <ItemName>{product.product_name}</ItemName>
+        <div style={{marginBottom: '.5rem'}}><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>
+        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{selectedColor?.color_name}</ItemValue></div>
+      </ItemTextWrapper>
+    </ItemWrapper>
+    );
+}
 
 export default Item;

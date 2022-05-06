@@ -24,6 +24,8 @@ import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
 import { calculateProductPrices, Product } from "../../domain/shop";
+import { addToCart } from "../../services/checkout-services";
+import api from "../../features/api";
 
 type ButtonProps = {
   secondary?: boolean;
@@ -136,6 +138,8 @@ const ProductDetails: NextPage = () => {
   const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
   console.log(product, product?.variations);
 
+  const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
+
   useEffect(() => {
     console.log(id, router);
     if (!id) return;
@@ -191,6 +195,12 @@ const ProductDetails: NextPage = () => {
             selectedColorId && item.size_variation.id === selectedSizeId)
       );
       console.log('var', variation);
+      if(product && variation){
+        // TODO use api.getAddToCartMutation()
+        addToCart(product.id, variation.id, 1).then(({ data }) => {
+          alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+        });
+      }
     }
   };
 
@@ -230,7 +240,7 @@ const ProductDetails: NextPage = () => {
               textTransform: "uppercase",
               fontFeatureSettings: '"case" on',
             }}
-          >
+          >{cart?.summary}a
             {'ფეხსაცმელი'} /
             <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span>
           </Breadcrumbs>
@@ -284,7 +294,7 @@ const ProductDetails: NextPage = () => {
           <ButtonWrapper style={{ marginBottom: "4.2rem" }}>
             <Button onClick={_showFeedback} style={{
               ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
-            }}>
+            }} disabled={!canAddToCart}>
               {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
               <BagIcon
                 height={"3.0rem"}
