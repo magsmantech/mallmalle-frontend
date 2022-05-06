@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 type Props = {
+  id?: number;
   imageUrl: string;
   price: string;
   oldPrice?: string;

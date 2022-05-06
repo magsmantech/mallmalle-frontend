@@ -23,6 +23,7 @@ import { getProductDetailsById } from "../../services/products-service";
 import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
+import { calculateProductPrices, Product } from "../../domain/shop";
 
 type ButtonProps = {
   secondary?: boolean;
@@ -116,23 +117,24 @@ const Grid = styled.section`
   grid-gap: 3.2rem;
 `;
 
-const Home: NextPage = () => {
+const ProductDetails: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [description, setDescription] = useState("");
   const [images, setImages] = useState<string[]>([]);
-  const [name, setName] = useState("");
   const [sizes, setSizes] = useState<SizeType[]>([]);
   const [colors, setColors] = useState<ColorType[]>([]);
 
-  const [selectedColorIndex, setSelectedColorIndex] = useState<any>(undefined);
-  const [selectedSizeIndex, setSelectedSizeIndex] = useState<any>(undefined);
+  const [selectedColorId, setSelectedColorId] = useState<any>(undefined);
+  const [selectedSizeId, setSelectedSizeId] = useState<any>(undefined);
 
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   const { id } = router.query;
   console.log(id);
+
+  const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
+  console.log(product, product?.variations);
 
   useEffect(() => {
     console.log(id, router);
@@ -143,8 +145,7 @@ const Home: NextPage = () => {
         console.log(res);
         const { data } = res;
         setProduct(data);
-        setDescription(data.description);
-        setName(data.product_name);
+        //
         if (data?.variations?.length) {
           const colorsArray = data.variations.map(
             (item: any) => item.color_variation
@@ -156,6 +157,9 @@ const Home: NextPage = () => {
           setColors(colorsArray);
           setSizes(sizesArray);
           setImages([...images, ...imagesArray]);
+          // auto-select first color
+          _colorSelected(colorsArray[0]?.id);
+          console.log('colorsArray', colorsArray);
 
           return;
         }
@@ -180,24 +184,24 @@ const Home: NextPage = () => {
     //   showFeedback({ show: true }),
     // );
     if (product?.variations) {
-      console.log(selectedColorIndex, selectedSizeIndex);
+      console.log(selectedColorId, selectedSizeId);
       const variation = product?.variations?.find(
         (item: any) =>
           (item.color_variation.id =
-            selectedColorIndex && item.size_variation.id === selectedSizeIndex)
+            selectedColorId && item.size_variation.id === selectedSizeId)
       );
-      console.log(variation);
+      console.log('var', variation);
     }
   };
 
   const _colorSelected = (e: any) => {
-    console.log(e);
-    setSelectedColorIndex(e);
+    console.log('color selected:', e);
+    setSelectedColorId(e);
   };
 
   const _sizeSelected = (e: any) => {
-    console.log(e);
-    setSelectedSizeIndex(e);
+    console.log('size selected:', e);
+    setSelectedSizeId(e);
   };
 
   const imagesTemp = [
@@ -210,6 +214,8 @@ const Home: NextPage = () => {
   const sizesTemp = ["34", "36", "38", "40", "42"];
 
   const colorsTemp = ["#E536BD", "#536DDB", "#EDC6A7", "#8D5843", "#D53232"];
+
+  const canAddToCart = typeof(selectedColorId) !== 'undefined' && typeof(selectedSizeId) !== 'undefined';
 
   return (
     <>
@@ -225,10 +231,10 @@ const Home: NextPage = () => {
               fontFeatureSettings: '"case" on',
             }}
           >
-            ფეხსაცმელი /
-            <span style={{ fontWeight: 500 }}> მწვანე ფეხსაცმელი</span>
+            {'ფეხსაცმელი'} /
+            <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span>
           </Breadcrumbs>
-          <Title style={{ marginBottom: "1.6rem" }}>Reima Overalls</Title>
+          <Title style={{ marginBottom: "1.6rem" }}>{product?.product_name}</Title>
           <div
             style={{
               display: "flex",
@@ -248,8 +254,10 @@ const Home: NextPage = () => {
             <Count>402 ნახვა</Count>
           </div>
           <div style={{ marginBottom: "3.5rem", display: "flex" }}>
-            <Price style={{ marginRight: "1.6rem" }}>55.98</Price>
-            <OldPrice>75.43</OldPrice>
+            <Price style={{ marginRight: "1.6rem" }}>{finalPrice}</Price>
+            {hasDiscount ? (
+              <OldPrice>{originalPrice}</OldPrice>
+            ): null}
           </div>
 
           {colors && !!colors.length && (
@@ -257,7 +265,7 @@ const Home: NextPage = () => {
               <ColorSelector
                 colors={colors}
                 style={{ marginBottom: "3.2rem" }}
-                defaultSelected={colors[0].id}
+                defaultSelected={colors[0]?.id}
                 gap={"2.1rem"}
                 onColorSelected={(event: any) => _colorSelected(event)}
               />
@@ -274,7 +282,9 @@ const Home: NextPage = () => {
             </>
           )}
           <ButtonWrapper style={{ marginBottom: "4.2rem" }}>
-            <Button onClick={_showFeedback}>
+            <Button onClick={_showFeedback} style={{
+              ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
+            }}>
               {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
               <BagIcon
                 height={"3.0rem"}
@@ -290,7 +300,7 @@ const Home: NextPage = () => {
           <Subtitle style={{ marginBottom: "1.8rem" }}>
             დამატებითი ინფორმაცია
           </Subtitle>
-          {description && <Text>{ReactHtmlParser(description)}</Text>}
+          {product?.description && <Text>{ReactHtmlParser(product?.description)}</Text>}
           {/* <Text>შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის</Text> */}
         </DetailsWrapper>
       </Section>
@@ -345,4 +355,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default ProductDetails;

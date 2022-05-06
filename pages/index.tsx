@@ -8,6 +8,7 @@ import { getDashboardData } from "../services/dashboard-services";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import config from "../config.json";
+import { Product } from "../domain/shop";
 
 const Home: NextPage = () => {
   const _scrollToTop = () => {
@@ -58,7 +59,7 @@ const Home: NextPage = () => {
 
       <div className={styles.itemsContainer}>
         {offers?.length ? (
-          offers.map((product, index) => (
+          offers.map((product: Product, index: number) => (
             <Item
               name={product.product_name}
               id={product.id}
@@ -90,7 +91,7 @@ const Home: NextPage = () => {
         style={{ marginBottom: "17.5rem" }}
       >
         {newProducts?.length ? (
-          newProducts.map((product, index) => (
+          newProducts.map((product: Product, index: number) => (
             <Item
               name={product.product_name}
               price="85,99"
