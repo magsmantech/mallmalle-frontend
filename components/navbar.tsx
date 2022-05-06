@@ -77,7 +77,8 @@ export default function Navbar({ onSidebarOpen }: Props) {
                     </ItemWrapper>
                 </Link>}
 
-                {loggedIn &&<Link href={{
+                {/* {loggedIn && */}
+                <Link href={{
                     pathname: '/profile',
                     query: { tab: 'bookmark' },
                 }}>
@@ -86,8 +87,8 @@ export default function Navbar({ onSidebarOpen }: Props) {
                         <Bookmark width={'3.6rem'} height={'3.6rem'}/>
                         <ItemLabel>რჩეულები</ItemLabel>
                     </ItemWrapper>
-
-                </Link>}
+                </Link>
+                {/* } */}
                 <Link href='/cart'>
                     <ItemWrapper style={{ cursor: 'pointer', marginLeft: '2.6rem' }}>
                         {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}

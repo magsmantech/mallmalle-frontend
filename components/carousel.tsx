@@ -3,6 +3,8 @@ import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from '../styles/Carousel.module.css';
 import styled from 'styled-components';
+import Clock from './clock';
+
 
 // Import Swiper styles
 import 'swiper/css';
@@ -85,10 +87,7 @@ const Carousel = ({ images = [] }: Props) => {
             <Background backgroundImage={image}>
               <SlideText  style={{marginLeft: '28.6rem'}}>
                 <span style={{fontSize: '4.0rem', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}>ფასდაკლება</span>
-                <div>
-                  <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}>03 : 12 : 54 </span>
-                  <span style={{fontSize: '2.0rem'}}>საათი</span>
-                </div>
+                <Clock />
 
               </SlideText>
             </Background>
