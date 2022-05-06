@@ -114,7 +114,7 @@ const CartScreen: NextPage = () => {
   const [selectedAddressId, setSelectedAddressId] = useState<number | undefined>(undefined);
   // TODO allow changing selected address on the right side, OrderDetails
   useEffect(() => {
-    if(addresses?.length > 0){
+    if(addresses && addresses?.length > 0){
       setSelectedAddressId(addresses?.[0].id);
     }
   }, [addresses]);
