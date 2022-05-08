@@ -41,6 +41,8 @@ import { CategoriesContext } from "../../components/Layout";
 import { getFilteredItems, getFilters } from "../../services/category-services";
 import config from "../../config.json";
 
+import Respinsive from "../../config/Responsive"
+
 const Heading = styled.h1`
   color: var(--text-color);
   font-size: 4.4rem;
@@ -63,9 +65,29 @@ const Quantity = styled.span`
 
 const Grid = styled.div`
   width: 100%;
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 3.2rem;
+  grid-gap: 3.2rem; */
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); /* see notes below */
+  grid-row-gap: 120px;
+  grid-column-gap: 32px;
+    ${Respinsive.laptop} {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* see notes below */
+      grid-row-gap: 120px;
+      grid-column-gap: 32px;
+    }
+    ${Respinsive.tablet} {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* see notes below */
+      grid-row-gap: 120px;
+      grid-column-gap: 32px;
+    }
+    ${Respinsive.mobile} {
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); /* see notes below */
+      grid-row-gap: 120px;
+      grid-column-gap: 32px;
+    }
 `;
 
 const ItemWrapper = styled.div`
@@ -93,7 +115,8 @@ const ItemBackground = styled.div`
 
 const Img = styled.div`
   width: 100%;
-  height: 54.2rem;
+  /* height: 54.2rem; */
+  height: 540px;
   background-image: ${(props: { backgroundImage: string }) =>
     `url(${props.backgroundImage})`};
   background-size: 105%;
@@ -103,9 +126,22 @@ const Img = styled.div`
   position: center;
   border-radius: 1.4rem;
   position: relative;
+  
   &:hover {
     background-size: 110%;
   }
+
+  background-position: center center;
+  background-size: cover;
+  ${Respinsive.laptop} {
+    height: 450px;
+  }
+  ${Respinsive.tablet} {
+    height: 420px;
+  }
+  ${Respinsive.mobile} {
+      height: 420px;
+    }
 `;
 
 const ItemOverlay = styled.div`

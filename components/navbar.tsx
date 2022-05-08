@@ -60,7 +60,7 @@ export default function Navbar({ onSidebarOpen }: Props) {
                 <Link href='/'><img src='/assets/logo.svg' className={styles.logo} /></Link>
                 <div className={styles.ItemWrappers}><SearchBar /></div>
                 {/* <div className={styles.ItemWrappers}><LanguageSwitcher languages={[ 'EN', 'GEO']} /></div> */}
-                <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div>
+                {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */} 
                 {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
                 {/* <Link href='/profile'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
                 <div className={styles.divider}></div>
