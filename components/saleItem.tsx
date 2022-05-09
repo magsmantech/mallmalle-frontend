@@ -1,7 +1,9 @@
+import React from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import { FiPercent } from 'react-icons/fi';
 import styles from '../styles/Home.module.css';
+import { useRouter } from 'next/router';
 
 type Props = {
     imageUrl: string,
@@ -11,6 +13,8 @@ type Props = {
 };
 
 const SaleItem = ({ imageUrl, style, big=false, gradient=false }: Props) => {
+
+    const router = useRouter();
 
     const wrapperClasses = classNames({
         [styles.saleItemWrapper]: true,
@@ -22,7 +26,10 @@ const SaleItem = ({ imageUrl, style, big=false, gradient=false }: Props) => {
         <>
             <div className={wrapperClasses} style={{
                 // backgroundImage: `url(${imageUrl})`,
-                ...style
+                cursor: 'pointer',
+                ...style,
+            }} onClick={() => {
+                router.push('/catalog/3');
             }}>
             <img src={imageUrl} className={styles.saleItemImg}/>    
             <div className={styles.gradient}></div>
