@@ -53,6 +53,7 @@ const OrderDetails: React.FC<{
     } = cartPrices;
 
     const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
+    const [initiatePayment, { isLoading: isInitiatePaymentLoading }] = api.useInitiatePaymentMutation();
 
     return(
         <>
@@ -126,8 +127,12 @@ const OrderDetails: React.FC<{
                         }
                         const { data: response } = await createOrder({ addressId: selectedAddressId });
                         if('success' in response && response.success){
-                          // TODO redirect to payment
-                          alert(response.success + ' -- TODO redirect to card payment URL');
+                            const orderId = response.data.id;
+                          // redirect to payment
+                          // alert(response.success + ' -- TODO redirect to card payment URL');
+                          const { data: payment } = await initiatePayment({ orderId });
+                          const { redirect_url } = payment;
+                          document.location.href = redirect_url;
                         } else {
                             alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
                         }
