@@ -379,6 +379,7 @@ const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
             </Wrapper>
             <div className={styles.filterTitle} style={{marginTop: '4.2rem'}} >ფერები</div>
             <div>
+                {/* @ts-ignore */}
                 <ColorSelector colors={colors} small style={{justifyContent: 'space-between'}}/>
             </div>
             <div className={styles.filterFooter}>

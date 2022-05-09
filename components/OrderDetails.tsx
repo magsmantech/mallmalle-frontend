@@ -125,11 +125,13 @@ const OrderDetails: React.FC<{
                             alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
                             return;
                         }
+                        // @ts-ignore
                         const { data: response } = await createOrder({ addressId: selectedAddressId });
                         if('success' in response && response.success){
                             const orderId = response.data.id;
                           // redirect to payment
                           // alert(response.success + ' -- TODO redirect to card payment URL');
+                          // @ts-ignore
                           const { data: payment } = await initiatePayment({ orderId });
                           const { redirect_url } = payment;
                           document.location.href = redirect_url;
