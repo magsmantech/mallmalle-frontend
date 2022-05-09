@@ -85,12 +85,18 @@ function Navbar({ onSidebarOpen }: Props) {
 
                 </Link>
             </Nav>
-            <div className={styles.curve}></div>
+            <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
         </>
     );
 }
 
 // styles
+const HoriontalFixedLine = styled.div`
+    ${Responsive.tabletMobile}{
+        top: 120px;
+        height: 24px;
+    }
+`;
 const SearchWrapper = styled.div`
     ${Responsive.tabletMobile}{
         margin-right: 15px;
@@ -108,7 +114,7 @@ const VerticalLine = styled.div`
 const Nav = styled.nav`
     padding: 0px 40px;
         ${Responsive.tabletMobile} {
-            padding: 20px 20px 0px 20px;
+            padding: 20px 24px 0px 24px;
             height: 120px;
         }
 `;

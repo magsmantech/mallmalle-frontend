@@ -32,7 +32,7 @@ export default function Layout({ children }: any) {
   //     setLoggedInState({loggedIn: !!isLogged}),
   // )
 
-  const showFeedback = useSelector((state: RootState)=> state.feedback.show);
+  const showFeedback = useSelector((state: RootState) => state.feedback.show);
   const feedbackType = useSelector((state: RootState) => state.feedback.type!);
 
   useEffect(() => {
@@ -49,10 +49,10 @@ export default function Layout({ children }: any) {
   useEffect(() => {
     const val = calcRatio(window);
     setRatio(val);
-    
+
     const isLogged = localStorage.getItem('access_token');
     dispatch(
-        setLoggedInState({loggedIn: !!isLogged}),
+      setLoggedInState({ loggedIn: !!isLogged }),
     )
 
     const debouncedHandleResize = debounce(function handleResize() {
@@ -65,7 +65,7 @@ export default function Layout({ children }: any) {
       .then((res) => {
         setCategories(res.data);
       })
-      .catch(err=> console.log(err));
+      .catch(err => console.log(err));
 
     window.addEventListener('resize', debouncedHandleResize);
     return () => {
@@ -73,9 +73,9 @@ export default function Layout({ children }: any) {
     }
   }, [])
 
-  const calcRatio = (win: Window):number => {
+  const calcRatio = (win: Window): number => {
     // if (win.innerWidth >= 1024) {
-    const val = (win.innerWidth / 1920) * 10;        
+    const val = (win.innerWidth / 1920) * 10;
     return val;
     // } else {
     //   const val = (1024 / 1920) * 10;        
@@ -101,12 +101,12 @@ export default function Layout({ children }: any) {
     )
   }
 
-  
+
   const typeClasses = {
     error: styles.error,
-    
+
     success: styles.success,
-    
+
     info: styles.info,
   }
 
@@ -119,14 +119,14 @@ export default function Layout({ children }: any) {
   return (
     <>
       {openSidebar && <div className={styles['sidebar-overlay-global']} onClick={_closeSidebar}></div>}
-      {showFeedback&& feedbackType==='info' &&<div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
-      {showFeedback &&<Feedback className={feedbackClasses}/>}
+      {showFeedback && feedbackType === 'info' && <div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
+      {showFeedback && <Feedback className={feedbackClasses} />}
       {openSidebar && <Sidebar onSidebarClose={_closeSidebar} categories={categories} />}
       <Navbar onSidebarOpen={_openSidebar} />
       <CategoriesContext.Provider value={categories}>
         <PageWrapper>{children}</PageWrapper>
       </CategoriesContext.Provider>
-      <Footer></Footer>
+      <Footer />
     </>
   )
 }
