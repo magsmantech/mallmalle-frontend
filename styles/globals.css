@@ -45,14 +45,15 @@ body {
 }
 
 html {
-  font-size: 10px;
+  /* font-size: 10px; */
   position: relative;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; 
+  font-size: unset !important;
 }
 
 @media(max-width: 1440px) {
   html {
-    font-size: 7.114583333333333px;
+    /* font-size: 7.114583333333333px; */
   }
 }
 a {
