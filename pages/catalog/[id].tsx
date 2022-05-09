@@ -42,7 +42,7 @@ import { getFilteredItems, getFilters } from "../../services/category-services";
 import config from "../../config.json";
 
 import Respinsive from "../../config/Responsive"
-import { calculateProductPrices, Category, findCategoryAndParents, findCategoryInAllCategories, Product } from "../../domain/shop";
+import { calculateProductPrices, Category, Product } from "../../domain/shop";
 
 import api from "../../features/api";
 
@@ -299,6 +299,7 @@ const Item = ({ product }: { product: Product }) => {
                 <OldPrice>{prices.originalPrice} ₾</OldPrice>
               )}
             </div>
+            {/* @ts-ignore */}
             {product.discount?.is_active && <Badge>-{product.discount.value}%</Badge>}
           </div>
           <span
@@ -645,6 +646,7 @@ const Catalog: NextPage = () => {
   // const category = findCategoryInAllCategories(+id, allCategories || []);
   // const categoryWithParents = findCategoryAndParents(id, allCategories);
 
+  // @ts-ignore
   const category = findCategoryNode(+id, context)?.category;
 
   useEffect(() => {

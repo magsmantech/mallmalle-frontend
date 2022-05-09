@@ -198,7 +198,8 @@ export default function OrdersList() {
                 </Headers>
                 {items.map((item, i) => <>
                     <ItemFlexWrapper key={i}>
-                    <Item style={{marginRight: '10.5rem'}}  name={item.name} size={item.size} color={item.color} />
+                    {/* @ts-ignore */}
+                    <Item style={{marginRight: '10.5rem'}} name={item.name} size={item.size} color={item.color} />
                     <Number>{item.quantity}x</Number>
                     <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '8.0rem', alignItems: 'flex-end', marginRight: '33.0rem' }}>
                         <Price>$79.90</Price>

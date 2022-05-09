@@ -76,13 +76,29 @@ const api = createApi({
     // Checkout / Place Order
     //
     createOrder: builder.mutation<{
-      success?: string;
+      success: string;
+      data: {
+        status: number;// 0
+        sub_total: number;// 25;
+        discounted_sub_total: number;// 25
+        id: number;// 3
+      }
+    } | {
       // error messages
       address_id: string[];// address field error message
      }, { addressId: number }>({
       query: ({ addressId }) => ({
         url: `/user/order?address_id=${addressId}`,
         method: 'POST',
+      }),
+    }),
+    initiatePayment: builder.mutation<{
+      message: string;
+      redirect_url: string;
+     }, { orderId: number }>({
+      query: ({ orderId }) => ({
+        url: `/pay/${orderId}`,
+        method: 'GET',
       }),
     }),
     //
