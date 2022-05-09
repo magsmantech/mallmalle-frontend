@@ -1,4 +1,4 @@
 {
-  "apiEndpoint": "https://mallmalle-core.herokuapp.com/api/",
-  "imagesEndpoint": "https://mallmalle-core.herokuapp.com/storage/"
+  "apiEndpoint": "https://api.mallmalle.com/api/",
+  "imagesEndpoint": "https://api.mallmalle.com/storage/"
 }

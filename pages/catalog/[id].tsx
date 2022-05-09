@@ -42,6 +42,9 @@ import { getFilteredItems, getFilters } from "../../services/category-services";
 import config from "../../config.json";
 
 import Respinsive from "../../config/Responsive"
+import { calculateProductPrices, Category, findCategoryAndParents, findCategoryInAllCategories, Product } from "../../domain/shop";
+
+import api from "../../features/api";
 
 const Heading = styled.h1`
   color: var(--text-color);
@@ -246,10 +249,16 @@ const HoverButton = styled(Button)`
   }
 `;
 
-const Item = ({ imgSrc, id, name, discount }: any) => {
+const Item = ({ product }: { product: Product }) => {
   const [hovered, setHovered] = useState(false);
 
+  const imgSrc = product?.images?.length
+  ? config.imagesEndpoint + product?.images[0]
+  : "/assets/2.png";
+
   const dispatch = useDispatch();
+
+  const prices = calculateProductPrices(product);
 
   const _addToCart = () => {
     dispatch(
@@ -261,7 +270,7 @@ const Item = ({ imgSrc, id, name, discount }: any) => {
 
   return (
     <>
-      <Link href={"/detail/" + id}>
+      <Link href={"/detail/" + product.id}>
         <ItemWrapper
           className={styles.wrapper}
           onMouseOver={() => setHovered(true)}
@@ -285,10 +294,12 @@ const Item = ({ imgSrc, id, name, discount }: any) => {
             className={styles.child}
           >
             <div style={{ display: "flex", alignItems: "flex-start" }}>
-              <Price style={{ marginRight: "1.6rem" }}>85,99 ₾</Price>
-              <OldPrice>120,00 ₾</OldPrice>
+              <Price style={{ marginRight: "1.6rem" }}>{prices.finalPrice} ₾</Price>
+              {prices.hasDiscount && (
+                <OldPrice>{prices.originalPrice} ₾</OldPrice>
+              )}
             </div>
-            {discount?.is_active && <Badge>-{discount.value}%</Badge>}
+            {product.discount?.is_active && <Badge>-{product.discount.value}%</Badge>}
           </div>
           <span
             className={styles.child}
@@ -301,7 +312,7 @@ const Item = ({ imgSrc, id, name, discount }: any) => {
               fontFeatureSettings: '"case" on',
             }}
           >
-            <Title>{name}</Title>
+            <Title>{product.product_name}</Title>
             {/* / შავი ზედა... */}
           </span>
           <div
@@ -320,14 +331,15 @@ const Item = ({ imgSrc, id, name, discount }: any) => {
             <Count>402 ნახვა</Count>
           </div>
           {hovered && (
-            <ItemButton
-              className={styles.child}
-              // onClick={_addToCart}
-              onMouseOver={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-            >
-              კალათაში დამატება
-            </ItemButton>
+            null
+            // <ItemButton
+            //   className={styles.child}
+            //   // onClick={_addToCart}
+            //   onMouseOver={() => setHovered(true)}
+            //   onMouseLeave={() => setHovered(false)}
+            // >
+            //   კალათაში დამატება
+            // </ItemButton>
           )}
           {hovered && <ItemBackground />}
         </ItemWrapper>
@@ -524,66 +536,7 @@ const FilterSideBar = ({
 };
 
 const Catalog: NextPage = () => {
-  const [openFilters, setOpenFilters] = useState(false);
 
-  const [products, setProducts] = useState<any>([]);
-  const [items, setItems] = useState<any>([]);
-  const [selectedFilterId, setSelectedFilterId] = useState<number | undefined>(
-    undefined
-  );
-  const [colorFilters, setColorFilters] = useState<any>([]);
-  const [pageIndex, setPageIndex] = useState<number>(0);
-
-  const context = useContext(CategoriesContext);
-  console.log(context);
-
-  const router = useRouter();
-
-  const { id } = router.query;
-  console.log(id);
-
-  useEffect(() => {
-    document.body.style.overflow = openFilters ? "hidden" : "auto";
-  }, [openFilters]);
-
-  useEffect(() => {
-    console.log(id, router);
-    if (!id) return;
-
-    Promise.all([getFilters(+id), getProductsById(+id)])
-      .then(([filtersResp, dataResp]) => {
-        console.log(filtersResp);
-        const {
-          data: { color_variations },
-        } = filtersResp;
-        setColorFilters(color_variations);
-        console.log(dataResp);
-        const array = _formatProductsData(dataResp?.data);
-        console.log(array, "ascacacas");
-        setProducts(array);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id]);
-
-  useEffect(() => {
-    if (!id || !context?.length) return;
-    const filtersNode = findCategoryNode(+id, context);
-    console.log(filtersNode);
-    const array: any = [];
-    if (filtersNode.level === 1) {
-      getFirstLevelFilters(filtersNode.root, array);
-    } else if (filtersNode.level === 2 || filtersNode.level === 3) {
-      getSecondLevelFilters(filtersNode.root, array);
-    }
-    if (filtersNode.selectedId) {
-      setSelectedFilterId(filtersNode.selectedId);
-    }
-
-    console.log(array);
-    setItems(array);
-  }, [id, context]);
 
   const getFirstLevelFilters = (root: any, array: any) => {
     if (!root.childrens) return;
@@ -613,7 +566,7 @@ const Catalog: NextPage = () => {
     for (const item of tree) {
       console.log(id, item.id);
       if (item.id === id) {
-        return { level: 1, root: item };
+        return { level: 1, root: item, category: item };
       }
       if (!item.childrens) {
         continue;
@@ -621,7 +574,7 @@ const Catalog: NextPage = () => {
       for (const elem of item.childrens) {
         console.log(id, elem.id);
         if (id === elem.id) {
-          return { level: 2, root: elem };
+          return { level: 2, root: elem, category: elem };
         }
         if (!elem.childrens) {
           continue;
@@ -629,7 +582,7 @@ const Catalog: NextPage = () => {
         for (const child of elem.childrens) {
           console.log(id, child.id);
           if (id === child.id) {
-            return { level: 3, root: elem, selectedId: id };
+            return { level: 3, root: elem, selectedId: id, category: child };
           }
         }
       }
@@ -668,6 +621,73 @@ const Catalog: NextPage = () => {
       return item;
     });
   };
+  
+  const [openFilters, setOpenFilters] = useState(false);
+
+  const [products, setProducts] = useState<any>([]);
+  const [items, setItems] = useState<any>([]);
+  const [selectedFilterId, setSelectedFilterId] = useState<number | undefined>(
+    undefined
+  );
+  const [colorFilters, setColorFilters] = useState<any>([]);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+
+  const context = useContext(CategoriesContext);
+  console.log(context);
+
+  const router = useRouter();
+
+  const { id } = router.query;
+  console.log(id);
+
+  const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
+
+  // const category = findCategoryInAllCategories(+id, allCategories || []);
+  // const categoryWithParents = findCategoryAndParents(id, allCategories);
+
+  const category = findCategoryNode(+id, context)?.category;
+
+  useEffect(() => {
+    document.body.style.overflow = openFilters ? "hidden" : "auto";
+  }, [openFilters]);
+
+  useEffect(() => {
+    console.log(id, router);
+    if (!id) return;
+
+    Promise.all([getFilters(+id), getProductsById(+id)])
+      .then(([filtersResp, dataResp]) => {
+        console.log(filtersResp);
+        const {
+          data: { color_variations },
+        } = filtersResp;
+        setColorFilters(color_variations);
+        const array = _formatProductsData(dataResp?.data);
+        console.log(array, "ascacacas");
+        setProducts(array);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    if (!id || !context?.length) return;
+    const filtersNode = findCategoryNode(+id, context);
+    console.log(filtersNode);
+    const array: any = [];
+    if (filtersNode.level === 1) {
+      getFirstLevelFilters(filtersNode.root, array);
+    } else if (filtersNode.level === 2 || filtersNode.level === 3) {
+      getSecondLevelFilters(filtersNode.root, array);
+    }
+    if (filtersNode.selectedId) {
+      setSelectedFilterId(filtersNode.selectedId);
+    }
+
+    console.log(array);
+    setItems(array);
+  }, [id, context]);
 
   return (
     <>
@@ -687,7 +707,7 @@ const Catalog: NextPage = () => {
         />
       )}
       <Breadcrumbs style={{ marginBottom: "2.0rem" }}>
-        მთავარი / კატეგორიები / ქალის ტანსაცმელი
+        მთავარი / კატეგორიები / {category?.category_name}
       </Breadcrumbs>
       <div
         style={{
@@ -696,8 +716,8 @@ const Catalog: NextPage = () => {
           alignItems: "flex-end",
         }}
       >
-        <Heading>ქალის ტანსაცმელი</Heading>
-        <Quantity>12 323 პროდუქტი</Quantity>
+        <Heading>{category?.category_name}</Heading>
+        {/* <Quantity>12 323 პროდუქტი</Quantity> */}
       </div>
       <div
         style={{
@@ -737,17 +757,10 @@ const Catalog: NextPage = () => {
       </div>
       <Grid>
         {products?.length ? (
-          products.map((item: any, i: number) => (
+          products.map((item: Product, i: number) => (
             <Item
-              name={item.product_name}
-              id={item.id}
-              discount={item.discount}
+              product={item}
               key={i}
-              imgSrc={
-                item?.images?.length
-                  ? config.imagesEndpoint + item?.images[0]
-                  : "/assets/2.png"
-              }
             ></Item>
           ))
         ) : (
@@ -768,7 +781,7 @@ const Catalog: NextPage = () => {
                 <Item id={1} imgSrc={'/assets/2.png'}></Item> */}
       </Grid>
 
-      <Pagination style={{ margin: "3.2rem 0 3.7rem 0" }} gap={"1.4rem"}>
+      {/* <Pagination style={{ margin: "3.2rem 0 3.7rem 0" }} gap={"1.4rem"}>
         {[1, 2, 3, 4].map((i, j) => (
           <Number
             key={j}
@@ -778,10 +791,7 @@ const Catalog: NextPage = () => {
             {i}
           </Number>
         ))}
-        {/* <Number>2</Number>
-                <Number>3</Number>
-                <Number>4</Number> */}
-      </Pagination>
+      </Pagination> */}
     </>
   );
 };

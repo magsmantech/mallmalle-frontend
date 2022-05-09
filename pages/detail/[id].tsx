@@ -140,6 +140,8 @@ const ProductDetails: NextPage = () => {
 
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
 
+  const { data: authData, isLoading: isUserLoading } = api.useProfileQuery(undefined);
+
   useEffect(() => {
     console.log(id, router);
     if (!id) return;
@@ -183,6 +185,10 @@ const ProductDetails: NextPage = () => {
   }, [id]);
 
   const _showFeedback = () => {
+    if(!authData?.profile?.user){
+      alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      return;
+    }
     console.log("test", product);
     // dispatch(
     //   showFeedback({ show: true }),
@@ -227,6 +233,10 @@ const ProductDetails: NextPage = () => {
 
   const canAddToCart = typeof(selectedColorId) !== 'undefined' && typeof(selectedSizeId) !== 'undefined';
 
+  const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
+
+  // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
+
   return (
     <>
       <Section style={{ marginBottom: "13.0rem" }}>
@@ -240,9 +250,10 @@ const ProductDetails: NextPage = () => {
               textTransform: "uppercase",
               fontFeatureSettings: '"case" on',
             }}
-          >{cart?.summary}a
-            {'ფეხსაცმელი'} /
-            <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span>
+          >
+            {/* {'ფეხსაცმელი'} /
+            <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span> */}
+            <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
           </Breadcrumbs>
           <Title style={{ marginBottom: "1.6rem" }}>{product?.product_name}</Title>
           <div

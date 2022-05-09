@@ -29,6 +29,7 @@ const SaleItem = ({ imageUrl, style, big=false, gradient=false }: Props) => {
                 cursor: 'pointer',
                 ...style,
             }} onClick={() => {
+                // TODO go to specific categories
                 router.push('/catalog/3');
             }}>
             <img src={imageUrl} className={styles.saleItemImg}/>    

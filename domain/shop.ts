@@ -4,6 +4,17 @@ export const roundToCents = (amount: number | undefined) => {
   return Math.round(amount * 100) / 100;
 }
 
+export type Category = {
+  id: number;// 1
+  category_name: string;// "ქალი"
+  icon: string | null;// null
+  childrens?: Category[] | null;
+}
+
+export type CategoryWithParent = Category & {
+  parent_id: number;
+};
+
 export type Product = {
   "id": number;// 1
   "product_name": string;// "ქალის მოსაცმელი";
@@ -11,7 +22,8 @@ export type Product = {
   "description": string | null;
   "images": string | null;// JSON string: '["1.jpg","2.jpg"]'
   "variations":  ProductVariation[];
-  "discount": Discount[]
+  "discount": Discount[];
+  "categories": Category[];
 }
 export type Discount = {
   "id": number;// 4
@@ -54,8 +66,8 @@ export type ProductVariation = {
  * @returns 
  */
 export const calculateProductPrices = (product: Product | null, variationId = 0) => {
-  const selectedVariation = product?.variations.find(v => v.id == variationId);
-  const originalPrice = parseFloat(product?.variations.find(v => v.id == variationId)?.price || '0');
+  const selectedVariation = product?.variations?.find(v => v.id == variationId);
+  const originalPrice = parseFloat(product?.variations?.find(v => v.id == variationId)?.price || '0');
   const finalPrice = product 
   ? (
     product?.discount.length > 0
@@ -120,3 +132,24 @@ export type Address = {
   "zip": string;// "0179",
   "mobile": string | null
 };
+
+
+export type User = {
+  "id": number;
+  "role_id": number;
+  "email_verified": 1 | 0;
+  "first_name": string;
+  "last_name": string;
+  "mobile": string;
+  "email": string;
+  "avatar": string | null;
+  "email_verified_at": Date | null;
+  "settings": any[];
+  "created_at": string;// "2022-05-09T18:20:21.000000Z",
+  "updated_at": string;// "2022-05-09T18:20:21.000000Z"
+};
+
+export type Order = {
+  id: number;
+  // TODO
+}
