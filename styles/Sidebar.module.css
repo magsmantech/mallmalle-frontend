@@ -7,7 +7,7 @@
     height: 100vh;
 
     display: grid;
-    grid-template-columns: repeat(3, minmax(39.8rem, 1fr));
+    grid-template-columns: repeat(3, minmax(400px, 1fr));
 }
 
 .container {

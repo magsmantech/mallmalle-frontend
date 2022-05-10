@@ -19,7 +19,7 @@ import ChildIcon from '../public/icons/react-icons/sidebar-icons/child';
 import MessageIcon from '../public/icons/react-icons/sidebar-icons/message';
 import BoxesIcon from '../public/icons/react-icons/sidebar-icons/box';
 import ShirtIcon from '../public/icons/react-icons/sidebar-icons/shirt';
-import ShoeIcon  from '../public/icons/react-icons/sidebar-icons/shoe';
+import ShoeIcon from '../public/icons/react-icons/sidebar-icons/shoe';
 import WatchIcon from '../public/icons/react-icons/sidebar-icons/watch';
 import ToyIcon from '../public/icons/react-icons/sidebar-icons/toy';
 
@@ -63,9 +63,9 @@ const Button = styled.div`
 
 
 
-const PromoItem = ({imageUrl= '/assets/testt.png'}: PromoItemProps) => {
-    return(<>
-        <div className={styles.promoItemBackground} style={{backgroundImage: `url(${imageUrl})`}}>
+const PromoItem = ({ imageUrl = '/assets/testt.png' }: PromoItemProps) => {
+    return (<>
+        <div className={styles.promoItemBackground} style={{ backgroundImage: `url(${imageUrl})` }}>
             <div className={styles.promoItemText}>
                 <div className={styles.promoItemTextSale}>ფასდაკლება</div>
                 <div className={styles.promoItemTextTime}>03:12:34 საათი</div>
@@ -89,11 +89,11 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
         {
             title: 'ქალი',
             color: styles.itemIconWoman,
-            icon: <><WomanIcon className={styles.itemIconWoman}/></>,
+            icon: <><WomanIcon className={styles.itemIconWoman} /></>,
             subItems: [
                 {
                     title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes}/></>,
+                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
                     color: styles.itemIconClothes,
                     subItems: [
                         {
@@ -121,7 +121,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes}/></>,
+                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
                     color: styles.itemIconShoes,
                     subItems: [
                         {
@@ -143,19 +143,19 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories}/></>,
+                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
                     color: styles.itemIconAccessories,
                 },
             ],
         },
         {
             title: 'კაცი',
-            icon: <><ManIcon className={styles.itemIconMan}/></>,
+            icon: <><ManIcon className={styles.itemIconMan} /></>,
             color: styles.itemIconMan,
             subItems: [
                 {
                     title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes}/></>,
+                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
                     color: styles.itemIconClothes,
                     subItems: [
                         {
@@ -178,7 +178,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes}/></>,
+                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
                     color: styles.itemIconShoes,
                     subItems: [
                         {
@@ -200,19 +200,19 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories}/></>,
+                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
                     color: styles.itemIconAccessories,
                 },
             ],
         },
         {
             title: 'ბავშვი',
-            icon: <><ChildIcon className={styles.itemIconChild}/></>,
+            icon: <><ChildIcon className={styles.itemIconChild} /></>,
             color: styles.itemIconChild,
             subItems: [
                 {
                     title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes}/></>,
+                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
                     color: styles.itemIconClothes,
                     subItems: [
                         {
@@ -234,7 +234,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes}/></>,
+                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
                     color: styles.itemIconShoes,
                     subItems: [
                         {
@@ -256,24 +256,24 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories}/></>,
+                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
                     color: styles.itemIconAccessories,
                 },
                 {
                     title: 'სათამაშოები',
-                    icon: <><ToyIcon className={styles.itemIconToys}/></>,
+                    icon: <><ToyIcon className={styles.itemIconToys} /></>,
                     color: styles.itemIconToys,
                 },
             ],
         },
         {
             title: 'სხვადასხვა',
-            icon: <><MessageIcon className={styles.itemIconOther}/></>,
+            icon: <><MessageIcon className={styles.itemIconOther} /></>,
             color: styles.itemIconOther,
             subItems: [
                 {
                     title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes}/></>,
+                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
                     color: styles.itemIconClothes,
                     subItems: [
                         {
@@ -295,7 +295,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes}/></>,
+                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
                     color: styles.itemIconShoes,
                     subItems: [
                         {
@@ -317,25 +317,25 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories}/></>,
+                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
                     color: styles.itemIconAccessories,
                 },
                 {
                     title: 'სათამაშოები',
-                    icon: <><ToyIcon className={styles.itemIconToys}/></>,
+                    icon: <><ToyIcon className={styles.itemIconToys} /></>,
                     color: styles.itemIconToys,
                 },
             ],
         },
         {
             title: 'ბოქსები',
-            icon: <><BoxesIcon className={styles.itemIconBoxes}/></>,
+            icon: <><BoxesIcon className={styles.itemIconBoxes} /></>,
 
             color: styles.itemIconBoxes,
             subItems: [
                 {
                     title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes}/></>,
+                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
                     color: styles.itemIconClothes,
                     subItems: [
                         {
@@ -357,7 +357,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes}/></>,
+                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
                     color: styles.itemIconShoes,
                     subItems: [
                         {
@@ -379,12 +379,12 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 },
                 {
                     title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories}/></>,
+                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
                     color: styles.itemIconAccessories,
                 },
                 {
                     title: 'სათამაშოები',
-                    icon: <><ToyIcon className={styles.itemIconToys}/></>,
+                    icon: <><ToyIcon className={styles.itemIconToys} /></>,
                     color: styles.itemIconToys,
                 },
             ],
@@ -425,21 +425,21 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
     const SidebarItems = () => {
         return (
-            <div className={styles.itemsContainer}>
-                {categories.map((item:any , index: number) => <Link href={'/catalog/' + item.id} key={index}>
-                    <div className={styles.item}
+            <SidebarItemWrapper className={styles.itemsContainer}>
+                {categories.map((item: any, index: number) => <Link href={'/catalog/' + item.id} key={index}>
+                    <SidebarItem className={styles.item}
                         onClick={() => onSidebarClose()}
-                        onMouseEnter={()=> mouseEnterItem(index)}
+                        onMouseEnter={() => mouseEnterItem(index)}
                         onMouseLeave={mouseLeaveItem}>
-                        <div className={styles.iconWrapper}>
+                        <SidebarItemIconWrapper className={styles.iconWrapper}>
                             {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
                             {item.icon || tree[index].icon}
-                        </div>
-                        <div className={styles.itemTitle}>{item.category_name}</div>
-                    </div>
+                        </SidebarItemIconWrapper>
+                        <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                    </SidebarItem>
                 </Link>
                 )}
-            </div>
+            </SidebarItemWrapper>
         );
     };
 
@@ -447,20 +447,20 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const SubmenuItems = () => {
         return (
             <div className={styles.itemsContainer}>
-                {subMenuItems.map((item: any, index: number) => 
+                {subMenuItems.map((item: any, index: number) =>
                     <Link href={'/catalog/' + item.id} key={index}>
-                    <div className={styles.item} onClick={() => onSidebarClose()}
-                        onMouseLeave={() => setShowDetailMenu(false)}
-                        onMouseEnter={() => mouseEnterSubItem(index)}>
-                        <div className={styles.iconWrapper}>
-                            {/* <FaTshirt size={'2.5rem'} className={item.color} /> */}
-                            {item.icon}
-                        </div>
+                        <div className={styles.item} onClick={() => onSidebarClose()}
+                            onMouseLeave={() => setShowDetailMenu(false)}
+                            onMouseEnter={() => mouseEnterSubItem(index)}>
+                            <div className={styles.iconWrapper}>
+                                {/* <FaTshirt size={'2.5rem'} className={item.color} /> */}
+                                {item.icon}
+                            </div>
 
-                        <div className={styles.itemTitle}>{item.category_name}</div>
-                    </div>
-                </Link>
-                
+                            <div className={styles.itemTitle}>{item.category_name}</div>
+                        </div>
+                    </Link>
+
                 )}
             </div>
         );
@@ -474,9 +474,9 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
             </div>
             <Divider></Divider>
             <div >
-                {detailMenuItems.map((item: any, index: number)=>                 
+                {detailMenuItems.map((item: any, index: number) =>
                     <Link href={'/catalog/' + item.id} key={index}>
-                        <div 
+                        <div
                             onClick={() => onSidebarClose()}
                             className={styles.detailMenuitem}>
                             {item.category_name}
@@ -493,25 +493,26 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     };
 
 
-    return (<>
-        <div className={styles.wrapper} onClick={(e) => console.log(e)}>
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <img src={'/assets/mallmalle.png'} style={{width:'20.0rem', height: '3.65rem'}} />
-                    <a className={styles.iconWrapper} onClick={() => onSidebarClose()}>
-                        <CloseIcon color='#424F60' />
-                    </a>
-                </div>
-                <div className={styles.content}>
-                    <span className={styles['content-title']}>კატეგორიები</span>
-                    <SidebarItems />
-                </div>
-            </div>
+    return (
+        <>
+            <div className={styles.wrapper} onClick={(e) => console.log(e)}>
+                <SideBarWrapper className={styles.container}>
+                    <SideBarTopSideWrapper className={styles.header}>
+                        <SideBarMainIcon src={'/assets/mallmalle.png'} />
+                        <CloseBtnWrapper className={styles.iconWrapper} onClick={() => onSidebarClose()}>
+                            <CloseIcon color='#424F60' />
+                        </CloseBtnWrapper>
+                    </SideBarTopSideWrapper>
+                    <div className={styles.content}>
+                        <SideBarTitle className={styles['content-title']}>კატეგორიები</SideBarTitle>
+                        <SidebarItems />
+                    </div>
+                </SideBarWrapper>
 
-            {showSubMenu && !!subMenuItems.length && <div className={styles.container}
-                onMouseLeave={() => setInSubMenu(false)}
-                onMouseEnter={() => setInSubMenu(true)}>
-                {/* <div className={styles.header}>
+                {showSubMenu && !!subMenuItems.length && <SideBarWrapper className={styles.container}
+                    onMouseLeave={() => setInSubMenu(false)}
+                    onMouseEnter={() => setInSubMenu(true)}>
+                    {/* <div className={styles.header}>
                     <a className={styles.iconWrapper}>
                         <HiArrowLeft size={'2.0rem'} color='#424F60'/>
                     </div>
@@ -521,21 +522,67 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </div>
                 </div> */}
 
-                <div className={styles.content}>
-                    <div className={styles.submenuTitle}>{selectedItemTitle}</div>
-                    <div className={styles.submenuSubtitle}>აირჩიე კატეგორია</div>
-                    <SubmenuItems />
-                </div>
-            </div>}
+                    <div className={styles.content}>
+                        <div className={styles.submenuTitle}>{selectedItemTitle}</div>
+                        <div className={styles.submenuSubtitle}>აირჩიე კატეგორია</div>
+                        <SubmenuItems />
+                    </div>
+                </SideBarWrapper>}
 
-            {showDetailMenu && !!detailMenuItems.length&& <div className={styles.container}
-                onMouseLeave={() => setShowDetailMenu(false)}
-                onMouseEnter={() => setShowDetailMenu(true)}>
-                <DetailMenu />
-            </div>}
+                {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
+                    onMouseLeave={() => setShowDetailMenu(false)}
+                    onMouseEnter={() => setShowDetailMenu(true)}>
+                    <DetailMenu />
+                </div>}
 
-        </div>
-    </>);
+            </div>
+        </>);
 };
+
+
+const SideBarWrapper = styled.div`
+    background-color: red;
+    width: 400px;
+    padding: 45px 40px;
+        &:nth-child(2) {
+            background-color: green;
+        }
+`;
+const SideBarMainIcon = styled.img`
+    width: unset;
+    height: 36px;
+    user-select: none;
+    pointer-events: none;
+`;
+const CloseBtnWrapper = styled.div`
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+`;
+const SideBarTopSideWrapper = styled.div`
+    margin-bottom: 40px;
+`;
+const SideBarTitle = styled.span`
+    font-size: 24px;
+    width: fit-content;
+`;
+const SidebarItemWrapper = styled.div`
+
+`;
+const SidebarItem = styled.div`
+`;
+const SidebarItemIconWrapper = styled.div`
+    height: 52px;
+    width: 52px;
+    border-radius: 8px;
+    margin-right: 20px  !important;
+`;
+const SideBarItemTitle = styled.div`
+    font-size: 20px;
+`;
+const SecondSideBarWrapper = styled.div`
+`;
+
+
 
 export default Sidebar;
