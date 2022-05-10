@@ -6,8 +6,8 @@
     z-index: 21;
     height: 100vh;
 
-    display: grid;
-    grid-template-columns: repeat(3, minmax(400px, 1fr));
+    /* display: grid; */
+    /* grid-template-columns: repeat(3, minmax(400px, 1fr)); */
 }
 
 .container {
@@ -17,7 +17,7 @@
     background-color: white;
     padding: 4.7rem 3.4rem 0 4.2rem;
     width: 100%;
-    max-width: 39.8rem;
+    /* max-width: 39.8rem; */
 }
 
 .header {

@@ -118,7 +118,7 @@ export default function Layout({ children }: any) {
 
   return (
     <>
-      {openSidebar && <div className={styles['sidebar-overlay-global']} onClick={_closeSidebar}></div>}
+      {/* {openSidebar && <div className={styles['sidebar-overlay-global']} onClick={_closeSidebar}></div>} */}
       {showFeedback && feedbackType === 'info' && <div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
       {showFeedback && <Feedback className={feedbackClasses} />}
       {openSidebar && <Sidebar onSidebarClose={_closeSidebar} categories={categories} />}

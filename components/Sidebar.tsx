@@ -495,6 +495,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
     return (
         <>
+         <BackgroundShadow onClick={() => onSidebarClose()} />
             <div className={styles.wrapper} onClick={(e) => console.log(e)}>
                 <SideBarWrapper className={styles.container}>
                     <SideBarTopSideWrapper className={styles.header}>
@@ -509,7 +510,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </div>
                 </SideBarWrapper>
 
-                {showSubMenu && !!subMenuItems.length && <SideBarWrapper className={styles.container}
+                {showSubMenu && !!subMenuItems.length && <SecondSideBar className={styles.container}
                     onMouseLeave={() => setInSubMenu(false)}
                     onMouseEnter={() => setInSubMenu(true)}>
                     {/* <div className={styles.header}>
@@ -527,7 +528,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         <div className={styles.submenuSubtitle}>აირჩიე კატეგორია</div>
                         <SubmenuItems />
                     </div>
-                </SideBarWrapper>}
+                </SecondSideBar>}
 
                 {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
                     onMouseLeave={() => setShowDetailMenu(false)}
@@ -544,9 +545,19 @@ const SideBarWrapper = styled.div`
     background-color: red;
     width: 400px;
     padding: 45px 40px;
+    height: 100vh;
         &:nth-child(2) {
             background-color: green;
         }
+`;
+const SecondSideBar = styled.div`
+    background-color: aqua;
+    position: absolute;
+    left: 400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    padding: 45px 40px;
 `;
 const SideBarMainIcon = styled.img`
     width: unset;
@@ -581,6 +592,18 @@ const SideBarItemTitle = styled.div`
     font-size: 20px;
 `;
 const SecondSideBarWrapper = styled.div`
+`;
+const BackgroundShadow = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background-color: #000000;
+    opacity: 0.49;
+    height: 100%;
+    width: 100%;
 `;
 
 
