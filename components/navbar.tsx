@@ -93,7 +93,7 @@ function Navbar({ onSidebarOpen }: Props) {
 // styles
 const HoriontalFixedLine = styled.div`
     ${Responsive.tabletMobile}{
-        top: 120px;
+        top: 120px; //TODO Levan Madurashvili
         height: 24px;
     }
 `;
