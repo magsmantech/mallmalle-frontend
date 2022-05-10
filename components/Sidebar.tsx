@@ -452,12 +452,12 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         <div className={styles.item} onClick={() => onSidebarClose()}
                             onMouseLeave={() => setShowDetailMenu(false)}
                             onMouseEnter={() => mouseEnterSubItem(index)}>
-                            <div className={styles.iconWrapper}>
+                            <SidebarItemIconWrapper className={styles.iconWrapper}>
                                 {/* <FaTshirt size={'2.5rem'} className={item.color} /> */}
                                 {item.icon}
-                            </div>
+                            </SidebarItemIconWrapper>
 
-                            <div className={styles.itemTitle}>{item.category_name}</div>
+                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
                         </div>
                     </Link>
 
@@ -469,9 +469,9 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
     const DetailMenu = () => {
         return (<>
-            <div className={styles.detailMenuTitle}>
+            <SubmenuTitle className={styles.detailMenuTitle}>
                 შემოთავაზებული კატეგორიები
-            </div>
+            </SubmenuTitle>
             <Divider></Divider>
             <div >
                 {detailMenuItems.map((item: any, index: number) =>
@@ -524,8 +524,8 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 </div> */}
 
                     <div className={styles.content}>
-                        <div className={styles.submenuTitle}>{selectedItemTitle}</div>
-                        <div className={styles.submenuSubtitle}>აირჩიე კატეგორია</div>
+                        <SubmenuTitle className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
+                        <SideBarSubMenuTitle className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
                         <SubmenuItems />
                     </div>
                 </SecondSideBar>}
@@ -541,23 +541,30 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 };
 
 
+
+
+const SubmenuTitle = styled.div`
+    font-size: 32px;
+    margin-top: 10px;
+`;
+const SideBarSubMenuTitle =  styled.div`
+    font-size: 24px;
+    margin-top: 24px;
+    width: fit-content;
+`;
 const SideBarWrapper = styled.div`
-    background-color: red;
-    width: 400px;
-    padding: 45px 40px;
+    /* background-color: red; */
+    /* width: 400px; */
     height: 100vh;
-        &:nth-child(2) {
-            background-color: green;
-        }
 `;
 const SecondSideBar = styled.div`
-    background-color: aqua;
-    position: absolute;
+    /* background-color: aqua; */
+    /* margin-left: -5px; */
+    /* position: absolute;
     left: 400px;
     top: 0;
-    width: 400px;
-    height: 100vh;
-    padding: 45px 40px;
+    width: 400px; */
+    /* height: 100vh; */
 `;
 const SideBarMainIcon = styled.img`
     width: unset;
