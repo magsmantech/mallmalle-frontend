@@ -7,7 +7,7 @@ import FacebookIcon from '../public/icons/react-icons/facebook';
 import YoutubeIcon from '../public/icons/react-icons/youtube';
 import InstagramIcon from '../public/icons/react-icons/instagram';
 import Responsive from '../config/Responsive';
-
+import Link from "next/link";
 
 const Footer = () => {
     return (
@@ -33,17 +33,32 @@ const Footer = () => {
                 </FooterColumn>
                 <FooterColumn className={styles.column}>
                     <FooterListTitle className={styles.title}>პირობები</FooterListTitle>
-                    <FooterListItem className={styles.item}>წესები და პირობები</FooterListItem>
-                    <FooterListItem className={styles.item}>ხშირად დასმული კითხვები</FooterListItem>
-                    <FooterListItem className={styles.item}>დაბრუნების და გაცვლის პოლიტიკა</FooterListItem>
-                    <FooterListItem className={styles.item}>კონფიდენციალურობა</FooterListItem>
-                    <FooterListItem className={styles.item}>დახმარება</FooterListItem>
+                    {/* <FooterListItem className={styles.item} */}
+                    <FooterListItem>
+                        <Link href="/mallmalle/terms-and-conditions">წესები და პირობები</Link>
+                    </FooterListItem>
+                    <FooterListItem>
+                        <Link href="/mallmalle/faq">ხშირად დასმული კითხვები</Link>
+                    </FooterListItem>
+                    <FooterListItem>
+                        <Link href="/mallmalle/return-policy">დაბრუნების და გაცვლის პოლიტიკა</Link>
+                    </FooterListItem>
+                    <FooterListItem>
+                        <Link href="/mallmalle/privacy-policy">კონფიდენციალურობა</Link>
+                    </FooterListItem>
+                    <FooterListItem>
+                        <Link href="/mallmalle/support">დახმარება</Link>
+                    </FooterListItem>
                 </FooterColumn>
 
                 <FooterColumn className={styles.column}>
                     <FooterListTitle className={styles.title}>ჩვენს შესახებ</FooterListTitle>
-                    <FooterListItem className={styles.item}>MallMalle-ს შესახებ</FooterListItem>
-                    <FooterListItem className={styles.item}>კონტაქტი</FooterListItem>
+                    <FooterListItem>
+                        <Link href="/mallmalle/about-us">MallMalle-ს შესახებ</Link>
+                    </FooterListItem>
+                    <FooterListItem>
+                        <Link href="/mallmalle/contact">კონტაქტი</Link>
+                    </FooterListItem>
                 </FooterColumn>
 
                 <FooterColumn className={classNames({ [styles.column]: true, [styles.lastColumn]: true })}>
@@ -116,9 +131,14 @@ const FooterListTitle = styled.span`
     user-select: none;
 `;
 const FooterListItem = styled.span`
-    font-size: 16px;
+  a {
+    font-size: 15px;
     margin: 2px 0px;
     padding: 5px 0px;
+    font-family: 'helvetica';
+    cursor: pointer;
+    display: block;
+  }
 `;
 const FbIcon = styled(FacebookIcon)`
     width: 24px;
