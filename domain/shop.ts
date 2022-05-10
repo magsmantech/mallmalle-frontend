@@ -1,5 +1,5 @@
 
-export type Page {
+export type Page = {
   "id": number;// 1,
   "slug": string;// "contact",
   "title": string;// "კონტაქტი"
