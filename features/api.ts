@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -22,6 +22,15 @@ const api = createApi({
     },
   }),
   endpoints: (builder) => ({
+    //
+    // Text pages
+    //
+    getPage: builder.query<{ success: boolean; data: Page }, string>({
+      query: (slug) => ({
+        url: `/pages/${slug}`,
+        method: 'GET',
+      })
+    }),
     //
     // Categories
     //
