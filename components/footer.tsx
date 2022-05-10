@@ -155,14 +155,15 @@ const YouTICon = styled(YoutubeIcon)`
 const FooterIconText = styled.div`
     font-size: 18px;
     margin-bottom: 25px;
+    padding-right: 10px;
 `;
 const FooterMainIcon = styled.img`
-    height: 42px;
+    height: 40px;
     margin-bottom: 20px;
 `;
 const FooterWrapper = styled.div`
     /* background-color: red; */
-    padding: 50px 100px;
+    padding: 50px 90px;
     display: flex;
     align-items: flex-start;
     grid-gap: 0px;

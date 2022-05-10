@@ -11,7 +11,9 @@ export const PageWrapper = styled.div`
     overflow-y: auto;
     width: 100%;
     z-index: 1;
-    padding: 4.0rem;
+    padding: 40px;
+    margin-top: 125px;
+    
     @media(max-width: 600px) {
         & {
             padding: 4.0rem 2.4rem;

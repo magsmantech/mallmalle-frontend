@@ -241,6 +241,10 @@
   bottom: 4.0rem;
   z-index: 3;
   cursor: pointer;
+
+  transform: scale(0.5);
+  right: 0;
+  bottom: 0;
 }
 
 .scrollButtonIcon {
