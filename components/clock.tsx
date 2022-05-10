@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import styles from "../styles/Home.module.css";
 
 const Clock: NextPage = () => {
@@ -41,19 +42,27 @@ const Clock: NextPage = () => {
   }, []);
 
   return (
-    <div>
-        <div>
+    <div style={{ userSelect: "none", marginLeft: "15%" }}>
+      <div>
         {/* <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}>{days} </span>
         <span style={{fontSize: '2.0rem'}}>დღე</span> */}
-        <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}> {hours} </span>
+        <ClockText> {hours} </ClockText>
         {/* <span style={{fontSize: '2.0rem'}}>საათი</span> */}
-        <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}> : {minutes} </span>
+        <ClockText> : {minutes} </ClockText>
         {/* <span style={{fontSize: '2.0rem'}}>წუთი</span> */}
-        <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}> : {seconds} </span>
-        <span style={{fontSize: '2.0rem'}}>საათი</span>
-        </div>
+        <ClockText> : {seconds} </ClockText>
+        <span style={{ fontSize: '2.0rem' }}>საათი</span>
+      </div>
     </div>
   );
 };
+
+const ClockText = styled.span`
+    font-size: 50px;
+    font-family: "fira-go";
+    text-transform: uppercase;
+    font-feature-settings: '"case" on';
+    font-weight: 600;
+`;
 
 export default Clock;
