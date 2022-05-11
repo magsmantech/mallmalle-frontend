@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import Responsive from "../../config/Responsive";
 
 export const Input = styled.input.attrs({ type: "checkbox" })`
-    height: 2.2rem;
-    width: 2.2rem;
+    height: 22px;
+    width: 22px;
     background-color: #DBDBDB;
-    border-radius: .6rem;
+    border-radius: 6px;
 `;
 
 export const Label = styled.label`
@@ -16,12 +17,15 @@ export const Label = styled.label`
 
 export const LabelText = styled.span`
   color: var(--text-color);
-  font-size: 1.8rem;
+  font-size: 18px;
   font-family: 'helvetica';
   opacity: 0.5;
   cursor: pointer;
   &:hover {
     opacity: 0.65;
 }
-
+  /* res */
+  ${Responsive.mobile} {
+    font-size: 14px;
+  }
 `;

@@ -25,6 +25,7 @@ import {
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { showFeedback } from "../../features/feedbackSlice";
+import Responsive from "../../config/Responsive";
 
 type TabItemProps = {
   selected?: boolean;
@@ -37,9 +38,9 @@ const Icon = () => {
 const TabItem = styled.div`
   color: ${({ selected }: TabItemProps) =>
     selected ? "#1FD5AE" : "var(--text-color)"};
-  font-size: 1.6rem;
+  font-size: 16px;
   /* font-family: 'helvetica'; */
-  padding: 1.5rem;
+  padding: 15px;
   border-bottom: ${({ selected }: TabItemProps) =>
     selected ? ".1rem solid #1FD5AE" : "none"};
   cursor: pointer;
@@ -50,22 +51,75 @@ const TabItem = styled.div`
   font-family: "BPG WEB 002 Caps";
   /* text-transform: uppercase;
   font-feature-settings: "case" on; */
+    ${Responsive.mobile} {
+      font-size: 13px;
+      padding: 14px 5px;
+    }
 `;
 
 const Title = styled.span`
   color: var(--text-color);
-  font-size: 3.2rem;
+  font-size: 32px;
   font-family: "BPG WEB 002 Caps";
+  margin-bottom: 20px;
   /* text-transform: uppercase;
   font-feature-settings: "case" on; */
+    ${Responsive.mobile} {
+      margin-bottom: 18px;
+    }
 `;
-
+const ImageWithTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 const Text = styled.span`
   color: var(--text-color);
-  font-size: 1.6rem;
+  font-size: 16px;
   font-family: "helvetica";
   opacity: 0.5;
+  margin-bottom: 30px;
+    ${Responsive.mobile} {
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
 `;
+
+//--------------//
+const TabsWrapper = styled.div`
+
+`;
+const SectionWrapper = styled.div`
+  /* background-color: red; */
+  justify-content: space-between;
+    ${TabsWrapper} {
+      /* background-color: green; */
+      flex-basis: 40%;
+        ${Responsive.tablet} {
+          flex-basis: 43%;
+        }
+        ${Responsive.mobile} {
+          flex-basis: 100%;
+          margin-bottom: 60px;
+        }
+    }
+    ${ImageWithTextWrapper} {
+      /* background-color: aqua; */
+      flex-basis: 54%;
+      ${Responsive.mobile} {
+          flex-basis: 100%;
+        }
+    }
+    /* res */
+    ${Responsive.tabletMobile} {
+      flex-direction: column;
+    }
+`;
+const TabPanelsWrapper = styled.div`
+  padding-top: 50px;
+`;
+
+
+//--------------//
 
 type InputProps = {
   invalid: boolean;
@@ -80,15 +134,15 @@ export const Input = styled.input.attrs((props: InputProps) => ({
   // size: props.size || "1em",
 }))`
   color: var(--text-color);
-  font-size: 1.6rem;
+  font-size: 16px;
   font-family: "helvetica";
   font-weight: 500;
   border: 0.2rem solid
     ${(props: InputProps) =>
-      props.invalid ? "rgba(255, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.08)"};
-  border-radius: 1.4rem;
-  height: 6.4rem;
-  padding: 1.6rem;
+    props.invalid ? "rgba(255, 0, 0, 0.5)" : "rgba(0, 0, 0, 0.08)"};
+  border-radius: 14px;
+  /* height: 64px; */
+  padding: 20px 15px;
   background-color: rgba(255, 255, 255, 0.22);
   &::placeholder {
     opacity: 0.5;
@@ -96,6 +150,13 @@ export const Input = styled.input.attrs((props: InputProps) => ({
   &:focus {
     outline: none;
     border: 0.2rem solid rgba(34, 210, 175, 0.45);
+  }
+
+  /* res */
+  ${Responsive.mobile} {
+    font-size: 14px;
+    height: 48px;
+    padding: 5px 0px 7px 15px;
   }
 
   /* here we use the dynamically computed prop */
@@ -112,7 +173,7 @@ const TextButton = styled.button`
   background-color: transparent;
   border: none;
   color: var(--text-color);
-  font-size: 1.4rem;
+  font-size: 14px;
   font-family: "helvetica";
   opacity: 0.5;
   font-weight: 500;
@@ -121,34 +182,48 @@ const TextButton = styled.button`
   &:hover {
     opacity: 0.65;
   }
+    ${Responsive.mobile} {
+      text-decoration-line: underline;
+    }
 `;
 
-const ImageWithTextWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+
 
 const Img = styled.img`
   width: 100%;
-  height: 53.5rem;
+  height: 540px;
   object-fit: cover;
   object-position: center;
-  border-radius: 1.4rem;
+  border-radius: 14px;
+  margin-bottom: 30px;
+    ${Responsive.mobile} {
+      height: 200px;
+      margin-bottom: 25px;
+    }
 `;
 
 const ImgTitle = styled.span`
   color: var(--text-color);
-  font-size: 2.4rem;
+  font-size: 24px;
   font-family: "BPG WEB 002 Caps";
+  margin-bottom: 18px;
   /* text-transform: uppercase;
   font-feature-settings: "case" on; */
+  ${Responsive.mobile} {
+      font-size: 18px;
+      margin-bottom: 18px;
+  }
 `;
 
 const ImgText = styled.span`
   color: var(--text-color);
-  font-size: 1.8rem;
+  font-size: 18px;
   font-family: "helvetica";
   font-weight: 500;
+  margin-bottom: 24px;
+  ${Responsive.mobile} {
+      font-size: 16px;
+  }
 `;
 
 const DoubleInputWrapper = styled.div`
@@ -158,13 +233,18 @@ const DoubleInputWrapper = styled.div`
 `;
 
 export const IWBInput = styled(Input)`
-  border-radius: 1.4rem 0 0 1.4rem;
+  border-radius: 14px 0 0 14px;
 `;
 
 export const IWBButton = styled(Button)`
-  border-radius: 0 1.4rem 1.4rem 0;
-  height: 6.4rem;
-  font-size: 2rem;
+  border-radius: 0 14px 14px 0;
+  height: 64px;
+  font-size: 20px;
+    ${Responsive.mobile} {
+      height: 48px;
+      padding: 0px 30px;
+      font-size: 14px;
+    }
 `;
 
 export const IWBWrapper = styled.div`
@@ -180,11 +260,12 @@ const PasswordInputWrapper = styled.div`
 
 const IconWrapper = styled.div`
   position: absolute;
-  right: 2.1rem;
-  top: 50%;
+  right: 18px;
+  top: 54%;
   transform: translateY(-50%);
   cursor: pointer;
   opacity: 0.3;
+  user-select: none;
   &:hover {
     opacity: 0.5;
   }
@@ -322,8 +403,8 @@ const Auth: NextPage = () => {
 
     return (
       <>
-        <Title style={{ marginBottom: "1.8rem" }}>ავტორიზაცია</Title>
-        <Text style={{ marginBottom: "3.0rem" }}>
+        <Title>ავტორიზაცია</Title>
+        <Text>
           შეიყვანეთ თქვენი მონაცემები
         </Text>
         <form onSubmit={formik.handleSubmit}>
@@ -354,9 +435,7 @@ const Auth: NextPage = () => {
               onChange={formik.handleChange}
               invalid={formik.touched.password && formik.errors.password}
             />
-            <TextButton
-              style={{ fontSize: "1.4rem" }}
-              onClick={() => setRecover(!recover)}
+            <TextButton onClick={() => setRecover(!recover)}
             >
               დაგავიწყდა მონაცემები?
             </TextButton>
@@ -464,8 +543,8 @@ const Auth: NextPage = () => {
       <>
         {authStep === "email" ? (
           <>
-            <Title style={{ marginBottom: "1.8rem" }}>პაროლის აღდგენა</Title>
-            <Text style={{ marginBottom: "3.0rem" }}>
+            <Title>პაროლის აღდგენა</Title>
+            <Text>
               პაროლის აღსადგენად შეიყვანეთ თქვენი ელ-ფოსტა
             </Text>
             <form onSubmit={recoverFormik.handleSubmit}>
@@ -480,6 +559,7 @@ const Auth: NextPage = () => {
                     recoverFormik.touched.email && recoverFormik.errors.email
                   }
                 />
+                <br/>
                 <Button type="submit" disabled={loading}>
                   გაგზავნა
                 </Button>
@@ -667,8 +747,8 @@ const Auth: NextPage = () => {
       <>
         {step === "personal-info" && (
           <>
-            <Title style={{ marginBottom: "1.8rem" }}>რეგისტრაცია</Title>
-            <Text style={{ marginBottom: "3.0rem" }}>
+            <Title>რეგისტრაცია</Title>
+            <Text>
               შეიყვანეთ თქვენი მონაცემები
             </Text>
             <div>{JSON.stringify(formik.errors)}</div>
@@ -760,10 +840,10 @@ const Auth: NextPage = () => {
         )}
         {step === "add-address" && (
           <>
-            <Title style={{ marginBottom: "1.8rem" }}>
+            <Title>
               დაამატეთ თქვენი მისამართი
             </Title>
-            <Text style={{ marginBottom: "3.0rem" }}>
+            <Text>
               შეიყვანეთ თქვენი მონაცემები
             </Text>
             <form onSubmit={addressFormik.handleSubmit}>
@@ -822,10 +902,10 @@ const Auth: NextPage = () => {
   const Success = () => {
     return (
       <>
-        <Title style={{ marginBottom: "1.0rem" }}>
+        <Title>
           პაროლის აღდგენის ლინკი წარმატებით გაიგზავნა
         </Title>
-        <Text style={{ marginBottom: "4.4rem" }}>
+        <Text>
           გთხოვთ შეამოწმოთ ელ-ფოსტა, სადაც გამოგზავნილია ერთჯერადი ლინკი, რის
           მეშვეობითაც აღადგენთ პაროლს
         </Text>
@@ -856,8 +936,8 @@ const Auth: NextPage = () => {
 
   return (
     <>
-      <div className={styles.sectionWrapper}>
-        <div className={styles.tabsWrapper}>
+      <SectionWrapper className={styles.sectionWrapper}>
+        <TabsWrapper className={styles.tabsWrapper}>
           <Tabs
             selectedIndex={tabIndex}
             onSelect={(index) => setTabIndex(index)}
@@ -871,22 +951,22 @@ const Auth: NextPage = () => {
                 <TabItem selected={tabIndex === 1}>ანგარიშის შექმნა</TabItem>
               </Tab>
             </TabList>
-            <div className={styles.tabPanelsWrapper}>
+            <TabPanelsWrapper className={styles.tabPanelsWrapper}>
               <TabPanel className={styles.tabContent}>
                 {!recover ? <AuthForm /> : <RecoverForm token={token} />}
               </TabPanel>
               <TabPanel className={styles.tabContent}>
                 <Register />
               </TabPanel>
-            </div>
+            </TabPanelsWrapper>
           </Tabs>
-        </div>
+        </TabsWrapper>
         <ImageWithTextWrapper>
-          <Img src={"/assets/auth.png"} style={{ marginBottom: "2.4rem" }} />
-          <ImgTitle style={{ marginBottom: "1.4rem" }}>
+          <Img src={"/assets/auth.png"} />
+          <ImgTitle>
             გამოიწერე ჩვენი ვებ გვერდი და პირველმა მიიღე სიახლეები
           </ImgTitle>
-          <ImgText style={{ marginBottom: "2.4rem" }}>
+          <ImgText>
             შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და
             ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად
             მიახლოებული შაბლონი წარუდგინონ შემფასებელს.{" "}
@@ -896,7 +976,7 @@ const Auth: NextPage = () => {
             <IWBButton lowercase>გამოწერა</IWBButton>
           </IWBWrapper>
         </ImageWithTextWrapper>
-      </div>
+      </SectionWrapper>
     </>
   );
 };
