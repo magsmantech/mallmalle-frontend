@@ -32,9 +32,9 @@ const TabItem = styled.div`
     !selected ? "var(--text-color)" : "#FFFFFF"};
   background-image: ${({ selected }: TabItemProps) =>
     selected ? `var(--header-gradient)` : "none"};
-  font-size: 1.8rem;
+  font-size: 18px;
   font-family: "helvetica";
-  padding: 2.5rem 0 3rem 0;
+  padding: 30px 100px;
   cursor: pointer;
   box-sizing: border-box;
   display: flex;
@@ -42,16 +42,16 @@ const TabItem = styled.div`
   justify-content: center;
   border-radius: 1.4rem 1.4rem 0 0;
   font-weight: 700;
-
-  max-width: 30.5rem;
+  text-align: center;
   width: 100%;
 `;
 
 const AddressButton = styled(Button)`
   /* background-image: none; */
-  height: 7.7rem;
+  height: 77px;
   /* color: #22D5AE; */
   border: 0.2rem solid #22d5ae;
+  margin-top: 55px;
   background: -webkit-linear-gradient(to right, #22d2af 0%, #3885d1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -66,26 +66,123 @@ const AddressButton = styled(Button)`
 `;
 
 const InputModified = styled(Input)`
-  padding-left: 6.4rem;
+  padding-left: 64px;
   font-family: fira-go;
   font-weight: 600;
-  font-size: 1.8rem;
+  font-size: 18px;
 `;
 
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 6.4rem;
+  margin-bottom: 25px;
 `;
 
 const InputIconWrapper = styled.div`
   position: absolute;
   /* top: 2.0rem; */
-  top: 50%;
+  top: 51%;
   transform: translateY(-50%);
-  left: 2.5rem;
+  left: 23px;
+    svg {
+      width: 20px;
+    }
 `;
+const TabItemList = styled(TabList)`
+  /* background-color: red; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+const PersonalInfoWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* margin-top: 65px; */
+`;
+const GridItem = styled.div`
+  padding: 65px 70px 0px 70px;
+    &:first-child {
+      padding-left: 0px;
+    }
+    &:last-child {
+      padding-right: 0px;
+    }
+`;
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 115px;
+  width: 115px;
+  border-radius: 12px;
+  background-image: linear-gradient(15deg, rgba(34, 210, 175, 0.14) 0%, rgba(56, 133, 209, 0.14) 100%);
+  margin-right: 20px;
+`;
+const ProfileIconStyle = styled(ProfileIcon)`
+  width: 35px;
+`;
+const UserName = styled.div`
+  font-size: 32px;
+  margin-bottom: 10px;
+  margin-top: 8px;
+`;
+const OrderNo = styled.div`
+  font-size: 18px;
+`;
+const HeaderStyle = styled.div`
+  margin-bottom: 40px;
+`;
+const LogOutStyle = styled.div`
+    svg {
+      font-size: 44px;
+    }
+    span {
+      font-size: 20px;
+      margin-top: -1px;
+    }
+`;
+const AddressTitle = styled.div`
+  font-size: 24px;
+  margin-bottom: 30px;
+`;
+const ChangePassTitle = styled.div`
+  font-size: 24px;
+  margin-bottom: 30px;
+  margin-top: 100px;
+`;
+const LabelText = styled.span`
+  font-size: 18px;
+  margin-bottom: 16px;
+`;
+const AddressItem = styled.div`
+`;
+const LocationIconStyle = styled(IoLocationSharp)`
+  font-size: 22px;
+  margin-right: 10px;
+  /* margin-top: 4px; */
+`;
+const CityStyle = styled.div`
+  font-size: 20px;
+  margin-bottom: 5px;
+`;
+const AddressStyle = styled.div`
+  font-size: 20px;
+  margin-bottom: 5px;
+`;
+const ZipCodeStyle = styled.div`
+  font-size: 20px;
+`;
+const EditIconStyle = styled(EditIcon)`
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
+
+
+
+
 
 type ProfileTabProps = {
   userInfo: any;
@@ -112,32 +209,30 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
 
   return (
     <>
-      <div className={styles.personalInfoWrapper}>
-        <div className={styles.gridItem}>
-          <div className={styles.header}>
-            <div className={styles.iconWrapper}>
+      <PersonalInfoWrapper className={styles.personalInfoWrapper}>
+        <GridItem className={styles.gridItem}>
+          <HeaderStyle className={styles.header}>
+            <IconWrapper className={styles.iconWrapper}>
               {/* <FaUserAlt size={'3.6rem'} color={'#2EAAC1'} /> */}
-              <ProfileIcon width={"3.6rem"} height={"4.5rem"} />
-            </div>
+              <ProfileIconStyle />
+            </IconWrapper>
             <div className={styles.headerText}>
-              <div className={styles.name}>
+              <UserName className={styles.name}>
                 {userInfo.first_name} {userInfo.last_name}
-              </div>
-              <div className={styles.orderNo}>
+              </UserName>
+              <OrderNo className={styles.orderNo}>
                 რეგისტრაციის დრო: {getYearFromDate(userInfo.created_at)} წელი
-              </div>
+              </OrderNo>
             </div>
-          </div>
-          <div onClick={_logOut} className={styles.logout}>
-            <IoLogOut size={"3.6rem"} />
+          </HeaderStyle>
+          <LogOutStyle onClick={_logOut} className={styles.logout}>
+            <IoLogOut />
             <span>გასვლა</span>
-          </div>
-        </div>
-        <div
+          </LogOutStyle>
+        </GridItem>
+        <GridItem
           className={styles.gridItem}
           style={{
-            paddingLeft: "9.8rem",
-            paddingRight: "9.8rem",
             position: "relative",
           }}
         >
@@ -152,90 +247,89 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
               borderRight: ".1rem solid rgba(34, 34, 34, .2)",
             }}
           ></div>
-          <div
+          <AddressTitle
             className={styles.addressTitle}
-            style={{ marginBottom: "2.6rem" }}
+            
           >
             პირადი ინფორმაცია
-          </div>
-          <span className={styles.labels} style={{ marginBottom: "1.6rem" }}>
+          </AddressTitle>
+          <LabelText className={styles.labels} style={{ marginBottom: "1.6rem" }}>
             ელ-ფოსტა
-          </span>
-          <InputWrapper style={{ marginBottom: "2.0rem" }}>
+          </LabelText>
+          <InputWrapper >
             <InputModified
               placeholder="ელ-ფოსტა"
               defaultValue={userInfo.email}
             />
             <InputIconWrapper>
-              <EmailIcon width={"2.4rem"} />
+              <EmailIcon  />
             </InputIconWrapper>
           </InputWrapper>
-          <span className={styles.labels} style={{ marginBottom: "1.6rem" }}>
+          <LabelText className={styles.labels} style={{ marginBottom: "1.6rem" }}>
             მობილური ტელეფონი
-          </span>
-          <InputWrapper style={{ marginBottom: "10.0rem" }}>
+          </LabelText>
+          <InputWrapper>
             <InputModified
               placeholder="(+955) 555 78 97 93"
               defaultValue={formatMobile(userInfo.mobile)}
             />
             <InputIconWrapper>
-              <PhoneIcon width={"2.4rem"} />
+              <PhoneIcon  />
             </InputIconWrapper>
             <InputIconWrapper style={{ left: "auto", right: "2.4rem" }}>
-              <EditIcon width={"2.4rem"} />
+              <EditIcon />
             </InputIconWrapper>
           </InputWrapper>
 
-          <span
+          <ChangePassTitle
             className={styles.addressTitle}
-            style={{ marginBottom: "2.6rem" }}
+           
           >
             პაროლის შეცვლა
-          </span>
-          <InputWrapper style={{ marginBottom: "1.6rem" }}>
+          </ChangePassTitle>
+          <InputWrapper >
             <InputModified placeholder="ძველი პაროლი" />
             <InputIconWrapper>
-              <UnlockIcon width={"2.4rem"} />
+              <UnlockIcon  />
             </InputIconWrapper>
           </InputWrapper>
-          <InputWrapper style={{ marginBottom: "1.6rem" }}>
+          <InputWrapper>
             <InputModified placeholder="ახალი პაროლი" />
             <InputIconWrapper>
-              <UnlockIcon width={"2.4rem"} />
+              <UnlockIcon  />
             </InputIconWrapper>
           </InputWrapper>
-          <InputWrapper style={{ marginBottom: "1.6rem" }}>
+          <InputWrapper>
             <InputModified placeholder="გაიმეორე ახალი პაროლი" />
             <InputIconWrapper>
-              <UnlockIcon width={"2.4rem"} />
+              <UnlockIcon  />
             </InputIconWrapper>
           </InputWrapper>
 
           <Button>შეცვლა</Button>
-        </div>
-        <div className={styles.gridItem} style={{ paddingLeft: "9.8rem" }}>
-          <div className={styles.addressTitle}>მისამართი:</div>
-          <div className={styles.addressItem}>
-            <EditIcon
-              width={"2.4rem"}
-              style={{ position: "absolute", right: 0, top: 0 }}
+        </GridItem>
+        <GridItem className={styles.gridItem}>
+          <AddressTitle className={styles.addressTitle}>მისამართი:</AddressTitle>
+          <AddressItem className={styles.addressItem}>
+            <EditIconStyle
+              
             />
             {/* <div> */}
-            <IoLocationSharp size={"3.2rem"} color={"var(--text-color)"} />
+            <LocationIconStyle color={"var(--text-color)"} />
             {/* </div> */}
             <div className={styles.addressItemText}>
-              <div className={styles.city}>Tbilisi</div>
-              <div className={styles.address}>
+              <CityStyle className={styles.city}>Tbilisi</CityStyle>
+              <AddressStyle className={styles.address}>
                 მუხიანი, ალეკო გობრონიძის #11 / ბინა 177
-              </div>
-              <div className={styles.zip}>ZIP კოდი: 01103</div>
+              </AddressStyle>
+              <ZipCodeStyle className={styles.zip}>ZIP კოდი: 01103</ZipCodeStyle>
             </div>
-          </div>
-          <AddressButton style={{ marginTop: "4.8rem" }}>
+          </AddressItem>
+          <AddressButton>
             მისამართის დამატება
           </AddressButton>
-        </div>
-      </div>
+        </GridItem>
+      </PersonalInfoWrapper>
     </>
   );
 };
@@ -293,10 +387,10 @@ const Profile: NextPage = () => {
 
   return (
     <>
-      <SectionTitle style={{ marginBottom: "1.7rem", fontSize: "4.4rem" }}>
+      <SectionTitle>
         {sectionTitles[tabIndex]}
       </SectionTitle>
-      <Breadcrumbs style={{ marginBottom: "3.2rem", opacity: 0.8 }}>
+      <Breadcrumbs>
         მთავარი / ჩემი პროფილი{tabIndicators[tabIndex]}
       </Breadcrumbs>
       {loadPage ? (
@@ -306,13 +400,13 @@ const Profile: NextPage = () => {
             onSelect={(index) => setTabIndex(index)}
             style={{ width: "100%" }}
           >
-            <TabList className={styles.tabList}>
+            <TabItemList className={styles.tabList}>
               {tabTitles.map((item, i) => (
                 <Tab key={i}>
                   <TabItem selected={tabIndex === i}>{item}</TabItem>
                 </Tab>
               ))}
-            </TabList>
+            </TabItemList>
             <div className={styles.divider}></div>
 
             <div className={styles.tabPanels}>

@@ -35,7 +35,8 @@ export const SectionTitle = styled.div`
   /* text-transform: uppercase;
   font-feature-settings: "case" on; */
 
-  font-size: 4.4rem;
+  font-size: 44px;
+  margin-bottom: 20px;
 `;
 
 const HeaderItem = styled.div`
