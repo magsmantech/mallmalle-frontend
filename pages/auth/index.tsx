@@ -200,6 +200,9 @@ const Img = styled.img`
       height: 200px;
       margin-bottom: 25px;
     }
+    ${Responsive.tabletMobile} {
+      margin-top: 70px;
+    }
 `;
 
 const ImgTitle = styled.span`

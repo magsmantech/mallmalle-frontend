@@ -30,6 +30,7 @@
 @import url('./fonts//helvetica/stylesheet.css');
 @import url('./fonts/bpg-web-002-caps-master/css/bpg-web-002-caps.css');
 @import url('./fonts/noto-sans/stylesheet.css');
+@import url('./App.css');
 
 html,
 body {
