@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ColorType } from '../interfaces/products';
+import Responsive from '../config/Responsive';
 
 type Props = {
     colors: ColorType[],
@@ -33,18 +34,24 @@ const Wrapper = styled.div`
 `;
 
 const Item = styled.div`
-    height: ${(props: ItemProps)=> props.small && !props.selected? '2.8rem': '4.4rem'};
-    width: ${(props: ItemProps)=> props.small && !props.selected? '2.8rem': '4.4rem'};
-    margin: ${(props: ItemProps)=> props.small && !props.selected? '.8rem': '0'};
+    height: ${(props: ItemProps)=> props.small && !props.selected? '44px': '44px'};
+    width: ${(props: ItemProps)=> props.small && !props.selected? '44px': '44px'};
+    margin: ${(props: ItemProps)=> props.small && !props.selected? '20px': '0'};
     background-color: ${(props: ItemProps)=> props.color};
     display: flex;
     align-items: center;
     justify-content: center;
-    border: ${(props: ItemProps)=> props.selected? 'solid .8rem #22D5AE': props.small? 'none': 'solid .8rem white'};
+    border: ${(props: ItemProps)=> props.selected? 'solid 8px #22D5AE': props.small? 'none': 'solid 8px white'};
     cursor: pointer;
-    border-radius: ${(props: ItemProps)=> props.small && !props.selected? '1.2rem':props.small&&props.selected?'1.9rem': '1.4rem'};
+    border-radius: ${(props: ItemProps)=> props.small && !props.selected? '1.2rem':props.small&&props.selected?'14px': '14px'};
     box-sizing: border-box;
     box-shadow: .1rem .1rem rgba(0, 0, 0, 0.16);
+
+        ${Responsive.mobile} {
+            height: ${(props: ItemProps)=> props.small && !props.selected? '37px': '37px'};
+            width: ${(props: ItemProps)=> props.small && !props.selected? '37px': '37px'};
+            margin: ${(props: ItemProps)=> props.small && !props.selected? '15px': '0'};
+        }
 `;
 
 const ColorSelector = ({ colors, style={}, small, gap, onColorSelected, defaultSelected=0 }: Props) => {

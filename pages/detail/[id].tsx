@@ -26,53 +26,116 @@ import { ColorType } from "../../interfaces/products";
 import { calculateProductPrices, Product } from "../../domain/shop";
 import { addToCart } from "../../services/checkout-services";
 import api from "../../features/api";
+import Responsive from "../../config/Responsive";
 
 type ButtonProps = {
   secondary?: boolean;
 };
 const Section = styled.section`
   display: flex;
-  justify-content: stretch;
+  justify-content: space-between;
   width: 100%;
+    ${Responsive.tablet}{
+      flex-direction: column;
+    }
+    ${Responsive.mobile}{
+      flex-direction: column;
+    }
 `;
-
+const DetailMainWrapper = styled.div`
+  flex-basis: 40%;
+  margin-left: 45px;
+    ${Responsive.tablet} {
+      flex-basis: 100%;
+      margin-left: 150px;
+      margin-top: 30px;
+    }
+    ${Responsive.mobile}{
+      margin-left: 0px;
+      margin-top: 25px;
+    }
+`;
 const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 4.4rem;
-  align-items: stretch;
-  width: 100%;
+`;
+
+const ItemPreviewWrapper = styled.div`
+  flex-basis: 60%;
+  ${Responsive.tablet} {
+    flex-basis: 100%;
+  }
 `;
 
 const Title = styled.h1`
   color: var(--text-color);
-  font-size: 4.4rem;
+  font-size: 44px;
   font-family: fira-go;
+    ${Responsive.mobile}{
+      font-size: 32px;
+    }
 `;
 
 const Price = styled(Title)`
+  font-size: 44px;
+  margin-right: 15px;
   &::before {
     content: "$";
+  }
+  ${Responsive.mobile}{
+    font-size: 32px;
   }
 `;
 
 const OldPrice = styled(Price)`
-  font-size: 2.4rem;
+  font-size: 24px;
+  margin-top: 2px;
   opacity: 0.4;
   text-decoration: line-through;
+    ${Responsive.mobile}{
+      font-size: 18px;
+      margin-top: 5px;
+    }
 `;
 
 const Label = styled.span`
   color: var(--text-color);
-  font-size: 1.6rem;
+  font-size: 16px;
+  font-weight: 700;
   font-family: "helvetica";
+  margin-bottom: 25px;
+    ${Responsive.mobile}{
+      font-size: 14px;
+      margin-bottom: 17px;
+    }
+`;
+const SelectSizeLabel = styled.div`
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "helvetica";
+  margin-bottom: 25px;
+    ${Responsive.mobile}{
+        font-size: 14px;
+        margin-bottom: 17px;
+      }
 `;
 
 const ButtonWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 8rem;
-  grid-gap: 1rem;
+  grid-gap: 10px;
   width: 100%;
+  margin-bottom: 40px;
+      ${Responsive.mobile}{
+        display: flex;
+        justify-content: space-between;
+          button {
+            &:first-child {
+              width: 100%;
+            }
+          }
+      }
 `;
 
 // const Button = styled.button`
@@ -93,13 +156,15 @@ const ButtonWrapper = styled.div`
 const Subtitle = styled.span`
   color: var(--text-color);
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 18px;
   font-family: "helvetica";
+  margin-bottom: 20px;
 `;
 
 const Text = styled.span`
   color: var(--text-color);
-  font-size: 1.8rem;
+  font-size: 18px;
+  margin-bottom: 15px;
   font-family: "helvetica";
 `;
 
@@ -108,16 +173,73 @@ const SectionTitle = styled.div`
   font-family: "BPG WEB 002 CAPS";
   /* text-transform: uppercase;
   font-feature-settings: "case" on; */
-
-  font-size: 2.4rem;
+  font-size: 24px;
+  margin-top: 140px;
+      ${Responsive.mobile}{
+        margin-top: 50px;
+      }
 `;
 
 const Grid = styled.section`
-  width: 100%;
+  margin-top: 50px;
+  overflow-x: scroll;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 3.2rem;
+  grid-auto-flow:column; 
+  grid-gap: 30px; 
+  white-space: nowrap;
+  padding-bottom: 20px;
+  border-radius: 14px;
 `;
+
+const RevieStartWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+`;
+const DetailCount = styled(Count)`
+  font-size: 16px;
+  margin-left: 15px;
+    ${Responsive.mobile}{
+      margin-left: 10px;
+    }
+`;
+const PriceWrapperStyle = styled.div`
+  display: flex;
+  margin-bottom: 35px;
+`;
+const SelectSizeWrapper = styled.div`
+  margin-top: 35px;
+  margin-bottom: 44px;
+    ${Responsive.mobile}{
+      margin-bottom: 25px;
+      margin-top: 25px;
+    }
+`;
+const BagIconStyle = styled(BagIcon)`
+  width: 30px;
+  margin-right: 25px;
+    ${Responsive.mobile}{
+      width: 25px;
+      margin-right: 10px;
+    }
+`;
+const BsBookmarkPlusFillStyle = styled(BsBookmarkPlusFill)`
+  width: 26px;
+  height: 25px;
+`;
+const AddCartButton = styled(Button)`
+  width: 77px;
+  height: 77px;
+    ${Responsive.mobile}{
+      min-width: 64px;
+      height: 64px;
+    }
+`;
+
+
+
+
 
 const ProductDetails: NextPage = () => {
   const dispatch = useDispatch();
@@ -185,7 +307,7 @@ const ProductDetails: NextPage = () => {
   }, [id]);
 
   const _showFeedback = () => {
-    if(!authData?.profile?.user){
+    if (!authData?.profile?.user) {
       alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       return;
     }
@@ -197,11 +319,11 @@ const ProductDetails: NextPage = () => {
       console.log(selectedColorId, selectedSizeId);
       const variation = product?.variations?.find(
         (item: any) =>
-          (item.color_variation.id =
-            selectedColorId && item.size_variation.id === selectedSizeId)
+        (item.color_variation.id =
+          selectedColorId && item.size_variation.id === selectedSizeId)
       );
       console.log('var', variation);
-      if(product && variation){
+      if (product && variation) {
         // TODO use api.getAddToCartMutation()
         addToCart(product.id, variation.id, 1).then(({ data }) => {
           alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
@@ -231,7 +353,7 @@ const ProductDetails: NextPage = () => {
 
   const colorsTemp = ["#E536BD", "#536DDB", "#EDC6A7", "#8D5843", "#D53232"];
 
-  const canAddToCart = typeof(selectedColorId) !== 'undefined' && typeof(selectedSizeId) !== 'undefined';
+  const canAddToCart = typeof (selectedColorId) !== 'undefined' && typeof (selectedSizeId) !== 'undefined';
 
   const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
 
@@ -239,93 +361,91 @@ const ProductDetails: NextPage = () => {
 
   return (
     <>
-      <Section style={{ marginBottom: "13.0rem" }}>
-        <ItemPreview images={images} />
-        <DetailsWrapper>
-          <Breadcrumbs
-            style={{
-              opacity: 0.5,
-              fontWeight: 700,
-              marginBottom: "0.8rem",
-              textTransform: "uppercase",
-              fontFeatureSettings: '"case" on',
-            }}
-          >
-            {/* {'ფეხსაცმელი'} /
-            <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span> */}
-            <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
-          </Breadcrumbs>
-          <Title style={{ marginBottom: "1.6rem" }}>{product?.product_name}</Title>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "2.4rem",
-            }}
-          >
-            <div
-              style={{ display: "flex", gap: ".4rem", marginRight: ".8rem" }}
+      <Section>
+        <ItemPreviewWrapper>
+          <ItemPreview images={imagesTemp} />
+        </ItemPreviewWrapper>
+        <DetailMainWrapper>
+          <DetailsWrapper>
+            <Breadcrumbs
+              style={{
+                opacity: 0.5,
+                fontWeight: 700,
+                marginBottom: "0.8rem",
+                textTransform: "uppercase",
+                fontFeatureSettings: '"case" on',
+              }}
             >
-              <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-            </div>
-            <Count>402 ნახვა</Count>
-          </div>
-          <div style={{ marginBottom: "3.5rem", display: "flex" }}>
-            <Price style={{ marginRight: "1.6rem" }}>{finalPrice}</Price>
-            {hasDiscount ? (
-              <OldPrice>{originalPrice}</OldPrice>
-            ): null}
-          </div>
+              {/* {'ფეხსაცმელი'} /
+            <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span> */}
+              <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
+            </Breadcrumbs>
+            <Title>{product?.product_name}</Title>
+            <RevieStartWrapper>
+              <div
+                style={{ display: "flex", gap: ".4rem", marginRight: ".8rem" }}
+              >
+                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
+                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
+                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
+                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
+                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
+              </div>
+              <DetailCount>402 ნახვა</DetailCount>
+            </RevieStartWrapper>
+            <PriceWrapperStyle>
+              <Price>{finalPrice}</Price>
+              {hasDiscount ? (
+                <OldPrice>{originalPrice}</OldPrice>
+              ) : null}
+            </PriceWrapperStyle>
 
-          {colors && !!colors.length && (
-            <>
-              <ColorSelector
-                colors={colors}
-                style={{ marginBottom: "3.2rem" }}
-                defaultSelected={colors[0]?.id}
-                gap={"2.1rem"}
-                onColorSelected={(event: any) => _colorSelected(event)}
-              />
-              <Label style={{ marginBottom: "2.4rem" }}>აირჩიე ფერი: </Label>
-            </>
-          )}
-          {sizes && !!sizes.length && (
-            <>
-              <SizeSelector
-                style={{ marginBottom: "4.4rem" }}
-                sizes={sizes}
-                onSelectedChange={(event: any) => _sizeSelected(event)}
-              />
-            </>
-          )}
-          <ButtonWrapper style={{ marginBottom: "4.2rem" }}>
-            <Button onClick={_showFeedback} style={{
-              ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
-            }} disabled={!canAddToCart}>
-              {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
-              <BagIcon
-                height={"3.0rem"}
-                width={"3.0rem"}
-                style={{ marginRight: "2.4rem" }}
-              />
-              კალათაში დამატება
-            </Button>
-            <Button secondary>
-              <BsBookmarkPlusFill size={"3.0rem"} />
-            </Button>
-          </ButtonWrapper>
-          <Subtitle style={{ marginBottom: "1.8rem" }}>
-            დამატებითი ინფორმაცია
-          </Subtitle>
-          {product?.description && <Text>{ReactHtmlParser(product?.description)}</Text>}
-          {/* <Text>შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის</Text> */}
-        </DetailsWrapper>
+            {colors && !!colors.length && (
+              <>
+                <Label>აირჩიე ფერი: </Label>
+                <ColorSelector
+                  colors={colors}
+                  defaultSelected={colors[0]?.id}
+                  gap={"20px"}
+                  onColorSelected={(event: any) => _colorSelected(event)}
+                />
+
+              </>
+            )}
+            <SelectSizeWrapper>
+              {sizes && !!sizes.length && (
+                <>
+                  <SelectSizeLabel>აირჩიე ზომა: </SelectSizeLabel>
+                  <SizeSelector
+                    sizes={sizes}
+                    onSelectedChange={(event: any) => _sizeSelected(event)}
+                  />
+                </>
+              )}
+            </SelectSizeWrapper>
+            <ButtonWrapper>
+              <Button onClick={_showFeedback} style={{
+                ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
+              }} disabled={!canAddToCart}>
+                {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
+                <BagIconStyle />
+                კალათაში დამატება
+              </Button>
+              <AddCartButton secondary>
+                <BsBookmarkPlusFillStyle />
+              </AddCartButton>
+            </ButtonWrapper>
+            <Subtitle>
+              დამატებითი ინფორმაცია
+            </Subtitle>
+            {product?.description && <Text>{ReactHtmlParser(product?.description)}</Text>}
+            {/* <Text>შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის</Text> */}
+          </DetailsWrapper>
+        </DetailMainWrapper>
       </Section>
-      <SectionTitle style={{ marginBottom: "5.0rem" }}>
+
+
+      <SectionTitle>
         რეკომენდირებული
       </SectionTitle>
       <Grid>

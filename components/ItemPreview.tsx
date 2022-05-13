@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import Responsive from '../config/Responsive';
 
 type TabImageProps = {
     selected: boolean,
@@ -11,33 +12,58 @@ type Props = {
 
 const Wrapper = styled.div`
     display: flex;
+    height: 100%;
+        ${Responsive.mobile} {
+            flex-direction: column-reverse;
+        }
 `;
 
-const TabsWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    margin-right: 2.1rem;
-`;
+
 const TabImage = styled.img`
-  width: 13.4rem;
-  height: 13.4rem;
-  border-radius: 1.4rem;
+  width: 130px;
+  height: 130px;
+  border-radius: 14px;
   object-fit: cover;
   object-position: center;
   cursor: pointer;
-  border: ${(props: TabImageProps) => props.selected ? 'solid .3rem #22d2af' : 'none'};
+  border: ${(props: TabImageProps) => props.selected ? 'solid 3px #22d2af' : 'none'};
   box-sizing: border-box;
 `;
-
+const TabsWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-right: 20px;
+        ${Responsive.mobile} {
+            flex-direction: row;
+            overflow-y: scroll;
+            padding-bottom: 7px;
+            margin-right: 0px;
+            margin-top: 12px;
+        }
+      
+`;
 const SelectedImage = styled.img`
-  width: 85.7rem;
-  height: 82.0rem;
-  border-radius: 1.4rem;
+  width: 100%;
+  height: 100%;
+  max-height: 730px;
+  border-radius: 14px;
   object-fit: cover;
   object-position: center;
   box-sizing: border-box;
+    ${Responsive.mobile} {
+        min-height: 400px;
+        margin-right: 15px;
+        &:last-child {
+            margin-right: 0px;
+        }
+    }
 `;
+const ImageWrapperDiv = styled.div`
+    width: 100%;
+    height: 100%;
+`;
+
 
 const ItemPreview = ({ images }: Props) => {
 
@@ -54,7 +80,9 @@ const ItemPreview = ({ images }: Props) => {
                         <TabImage src={image} key={index} selected={index === selected} onClick={() => _imageSelected(index)} />
                     )}
                 </TabsWrapper>
-                <SelectedImage src={images[selected]} />
+                <ImageWrapperDiv>
+                    <SelectedImage src={images[selected]} />
+                </ImageWrapperDiv>
             </Wrapper>
         </>
     )
