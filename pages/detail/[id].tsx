@@ -363,7 +363,7 @@ const ProductDetails: NextPage = () => {
     <>
       <Section>
         <ItemPreviewWrapper>
-          <ItemPreview images={imagesTemp} />
+          <ItemPreview images={images} />
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>
