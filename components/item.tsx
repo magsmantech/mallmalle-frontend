@@ -2,6 +2,7 @@ import classNames from "classnames";
 import styles from "../styles/Home.module.css";
 import styled from "styled-components";
 import Link from "next/link";
+import Responsive from "../config/Responsive";
 
 type Props = {
   id?: number;
@@ -24,29 +25,55 @@ const Span = styled.span`
 `;
 
 const Title = styled(Span)`
-  font-size: 1.8rem;
+  font-size: 18px;
   font-family: "helvetica";
   color: var(--text-color);
   opacity: 0.5;
   text-transform: uppercase;
   font-feature-settings: "case" on;
   font-weight: bold;
+    ${Responsive.mobile}{
+      font-size: 11px;
+    }
 `;
 
 const Price = styled(Span)`
-  font-size: ${(props: PriceProps) => (props.old ? "2.4rem" : "3.2rem")};
+  font-size: ${(props: PriceProps) => (props.old ? "24px" : "32px")};
+  margin-right: ${(props: PriceProps) => (props.old ? "0" : "25px")};
+  margin-top: ${(props: PriceProps) => (props.old ? "5px" : "0px")};
   text-decoration: ${(props: PriceProps) =>
     props.old ? "line-through" : "none"};
   color: var(--text-color);
   opacity: ${(props: PriceProps) => (props.old ? 0.5 : 1)};
   font-weight: bold;
   font-family: fira-go;
+    ${Responsive.mobile} {
+      font-size: ${(props: PriceProps) => (props.old ? "14px" : "18px")};
+      margin-right: ${(props: PriceProps) => (props.old ? "0" : "15px")};
+      margin-top: ${(props: PriceProps) => (props.old ? "2px" : "0px")};
+    }
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+`;
+
+const ProductItemImgWrapper = styled.div`
+  border-radius: 14px;
+  height: 330px;
+    ${Responsive.mobile}{
+      height: 185px;
+    }
+`;
+const ProductTextWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin: 20px 0px;
+    ${Responsive.mobile} {
+      margin: 14px 0px;
+    }
 `;
 
 const CurrencyMap: any = {
@@ -76,23 +103,17 @@ const SaleItem = ({
       <Link href={"/detail/" + id}>
         <Wrapper>
           {/* <ItemImage backgroundImage={imageUrl}></ItemImage> */}
-          <div className={styles.productItemImgWrapper}>
+          <ProductItemImgWrapper className={styles.productItemImgWrapper}>
             <img src={imageUrl} className={styles.productItemImg} />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              margin: "1.4rem 0",
-            }}
-          >
-            <Price style={{ marginRight: "1.5rem" }} currency={currency}>
+          </ProductItemImgWrapper>
+          <ProductTextWrapper>
+            <Price currency={currency}>
               {price} {CurrencyMap[currency]}
             </Price>
             <Price old currency={currency}>
               {oldPrice} {CurrencyMap[currency]}
             </Price>
-          </div>
+          </ProductTextWrapper>
           <Title>{name}</Title>
         </Wrapper>
       </Link>

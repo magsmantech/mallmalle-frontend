@@ -9,13 +9,21 @@ import FilterIcon from '../public/icons/react-icons/filter';
 import { ChipIconWrapper, ChipTitle, ChipWrapper } from './styled/Chips';
 import { useDispatch } from 'react-redux';
 import { showFeedback } from '../features/feedbackSlice';
+import Responsive from "../config/Responsive";
 
 
 const Grid = styled.section`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 3.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 20px;
+  grid-row-gap: 30px;
+    ${Responsive.mobile} {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr;
+        grid-gap: 10px;
+        grid-row-gap: 25px;
+    }
 `;
 
 const ItemWrapper = styled.div`
@@ -34,18 +42,23 @@ type Props = {
 
 
 const CartButton = styled(Button)`
-    border-radius: .8rem;
+    border-radius: 8px;
     background-image: none;
-    height: 5.4rem; 
+    height: 54px; 
     color: #2EA4CA;
     border: .2rem solid #2EA4CA;
-    font-size: 1.6rem;
+    font-size: 18px;
     font-family: fira-go;
+    margin-top: 18px;
     &:hover {
         /* background-color: #2EA4CA; */
         border: none;
         color: white;
         background-image: var(--button-gradient);
+    }
+    ${Responsive.mobile} {
+        font-size: 12px;
+        letter-spacing: 0px;
     }
 `;
 
@@ -68,7 +81,6 @@ export default function Favorites() {
                     <Item name={name} price={price} oldPrice={oldPrice} currency={currency} imageUrl={imageUrl}></Item>
                     <CartButton
                         onClick={_showFeedback}
-                        style={{ marginTop: '1.8rem',}}
                     >კალათაში დამატება</CartButton>
                 </ItemWrapper>
             </>

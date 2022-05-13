@@ -541,7 +541,7 @@ const Profile: NextPage = () => {
                 <OrdersList></OrdersList>
               </TabPanel>
               <TabPanel className={styles.tabPanel}>
-                <Favorites></Favorites>
+                <Favorites/>
               </TabPanel>
               <TabPanel className={styles.tabPanel}>
                 <MyPayments />
