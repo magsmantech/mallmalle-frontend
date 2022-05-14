@@ -7,22 +7,30 @@ const IconWrapper = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: .2rem solid rgba(0, 0, 0, 0.08);
-    width: 3.8rem;
-    height: 3.8rem;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    width: 38px;
+    height: 38px;
     cursor: pointer;
+`;
+const MinusIcon = styled(HiMinus)`
+    font-size: 18px;
+`;
+const PlusIcon = styled(HiPlus)`
+    font-size: 18px;
 `;
 
 const Number = styled.span`
-    font-size: 2.4rem;
+    font-size: 24px;
     color: var(--text-color);
-    padding: 0 2.0rem;
     font-size: fira-go;
 `;
 
 const ItemWrapper = styled.div`
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 150px;
+    justify-content: space-between;
 `;
 const Quantity: React.FC<{
     value: number;
@@ -63,13 +71,13 @@ const Quantity: React.FC<{
     return (<>
         <ItemWrapper>
             <IconWrapper onClick={()=>setNewQuantityValue(quantity-1)}>
-                <HiMinus size={'1.6rem'} color={iconColor(allowLess)}/>
+                <MinusIcon color={iconColor(allowLess)}/>
             </IconWrapper>
             <Number>
                 {quantity}
             </Number>
             <IconWrapper onClick={()=>setNewQuantityValue(quantity+1)}>
-                <HiPlus size={'1.6rem'} color={iconColor(allowMore)}/>
+                <PlusIcon color={iconColor(allowMore)}/>
             </IconWrapper>
         </ItemWrapper>
 

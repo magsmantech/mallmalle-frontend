@@ -24,124 +24,240 @@ const CustomButton = styled.button`
     color: var(--text-color);
 
     font-family: fira-go;
-    font-size: 2.0rem;
+    font-size: 20px;
     font-weight: 700;
-    height: 4.5rem;
+    height: 70%;
     display: inline-flex;
     align-items: center;
     z-index: 2;
     cursor: pointer;
-    padding: 0 2.3rem 0 2.7rem;
+    padding: 0 25px 0 25px;
     border-left: rgba(66, 79, 96, 0.3) solid 0.1rem;
 `;
+
+const ContainerStyle = styled.div`
+ display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px;
+    background-color: #F8FEFF;
+    border: 2px solid rgba(0, 210, 255, 0.09);
+    border-radius: 14px;
+`;
+const IconWrapperStyle = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    width: 64px;
+    border-radius: 12px;
+    background-image: linear-gradient(15deg, rgba(34, 210, 175, 0.14) 0%, rgba(56, 133, 209, 0.14) 100%);
+    margin-right: 25px;
+`;
+const ProfileIconStyle = styled(ProfileIcon)`
+    width: 26px;
+    height: 26px;
+`;
+const NameStyle = styled.div`
+    color: var(--text-color);
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-family: fira-go;
+`;
+const OrderNoStyle = styled.div`
+      
+    font-size: 16px;
+    font-family: 'helvetica';
+    opacity: 0.5;
+    font-weight: 500;
+`;
+const HeaderStyle = styled.div`
+    display: flex;
+    margin-bottom: 30px;
+`;
+const AddressTitleStyle = styled.div`
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 18px;
+    font-family: fira-go;
+`;
+const AddressItemStyle = styled.div`
+    display: flex;
+    position: relative;
+    margin-bottom: 15px;
+    gap: 15px;
+`;
+const EditIconStyle = styled(EditIcon)`
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 0;
+    top: 0;
+`;
+const IoLocationSharpStyle = styled(IoLocationSharp)`
+    height: 32px;
+    width: 32px;
+    color: var(--text-color);
+    margin-top: 2px;
+`;
+const BsFillTelephoneFillStyle = styled(BsFillTelephoneFill)`
+    height: 23px;
+    width: 23px;
+    color: var(--text-color);
+    margin-left: 5px;
+    margin-right: 2px;
+`;
+const AddressItemTextStyle = styled.div`
+    color: var(--text-color);
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    font-family: fira-go;
+    padding-right: 20px;
+`;
+const InputWrapperStyle = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+`;
+const InputStyle = styled(Input)`
+    font-size: 20px;
+    font-family: fira-go;
+    font-weight: 500;
+`;
+const DividerStyle = styled.div`
+    border-bottom: .1rem solid rgba(42, 114, 129, .3);
+    margin: 40px 0px 35px 0px;
+    display: flex;
+`;
+const PaymentItemStyle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.5;
+    font-size: 18px;
+    font-family: fira-go;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-weight: 500;
+        &:first-of-type {
+            opacity: 1;
+            font-size: 20px;
+            font-family: 'BPG WEB 002 CAPS';
+        }
+`;
+
+
+
 
 const OrderDetails: React.FC<{
     cart?: Cart;
     selectedAddressId?: number;
- }> = ({ 
-     cart,
-     selectedAddressId,
-     }) => {
+}> = ({
+    cart,
+    selectedAddressId,
+}) => {
 
-    const cartPrices = calculateCartPrices(cart);
-    const {
-      itemsSubtotalOriginalPrice,
-      itemsSubtotal,
-      hasDiscount,
-      shippingCost,
-      cartTotal,
-    } = cartPrices;
+        const cartPrices = calculateCartPrices(cart);
+        const {
+            itemsSubtotalOriginalPrice,
+            itemsSubtotal,
+            hasDiscount,
+            shippingCost,
+            cartTotal,
+        } = cartPrices;
 
-    const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
-    const [initiatePayment, { isLoading: isInitiatePaymentLoading }] = api.useInitiatePaymentMutation();
+        const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
+        const [initiatePayment, { isLoading: isInitiatePaymentLoading }] = api.useInitiatePaymentMutation();
 
-    return(
-        <>
-            <div className={styles.container}>
-                <div className={styles.header}>
-                    <div className={styles.iconWrapper}>
-                        {/* <FaUserAlt size={'2.0rem'} color={'#2EAAC1'}/> */}
-                        <ProfileIcon height={'2.5rem'} width={'2.0rem'} />
-                    </div>
-                    <div className={styles.headerText}>
-                        <div className={styles.name}>გაგი მურჯიკნელი</div>
-                        <div className={styles.orderNo}>ორდერის ID: 124532</div>
-                    </div>
-                </div>
-                <div>
-                    <div className={styles.addressTitle}>მისამართი:</div>
-                    <div className={styles.addressItem}>
-                        <EditIcon width={'2.4rem'} style={{position: 'absolute', right: 0, top: 0}}/>
-                        {/* <div> */}
-                            <IoLocationSharp size={'3.2rem'} color={'var(--text-color)'}/>
-                        {/* </div> */}
-                        <div className={styles.addressItemText}>
-                            <div className={styles.city}>Tbilisi</div>
-                            <div className={styles.address}>მუხიანი, ალეკო გობრონიძის #11 / ბინა 177</div>
-                            <div className={styles.zip}>ZIP კოდი: 01103</div>
+        return (
+            <>
+                <ContainerStyle className={styles.container}>
+                    <HeaderStyle>
+                        <IconWrapperStyle className={styles.iconWrapper}>
+                            {/* <FaUserAlt size={'2.0rem'} color={'#2EAAC1'}/> */}
+                            <ProfileIconStyle />
+                        </IconWrapperStyle>
+                        <div className={styles.headerText}>
+                            <NameStyle>გაგი მურჯიკნელი</NameStyle>
+                            <OrderNoStyle>ორდერის ID: 124532</OrderNoStyle>
                         </div>
-                    </div>
-                    <div className={styles.addressItem} style={{alignItems: 'center'}}>
-                        {/* <div>Icon</div> */}
-                        <BsFillTelephoneFill size={'3.2rem'} color={'var(--text-color)'}/>
-                        <div className={styles.addressItemText}>
-                            (+995) 577 48 88 96
-                        </div>
-                    </div>
+                    </HeaderStyle>
+                    <div>
+                        <AddressTitleStyle>მისამართი:</AddressTitleStyle>
+                        <AddressItemStyle>
+                            <EditIconStyle />
+                            {/* <div> */}
+                            <IoLocationSharpStyle />
+                            {/* </div> */}
+                            <AddressItemTextStyle >
+                                <div className={styles.city}>Tbilisi</div>
+                                <div className={styles.address}>მუხიანი, ალეკო გობრონიძის #11 / ბინა 177</div>
+                                <div className={styles.zip}>ZIP კოდი: 01103</div>
+                            </AddressItemTextStyle>
+                        </AddressItemStyle>
+                        <AddressItemStyle>
+                            {/* <div>Icon</div> */}
+                            <BsFillTelephoneFillStyle color={'var(--text-color)'} />
+                            <AddressItemTextStyle>
+                                (+995) 577 48 88 96
+                            </AddressItemTextStyle>
+                        </AddressItemStyle>
 
-                    <div className={styles.addressTitle}>პრომო კოდი:</div>
+                        <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle>
                     </div>
-                    <div className={styles.inputWrapper}>
-                        <Input placeholder="Kme23m2313434m4" style={{fontSize: '2.0rem', fontFamily: 'fira-go', fontWeight: 500}}></Input>
+                    <InputWrapperStyle>
+                        <InputStyle placeholder="PROMO CODE"></InputStyle>
                         <CustomButton>შემოწმება</CustomButton>
-                    </div>
+                    </InputWrapperStyle>
 
-                    <div className={styles.divider}></div>
+                    <DividerStyle></DividerStyle>
 
                     <div className={styles.paymentWrapper}>
 
-                        <div className={styles.paymentItem}>
+                        <PaymentItemStyle >
                             <span>სრული თანხა</span>
-                            <span style={{fontFamily: 'fira-go', fontWeight: 600, fontSize: '2.4rem'}}>$ {cartTotal}</span>
-                        </div>
+                            <span>$ {cartTotal}</span>
+                        </PaymentItemStyle>
                         {cartPrices.hasDiscount ? (
-                          <div className={styles.paymentItem}>
-                              <span>ფასდაკლება</span>
-                              <span >-$ {itemsSubtotal}</span>
-                          </div>
+                            <PaymentItemStyle>
+                                <span>ფასდაკლება</span>
+                                <span >-$ {itemsSubtotal}</span>
+                            </PaymentItemStyle>
                         ) : null}
-                        <div className={styles.paymentItem}>
+                        <PaymentItemStyle>
                             <span>{cart?.items?.length} ნივთი</span>
                             <span>$ {itemsSubtotalOriginalPrice}</span>
-                        </div>
-                        <div className={styles.paymentItem}>
+                        </PaymentItemStyle>
+                        <PaymentItemStyle>
                             <span>მიტანა</span>
                             <span>$ {shippingCost}</span>
-                        </div>
+                        </PaymentItemStyle>
                     </div>
 
                     <Button onClick={async () => {
-                        if(!selectedAddressId){
+                        if (!selectedAddressId) {
                             alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
                             return;
                         }
                         // @ts-ignore
                         const { data: response } = await createOrder({ addressId: selectedAddressId });
-                        if('success' in response && response.success){
+                        if ('success' in response && response.success) {
                             const orderId = response.data.id;
-                          // redirect to payment
-                          // alert(response.success + ' -- TODO redirect to card payment URL');
-                          // @ts-ignore
-                          const { data: payment } = await initiatePayment({ orderId });
-                          const { redirect_url } = payment;
-                          document.location.href = redirect_url;
+                            // redirect to payment
+                            // alert(response.success + ' -- TODO redirect to card payment URL');
+                            // @ts-ignore
+                            const { data: payment } = await initiatePayment({ orderId });
+                            const { redirect_url } = payment;
+                            document.location.href = redirect_url;
                         } else {
                             alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
                         }
                     }}>გადახდაზე გადასვალა</Button>
-            </div>
-        </>
-    )
-}
+                </ContainerStyle>
+            </>
+        )
+    }
 
 export default OrderDetails;

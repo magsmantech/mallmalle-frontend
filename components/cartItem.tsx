@@ -4,15 +4,16 @@ import { calculateProductPrices, CartItem } from "../domain/shop";
 
 const ItemName= styled.span`
 color: var(--text-color);
-font-size: 2.4rem;
+font-size: 24px;
+line-height: 21px;
 font-family: fira-go;
 font-weight: 600;
-margin-bottom: 1.0rem;
+margin-bottom: 15px;
 `;
 
 const ItemLabel= styled.span`
 color: var(--text-color);
-font-size: 1.8rem;
+font-size: 18px;
 font-family: 'helvetica';
 opacity: 0.5;
 font-weight: 500;
@@ -20,18 +21,19 @@ font-weight: 500;
 
 const ItemValue= styled.span`
 color: var(--text-color);
-font-size: 1.8rem;
+font-size: 18px;
 font-weight: 500;
 font-family: fira-go ;
 `;
 
 const ItemImg = styled.img`
-height: 13.0rem;
-width: 13.0rem;
-border-radius: 1.4rem;
+height: 130px;
+width: 130px;
+border-radius: 14px;
 object-fit: cover;
 object-position: center;
-margin-right: 2.0rem;
+margin-right: 20px;
+min-width: 130px;
 `;
 
 const ItemTextWrapper = styled.div`
@@ -47,7 +49,7 @@ max-width: 40.0rem;
 `;
 
 
-const Item = ({ item, style } : { item: CartItem } & { style: any }) => {
+const Item = ({ item, style } : { item: CartItem } & { style?: any }) => {
     const { product, product_id, variation_id, quantity, total } = item;
     const {
       selectedVariation,
@@ -59,7 +61,7 @@ const Item = ({ item, style } : { item: CartItem } & { style: any }) => {
       <ItemImg src={'/assets/photo-3.jpg'}/>
       <ItemTextWrapper>
         <ItemName>{product.product_name}</ItemName>
-        <div style={{marginBottom: '.5rem'}}><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>
+        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>
         <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{selectedColor?.color_name}</ItemValue></div>
       </ItemTextWrapper>
     </ItemWrapper>
