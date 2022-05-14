@@ -85,6 +85,13 @@
   align-items: center;
   width: 20.0rem;
   backdrop-filter: blur(1.5rem);
+  transform: scale(0.55);
+  padding-right: 30px;
+  width: 100%;
+  position: absolute;
+  right: -53px;
+  bottom: -7px;
+  width: fit-content;
 }
 
 .saleItemWrapper.gradientOverlay .label {
@@ -104,8 +111,11 @@
 .big .label {
   /* padding: 3.4rem 4.4rem; */
   width: 29.8rem;
-
   height: 10.0rem;
+  transform: scale(0.63);
+  position: absolute;
+  right: -55px;
+  bottom: 2px;
 }
 
 
@@ -246,13 +256,37 @@
 
 
 /* res */
-@media only screen and (max-width: 991px) {
-  .saleItemWrapper {
-    padding: 3rem;
-  }
-}
+
 @media only screen and (max-width: 768px) {
   .saleItemWrapper {
     padding: 2rem;
+  }
+ 
+}
+
+@media only screen and (max-width: 991px) {
+  .saleItemWrapper {
+    padding: 7rem;
+  }
+  .saleItemWrapper.big {
+    padding: 13rem;
+  }
+}
+@media only screen and (max-width: 510px) {
+  .saleItemWrapper {
+    padding: 4.9rem;
+  }
+  .saleItemWrapper.big {
+    padding: 10rem;
+  }
+  .big .label {
+    transform: scale(0.5);
+    right: -100px;
+    bottom: -18px;
+  }
+  .label {
+    transform: scale(0.40);
+    right: -83px;
+    bottom: -23px;
   }
 }
