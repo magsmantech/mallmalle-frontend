@@ -25,6 +25,7 @@ import Cart from '../public/icons/react-icons/cart';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import Responsive from '../config/Responsive';
+import api from '../features/api';
 
 
 type Props = {
@@ -36,8 +37,11 @@ type Props = {
 
 
 function Navbar({ onSidebarOpen }: Props) {
+
     const [checked, setChecked] = useState(false);
     const { loggedIn } = useSelector((state: RootState) => state.auth);
+    // const { data: cart, isLoading: isCartLoading, refetch: refetchCart, isSuccess: isCartSucces } = api.useGetCartQuery(undefined);
+
 
     return (
         <>
@@ -81,8 +85,12 @@ function Navbar({ onSidebarOpen }: Props) {
                         {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
                         <CartIcon />
                         <ItemLabel>კალათა</ItemLabel>
+                        {/* {isCartSucces === true ? ( //TODO ask luka 500 error
+                            cart.items.length > 0 ? (
+                                <CountLenght>{cart.items.length}</CountLenght>
+                            ) : null
+                        ) : null} */}
                     </ItemWrapper>
-
                 </Link>
             </Nav>
             <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
@@ -91,6 +99,25 @@ function Navbar({ onSidebarOpen }: Props) {
 }
 
 // styles
+const CountLenght = styled.div`
+    position: absolute;
+    top: -3px;
+    right: 0px;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-family: 'helvetica';
+        ${Responsive.tabletMobile}{
+            right: -8px;
+            top: -5px;
+        }
+`;
 const HoriontalFixedLine = styled.div`
     ${Responsive.tabletMobile}{
         top: 120px; //TODO Levan Madurashvili
