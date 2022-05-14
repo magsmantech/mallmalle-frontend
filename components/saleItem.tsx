@@ -27,6 +27,7 @@ const SaleItem = ({ imageUrl, style, big=false, gradient=false }: Props) => {
             <div className={wrapperClasses} style={{
                 // backgroundImage: `url(${imageUrl})`,
                 cursor: 'pointer',
+                height: '100%',
                 ...style,
             }} onClick={() => {
                 // TODO go to specific categories

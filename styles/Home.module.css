@@ -1,13 +1,5 @@
 .container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  /* grid-auto-rows: 30.0rem; */
-  grid-template-areas:
-      'a a b c'
-      'a a d e';
-  height: 57.2rem;
-  grid-gap: 3.2rem;
-  margin-bottom: 11.8rem;
+  
 }
 
 
@@ -249,4 +241,18 @@
   transform: rotate(-90deg);
   width: auto;
   height: 3.0rem;
+}
+
+
+
+/* res */
+@media only screen and (max-width: 991px) {
+  .saleItemWrapper {
+    padding: 3rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .saleItemWrapper {
+    padding: 2rem;
+  }
 }

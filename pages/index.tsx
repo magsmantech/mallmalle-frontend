@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import config from "../config.json";
 import { Product } from "../domain/shop";
+import styled from 'styled-components';
+import Responsive from "../config/Responsive";
+
 
 const Home: NextPage = () => {
   const _scrollToTop = () => {
@@ -43,13 +46,17 @@ const Home: NextPage = () => {
   return (
     <>
       <Carousel images={images} />
-      <div className={styles.container}>
-        <SaleItem imageUrl={"/assets/122.png"} style={{ gridArea: "a" }} big />
-        <SaleItem imageUrl={"/assets/3.png"} style={{ gridArea: "b" }} />
-        <SaleItem imageUrl={"/assets/31.png"} style={{ gridArea: "c" }} />
-        <SaleItem imageUrl={"/assets/311.png"} style={{ gridArea: "d" }} />
-        <SaleItem imageUrl={"/assets/photo-1.jpg"} style={{ gridArea: "e" }} />
-      </div>
+      <SaleItemWrapper className={styles.container}>
+        <OneSaleItemWrapper>
+          <SaleItem imageUrl={"/assets/122.png"} big />
+        </OneSaleItemWrapper>
+        <FourSaleItemWrapper>
+          <SaleItem imageUrl={"/assets/3.png"} />
+          <SaleItem imageUrl={"/assets/31.png"} />
+          <SaleItem imageUrl={"/assets/311.png"} />
+          <SaleItem imageUrl={"/assets/photo-1.jpg"} />
+        </FourSaleItemWrapper>
+      </SaleItemWrapper>
       <div className={styles.dividerWrapper}>
         <div className={styles.divider}></div>
         <img className={styles.dividerImage} src={"/assets/mallmalle.png"} />
@@ -120,5 +127,47 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+
+const SaleItemWrapper = styled.div`
+  height: 100vh;
+  max-height: 580px;
+  margin-bottom: 120px;
+  display: flex;
+  justify-content: space-between;
+    ${Responsive.tablet}{
+      max-height: 450px;
+      margin-bottom: 80px;
+    }
+    ${Responsive.tabletMobile}{
+      flex-direction: column-reverse;
+      width: 100%;
+      max-height: unset;
+      height: fit-content;
+      margin-bottom: 50px;
+    }
+`;
+const FourSaleItemWrapper = styled.div`
+  width: calc(50% - 15px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+    ${Responsive.tabletMobile}{
+      width: 100%;
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+    }
+`;
+const OneSaleItemWrapper = styled.div`
+  width: calc(50% - 15px);
+    ${Responsive.tabletMobile}{
+      width: 100%;
+      margin-top: 20px;
+    }
+`;
+
+
 
 export default Home;
