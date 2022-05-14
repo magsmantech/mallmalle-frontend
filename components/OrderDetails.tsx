@@ -10,6 +10,7 @@ import ProfileIcon from '../public/icons/react-icons/profile';
 import EditIcon from '../public/icons/react-icons/edit';
 import { calculateCartPrices, Cart } from '../domain/shop';
 import api from '../features/api';
+import Responsive from '../config/Responsive';
 
 const CustomButton = styled.button`
     
@@ -33,6 +34,10 @@ const CustomButton = styled.button`
     cursor: pointer;
     padding: 0 25px 0 25px;
     border-left: rgba(66, 79, 96, 0.3) solid 0.1rem;
+        ${Responsive.mobile}{
+            font-size: 14px;
+            padding: 0 10px 0 10px;
+        }
 `;
 
 const ContainerStyle = styled.div`
@@ -43,6 +48,9 @@ const ContainerStyle = styled.div`
     background-color: #F8FEFF;
     border: 2px solid rgba(0, 210, 255, 0.09);
     border-radius: 14px;
+        ${Responsive.mobile}{
+            padding: 15px;
+        }
 `;
 const IconWrapperStyle = styled.div`
     display: flex;
@@ -53,10 +61,19 @@ const IconWrapperStyle = styled.div`
     border-radius: 12px;
     background-image: linear-gradient(15deg, rgba(34, 210, 175, 0.14) 0%, rgba(56, 133, 209, 0.14) 100%);
     margin-right: 25px;
+        ${Responsive.mobile}{
+            height: 44px;
+            width: 44px;
+            margin-right: 12px;
+        }
 `;
 const ProfileIconStyle = styled(ProfileIcon)`
     width: 26px;
     height: 26px;
+        ${Responsive.mobile}{
+            width: 18px;
+            height: 18px;
+        }
 `;
 const NameStyle = styled.div`
     color: var(--text-color);
@@ -64,6 +81,10 @@ const NameStyle = styled.div`
     margin-bottom: 10px;
     font-weight: 600;
     font-family: fira-go;
+        ${Responsive.mobile}{
+            font-size: 20px;
+            margin-bottom: 0px;
+        }
 `;
 const OrderNoStyle = styled.div`
       
@@ -75,6 +96,9 @@ const OrderNoStyle = styled.div`
 const HeaderStyle = styled.div`
     display: flex;
     margin-bottom: 30px;
+        ${Responsive.mobile}{
+            margin-bottom: 38px;
+        }
 `;
 const AddressTitleStyle = styled.div`
     color: var(--text-color);
@@ -82,12 +106,20 @@ const AddressTitleStyle = styled.div`
     font-weight: bold;
     margin-bottom: 18px;
     font-family: fira-go;
+        ${Responsive.mobile}{
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
 `;
 const AddressItemStyle = styled.div`
     display: flex;
     position: relative;
     margin-bottom: 15px;
     gap: 15px;
+        ${Responsive.mobile}{
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 `;
 const EditIconStyle = styled(EditIcon)`
     width: 24px;
@@ -95,12 +127,24 @@ const EditIconStyle = styled(EditIcon)`
     position: absolute;
     right: 0;
     top: 0;
+        ${Responsive.mobile}{
+            width: 19px;
+            height: 19px;
+            margin-top: -2px;
+        }
 `;
 const IoLocationSharpStyle = styled(IoLocationSharp)`
     height: 32px;
     width: 32px;
+    min-width: 32px;
     color: var(--text-color);
     margin-top: 2px;
+        ${Responsive.mobile}{
+            height: 18px;
+            width: 18px;
+            min-width: 18px;
+            margin-top: 0px;
+        }
 `;
 const BsFillTelephoneFillStyle = styled(BsFillTelephoneFill)`
     height: 23px;
@@ -108,6 +152,12 @@ const BsFillTelephoneFillStyle = styled(BsFillTelephoneFill)`
     color: var(--text-color);
     margin-left: 5px;
     margin-right: 2px;
+        ${Responsive.mobile}{
+            height: 16px;
+            width: 16px;
+            min-width: 16px;
+            margin-top: -1px;
+        }
 `;
 const AddressItemTextStyle = styled.div`
     color: var(--text-color);
@@ -116,6 +166,9 @@ const AddressItemTextStyle = styled.div`
     flex-direction: column;
     font-family: fira-go;
     padding-right: 20px;
+        ${Responsive.mobile}{
+            font-size: 14px;
+        }
 `;
 const InputWrapperStyle = styled.div`
     position: relative;
@@ -126,11 +179,17 @@ const InputStyle = styled(Input)`
     font-size: 20px;
     font-family: fira-go;
     font-weight: 500;
+        ${Responsive.mobile}{
+            font-size: 13px;
+        }
 `;
 const DividerStyle = styled.div`
     border-bottom: .1rem solid rgba(42, 114, 129, .3);
     margin: 40px 0px 35px 0px;
     display: flex;
+        ${Responsive.mobile}{
+            margin: 40px 0px 20px 0px;
+        }
 `;
 const PaymentItemStyle = styled.div`
     display: flex;
@@ -141,10 +200,16 @@ const PaymentItemStyle = styled.div`
     color: var(--text-color);
     margin-bottom: 10px;
     font-weight: 500;
+        ${Responsive.mobile}{
+            font-size: 14px;
+        }
         &:first-of-type {
             opacity: 1;
             font-size: 20px;
             font-family: 'BPG WEB 002 CAPS';
+                ${Responsive.mobile}{
+                    font-size: 15px;
+                }
         }
 `;
 

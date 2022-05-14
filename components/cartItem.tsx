@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Responsive from "../config/Responsive";
 import { calculateProductPrices, CartItem } from "../domain/shop";
 
 
@@ -9,6 +10,12 @@ line-height: 21px;
 font-family: fira-go;
 font-weight: 600;
 margin-bottom: 15px;
+  ${Responsive.mobile}{
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: 10px;
+    padding-right: 30px;
+  }
 `;
 
 const ItemLabel= styled.span`
@@ -17,6 +24,9 @@ font-size: 18px;
 font-family: 'helvetica';
 opacity: 0.5;
 font-weight: 500;
+  ${Responsive.mobile}{
+    font-size: 14px;
+  }
 `;
 
 const ItemValue= styled.span`
@@ -24,6 +34,9 @@ color: var(--text-color);
 font-size: 18px;
 font-weight: 500;
 font-family: fira-go ;
+  ${Responsive.mobile}{
+    font-size: 14px;
+  }
 `;
 
 const ItemImg = styled.img`
@@ -34,17 +47,26 @@ object-fit: cover;
 object-position: center;
 margin-right: 20px;
 min-width: 130px;
+  ${Responsive.mobile}{
+    height: 78px;
+    width: 78px;
+    min-width: 78px;
+    margin-right: 10px;
+  }
 `;
 
 const ItemTextWrapper = styled.div`
 display: flex;
 flex-direction: column;
+margin-top: 5px;
+  ${Responsive.mobile}{
+    margin-top: 1px;
+  }
 `;
 
 const ItemWrapper = styled.div`
 display: flex;
 width: 100%;
-max-width: 40.0rem;
 
 `;
 

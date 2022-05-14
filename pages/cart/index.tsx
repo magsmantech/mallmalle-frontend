@@ -12,22 +12,99 @@ import { getBag } from "../../services/checkout-services";
 import { useEffect, useState } from "react";
 import { calculateProductPrices, Cart, CartItem } from "../../domain/shop";
 import api from "../../features/api";
+import Responsive from "../../config/Responsive";
 
-const Grid = styled.div`
-  /* display: grid; */
-  /* row-gap: 5.0rem; */
-  /* grid-template-columns: repeat(3, 1fr); */
-  width: 100%;
-  margin-right: 1.5rem;
-  height: min-content;
-  display: flex;
-  flex-direction: column;
-`;
+
 
 const FlexRow = styled.div`
   display: flex;
-  justify-content: stretch;
+  justify-content: space-between;
+    ${Responsive.mobile}{
+
+}
 `;
+
+const PriceWrapperStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const HeaderItem = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 18px;
+  font-family: fira-go;
+  font-weight: 500;
+  color: var(--text-color);
+  opacity: 0.5;
+    &:first-child {
+      flex-basis: 55%;
+      /* background-color: gray; */
+      ${Responsive.mobile}{
+        flex-basis: 100%;
+        font-size: 14px;
+        }
+    }
+    &:nth-child(2){
+      flex-basis: 21%;
+      /* background-color: brown; */
+        ${Responsive.mobile}{
+          display: none;
+        }
+    }
+    &:nth-child(3){
+      flex-basis: 21%;
+      padding-left: 10px;
+      /* background-color: yellow; */
+        ${Responsive.mobile}{
+          display: none;
+        }
+    }
+ 
+`;
+const FlexRowWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 50px;
+  /* background-color: green; */
+    ${Responsive.mobile}{
+      flex-direction: column;
+      position: relative;
+      margin-bottom: 35px;
+    }
+`;
+const ItemWrapper = styled.div`
+  /* background-color: gray; */
+  flex-basis: 55%;
+   
+`;
+const QuantityWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  /* background-color: brown; */
+  flex-basis: 21%;
+    ${Responsive.mobile}{
+      margin-left: 88px;
+      margin-bottom: 15px;
+    }
+`;
+const PriceHorizontalWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 21%;
+  padding-left: 10px;
+  margin-top: 4px;
+  /* background-color: yellow; */
+    ${Responsive.mobile}{
+      margin-left: 88px;
+      padding-left: 0px;
+    }
+`;
+
+
+
+
+
 const BreadcrumbsStyle = styled(Breadcrumbs)`
   margin-bottom: 40px;
 `;
@@ -50,19 +127,13 @@ export const MainTitle = styled.div`
   margin-bottom: 20px;
 `;
 
-const HeaderItem = styled.div`
-  display: flex;
-  width: 100%;
-  font-size: 18px;
-  font-family: fira-go;
-  font-weight: 500;
-  color: var(--text-color);
-  opacity: 0.5;
-`;
 const Divider = styled.div`
   display: flex;
   width: 100%;
   margin: 24px 0 30px 0;
+    ${Responsive.mobile}{
+      margin: 18px 0px 18px 0px;
+    }
 
   border-bottom: 1px solid rgba(33, 114, 129, 0.3);
 `;
@@ -82,22 +153,47 @@ const OldPrice = styled(Price)`
 
 const Container = styled.div`
   display: flex;
-  justify-content: stretch;
-  width: 100%;
-`;
-
-const QuantityWrapper = styled.div`
-  display: flex;
+  justify-content: space-between;
   align-items: flex-start;
   width: 100%;
-  /* max-width: 34.7rem; */
+    ${Responsive.tablet}{
+      flex-direction: column;
+    }
+    ${Responsive.mobile}{
+      flex-direction: column;
+    }
 `;
+const Grid = styled.div`
+  width: 100%;
+  height: min-content;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 65%;
+`;
+const OrderDetailsWrapper = styled.div`
+  flex-basis: 34%;
+    ${Responsive.tablet}{
+      flex-basis: 100%;
+      width: 100%;
+    }
+    ${Responsive.mobile}{
+      flex-basis: 100%;
+      width: 100%;
+    }
+`;
+
+
 const CloseIconStyle = styled(CloseIcon)`
   cursor: pointer;
   height: 24px;
   width: 24px;
   opacity: 0.4;
   padding: 5px;
+    ${Responsive.mobile}{
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
 `;
 
 
@@ -161,8 +257,10 @@ const CartScreen: NextPage = () => {
             const { hasDiscount, originalPrice, finalPrice, selectedVariation } = calculateProductPrices(item.product, item.variation_id);
             console.log('cart item prices:', { hasDiscount, originalPrice, finalPrice, item });
             return (
-              <FlexRow key={i}>
-                <Item  item={item}/>
+              <FlexRowWrapper key={i}>
+                <ItemWrapper>
+                  <Item item={item} />
+                </ItemWrapper>
                 <QuantityWrapper>
                   <Quantity value={item.quantity} onChange={async (newQuantity) => {
                     const result = await updateQuantity({
@@ -173,34 +271,30 @@ const CartScreen: NextPage = () => {
                     await refetchCart();
                   }} />
                 </QuantityWrapper>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                  }}
-                >
-                  <div style={{ display: "flex", flexDirection: "column" }}>
+                <PriceHorizontalWrapper>
+                  <PriceWrapperStyle>
                     <Price>{'$' + finalPrice}</Price>
                     {hasDiscount && (
                       <OldPrice>${originalPrice}</OldPrice>
                     )}
-                  </div>
+                  </PriceWrapperStyle>
                   <CloseIconStyle onClick={async () => {
-                      const result = await removeFromCart({
-                        cartItemId: item.id,
-                        // variationId: item.variation_id,
-                      });
-                      await refetchCart();
-                      console.log('removeFromCart result:', result);
-                    }}
+                    const result = await removeFromCart({
+                      cartItemId: item.id,
+                      // variationId: item.variation_id,
+                    });
+                    await refetchCart();
+                    console.log('removeFromCart result:', result);
+                  }}
                   />
-                </div>
-              </FlexRow>
+                </PriceHorizontalWrapper>
+              </FlexRowWrapper>
             );
           })}
         </Grid>
-        <OrderDetails cart={cart} selectedAddressId={selectedAddressId}></OrderDetails>
+        <OrderDetailsWrapper>
+          <OrderDetails cart={cart} selectedAddressId={selectedAddressId}></OrderDetails>
+        </OrderDetailsWrapper>
       </Container>
     </>
   );

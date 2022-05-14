@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import styled from "styled-components";
+import Responsive from "../config/Responsive";
 
 const IconWrapper = styled.div`
     display: flex;
@@ -11,6 +12,10 @@ const IconWrapper = styled.div`
     width: 38px;
     height: 38px;
     cursor: pointer;
+        ${Responsive.mobile}{
+            width: 30px;
+            height: 30px;
+        }
 `;
 const MinusIcon = styled(HiMinus)`
     font-size: 18px;
@@ -23,14 +28,20 @@ const Number = styled.span`
     font-size: 24px;
     color: var(--text-color);
     font-size: fira-go;
+        ${Responsive.mobile}{
+            font-size: 17px;
+        }
 `;
 
 const ItemWrapper = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 150px;
+    max-width: 140px;
     justify-content: space-between;
+        ${Responsive.mobile}{
+            max-width: 110px;
+        }
 `;
 const Quantity: React.FC<{
     value: number;

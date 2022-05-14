@@ -3,20 +3,13 @@
     justify-self: center;
     flex-direction: column;
 }
-
-
-
 .city {
     font-weight: 600;
 }
-
 .address, .zip {
     opacity: 0.5;
     font-family: fira-go;
 }
-
-
-
 .paymentWrapper {
     display: flex;
     flex-direction: column;

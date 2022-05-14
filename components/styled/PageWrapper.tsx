@@ -16,7 +16,7 @@ export const PageWrapper = styled.div`
     
     @media(max-width: 600px) {
         & {
-            padding: 4.0rem 24px;
+            padding: 40px 20px;
         }
     }
 `;
