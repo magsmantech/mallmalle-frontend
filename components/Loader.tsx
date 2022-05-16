@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components'; //ims
-import { GlobalStyle } from './GlobalStyle';
+import { Scrollbar } from './GlobalStyle';
 
 const Loader: React.FC = () => {
     return (
         <Wrapper>
-            <GlobalStyle scrollBar={false} />
+            <Scrollbar hide={true} />
             <Content>
                 <LoaderValue>m</LoaderValue>
                 <LoaderValue>a</LoaderValue>

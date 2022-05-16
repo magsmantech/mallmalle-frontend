@@ -26,6 +26,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import Responsive from '../config/Responsive';
 import api from '../features/api';
+import Loader from './Loader';
 
 
 type Props = {
@@ -41,9 +42,9 @@ function Navbar({ onSidebarOpen }: Props) {
     const [checked, setChecked] = useState(false);
     const { loggedIn } = useSelector((state: RootState) => state.auth);
     // const { data: cart, isLoading: isCartLoading, refetch: refetchCart, isSuccess: isCartSucces } = api.useGetCartQuery(undefined);
+    console.log("levani " + loggedIn)
 
-
-    return (
+    return  ( //isCartLoading ? <Loader /> :
         <>
             <Nav className={styles.wrapper}>
                 <MenuIcon onClick={() => onSidebarOpen()} />

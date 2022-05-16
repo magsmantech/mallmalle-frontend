@@ -19,10 +19,10 @@ const SelectContainer = styled.div`
 
 type Props = any;
 
-const FilterSelect = ({style}: Props) => {
+const FilterSelect = ({ style }: Props) => {
     const [select, setSelect] = useState("popular");
     const [show, setShow] = useState(false)
-    
+
     const handleSelectChange = (event: any) => {
         const value = event.target.value;
         setSelect(value);
@@ -53,7 +53,7 @@ const FilterSelect = ({style}: Props) => {
         {
             value: 'max',
             label: 'მაქს. ფასი'
-        }, 
+        },
     ]
 
     const _onClick = () => {
@@ -62,38 +62,34 @@ const FilterSelect = ({style}: Props) => {
 
 
     return <>
-        <div style={{position: 'relative', ...style}}>
-        <ChipWrapper onClick={()=> _onClick()}
-            hoverColor="rgba(34, 213, 174, .5)"    
-            color={'rgba(34, 213, 174, .25)'}>
-            <ChipTitle>პოპულარობა</ChipTitle>
-            <ChipIconWrapper>
-                <BsChevronDown size={'2.0rem'}></BsChevronDown>
-            </ChipIconWrapper>
-        </ChipWrapper>
+        <div style={{ position: 'relative', ...style }}>
+            <ChipWrapper onClick={() => _onClick()}
+                hoverColor="rgba(34, 213, 174, .5)"
+                color={'rgba(34, 213, 174, .25)'}>
+                <ChipTitle>პოპულარობა</ChipTitle>
+                <ChipIconWrapper>
+                    <BsChevronDown size={'2.0rem'}></BsChevronDown>
+                </ChipIconWrapper>
+            </ChipWrapper>
 
-        {show &&<SelectContainer>
-            <Wrapper>
-                {radios.map((item, index)=>
-                <RadioItem key={index}>
-                    <RadioButton
-                        type="radio"
-                        name="radio"
-                        value={item.value}
-                        checked={select === item.value}
-                        onChange={(event) => handleSelectChange(event)}
-                    />
-                    <RadioButtonLabel />
-                    <div>{item.label}</div>
-                </RadioItem>
-                
-                )}
-            </Wrapper>
+            {show && <SelectContainer>
+                <Wrapper>
+                    {radios.map((item, index) =>
+                        <RadioItem key={index}>
+                            <RadioButton
+                                type="radio"
+                                name="radio"
+                                value={item.value}
+                                checked={select === item.value}
+                                onChange={(event) => handleSelectChange(event)}
+                            />
+                            <RadioButtonLabel />
+                            <div>{item.label}</div>
+                        </RadioItem>
+                    )}
+                </Wrapper>
             </SelectContainer>}
-
         </div>
-
-        
     </>
 }
 
