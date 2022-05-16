@@ -23,6 +23,7 @@ import { relative } from "path/posix";
 import { useDispatch } from "react-redux";
 import { removeAccessToken, getUserData } from "../../services/auth-services";
 import Responsive from "../../config/Responsive";
+import Loader from "../../components/Loader";
 
 type TabItemProps = {
   selected?: boolean;
@@ -550,7 +551,8 @@ const Profile: NextPage = () => {
           </Tabs>
         </div>
       ) : (
-        <h1 style={{ margin: "2rem 0 50rem 0" }}>Loading...</h1>
+        // <h1 style={{ margin: "2rem 0 50rem 0" }}>Loading...</h1>
+        <Loader/>
       )}
     </>
   );
