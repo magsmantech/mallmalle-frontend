@@ -4,13 +4,7 @@
 
 
 .sectionTitle {
-  font-size: 3.2rem;
-  margin: 0 0 6.4rem 0;
-  color: var(--text-color);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-feature-settings: "case" on;
-  font-family: fira-go;
+  
 }
 
 .saleItemWrapper {
@@ -169,11 +163,7 @@
 }
 
 .middleContainer {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  height: 31.3rem;
-  grid-gap: 3.2rem;
-  margin-bottom: 10.4rem;
+
 
 }
 
@@ -269,7 +259,7 @@
     padding: 7rem;
   }
   .saleItemWrapper.big {
-    padding: 13rem;
+    padding: 6rem;
   }
 }
 @media only screen and (max-width: 510px) {
@@ -277,7 +267,7 @@
     padding: 4.9rem;
   }
   .saleItemWrapper.big {
-    padding: 10rem;
+    padding: 6rem;
   }
   .big .label {
     transform: scale(0.5);

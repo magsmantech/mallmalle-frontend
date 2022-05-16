@@ -62,7 +62,7 @@ const Home: NextPage = () => {
         <img className={styles.dividerImage} src={"/assets/mallmalle.png"} />
       </div>
 
-      <h3 className={styles.sectionTitle}>შემოთავაზება</h3>
+      <SectionTitle className={styles.sectionTitle}>შემოთავაზება</SectionTitle>
 
       <div className={styles.itemsContainer}>
         {offers?.length ? (
@@ -87,12 +87,12 @@ const Home: NextPage = () => {
         )}
       </div>
 
-      <div className={styles.middleContainer}>
+      <MiddleContainer className={styles.middleContainer}>
         <SaleItem big imageUrl={"/assets/122.png"} gradient />
         <SaleItem big imageUrl={"/assets/122.png"} gradient />
-      </div>
+      </MiddleContainer>
 
-      <h3 className={styles.sectionTitle}>ახალი დამატებული</h3>
+      <SectionTitle className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
       <div
         className={styles.itemsContainer}
         style={{ marginBottom: "17.5rem" }}
@@ -167,7 +167,46 @@ const OneSaleItemWrapper = styled.div`
       margin-top: 20px;
     }
 `;
-
+const SectionTitle = styled.h3`
+  font-size: 32px;
+  margin: 0 0 60px 0;
+  color: var(--text-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-feature-settings: "case" on;
+  font-family: fira-go;
+`;
+const MiddleContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 310px;
+  grid-gap: 30px;
+  margin-bottom: 110px;
+    ${Responsive.tabletMobile}{
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      height: fit-content;
+      grid-gap: 20px;
+    }
+    ${Responsive.mobile}{
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      height: fit-content;
+      grid-gap: 20px;
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+            &:nth-child(3){
+              right: unset !important;
+              top: unset !important;
+              transform: scale(0.45) !important;
+              width: fit-content;
+              bottom: unset !important;
+            }
+          }
+    }
+`;
 
 
 export default Home;
