@@ -21,83 +21,82 @@ import styled from 'styled-components';
 
 import MenuIcon from '../public/icons/react-icons/MenuIcon';
 import Bookmark from '../public/icons/react-icons/bookmark'
-import Cart from '../public/icons/react-icons/cart';
+import CartIcon from '../public/icons/react-icons/cart';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
 import Responsive from '../config/Responsive';
 import api from '../features/api';
 import Loader from './Loader';
+import { Cart } from '../domain/shop';
 
 
-type Props = {
-    onSidebarOpen: Function,
-}
+const Navbar: React.FC<{
+    onSidebarOpen: Function;
+    cart: Cart;
+}> = ({
+    onSidebarOpen,
+    cart
+}) => {
 
 
+        // function Navbar({ onSidebarOpen }: Props) {
+
+        const [checked, setChecked] = useState(false);
+        const { loggedIn } = useSelector((state: RootState) => state.auth);
 
 
+        return (
+            <>
+                <Nav className={styles.wrapper}>
+                    <MenuIcon onClick={() => onSidebarOpen()} />
+                    {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
+                    <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
+                    <SearchWrapper className={styles.ItemWrappers}><SearchBar /></SearchWrapper>
+                    {/* <div className={styles.ItemWrappers}><LanguageSwitcher languages={[ 'EN', 'GEO']} /></div> */}
+                    {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
+                    {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
+                    {/* <Link href='/profile'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
+                    <VerticalLine className={styles.divider}></VerticalLine>
+                    {!loggedIn && <Link href='/auth'>
+                        <ItemWrapper style={{ cursor: 'pointer', marginLeft: '2.0rem' }}>
+                            <UserIcon />
+                            <ItemLabel>ავტორიზაცია</ItemLabel>
+                        </ItemWrapper>
+                    </Link>}
+                    {loggedIn && <Link href='/profile'>
+                        <ItemWrapper >
+                            <UserIcon />
+                            <ItemLabel>პროფილი</ItemLabel>
+                        </ItemWrapper>
+                    </Link>}
 
-function Navbar({ onSidebarOpen }: Props) {
-
-    const [checked, setChecked] = useState(false);
-    const { loggedIn } = useSelector((state: RootState) => state.auth);
-    // const { data: cart, isLoading: isCartLoading, refetch: refetchCart, isSuccess: isCartSucces } = api.useGetCartQuery(undefined);
-    console.log("levani " + loggedIn)
-
-    return  ( //isCartLoading ? <Loader /> :
-        <>
-            <Nav className={styles.wrapper}>
-                <MenuIcon onClick={() => onSidebarOpen()} />
-                {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
-                <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
-                <SearchWrapper className={styles.ItemWrappers}><SearchBar /></SearchWrapper>
-                {/* <div className={styles.ItemWrappers}><LanguageSwitcher languages={[ 'EN', 'GEO']} /></div> */}
-                {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
-                {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
-                {/* <Link href='/profile'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
-                <VerticalLine className={styles.divider}></VerticalLine>
-                {!loggedIn && <Link href='/auth'>
-                    <ItemWrapper style={{ cursor: 'pointer', marginLeft: '2.0rem' }}>
-                        <UserIcon />
-                        <ItemLabel>ავტორიზაცია</ItemLabel>
-                    </ItemWrapper>
-                </Link>}
-                {loggedIn && <Link href='/profile'>
-                    <ItemWrapper >
-                        <UserIcon />
-                        <ItemLabel>პროფილი</ItemLabel>
-                    </ItemWrapper>
-                </Link>}
-
-                {/* {loggedIn && */}
-                <Link href={{
-                    pathname: '/profile',
-                    query: { tab: 'bookmark' },
-                }}>
-                    <ItemWrapper >
-                        {/* <BsBookmark size={"3.2rem"} color={"white"} /> */}
-                        <BookmarkIcon />
-                        <ItemLabel>რჩეულები</ItemLabel>
-                    </ItemWrapper>
-                </Link>
-                {/* } */}
-                <Link href='/cart'>
-                    <ItemWrapper >
-                        {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
-                        <CartIcon />
-                        <ItemLabel>კალათა</ItemLabel>
-                        {/* {isCartSucces === true ? ( //TODO ask luka 500 error
-                            cart.items.length > 0 ? (
-                                <CountLenght>{cart.items.length}</CountLenght>
-                            ) : null
-                        ) : null} */}
-                    </ItemWrapper>
-                </Link>
-            </Nav>
-            <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
-        </>
-    );
-}
+                    {/* {loggedIn && */}
+                    <Link href={{
+                        pathname: '/profile',
+                        query: { tab: 'bookmark' },
+                    }}>
+                        <ItemWrapper >
+                            {/* <BsBookmark size={"3.2rem"} color={"white"} /> */}
+                            <BookmarkIcon />
+                            <ItemLabel>რჩეულები</ItemLabel>
+                        </ItemWrapper>
+                    </Link>
+                    {/* } */}
+                    <Link href='/cart'>
+                        <ItemWrapper >
+                            {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
+                            <CartIconStyle />
+                            <ItemLabel>კალათა</ItemLabel>
+                            {loggedIn === true ? (
+                                cart.items?.length < 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
+                            ) : null}
+                        </ItemWrapper>
+                    </Link>
+                </Nav>
+                <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
+            </>
+        )
+    }
 
 // styles
 const CountLenght = styled.div`
@@ -156,7 +155,7 @@ const BookmarkIcon = styled(Bookmark)`
     height: 30px;
   
 `;
-const CartIcon = styled(Cart)`
+const CartIconStyle = styled(CartIcon)`
     height: 30px;
 `;
 const ItemWrapper = styled.div`

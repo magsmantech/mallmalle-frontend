@@ -14,12 +14,15 @@ import { hideFeedback } from '../features/feedbackSlice';
 import { setLoggedInState } from '../features/authSlice';
 import classNames from 'classnames';
 import { getCategories } from '../services/category-services';
+import api from '../features/api';
+import Loader from './Loader';
 // import { isLoggedIn } from '../services/auth-services';
 
 
 export const CategoriesContext = createContext<any>(null);
 
 export default function Layout({ children }: any) {
+  const { data: cart, isLoading: isCartLoading, refetch: refetchCart, isSuccess: isCartSucces } = api.useGetCartQuery(undefined);
   const [openSidebar, setOpenSidebar] = useState(false);
   // const [showFeedback, setShowFeedback] = useState(false);
   const [ratio, setRatio] = useState(10)
@@ -122,7 +125,8 @@ export default function Layout({ children }: any) {
       {showFeedback && feedbackType === 'info' && <div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
       {showFeedback && <Feedback className={feedbackClasses} />}
       {openSidebar && <Sidebar onSidebarClose={_closeSidebar} categories={categories} />}
-      <Navbar onSidebarOpen={_openSidebar} />
+      {isCartLoading ? <Loader /> : !cart ? (<span>Not Found</span>) : (<Navbar cart={cart} onSidebarOpen={_openSidebar} />)}
+      <h1>{cart?.items?.length}</h1>
       <CategoriesContext.Provider value={categories}>
         <PageWrapper>{children}</PageWrapper>
       </CategoriesContext.Provider>
