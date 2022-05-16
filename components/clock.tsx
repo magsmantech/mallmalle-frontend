@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Responsive from "../config/Responsive";
 import styles from "../styles/Home.module.css";
 
 const Clock: NextPage = () => {
@@ -42,7 +43,7 @@ const Clock: NextPage = () => {
   }, []);
 
   return (
-    <div style={{ userSelect: "none", marginLeft: "15%" }}>
+    <Wrapper>
       <div>
         {/* <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}>{days} </span>
         <span style={{fontSize: '2.0rem'}}>დღე</span> */}
@@ -51,9 +52,9 @@ const Clock: NextPage = () => {
         <ClockText> : {minutes} </ClockText>
         {/* <span style={{fontSize: '2.0rem'}}>წუთი</span> */}
         <ClockText> : {seconds} </ClockText>
-        <span style={{ fontSize: '2.0rem' }}>საათი</span>
+        <ClockSpan >საათი</ClockSpan>
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
@@ -63,6 +64,24 @@ const ClockText = styled.span`
     text-transform: uppercase;
     font-feature-settings: '"case" on';
     font-weight: 600;
+    
+      ${Responsive.tabletMobile}{
+        font-size: 22px;
+      }
+`;
+const ClockSpan = styled.span`
+  font-size: 2.0rem;
+      ${Responsive.tabletMobile}{
+        font-size: 22px;
+      }
+`;
+
+const Wrapper = styled.div`
+  user-select: none;
+  margin-left: 15%;
+  ${Responsive.tabletMobile}{
+    margin-left: 0px;
+  }
 `;
 
 export default Clock;

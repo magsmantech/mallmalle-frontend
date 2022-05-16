@@ -38,12 +38,8 @@ const Navbar: React.FC<{
     cart
 }) => {
 
-
-        // function Navbar({ onSidebarOpen }: Props) {
-
         const [checked, setChecked] = useState(false);
         const { loggedIn } = useSelector((state: RootState) => state.auth);
-
 
         return (
             <>

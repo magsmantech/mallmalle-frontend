@@ -85,6 +85,10 @@ const SliderTitle = styled.span`
   font-feature-settings: '"case" on';
   font-weight: 600;
   user-select: none;
+    ${Responsive.tabletMobile}{
+      padding-left: 0px;
+      font-size: 23px;
+    }
 `;
 const SwiperLeftBtn = styled.div`
   top: calc(100% - 230px);
@@ -151,11 +155,10 @@ const Background = styled.div`
 const SlideText = styled.div`
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   flex-direction: column;
   color: white;
     ${Responsive.tabletMobile} {
-      display: none;
+      align-items: center;
     }
 `;
 
