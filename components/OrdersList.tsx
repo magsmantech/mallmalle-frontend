@@ -18,44 +18,104 @@ height: min-content;
 const Headers = styled.div`
     display: flex;
     width: 100%;
-    margin-bottom: 4.4rem;
-    /* border-bottom: .1rem solid rgba(33, 114, 129, 0.3); */
+    margin-bottom: 15px;
 `;
 
 const HeaderItem = styled.div`
-    display: inline-flex;
-    /* width: 100%; */
-    font-size: 1.8rem;
+    font-size: 18px;
     font-weight: 500;
     font-family: fira-go;
     color: var(--text-color);
     opacity: 0.5;
-    /* border-bottom: .1rem solid rgba(33, 114, 129, 0.3); */
-    /* padding-bottom: 2.4rem; */
+    user-select: none;
+        &:nth-child(1){
+            background-color: green;
+            width: 36%;
+        }
+        &:nth-child(2) {
+            background-color: aqua;
+            width: 9%;
+        }
+        &:nth-child(3) {
+            background-color: yellow;
+            width: 20%;
+            text-align: right;
+        }
+        &:nth-child(4) {
+            background-color: brown;
+            width: 25%;
+            text-align: right;
+        }
 `;
 
 const ItemFlexWrapper = styled.div`
     display: flex;
+    justify-content: space-between;
     width: 100%;
-    padding: 3.3rem 0;
-    border-bottom: .1rem solid rgba(33, 114, 129, 0.3);
+    padding: 33px 0px;
+    border-bottom: 1px solid rgba(33, 114, 129, 0.3);
+    background-color: red;
     &:last-of-type {
         border-bottom: none;
     }
+`;
 
+const ItemWrapperStyle = styled.div`
+    background-color: green;
+    width: 36%;
+`;
+const NumberWrapperStyle = styled.div`
+    background-color: aqua;
+    width: 9%;
+    display: flex;
+    justify-content: center;
+`;
+const PriceWrapperStyle = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: yellow;
+    width: 20%;
+`;
+const BadgeWrapperStyle = styled.div`
+    background-color: brown;
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+`;
+const ButtonWrapperStyle = styled.div`
+    background-color: yellowgreen;
+    width: 10%;
+    margin-left: auto;
+`;
+
+const IconWrapper = styled.div`
+    height: 54px;
+    min-width: 54px;
+    max-width: 54px;
+    background-color: rgba(224, 224, 224, .3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    cursor: pointer;
+    margin-left: auto;
+    &:hover {
+        background-color: rgba(224, 224, 224, 1);
+    }
 `;
 
 const Price = styled.span`
-color: var(--text-color);
-font-size: 2.4rem;
-font-family: fira-go;
-font-weight: 600;
+    color: var(--text-color);
+    font-size: 24px;
+    font-family: fira-go;
+    font-weight: 600;
 `;
 
 const OldPrice = styled(Price)`
-text-decoration: line-through;
-opacity: 0.3;
-margin-top: 0.3rem;
+    text-decoration: line-through;
+    opacity: 0.3;
+    margin-top: 5px;
 `;
 
 const Container = styled.div`
@@ -66,9 +126,8 @@ width: 100%;
 
 
 const Number = styled.span`
-    font-size: 2.4rem;
+    font-size: 24px;
     color: var(--text-color);
-    margin-right: 24.3rem;
     font-family: fira-go;
 `;
 
@@ -99,33 +158,54 @@ type itemType = {
 
 
 export const Badge = styled.div`
-    border-radius: 2.2rem;
-    width: 20.5rem;
-    height: 4.3rem;
+    border-radius: 22px;
+    max-height: 43px;
+    height: 100vh;
+    width: 200px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     background-color: ${(prop: BgProps) => prop.backgroundColor ?? 'rgba(34, 213, 174, .21)'};
     color: ${(prop: BgProps) => prop.color ?? '#22D5AE'};
-    font-size: 1.6rem;
+    font-size: 16px;
     font-family: 'helvetica';
     font-weight: 700;
-    /* font-family: fira-go; */
     flex-shrink: 0;
+    user-select: none;
 `;
 
-const IconWrapper = styled.div`
-    height: 5.4rem;
-    width: 5.4rem;
-    background-color: rgba(224, 224, 224, .3);
+
+const OrderListWrapper = styled.div`
     display: flex;
+    flex-direction: column;
+    padding-top: 65px;
+`;
+const OrderListTopSideWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    border-radius: 1.4rem;
-    cursor: pointer;
-    &:hover {
-        background-color: rgba(224, 224, 224, 1);
-    }
+    margin-bottom: 38px;
+    width: 100%;
+`;
+const OrderListTopSideInsideWrapper = styled.div`
+    display: flex;
+`;
+const SearchCount = styled.span`
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-weight: 500;
+`;
+const SearchCountText = styled.span`
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-weight: 700;
+    font-family: 'fira-go';
+`;
+
+const RightArrowStyle = styled(BsArrowRight)`
+    font-size: 22px;
 `;
 
 export default function OrdersList() {
@@ -172,51 +252,56 @@ export default function OrdersList() {
     }
 
     return (<>
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100.0rem' }}>
-            <div style={{display: 'flex', marginBottom: '3.2rem', justifyContent: 'space-between', width: '100%', alignItems: 'center'}}>
-            <div style={{ display: 'flex' }}>
-                <ChipWrapper style={{ marginRight: '2.0rem' }}>
-                    <ChipTitle style={{ margin: '0 .8rem' }}>დადასტურებული</ChipTitle>
-                </ChipWrapper>
+        <OrderListWrapper >
+            <OrderListTopSideWrapper >
+                <OrderListTopSideInsideWrapper>
+                    <ChipWrapper>
+                        <ChipTitle>დადასტურებული</ChipTitle>
+                    </ChipWrapper>
 
-                <ChipWrapper style={{ marginRight: '2.0rem' }} color={'rgba(34, 213, 174, .25)'}>
-                    <ChipTitle style={{ margin: '0 .8rem' }}>პროცესში</ChipTitle>
-                </ChipWrapper>
-                <ChipWrapper style={{ marginRight: '2.0rem' }}>
-                    <ChipTitle style={{ margin: '0 .8rem' }}>გაუქმებული</ChipTitle>
-                </ChipWrapper>
-            </div>
-            <span style={{fontSize: '1.6rem', color: 'var(--text-color)', opacity: 0.8, fontWeight: 500}}>სულ მოიძებნა: <span style={{fontWeight: 700,  fontFamily: 'fira-go'}}>12 შეკვეთა</span></span>
-            </div>
+                    <ChipWrapper color={'rgba(34, 213, 174, .25)'}>
+                        <ChipTitle>პროცესში</ChipTitle>
+                    </ChipWrapper>
+                    <ChipWrapper>
+                        <ChipTitle>გაუქმებული</ChipTitle>
+                    </ChipWrapper>
+                </OrderListTopSideInsideWrapper>
+                <SearchCount>სულ მოიძებნა: <SearchCountText>12 შეკვეთა</SearchCountText></SearchCount>
+            </OrderListTopSideWrapper>
 
-            {/* <Grid> */}
-                <Headers>
-                    <HeaderItem style={{marginRight: '36.7rem'}}>პროდუქტი</HeaderItem>
-                    <HeaderItem style={{marginRight: '24.3rem'}}>რაოდენობა</HeaderItem>
-                    <HeaderItem style={{marginRight: '44.1rem'}}>ფასი</HeaderItem>
-                    <HeaderItem>სტატუსი</HeaderItem>
-                </Headers>
-                {items.map((item, i) => <>
-                    <ItemFlexWrapper key={i}>
-                    {/* @ts-ignore */}
-                    <Item style={{marginRight: '10.5rem'}} name={item.name} size={item.size} color={item.color} />
-                    <Number>{item.quantity}x</Number>
-                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '8.0rem', alignItems: 'flex-end', marginRight: '33.0rem' }}>
+            <Headers>
+                <HeaderItem>პროდუქტი</HeaderItem>
+                <HeaderItem>რაოდენობა</HeaderItem>
+                <HeaderItem>ფასი</HeaderItem>
+                <HeaderItem>სტატუსი</HeaderItem>
+            </Headers>
+            {items.map((item, i) => <>
+                <ItemFlexWrapper key={i}>
+                    <ItemWrapperStyle>
+                        {/* @ts-ignore */}
+                        <Item name={item.name} size={item.size} color={item.color} />
+                    </ItemWrapperStyle>
+                    <NumberWrapperStyle>
+                        <Number>{item.quantity}x</Number>
+                    </NumberWrapperStyle>
+                    <PriceWrapperStyle>
                         <Price>$79.90</Price>
                         <OldPrice>$123.90</OldPrice>
-                    </div>
+                    </PriceWrapperStyle>
 
-                    <Badge color={colors[item.status]?.text} style={{marginRight: '33.9rem'}} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
-                    <Link href="/history">
-                        <IconWrapper>
-                            <BsArrowRight size={'2.0rem'} color={'#3A7BD5'} />
-                        </IconWrapper>
-                    </Link>
-                    </ItemFlexWrapper>
-                    {/* <div></div> */}
-                </>)}
-            {/* </Grid> */}
-        </div>
+                    <BadgeWrapperStyle>
+                        <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
+                    </BadgeWrapperStyle>
+                    <ButtonWrapperStyle>
+                        <Link href="/history">
+                            <IconWrapper>
+                                <RightArrowStyle color={'#3A7BD5'} />
+                            </IconWrapper>
+                        </Link>
+                    </ButtonWrapperStyle>
+                </ItemFlexWrapper>
+            </>)}
+        </OrderListWrapper>
 
     </>)
 };

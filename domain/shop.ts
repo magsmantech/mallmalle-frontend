@@ -79,7 +79,7 @@ export const calculateProductPrices = (product: Product | null, variationId = 0)
   const originalPrice = parseFloat(product?.variations?.find(v => v.id == variationId)?.price || '0');
   const finalPrice = product 
   ? (
-    product?.discount.length > 0
+    product?.discount?.length > 0
       ? product?.discount?.reduce((carryPrice, newDiscount) => carryPrice * (100 - newDiscount.value) / 100, originalPrice)
       : originalPrice
     )

@@ -7,10 +7,15 @@ type Props= {
 
 export const ChipWrapper = styled.div`
     display: flex;
-    height: 4.8rem;
-    border-radius: 2.5rem;
-    padding: .8rem;
+    max-height: 48px;
+    height: 100vh;
+    border-radius: 25px;
+    padding: 0px 15px;
     align-items: center;
+    margin-right: 25px;
+        &:last-child {
+            margin-right: 0px;
+        }
     background-color: ${(props: Props)=> props.color ??  '#F2F2F2'};
     cursor: pointer;
     transition: all 150ms ease-in-out;
@@ -20,8 +25,8 @@ export const ChipWrapper = styled.div`
 `;
 
 export const ChipTitle = styled.span`
-    margin-left: .8rem;
-    font-size: 1.6rem;
+    font-size: 16px;
+    text-align: center;
     font-family: 'helvetica';
     color: var(--text-color);
     font-weight: 600;

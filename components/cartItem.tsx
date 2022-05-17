@@ -1,9 +1,40 @@
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
 import { calculateProductPrices, CartItem } from "../domain/shop";
+import api from "../features/api";
+import Loader from "./Loader";
 
 
-const ItemName= styled.span`
+
+
+const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
+  const { data: cart, isLoading: isCartLoading, refetch: refetchCart, isSuccess: isCartSucces } = api.useGetCartQuery(undefined);
+  // const { product, product_id, variation_id, quantity, total } = item;
+  // const {
+  //   selectedVariation,
+  //   selectedSize,
+  //   selectedColor,
+  // } = calculateProductPrices(item.product, variation_id);
+  return (
+    isCartLoading ? <Loader /> : !cart ? (<span>Not Found</span>) : (
+      cart.items.map((i, index) => (
+        <ItemWrapper style={{ ...style }}>
+          <ItemImg src={'/assets/photo-3.jpg'} />
+          <ItemTextWrapper>
+            <ItemName>Reima Overalls</ItemName>
+            {/* <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div> //TODO old from api
+            <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{selectedColor?.color_name}</ItemValue></div> */}
+            <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>XL</ItemValue></div>
+            <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>ლურჯი</ItemValue></div>
+          </ItemTextWrapper>
+        </ItemWrapper>
+      ))
+    )
+
+  );
+}
+
+const ItemName = styled.span`
 color: var(--text-color);
 font-size: 24px;
 line-height: 21px;
@@ -18,7 +49,7 @@ margin-bottom: 15px;
   }
 `;
 
-const ItemLabel= styled.span`
+const ItemLabel = styled.span`
 color: var(--text-color);
 font-size: 18px;
 font-family: 'helvetica';
@@ -29,7 +60,7 @@ font-weight: 500;
   }
 `;
 
-const ItemValue= styled.span`
+const ItemValue = styled.span`
 color: var(--text-color);
 font-size: 18px;
 font-weight: 500;
@@ -69,25 +100,5 @@ display: flex;
 width: 100%;
 
 `;
-
-
-const Item = ({ item, style } : { item: CartItem } & { style?: any }) => {
-    const { product, product_id, variation_id, quantity, total } = item;
-    const {
-      selectedVariation,
-      selectedSize,
-      selectedColor,
-    } = calculateProductPrices(item.product, variation_id);
-    return (
-    <ItemWrapper style={{...style}}>
-      <ItemImg src={'/assets/photo-3.jpg'}/>
-      <ItemTextWrapper>
-        <ItemName>{product.product_name}</ItemName>
-        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>
-        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{selectedColor?.color_name}</ItemValue></div>
-      </ItemTextWrapper>
-    </ItemWrapper>
-    );
-}
 
 export default Item;
