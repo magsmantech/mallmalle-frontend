@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Responsive from "../../config/Responsive";
 
 type Props= {
     color?: string,
@@ -22,6 +23,10 @@ export const ChipWrapper = styled.div`
     &:hover {
         background-color: ${(props: Props)=> props.hoverColor ??  '#F2F2F2'};
     }
+        ${Responsive.tabletMobile}{
+            margin-bottom: 14px;
+            margin-right: 14px;
+        }
 `;
 
 export const ChipTitle = styled.span`

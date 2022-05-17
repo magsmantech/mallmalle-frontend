@@ -5,6 +5,10 @@ import styled from "styled-components";
 import Item from "./cartItem";
 import Quantity from "./quantity";
 import { ChipWrapper, ChipTitle } from "./styled/Chips";
+import Responsive from "../config/Responsive"
+
+
+
 
 const Grid = styled.div`
 display: grid;
@@ -19,6 +23,9 @@ const Headers = styled.div`
     display: flex;
     width: 100%;
     margin-bottom: 15px;
+        ${Responsive.tabletMobile} {
+            display: none;
+        }
 `;
 
 const HeaderItem = styled.div`
@@ -29,20 +36,20 @@ const HeaderItem = styled.div`
     opacity: 0.5;
     user-select: none;
         &:nth-child(1){
-            background-color: green;
+            /* background-color: green; */
             width: 36%;
         }
         &:nth-child(2) {
-            background-color: aqua;
-            width: 9%;
+            /* background-color: aqua; */
+            width: 10%;
         }
         &:nth-child(3) {
-            background-color: yellow;
-            width: 20%;
+            /* background-color: yellow; */
+            width: 18%;
             text-align: right;
         }
         &:nth-child(4) {
-            background-color: brown;
+            /* background-color: brown; */
             width: 25%;
             text-align: right;
         }
@@ -54,39 +61,64 @@ const ItemFlexWrapper = styled.div`
     width: 100%;
     padding: 33px 0px;
     border-bottom: 1px solid rgba(33, 114, 129, 0.3);
-    background-color: red;
+    /* background-color: red; */
     &:last-of-type {
         border-bottom: none;
     }
+        ${Responsive.tabletMobile}{
+            flex-direction: column;
+        }
 `;
 
 const ItemWrapperStyle = styled.div`
-    background-color: green;
+    /* background-color: green; */
     width: 36%;
+        ${Responsive.tabletMobile}{
+            width: 100%;
+        }
 `;
 const NumberWrapperStyle = styled.div`
-    background-color: aqua;
-    width: 9%;
+    /* background-color: aqua; */
+    width: 10%;
     display: flex;
     justify-content: center;
+        ${Responsive.tabletMobile}{
+            display: none;
+        }
 `;
 const PriceWrapperStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    background-color: yellow;
-    width: 20%;
+    /* background-color: yellow; */
+    width: 18%;
+        ${Responsive.tabletMobile}{
+            width: fit-content;
+            align-items: flex-start;
+            margin-left: 150px;
+            margin-top: -25px;
+        }
+        ${Responsive.mobile}{
+            margin-left: 88px;
+            margin-top: 0px;
+        }
 `;
 const BadgeWrapperStyle = styled.div`
-    background-color: brown;
+    /* background-color: brown; */
     width: 25%;
     display: flex;
     justify-content: flex-end;
+        ${Responsive.tabletMobile}{
+            display: none;
+        }
 `;
 const ButtonWrapperStyle = styled.div`
-    background-color: yellowgreen;
+    /* background-color: yellowgreen; */
     width: 10%;
-    margin-left: auto;
+    margin-top: -5px;
+        ${Responsive.tabletMobile}{
+            display: none;
+        }
 `;
 
 const IconWrapper = styled.div`
@@ -189,12 +221,18 @@ const OrderListTopSideWrapper = styled.div`
 `;
 const OrderListTopSideInsideWrapper = styled.div`
     display: flex;
+        ${Responsive.tabletMobile}{
+            flex-wrap: wrap;
+        }
 `;
 const SearchCount = styled.span`
     font-size: 16px;
     color: var(--text-color);
     opacity: 0.8;
     font-weight: 500;
+        ${Responsive.tabletMobile}{
+            display: none;
+        }
 `;
 const SearchCountText = styled.span`
     font-size: 16px;
