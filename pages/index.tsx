@@ -11,6 +11,8 @@ import config from "../config.json";
 import { Product } from "../domain/shop";
 import styled from 'styled-components';
 import Responsive from "../config/Responsive";
+import RadioButton from "../components/customStyle/RadioButton";
+
 
 
 const Home: NextPage = () => {
@@ -21,6 +23,8 @@ const Home: NextPage = () => {
   const [offers, setOffers] = useState<any>(null);
   const [newProducts, setNewProducts] = useState<any>(null);
   const [discounts, setDiscounts] = useState<any>(null);
+
+  const [selected, setselected] = useState();
 
   useEffect(() => {
     getDashboardData()
@@ -45,6 +49,15 @@ const Home: NextPage = () => {
 
   return (
     <>
+      {/* <RadioButton
+        id="userType"
+        onChange={(value) => setselected(value)}
+        options={[
+          { label: "i am levan", value: "levan" },
+          { label: "i am giorgi", value: "giorgi" },
+        ]}
+        value={selected}
+      /> */}
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
         <OneSaleItemWrapper>

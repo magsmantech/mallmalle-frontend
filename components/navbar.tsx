@@ -78,16 +78,19 @@ const Navbar: React.FC<{
                         </ItemWrapper>
                     </Link>
                     {/* } */}
-                    <Link href='/cart'>
-                        <ItemWrapper >
-                            {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
-                            <CartIconStyle />
-                            <ItemLabel>კალათა</ItemLabel>
-                            {loggedIn === true ? (
-                                cart.items?.length < 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
-                            ) : null}
-                        </ItemWrapper>
-                    </Link>
+                    {loggedIn === false ? null : (
+                        <Link href='/cart'>
+                            <ItemWrapper >
+                                {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
+                                <CartIconStyle />
+                                <ItemLabel>კალათა</ItemLabel>
+                                {loggedIn === true ? (
+                                    cart.items?.length < 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
+                                ) : null}
+                            </ItemWrapper>
+                        </Link>
+                    )}
+
                 </Nav>
                 <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
             </>
