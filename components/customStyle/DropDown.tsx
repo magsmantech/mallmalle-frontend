@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RadioButton from './RadioButton';
 import { BsChevronDown } from 'react-icons/bs'
+import Responsive from '../../config/Responsive';
 const DropDown: React.FC<{}> = ({ }) => {
 
   const [selected, setselected] = useState();
@@ -75,6 +76,24 @@ const DropDownBtn = styled(DropdownButton)`
     }
     button + div {
       width: 100%;
+      background-color: #fff;
+      border-radius: 18px;
+      border: 0px;
+      padding: 15px 10px;
+      box-shadow: 0 0 0.4rem 0.4rem rgb(0 0 0 / 8%);
+        ${Responsive.mobile} {
+          position: fixed !important;
+          left: 0 !important;
+          bottom: 0 !important;
+          height: 70%;
+          margin-top: auto;
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          transform: unset !important;
+          overflow-y: scroll;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
     }
     &.show > .btn-primary.dropdown-toggle {
       background-color: #F2F2F2;
