@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import Responsive from "../config/Responsive";
 import RadioButton from "../components/customStyle/RadioButton";
 import DropDown from "../components/customStyle/DropDown";
+import SidebarFilter from "../components/customStyle/SidebarFilter";
 
 
 
@@ -50,10 +51,10 @@ const Home: NextPage = () => {
   const [selected, setselected] = useState();
   return (
     <>
-      
 
-      <DropDown/>
-      
+
+      {/* <DropDown/> */}
+
       {/* <RadioButton
           id="userType"
           onChange={(value) => setselected(value)}
@@ -63,6 +64,8 @@ const Home: NextPage = () => {
           ]}
           value={selected}
         /> */}
+
+      {/* <SidebarFilter /> */}
 
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
