@@ -21,15 +21,12 @@
 .backButton {
     display: flex;
     align-items: center;
-    font-size: 1.8rem;
+    font-size: 18px;
     font-family: fira-go;
     font-weight: 500;
     color: var(--text-color);
-    margin-top: 3.8rem;
     cursor: pointer;
-
-    max-width: 22.0rem;
-    /* flex-shrink: 1; */
+    margin-top: 40px;
 }
 
 .wrapper {
@@ -62,26 +59,9 @@
 }
 
 
-
-.addressTitle {
-    color: var(--text-color);
-    font-size: 2.0rem;
-    /* font-weight: bold; */
-    font-family: 'BPG WEB 002 CAPS';
-    margin-bottom: 1.8rem;
-}
-
-.addressItem {
-    display: flex;
-    margin-bottom: 1.5rem;
-    gap: 1.4rem;
-    
-    position: relative;
-}
-
 .addressItemText {
     color: var(--text-color);
-    font-size: 2.0rem;
+    font-size: 20px;
     display: flex;
     flex-direction: column;
 }
@@ -89,6 +69,8 @@
 .address, .zip {
     opacity: 0.5;
     margin-bottom: .5rem;
+    font-size: 18px;
+    line-height: 20px;
 }
 
 .city {

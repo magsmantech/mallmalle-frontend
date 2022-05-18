@@ -17,7 +17,7 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
   // } = calculateProductPrices(item.product, variation_id);
   return (
     isCartLoading ? <Loader /> : !cart ? (<span>Not Found</span>) : (
-      cart.items.map((i, index) => (
+      cart.items?.map((i, index) => (
         <ItemWrapper style={{ ...style }}>
           <ItemImg src={'/assets/photo-3.jpg'} />
           <ItemTextWrapper>
