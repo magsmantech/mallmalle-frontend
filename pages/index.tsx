@@ -12,6 +12,7 @@ import { Product } from "../domain/shop";
 import styled from 'styled-components';
 import Responsive from "../config/Responsive";
 import RadioButton from "../components/customStyle/RadioButton";
+import DropDown from "../components/customStyle/DropDown";
 
 
 
@@ -24,7 +25,7 @@ const Home: NextPage = () => {
   const [newProducts, setNewProducts] = useState<any>(null);
   const [discounts, setDiscounts] = useState<any>(null);
 
-  const [selected, setselected] = useState();
+
 
   useEffect(() => {
     getDashboardData()
@@ -46,18 +47,23 @@ const Home: NextPage = () => {
     "/assets/cover.png",
     "/assets/cover.png",
   ];
-
+  const [selected, setselected] = useState();
   return (
     <>
+      
+
+      <DropDown/>
+      
       {/* <RadioButton
-        id="userType"
-        onChange={(value) => setselected(value)}
-        options={[
-          { label: "i am levan", value: "levan" },
-          { label: "i am giorgi", value: "giorgi" },
-        ]}
-        value={selected}
-      /> */}
+          id="userType"
+          onChange={(value) => setselected(value)}
+          options={[
+            { label: "i am levan", value: "levan" },
+            { label: "i am giorgi", value: "giorgi" },
+          ]}
+          value={selected}
+        /> */}
+
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
         <OneSaleItemWrapper>
