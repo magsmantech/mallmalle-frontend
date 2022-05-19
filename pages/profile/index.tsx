@@ -24,6 +24,8 @@ import { useDispatch } from "react-redux";
 import { removeAccessToken, getUserData } from "../../services/auth-services";
 import Responsive from "../../config/Responsive";
 import Loader from "../../components/Loader";
+import api from "../../features/api";
+import { profile } from "console";
 
 type TabItemProps = {
   selected?: boolean;
@@ -310,11 +312,7 @@ const CustomBorder = styled.div`
 
 
 
-type ProfileTabProps = {
-  userInfo: any;
-};
-
-const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
+const PersonalInfo = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const _logOut = () => {
@@ -333,7 +331,15 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
     return mobile.slice(4);
   };
 
-  return (
+  const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
+
+  const userInfo = profile
+
+  return isProfileLoading ? (
+    <Loader />
+  ) : !profile ? (
+    <span>Not Found</span>
+  ) : (
     <>
       <PersonalInfoWrapper className={styles.personalInfoWrapper}>
         <GridItem className={styles.gridItem}>
@@ -344,10 +350,10 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
             </IconWrapper>
             <div className={styles.headerText}>
               <UserName className={styles.name}>
-                {userInfo.first_name} {userInfo.last_name}
+                {profile.profile.user.first_name} {profile.profile.user.last_name}
               </UserName>
               <OrderNo className={styles.orderNo}>
-                რეგისტრაციის დრო: {getYearFromDate(userInfo.created_at)} წელი
+                რეგისტრაციის დრო: {getYearFromDate(profile.profile.user.created_at)} წელი
               </OrderNo>
             </div>
           </HeaderStyle>
@@ -385,7 +391,7 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
           <InputWrapper >
             <InputModified
               placeholder="ელ-ფოსტა"
-              defaultValue={userInfo.email}
+              defaultValue={profile.profile.user.email}
             />
             <InputIconWrapper>
               <EmailIcon />
@@ -397,7 +403,7 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
           <InputWrapper>
             <InputModified
               placeholder="(+955) 555 78 97 93"
-              defaultValue={formatMobile(userInfo.mobile)}
+              defaultValue={"+995 " + profile.profile.user.mobile}
             />
             <InputIconWrapper>
               <PhoneIcon />
@@ -443,13 +449,15 @@ const PersonalInfo = ({ userInfo }: ProfileTabProps) => {
             {/* <div> */}
             <LocationIconStyle color={"var(--text-color)"} />
             {/* </div> */}
-            <AddressItemText className={styles.addressItemText}>
-              <CityStyle className={styles.city}>Tbilisi</CityStyle>
-              <AddressStyle className={styles.address}>
-                მუხიანი, ალეკო გობრონიძის #11 / ბინა 177
-              </AddressStyle>
-              <ZipCodeStyle className={styles.zip}>ZIP კოდი: 01103</ZipCodeStyle>
-            </AddressItemText>
+            {profile.profile.addresses.map((a, index) => (
+              <AddressItemText key={index} className={styles.addressItemText}>
+                <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
+                <AddressStyle className={styles.address}>
+                  {a.address_1}
+                </AddressStyle>
+                <ZipCodeStyle className={styles.zip}>ZIP კოდი: {a.zip}</ZipCodeStyle>
+              </AddressItemText>
+            ))}
           </AddressItem>
           <AddressButton>
             მისამართის დამატება
@@ -489,7 +497,7 @@ const Profile: NextPage = () => {
             router.push("/auth");
             return;
           }
-          console.log(res.data.profile);
+          // console.log(res.data.profile);
           const { data } = res;
           setUserInfo(data?.profile?.user);
           setLoadPage(true);
@@ -536,13 +544,13 @@ const Profile: NextPage = () => {
 
             <div className={styles.tabPanels}>
               <TabPanel className={styles.tabPanel}>
-                <PersonalInfo userInfo={userInfo}></PersonalInfo>
+                <PersonalInfo />
               </TabPanel>
               <TabPanel className={styles.tabPanel}>
-                <OrdersList></OrdersList>
+                <OrdersList userInfo={userInfo} />
               </TabPanel>
               <TabPanel className={styles.tabPanel}>
-                <Favorites/>
+                <Favorites />
               </TabPanel>
               <TabPanel className={styles.tabPanel}>
                 <MyPayments />
@@ -552,7 +560,7 @@ const Profile: NextPage = () => {
         </div>
       ) : (
         // <h1 style={{ margin: "2rem 0 50rem 0" }}>Loading...</h1>
-        <Loader/>
+        <Loader />
       )}
     </>
   );

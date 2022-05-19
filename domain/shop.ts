@@ -160,5 +160,7 @@ export type User = {
 
 export type Order = {
   id: number;
-  // TODO
+  status: number;
+  sub_total: string;
+  discounted_sub_total: number;
 }

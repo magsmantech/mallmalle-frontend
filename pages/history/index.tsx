@@ -12,6 +12,105 @@ import Link from "next/link";
 import Responsive from "../../config/Responsive";
 
 
+
+const Item = () => {
+    return (
+        <>
+            <ItemWrapperStyle>
+                <ItemImage src={'/assets/123123.png'} />
+                <div className={styles.itemTextContainer}>
+                    <ItemName>Reima Overalls  1x</ItemName>
+                    <StarsWrapper>
+                        <Stars >
+                            <StartIcon color={'#22D5AE'} />
+                            <StartIcon color={'#22D5AE'} />
+                            <StartIcon color={'#22D5AE'} />
+                            <StartIcon color={'#22D5AE'} />
+                            <StartIcon color={'#22D5AE'} />
+                        </Stars>
+                        <ViewCount>402 ნახვა</ViewCount>
+                    </StarsWrapper>
+                    <ItemListWrapper>
+                        <ItemLabel>ზომა: </ItemLabel> <ItemValue>XL</ItemValue>
+                    </ItemListWrapper>
+                    <ItemListWrapper>
+                        <ItemLabel>ფერი: </ItemLabel> <ItemValue>მწვანე</ItemValue>
+                    </ItemListWrapper>
+                    <ItemListWrapper>
+                        <ItemLabel>რაოდენობა: </ItemLabel> <ItemValue>1x</ItemValue>
+                    </ItemListWrapper>
+                    <Price>$79.90</Price>
+                    <OldPrice>$123.90</OldPrice>
+                </div>
+            </ItemWrapperStyle>
+        </>
+    )
+
+}
+
+const History: NextPage = () => {
+    return (
+        <>
+            <SectionStyle className={styles.section}>
+                <div className={styles.container}>
+                    <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                    <Breadcrumbs>მთავარი / პროდუქტები / ყიდვის ისტორია / Reima Overalls</Breadcrumbs>
+                    <Link href={{
+                        pathname: '/profile',
+                        query: { tab: 'orders-history' },
+                    }} >
+                        <div className={styles.backButton}>
+                            <IconWrapper>
+                                <BsArrowLeft color={'#3A7BD5'} />
+                            </IconWrapper>
+                            უკან დაბრუნება
+                        </div>
+                    </Link>
+                    <WrapperStyle className={styles.wrapper}>
+                        <ItemWrapper>
+                            <Item />
+                        </ItemWrapper>
+                        <BadgeStyle>დადასტურებული</BadgeStyle>
+                        <AddressWrapperStyle>
+
+                            <AddressTitle>მისამართი:</AddressTitle>
+                            <AddressItem>
+                                <LocationIconStyle />
+                                <div className={styles.addressItemText}>
+                                    <div className={styles.city}>Tbilisi</div>
+                                    <div className={styles.address}>მუხიანი, ალეკო გობრონიძის #11 / ბინა 177</div>
+                                    <div className={styles.zip}>ZIP კოდი: 01103</div>
+                                </div>
+                            </AddressItem>
+
+                        </AddressWrapperStyle>
+
+                        <PayMentMethodWrapper>
+                            <AddressTitle>გადახდის მეთოდი</AddressTitle>
+                            <PayMentMethod>უნაღდო ანგარიშწორება</PayMentMethod>
+                            {/* <div className={styles.paymentMethod}>
+                                <img className={styles.paymentIcon} src={'/assets/visa.png'} />
+                                <div className={styles.cardNumber}>4332 **** **** **83  </div>
+                            </div> */}
+                        </PayMentMethodWrapper>
+                    </WrapperStyle>
+
+                </div>
+
+                <DividerStyle />
+
+                <DescriptionTitle>
+                    დამატებითი ინფორმაცია
+                </DescriptionTitle>
+                <DescriptionText>
+                    შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის
+                </DescriptionText>
+            </SectionStyle>
+        </>
+    )
+}
+
+// styles
 const SectionStyle = styled.section`
     display: flex;
     flex-direction: column;
@@ -217,110 +316,7 @@ const Breadcrumbs = styled.span`
 `;
 
 
-const History: NextPage = () => {
-    return (
-        <>
-            <SectionStyle className={styles.section}>
-                <div className={styles.container}>
-                    <SectionTitle>ყიდვის ისტორია</SectionTitle>
-                    <Breadcrumbs>მთავარი / პროდუქტები / ყიდვის ისტორია / Reima Overalls</Breadcrumbs>
-                    <Link href={{
-                        pathname: '/profile',
-                        query: { tab: 'orders-history' },
-                    }} >
-                        <div className={styles.backButton}>
-                            <IconWrapper>
-                                <BsArrowLeft color={'#3A7BD5'} />
-                            </IconWrapper>
-                            უკან დაბრუნება
-                        </div>
-                    </Link>
-                    <WrapperStyle className={styles.wrapper}>
-                        <ItemWrapper>
-                            <Item />
-                        </ItemWrapper>
-                        <BadgeStyle>დადასტურებული</BadgeStyle>
-                        <AddressWrapperStyle>
-
-                            <AddressTitle>მისამართი:</AddressTitle>
-                            <AddressItem>
-                                <LocationIconStyle />
-                                <div className={styles.addressItemText}>
-                                    <div className={styles.city}>Tbilisi</div>
-                                    <div className={styles.address}>მუხიანი, ალეკო გობრონიძის #11 / ბინა 177</div>
-                                    <div className={styles.zip}>ZIP კოდი: 01103</div>
-                                </div>
-                            </AddressItem>
-
-                        </AddressWrapperStyle>
-
-                        <PayMentMethodWrapper>
-                            <AddressTitle>გადახდის მეთოდი</AddressTitle>
-                            <PayMentMethod>უნაღდო ანგარიშწორება</PayMentMethod>
-                            {/* <div className={styles.paymentMethod}>
-                                <img className={styles.paymentIcon} src={'/assets/visa.png'} />
-                                <div className={styles.cardNumber}>4332 **** **** **83  </div>
-                            </div> */}
-                        </PayMentMethodWrapper>
-                    </WrapperStyle>
-
-                </div>
-
-                <DividerStyle />
-
-                <DescriptionTitle>
-                    დამატებითი ინფორმაცია
-                </DescriptionTitle>
-                <DescriptionText>
-                    შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის
-                </DescriptionText>
-            </SectionStyle>
-        </>
-    )
-}
-
 export default History;
 
-const Item = () => {
-    return (
-        <>
-            <ItemWrapperStyle>
-                <ItemImage src={'/assets/123123.png'} />
-                <div className={styles.itemTextContainer}>
-                    <ItemName>Reima Overalls  1x</ItemName>
-                    <StarsWrapper>
-                        <Stars >
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                        </Stars>
-                        <ViewCount>402 ნახვა</ViewCount>
-                    </StarsWrapper>
-                    <ItemListWrapper>
-                        <ItemLabel>ზომა: </ItemLabel> <ItemValue>XL</ItemValue>
-                    </ItemListWrapper>
-                    <ItemListWrapper>
-                        <ItemLabel>ფერი: </ItemLabel> <ItemValue>მწვანე</ItemValue>
-                    </ItemListWrapper>
-                    <ItemListWrapper>
-                        <ItemLabel>რაოდენობა: </ItemLabel> <ItemValue>1x</ItemValue>
-                    </ItemListWrapper>
-                    <Price>$79.90</Price>
-                    <OldPrice>$123.90</OldPrice>
-                </div>
-            </ItemWrapperStyle>
-        </>
-    )
-
-}
 
 
-// import { NextPage } from "next"
-
-// const Test: NextPage = () => {
-//     return <h1>Test</h1>
-// }
-
-// export default Test;

@@ -58,14 +58,14 @@ const api = createApi({
         method: 'POST',
       })
     }),
-    
+
     updateQuantity: builder.mutation<Cart, { cartItemId: number, quantity: number }>({
       query: ({ cartItemId, quantity }) => ({
         url: `/bag/${cartItemId}?quantity=${quantity}`,
         method: 'PUT',
       }),
     }),
-    
+
     removeFromCart: builder.mutation<Cart, { cartItemId: number }>({
       query: ({ cartItemId }) => ({
         url: `bag/${cartItemId}`,
@@ -78,6 +78,24 @@ const api = createApi({
     getAddresses: builder.query<Address[], undefined>({
       query: (_args) => ({
         url: `/user/addresses`,
+        method: 'GET',
+      })
+    }),
+    //
+    // products<---
+    //
+    getProducts: builder.query<Product[], undefined>({
+      query: (_args) => ({
+        url: `/products`,
+        method: 'GET',
+      })
+    }),
+    //
+    // product <---
+    //
+    getProductById: builder.query<Product, number>({
+      query: (productId) => ({
+        url: `/product/${productId}`,
         method: 'GET',
       })
     }),
@@ -95,7 +113,7 @@ const api = createApi({
     } | {
       // error messages
       address_id: string[];// address field error message
-     }, { addressId: number }>({
+    }, { addressId: number }>({
       query: ({ addressId }) => ({
         url: `/user/order?address_id=${addressId}`,
         method: 'POST',
@@ -104,7 +122,7 @@ const api = createApi({
     initiatePayment: builder.mutation<{
       message: string;
       redirect_url: string;
-     }, { orderId: number }>({
+    }, { orderId: number }>({
       query: ({ orderId }) => ({
         url: `/pay/${orderId}`,
         method: 'GET',
@@ -113,13 +131,13 @@ const api = createApi({
     //
     // Profile
     //
-    profile: builder.query<{ 
-        profile: { 
-          user: User,
-          addresses: Address[],
-        },
-        order_history: Order[],
-      }, undefined>({
+    profile: builder.query<{
+      profile: {
+        user: User,
+        addresses: Address[],
+      },
+      order_history: Order[],
+    }, undefined>({
       query: (_args) => ({
         url: `/user/profile`,
         method: 'GET',

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
@@ -6,7 +7,171 @@ import Item from "./cartItem";
 import Quantity from "./quantity";
 import { ChipWrapper, ChipTitle } from "./styled/Chips";
 import Responsive from "../config/Responsive"
+import { Order, } from '../domain/shop';
+import api from "../features/api";
+import Loader from "./Loader";
 
+
+
+
+
+const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
+
+    
+
+
+    const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
+    const { data: products, isLoading: isProductsLoading, refetch: refetchProducts, isSuccess: isProductsSucces } = api.useGetProductsQuery(undefined);
+    // const { data: product, isLoading: isProductLoading, refetch: refetchProduct, isSuccess: isProductSucces } = api.useGetProductByIdQuery(1);
+
+    const items: itemType[] = [
+        {
+            name: 'Reima Overalls',
+            size: 'XL',
+            color: 'ლურჯი',
+            quantity: 2,
+            status: 'success',
+            statusLabel: 'დადასტურებული',
+        },
+        {
+            name: 'Reima Overalls',
+            size: 'XL',
+            color: 'ლურჯი',
+            quantity: 2,
+            status: 'warning',
+            statusLabel: 'პროცესში',
+        },
+        {
+            name: 'Reima Overalls',
+            size: 'XL',
+            color: 'ლურჯი',
+            quantity: 2,
+            status: 'error',
+            statusLabel: 'გაუქმებული',
+        },
+    ];
+
+    const colors: allColor = {
+        success: {
+            text: '#22D5AE',
+            bg: 'rgba(34, 213, 174, .21)',
+        },
+        warning: {
+            text: 'rgba(213, 213, 34, 1)',
+            bg: 'rgba(213, 213, 34, .21)',
+        },
+        error: {
+            text: 'rgba(213, 34, 34, 1)',
+            bg: 'rgba(213, 34, 34, .21)',
+        },
+    }
+
+    // console.log("levani " + userInfo.discounted_sub_total)
+
+    // isProductLoading ? "loading" : product?.product_name
+
+    return isProfileLoading ? (
+        <Loader />
+    ) : !profile ? (
+        <span>Not Found</span>
+    ) : (<>
+        <OrderListWrapper >
+            <OrderListTopSideWrapper >
+                <OrderListTopSideInsideWrapper>
+                    <ChipWrapper>
+                        <ChipTitle>დადასტურებული</ChipTitle>
+                    </ChipWrapper>
+                    <ChipWrapper color={'rgba(34, 213, 174, .25)'}>
+                        <ChipTitle>პროცესში</ChipTitle>
+                    </ChipWrapper>
+                    <ChipWrapper>
+                        <ChipTitle>გაუქმებული</ChipTitle>
+                    </ChipWrapper>
+                </OrderListTopSideInsideWrapper>
+                <SearchCount>სულ მოიძებნა: <SearchCountText>12 შეკვეთა</SearchCountText></SearchCount>
+            </OrderListTopSideWrapper>
+
+            <Headers>
+                <HeaderItem>პროდუქტი</HeaderItem>
+                <HeaderItem>რაოდენობა</HeaderItem>
+                <HeaderItem>ფასი</HeaderItem>
+                <HeaderItem>სტატუსი</HeaderItem>
+            </Headers>
+            {/* {Order map((i, index) => {
+                const product = products.find(p => p.id == item.product_id);
+                    return (
+                        <h1>{}</h1>
+                    )
+            } */}
+
+            {/* {Order.map((i, index) => {
+                const product = products.find(p => p.id == item.product_id);
+
+            })} */}
+
+            {/* {isProductLoading ? <Loader /> : (
+                product?.product_name.map(i => (
+                    <h1>{i.product_name}</h1>
+                ))
+            )} */}
+
+            {profile.order_history.map((o, index) => (
+                <ItemFlexWrapper key={index}>
+                    <ItemWrapperStyle>
+                        {/* @ts-ignore */}
+                        {/* <Item name={item.name} size={item.size} color={item.color} /> */}
+                    </ItemWrapperStyle>
+                    <NumberWrapperStyle>
+                        {/* <Number>{item.quantity}x</Number> */}
+                    </NumberWrapperStyle>
+                    <PriceWrapperStyle>
+                        <Price>{o.sub_total}</Price>
+                        <OldPrice>{o.discounted_sub_total}</OldPrice>
+                    </PriceWrapperStyle>
+
+                    <BadgeWrapperStyle>
+                        {/* <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge> */}
+                    </BadgeWrapperStyle>
+                    <ButtonWrapperStyle>
+                        <Link href="/history">
+                            <IconWrapper>
+                                <RightArrowStyle color={'#3A7BD5'} />
+                            </IconWrapper>
+                        </Link>
+                    </ButtonWrapperStyle>
+                </ItemFlexWrapper>
+            ))}
+
+            {items.map((item, i) => <>
+                <ItemFlexWrapper key={i}>
+                    <ItemWrapperStyle>
+                        {/* @ts-ignore */}
+                        <Item name={item.name} size={item.size} color={item.color} />
+                    </ItemWrapperStyle>
+                    <NumberWrapperStyle>
+                        <Number>{item.quantity}x</Number>
+                    </NumberWrapperStyle>
+                    <PriceWrapperStyle>
+                        <Price>$79.90</Price>
+                        <OldPrice>$123.90</OldPrice>
+                    </PriceWrapperStyle>
+
+                    <BadgeWrapperStyle>
+                        <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
+                    </BadgeWrapperStyle>
+                    <ButtonWrapperStyle>
+                        <Link href="/history">
+                            <IconWrapper>
+                                <RightArrowStyle color={'#3A7BD5'} />
+                            </IconWrapper>
+                        </Link>
+                    </ButtonWrapperStyle>
+                </ItemFlexWrapper>
+            </>)}
+        </OrderListWrapper>
+
+    </>)
+};
 
 
 
@@ -246,100 +411,5 @@ const RightArrowStyle = styled(BsArrowRight)`
     font-size: 22px;
 `;
 
-export default function OrdersList() {
-    const items: itemType[] = [
-        {
-            name: 'Reima Overalls',
-            size: 'XL',
-            color: 'ლურჯი',
-            quantity: 2,
-            status: 'success',
-            statusLabel: 'დადასტურებული',
-        },
-        {
-            name: 'Reima Overalls',
-            size: 'XL',
-            color: 'ლურჯი',
-            quantity: 2,
-            status: 'warning',
-            statusLabel: 'პროცესში',
-        },
-        {
-            name: 'Reima Overalls',
-            size: 'XL',
-            color: 'ლურჯი',
-            quantity: 2,
-            status: 'error',
-            statusLabel: 'გაუქმებული',
-        },
-    ];
 
-    const colors: allColor = {
-        success: {
-            text: '#22D5AE',
-            bg: 'rgba(34, 213, 174, .21)',
-        },
-        warning: {
-            text: 'rgba(213, 213, 34, 1)',
-            bg: 'rgba(213, 213, 34, .21)',
-        },
-        error: {
-            text: 'rgba(213, 34, 34, 1)',
-            bg: 'rgba(213, 34, 34, .21)',
-        },
-    }
-
-    return (<>
-        <OrderListWrapper >
-            <OrderListTopSideWrapper >
-                <OrderListTopSideInsideWrapper>
-                    <ChipWrapper>
-                        <ChipTitle>დადასტურებული</ChipTitle>
-                    </ChipWrapper>
-
-                    <ChipWrapper color={'rgba(34, 213, 174, .25)'}>
-                        <ChipTitle>პროცესში</ChipTitle>
-                    </ChipWrapper>
-                    <ChipWrapper>
-                        <ChipTitle>გაუქმებული</ChipTitle>
-                    </ChipWrapper>
-                </OrderListTopSideInsideWrapper>
-                <SearchCount>სულ მოიძებნა: <SearchCountText>12 შეკვეთა</SearchCountText></SearchCount>
-            </OrderListTopSideWrapper>
-
-            <Headers>
-                <HeaderItem>პროდუქტი</HeaderItem>
-                <HeaderItem>რაოდენობა</HeaderItem>
-                <HeaderItem>ფასი</HeaderItem>
-                <HeaderItem>სტატუსი</HeaderItem>
-            </Headers>
-            {items.map((item, i) => <>
-                <ItemFlexWrapper key={i}>
-                    <ItemWrapperStyle>
-                        {/* @ts-ignore */}
-                        <Item name={item.name} size={item.size} color={item.color} />
-                    </ItemWrapperStyle>
-                    <NumberWrapperStyle>
-                        <Number>{item.quantity}x</Number>
-                    </NumberWrapperStyle>
-                    <PriceWrapperStyle>
-                        <Price>$79.90</Price>
-                        <OldPrice>$123.90</OldPrice>
-                    </PriceWrapperStyle>
-
-                    <BadgeWrapperStyle>
-                        <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
-                    </BadgeWrapperStyle>
-                    <ButtonWrapperStyle>
-                        <Link href="/history">
-                            <IconWrapper>
-                                <RightArrowStyle color={'#3A7BD5'} />
-                            </IconWrapper>
-                        </Link>
-                    </ButtonWrapperStyle>
-                </ItemFlexWrapper>
-            </>)}
-        </OrderListWrapper>
-
-    </>)
-};
+export default OrdersList;
