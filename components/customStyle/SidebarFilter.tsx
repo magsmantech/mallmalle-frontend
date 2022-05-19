@@ -32,7 +32,7 @@ const SidebarFilter: React.FC<{}> = ({ }) => {
                             value={selected}
                         />
                     </RadioBox>
-                    <MediumTitle>ფასი</MediumTitle>
+                    <MediumTitle style={{ marginTop: "auto" }}>ფასი</MediumTitle>
                     <MuiSlider />
                     <RadioButton
                         id="userType"
@@ -64,6 +64,9 @@ const Shadow = styled.div`
     z-index: 20;
     height: 100%;
     width: 100%;
+        ${Responsive.tabletMobile}{
+            top: 120px;
+        }
 `;
 const Content = styled.div`
     position: fixed;
@@ -77,6 +80,9 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+        ${Responsive.tabletMobile}{
+            top: 120px;
+        }
         ${Responsive.mobile}{
             width: 100%;
             height: 75%;
@@ -85,31 +91,51 @@ const Content = styled.div`
             top: unset;
             right: unset;
             border-radius: 20px 20px 0px 0px;
+            overflow-x: scroll;
         }
 `;
 const InnerContent = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    height: 100%;
+    padding-bottom: 45px;
+        ${Responsive.mobile}{
+            padding-bottom: 20px;
+        }
 `;
 const BottomContent = styled.div`
-    background-color: red;
+    /* background-color: red; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 30px 0px;
+       ${Responsive.mobile}{
+            padding: 15px 0px;
+        }
 `;
 const MediumTitle = styled.h4`
     font-size: 18px;
     color: #424F60;
     font-family: 'BPG WEB 002 CAPS';
     font-weight: 400;
+        ${Responsive.mobile}{
+            font-size: 14px;
+        }
 `;
 const RadioBox = styled.div`
     margin-top: 30px;
     padding-bottom: 45px;
     margin-bottom: 45px;
     border-bottom: 1px solid #DEDEDE;
+    max-height: 380px;
+    overflow-x: scroll;
+        ${Responsive.mobile}{
+            max-height: unset;
+            margin-top: 20px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
 `;
 const BtnWithBorder = styled.button` //TODO Levan Madurashvili
     height: 70px;
@@ -122,12 +148,20 @@ const BtnWithBorder = styled.button` //TODO Levan Madurashvili
     padding: 0px 30px;
     font-size: 20px;
     font-family: 'helvetica';
+    font-weight: 700;
     color: #22D5AE;
     cursor: pointer;
+    width: 48%;
+    background: linear-gradient(90deg, #23CFB0 0%, #3882D2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+        ${Responsive.mobile}{
+            font-size: 16px;
+        }
 `;
 const FillBtn = styled.button` //TODO Levan Madurashvili
     height: 70px;
-    border: 3px solid #22D5AE;
+    border: 0px;
     border-radius: 14px;
     display: flex;
     justify-content: center;
@@ -136,8 +170,14 @@ const FillBtn = styled.button` //TODO Levan Madurashvili
     padding: 0px 30px;
     font-size: 20px;
     font-family: 'helvetica';
-    color: #22D5AE;
+    font-weight: 700;
+    color: #fff;
     cursor: pointer;
+    width: 48%;
+    background: linear-gradient(90deg, #23CFB0 0%, #3882D2 100%);
+        ${Responsive.mobile}{
+            font-size: 16px;
+        }
 `;
 
 
