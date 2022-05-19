@@ -49,44 +49,51 @@ function Favorites() {
         <Wrapper>
             <TopSideWrapper>
                 <FilterWrapper>
+                    <FilltersBox>
+                        <DropDown dropdownTitle="პოპულარული">
+                            <RadioButton
+                                id="popular-id"
+                                onChange={(value) => setPopular(value)}
+                                options={[
+                                    { label: "პოპულარული 1", value: "პოპულარული 1" },
+                                    { label: "პოპულარული 2", value: "პოპულარული 2" },
+                                ]}
+                                value={popular}
+                            />
+                        </DropDown>{popular === undefined ? null : popular}
+                    </FilltersBox>
+                    <FilltersBox>
+                        <DropDown dropdownTitle="ბრენდი">
+                            <RadioButton
+                                id="brand-id"
+                                onChange={(value) => setBrand(value)}
+                                options={[
+                                    { label: "ბრენდი 1", value: "ბრენდი 1" },
+                                    { label: "ბრენდი 2", value: "ბრენდი 2" },
+                                ]}
+                                value={brand}
+                            />
+                        </DropDown>{brand === undefined ? null : brand}
+                    </FilltersBox>
 
-                    <DropDown dropdownTitle="პოპულარული">
-                        <RadioButton
-                            id="popular-id"
-                            onChange={(value) => setPopular(value)}
-                            options={[
-                                { label: "პოპულარული 1", value: "პოპულარული 1" },
-                                { label: "პოპულარული 2", value: "პოპულარული 2" },
-                            ]}
-                            value={popular}
-                        />
-                    </DropDown>{popular === undefined ? null : popular}
+                    <FilltersBox>
+                        <DropDown dropdownTitle="ფასი">
+                            <RadioButton
+                                id="price-id"
+                                onChange={(value) => setPrice(value)}
+                                options={[
+                                    { label: "ფასი 1", value: "ფასი 1" },
+                                    { label: "ფასი 2", value: "ფასი 2" },
+                                ]}
+                                value={price}
+                            />
+                        </DropDown>{price === undefined ? null : price}
+                    </FilltersBox>
 
-                    <DropDown dropdownTitle="ბრენდი">
-                        <RadioButton
-                            id="brand-id"
-                            onChange={(value) => setBrand(value)}
-                            options={[
-                                { label: "ბრენდი 1", value: "ბრენდი 1" },
-                                { label: "ბრენდი 2", value: "ბრენდი 2" },
-                            ]}
-                            value={brand}
-                        />
-                    </DropDown>{brand === undefined ? null : brand}
+                    <FilltersBox>
+                        <button onClick={() => setOpenModal(true)}>მეტი ფილტრი</button>
+                    </FilltersBox>
 
-                    <DropDown dropdownTitle="ფასი">
-                        <RadioButton
-                            id="price-id"
-                            onChange={(value) => setPrice(value)}
-                            options={[
-                                { label: "ფასი 1", value: "ფასი 1" },
-                                { label: "ფასი 2", value: "ფასი 2" },
-                            ]}
-                            value={price}
-                        />
-                    </DropDown>{price === undefined ? null : price}
-
-                    <button onClick={() => setOpenModal(true)}>მეტი ფილტრი</button>
                     {openModal && <SidebarFilter openModal={setOpenModal} />}
 
 
@@ -113,26 +120,50 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 `;
+const FilltersBox = styled.div`
+    margin-right: 24px;
+    margin-bottom: 20px;
+        &:last-child {
+            margin-right: 0px;
+        }
+        ${Responsive.tabletMobile}{
+            margin-bottom: 20px;
+        }
+`;
 const FilterWrapper = styled.div`
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+        ${Responsive.tabletMobile} {
+            flex-wrap: wrap;
+        }
+        
 `;
 const TopSideWrapper = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     padding-top: 65px;
     padding-bottom: 40px;
+        ${Responsive.tabletMobile}{
+            align-items: flex-start;
+        }
 `;
 const FavoriteCount = styled.div`
     font-size: 16px;
     font-weight: 500;
     color: var(--text-color);
     opacity: 0.8;
+    margin-left: 20px;
+    margin-top: 3px;
+    white-space: nowrap;
         span {
             font-weight: 700;
             font-family: 'fira-go';
+        }
+        ${Responsive.mobile}{
+            display: none;
         }
 `;
 

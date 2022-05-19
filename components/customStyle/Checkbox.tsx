@@ -29,7 +29,7 @@ const Checkbox: React.FC<{
 // style
 const Wrapper = styled.div`
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     width: fit-content;
         &:hover {
@@ -62,8 +62,8 @@ const Input = styled.input.attrs({ type: "checkbox" })`
         &:checked {
             &::before {
                 border: 6px solid #22D5AE;
-                height: 12px;
-                width: 12px;
+                height: 24px;
+                width: 24px;
                 background-color: #ffffff;
             }
         }
