@@ -79,8 +79,8 @@ const Input = styled.input.attrs({ type: "radio" })`
         &:checked {
             &::before {
                 border: 6px solid #22D5AE;
-                height: 12px;
-                width: 12px;
+                height: 24px;
+                width: 24px;
                 background-color: #ffffff;
             }
         }

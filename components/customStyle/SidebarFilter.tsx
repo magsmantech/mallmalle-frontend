@@ -4,59 +4,59 @@ import Responsive from '../../config/Responsive';
 import { Scrollbar } from '../GlobalStyle';
 import RadioButton from './RadioButton';
 import MuiSlider from './MuiSlider';
-import Button from '../styled/button';
 import Checkbox from './Checkbox';
 
 
-const SidebarFilter: React.FC<{}> = ({ }) => {
+const SidebarFilter: React.FC<{
+    openModal: any;
+}> = ({
+    openModal
+}) => {
 
-    const [closeSideBar, setCloseSideBar] = useState(false); //close side bar
-    const [selected, setSelected] = useState(); //radio button selected value
-    
+        const [selected, setSelected] = useState(); //radio button selected value
 
+        return (
+            <Wrapper>
+                <Shadow onClick={() => openModal(false)} />
+                <Scrollbar hide={true} />
+                <Content>
+                    <InnerContent>
+                        <MediumTitle>კატეგორიები</MediumTitle>
 
-    return closeSideBar === true ? null : (
-        <Wrapper>
-            <Shadow onClick={() => setCloseSideBar(!closeSideBar)} />
-            <Scrollbar hide={true} />
-            <Content>
-                <InnerContent>
-                    <MediumTitle>კატეგორიები</MediumTitle>
+                        <RadioBox>
+                            <RadioButton
+                                id="userType"
+                                onChange={(value) => setSelected(value)}
+                                options={[
+                                    { label: "i am levan", value: "levan" },
+                                    { label: "i am giorgi", value: "giorgi" },
+                                ]}
+                                value={selected}
+                            />
+                        </RadioBox>
 
-                    <RadioBox>
-                        <RadioButton
-                            id="userType"
-                            onChange={(value) => setSelected(value)}
-                            options={[
-                                { label: "i am levan", value: "levan" },
-                                { label: "i am giorgi", value: "giorgi" },
-                            ]}
-                            value={selected}
-                        />
-                    </RadioBox>
+                        <MediumTitle style={{ marginTop: "auto" }}>ფასი</MediumTitle>
 
-                    <MediumTitle style={{ marginTop: "auto" }}>ფასი</MediumTitle>
-                    
-                    <MuiSlider />
+                        <MuiSlider />
 
-                    <Checkbox id={"testId"} label={"ფასდაკლებები"} onChange={checked => {
-                        if (checked) {
-                            console.log("checked")
-                        } else {
-                            console.log("not checked")
-                        }
-                    }} />
-                </InnerContent>
-                
-                <BottomContent>
-                    <BtnWithBorder>გასუფთავება</BtnWithBorder>
-                    <FillBtn>აჩვენე 124</FillBtn>
-                </BottomContent>
-            </Content>
+                        <Checkbox id={"testId"} label={"ფასდაკლებები"} onChange={checked => {
+                            if (checked) {
+                                console.log("checked")
+                            } else {
+                                console.log("not checked")
+                            }
+                        }} />
+                    </InnerContent>
 
-        </Wrapper>
-    )
-}
+                    <BottomContent>
+                        <BtnWithBorder>გასუფთავება</BtnWithBorder>
+                        <FillBtn>აჩვენე 124</FillBtn>
+                    </BottomContent>
+                </Content>
+
+            </Wrapper>
+        )
+    }
 
 const Wrapper = styled.div`
     

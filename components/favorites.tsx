@@ -1,16 +1,140 @@
-import { BsChevronDown } from "react-icons/bs";
 import styled from "styled-components";
-import FilterSelect from "./filterSelect";
 import Item from './item';
 import Button from "./styled/button";
-
-import FilterIcon from '../public/icons/react-icons/filter';
-
-import { ChipIconWrapper, ChipTitle, ChipWrapper } from './styled/Chips';
 import { useDispatch } from 'react-redux';
 import { showFeedback } from '../features/feedbackSlice';
 import Responsive from "../config/Responsive";
+import DropDown from "./customStyle/DropDown";
+import RadioButton from "./customStyle/RadioButton";
+import { useState } from "react";
+import SidebarFilter from "./customStyle/SidebarFilter";
 
+
+
+
+
+
+
+
+function Favorites() {
+    const dispatch = useDispatch();
+
+    const _showFeedback = () => {
+        dispatch(
+            showFeedback({ show: true }),
+        );
+    }
+
+    const [popular, setPopular] = useState();
+    const [brand, setBrand] = useState();
+    const [price, setPrice] = useState();
+
+    const [openModal, setOpenModal] = useState(false);
+
+
+    const ItemWithButton = ({ imageUrl, style, price, oldPrice, name, currency = 'gel' }: Props) => {
+        return (
+            <>
+                <ItemWrapper>
+                    <Item name={name} price={price} oldPrice={oldPrice} currency={currency} imageUrl={imageUrl}></Item>
+                    <CartButton
+                        onClick={_showFeedback}
+                    >კალათაში დამატება</CartButton>
+                </ItemWrapper>
+            </>
+        )
+    }
+
+    return (<>
+        <Wrapper>
+            <TopSideWrapper>
+                <FilterWrapper>
+
+                    <DropDown dropdownTitle="პოპულარული">
+                        <RadioButton
+                            id="popular-id"
+                            onChange={(value) => setPopular(value)}
+                            options={[
+                                { label: "პოპულარული 1", value: "პოპულარული 1" },
+                                { label: "პოპულარული 2", value: "პოპულარული 2" },
+                            ]}
+                            value={popular}
+                        />
+                    </DropDown>{popular === undefined ? null : popular}
+
+                    <DropDown dropdownTitle="ბრენდი">
+                        <RadioButton
+                            id="brand-id"
+                            onChange={(value) => setBrand(value)}
+                            options={[
+                                { label: "ბრენდი 1", value: "ბრენდი 1" },
+                                { label: "ბრენდი 2", value: "ბრენდი 2" },
+                            ]}
+                            value={brand}
+                        />
+                    </DropDown>{brand === undefined ? null : brand}
+
+                    <DropDown dropdownTitle="ფასი">
+                        <RadioButton
+                            id="price-id"
+                            onChange={(value) => setPrice(value)}
+                            options={[
+                                { label: "ფასი 1", value: "ფასი 1" },
+                                { label: "ფასი 2", value: "ფასი 2" },
+                            ]}
+                            value={price}
+                        />
+                    </DropDown>{price === undefined ? null : price}
+
+                    <button onClick={() => setOpenModal(true)}>მეტი ფილტრი</button>
+                    {openModal && <SidebarFilter openModal={setOpenModal} />}
+
+
+                </FilterWrapper>
+                <FavoriteCount>სულ მოიძებნა: <span>13 შენახული</span></FavoriteCount>
+            </TopSideWrapper>
+
+            <Grid>
+                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/2.png'}></ItemWithButton>
+                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/5.png'}></ItemWithButton>
+                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/4.png'}></ItemWithButton>
+                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/6.png'}></ItemWithButton>
+                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/2.png'}></ItemWithButton>
+                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/5.png'}></ItemWithButton>
+            </Grid>
+        </Wrapper>
+    </>)
+};
+
+
+
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const FilterWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+const TopSideWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 65px;
+    padding-bottom: 40px;
+`;
+const FavoriteCount = styled.div`
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.8;
+        span {
+            font-weight: 700;
+            font-family: 'fira-go';
+        }
+`;
 
 const Grid = styled.section`
   width: 100%;
@@ -63,67 +187,4 @@ const CartButton = styled(Button)`
 `;
 
 
-
-export default function Favorites() {
-    const dispatch = useDispatch();
-
-    const _showFeedback = () => {
-      dispatch(
-        showFeedback({ show: true }),
-      );
-    }  
-
-    
-    const ItemWithButton = ({ imageUrl, style, price, oldPrice, name, currency = 'gel' }: Props) => {
-        return (
-            <>
-                <ItemWrapper>
-                    <Item name={name} price={price} oldPrice={oldPrice} currency={currency} imageUrl={imageUrl}></Item>
-                    <CartButton
-                        onClick={_showFeedback}
-                    >კალათაში დამატება</CartButton>
-                </ItemWrapper>
-            </>
-        )
-    }
-
-    return (<>
-        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '97.8rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4.0rem', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center'}}>
-                    <FilterSelect style={{marginRight: '2.4rem'}} />
-                    <ChipWrapper style={{marginRight: '2.4rem'}}>
-                        <ChipTitle>ბრენდი</ChipTitle>
-                        <ChipIconWrapper>
-                            <BsChevronDown size={'1.6rem'}></BsChevronDown>
-                        </ChipIconWrapper>
-                    </ChipWrapper>
-
-                    <ChipWrapper style={{marginRight: '2.4rem'}}>
-                        <ChipTitle>ფასი</ChipTitle>
-                        <ChipIconWrapper>
-                            <BsChevronDown size={'1.6rem'}></BsChevronDown>
-                        </ChipIconWrapper>
-                    </ChipWrapper>
-                    
-                    <ChipWrapper>
-                        <ChipTitle>მეტი ფილტრი</ChipTitle>
-                        <ChipIconWrapper>
-                            <FilterIcon width={'2.4rem'} height={'2.4rem'}/>
-                        </ChipIconWrapper>
-                    </ChipWrapper>                    
-                </div>
-                <span style={{fontSize: '1.6rem', color: 'var(--text-color)', opacity: 0.8, fontWeight: 500}}>სულ მოიძებნა: <span style={{fontWeight: 700,  fontFamily: 'fira-go'}}>13 შენახული</span></span>
-            </div>
-
-            <Grid>
-                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/2.png'}></ItemWithButton>
-                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/5.png'}></ItemWithButton>
-                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/4.png'}></ItemWithButton>
-                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/6.png'}></ItemWithButton>
-                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/2.png'}></ItemWithButton>
-                <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/5.png'}></ItemWithButton>
-            </Grid>
-        </div>
-    </>)
-};
+export default Favorites

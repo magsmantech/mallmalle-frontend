@@ -1,31 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { DropdownButton } from 'react-bootstrap'
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import RadioButton from './RadioButton';
 import { BsChevronDown } from 'react-icons/bs'
 import Responsive from '../../config/Responsive';
-const DropDown: React.FC<{}> = ({ }) => {
 
-  const [selected, setselected] = useState();
 
-  return (
-    <Wrapper>
-      <Arrow />
-      <DropDownBtn id="dropdown-item-button" title="პოპულარობა">
-        <RadioButton
-          id="userType"
-          onChange={(value) => setselected(value)}
-          options={[
-            { label: "i am levan", value: "levan" },
-            { label: "i am giorgi", value: "giorgi" },
-          ]}
-          value={selected}
-        />
-      </DropDownBtn>
-    </Wrapper>
-  )
-}
+
+const DropDown: React.FC<{
+  children: React.ReactNode;
+  dropdownTitle: string;
+}> = ({
+  children,
+  dropdownTitle
+}) => {
+
+    return (
+      <Wrapper>
+        <Arrow />
+        <DropDownBtn id="dropdown-item-button" title={dropdownTitle}>
+          {children}
+        </DropDownBtn>
+      </Wrapper>
+    )
+  }
 
 const Wrapper = styled.div`
   position: relative;
@@ -81,6 +79,7 @@ const DropDownBtn = styled(DropdownButton)`
       border: 0px;
       padding: 15px 10px;
       box-shadow: 0 0 0.4rem 0.4rem rgb(0 0 0 / 8%);
+      margin-top: 5px;
         ${Responsive.mobile} {
           position: fixed !important;
           left: 0 !important;
