@@ -5,13 +5,14 @@ import { Scrollbar } from '../GlobalStyle';
 import RadioButton from './RadioButton';
 import MuiSlider from './MuiSlider';
 import Button from '../styled/button';
+import Checkbox from './Checkbox';
 
 
 const SidebarFilter: React.FC<{}> = ({ }) => {
 
     const [closeSideBar, setCloseSideBar] = useState(false); //close side bar
     const [selected, setSelected] = useState(); //radio button selected value
-    const [selectedSale, setSelectedSale] = useState(); //radio button selected value
+    
 
 
     return closeSideBar === true ? null : (
@@ -21,6 +22,7 @@ const SidebarFilter: React.FC<{}> = ({ }) => {
             <Content>
                 <InnerContent>
                     <MediumTitle>კატეგორიები</MediumTitle>
+
                     <RadioBox>
                         <RadioButton
                             id="userType"
@@ -32,17 +34,20 @@ const SidebarFilter: React.FC<{}> = ({ }) => {
                             value={selected}
                         />
                     </RadioBox>
+
                     <MediumTitle style={{ marginTop: "auto" }}>ფასი</MediumTitle>
+                    
                     <MuiSlider />
-                    <RadioButton
-                        id="userType"
-                        onChange={(value) => setSelectedSale(value)}
-                        options={[
-                            { label: "ფასდაკლება", value: "sale" },
-                        ]}
-                        value={selectedSale}
-                    />
+
+                    <Checkbox id={"testId"} label={"ფასდაკლებები"} onChange={checked => {
+                        if (checked) {
+                            console.log("checked")
+                        } else {
+                            console.log("not checked")
+                        }
+                    }} />
                 </InnerContent>
+                
                 <BottomContent>
                     <BtnWithBorder>გასუფთავება</BtnWithBorder>
                     <FillBtn>აჩვენე 124</FillBtn>
@@ -157,6 +162,7 @@ const BtnWithBorder = styled.button` //TODO Levan Madurashvili
     -webkit-text-fill-color: transparent;
         ${Responsive.mobile}{
             font-size: 16px;
+            height: 60px;
         }
 `;
 const FillBtn = styled.button` //TODO Levan Madurashvili
@@ -177,6 +183,7 @@ const FillBtn = styled.button` //TODO Levan Madurashvili
     background: linear-gradient(90deg, #23CFB0 0%, #3882D2 100%);
         ${Responsive.mobile}{
             font-size: 16px;
+            height: 60px;
         }
 `;
 

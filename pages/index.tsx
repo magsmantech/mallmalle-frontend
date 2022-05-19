@@ -66,6 +66,7 @@ const Home: NextPage = () => {
         /> */}
 
       {/* <SidebarFilter /> */}
+      
 
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
