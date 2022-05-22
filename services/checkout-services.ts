@@ -6,8 +6,17 @@ import { apiCall } from "../utilities/api-call"
 export const getBag = async () => {
     return await apiCall('bag', 'GET');
 }
+
 export const addToCart = (productId: number, variationId: number, quantity: number) => {
     return apiCall(`bag?product_id=${productId}&variation_id=${variationId}&quantity=${quantity}`, 'POST');
+}
+
+export const addToFavorite = (productId: number) => {
+    return apiCall(`user/favorites/add/${productId}`, 'POST');
+}
+
+export const removeFromFavorite = (productId: number) => {
+    return apiCall(`user/favorites/remove/${productId}`, 'DELETE');
 }
 
 export const updateQuantity = (productId: number, quantity: number) => {

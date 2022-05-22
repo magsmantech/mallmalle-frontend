@@ -24,7 +24,7 @@ import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
 import { calculateProductPrices, Product } from "../../domain/shop";
-import { addToCart } from "../../services/checkout-services";
+import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
 
@@ -249,6 +249,8 @@ const ProductDetails: NextPage = () => {
   const [sizes, setSizes] = useState<SizeType[]>([]);
   const [colors, setColors] = useState<ColorType[]>([]);
 
+  const [disableFavoriteBtn, setdisableFavoriteBtn] = useState(false);
+
   const [selectedColorId, setSelectedColorId] = useState<any>(undefined);
   const [selectedSizeId, setSelectedSizeId] = useState<any>(undefined);
 
@@ -332,6 +334,22 @@ const ProductDetails: NextPage = () => {
     }
   };
 
+
+  const _showFavoriteFeedback = () => {
+    if (!authData?.profile?.user) {
+      alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setdisableFavoriteBtn(true)
+      return;
+    }
+    if (product) {
+      addToFavorite(product.id).then(({ data }) => {
+        alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
+        setdisableFavoriteBtn(true);
+      });
+    }
+  };
+
+
   const _colorSelected = (e: any) => {
     console.log('color selected:', e);
     setSelectedColorId(e);
@@ -354,6 +372,8 @@ const ProductDetails: NextPage = () => {
   const colorsTemp = ["#E536BD", "#536DDB", "#EDC6A7", "#8D5843", "#D53232"];
 
   const canAddToCart = typeof (selectedColorId) !== 'undefined' && typeof (selectedSizeId) !== 'undefined';
+
+  const canAddToFavorite = typeof (selectedColorId) !== 'undefined' && typeof (selectedSizeId) !== 'undefined';
 
   const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
 
@@ -431,9 +451,11 @@ const ProductDetails: NextPage = () => {
                 <BagIconStyle />
                 კალათაში დამატება
               </Button>
-              <AddCartButton secondary>
+
+              <AddCartButton secondary onClick={_showFavoriteFeedback} disabled={disableFavoriteBtn}>
                 <BsBookmarkPlusFillStyle />
               </AddCartButton>
+
             </ButtonWrapper>
             <Subtitle>
               დამატებითი ინფორმაცია

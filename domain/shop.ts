@@ -9,7 +9,7 @@ export type Page = {
 }
 
 export const roundToCents = (amount: number | undefined) => {
-  if(!amount) return 0;
+  if (!amount) return 0;
   return Math.round(amount * 100) / 100;
 }
 
@@ -30,7 +30,7 @@ export type Product = {
   "created_at": Date;// "2021-09-23T07: 02: 00.000000Z";
   "description": string | null;
   "images": string | null;// JSON string: '["1.jpg","2.jpg"]'
-  "variations":  ProductVariation[];
+  "variations": ProductVariation[];
   "discount": Discount[];
   "categories": Category[];
 }
@@ -77,13 +77,13 @@ export type ProductVariation = {
 export const calculateProductPrices = (product: Product | null, variationId = 0) => {
   const selectedVariation = product?.variations?.find(v => v.id == variationId);
   const originalPrice = parseFloat(product?.variations?.find(v => v.id == variationId)?.price || '0');
-  const finalPrice = product 
-  ? (
-    product?.discount?.length > 0
-      ? product?.discount?.reduce((carryPrice, newDiscount) => carryPrice * (100 - newDiscount.value) / 100, originalPrice)
-      : originalPrice
+  const finalPrice = product
+    ? (
+      product?.discount?.length > 0
+        ? product?.discount?.reduce((carryPrice, newDiscount) => carryPrice * (100 - newDiscount.value) / 100, originalPrice)
+        : originalPrice
     )
-  : null;
+    : null;
   console.log('calculateProductPrices', { product, variationId, originalPrice, finalPrice });
   return {
     selectedVariation,
@@ -163,4 +163,22 @@ export type Order = {
   status: number;
   sub_total: string;
   discounted_sub_total: number;
+}
+
+// export type Favorite = {
+//   id: number;
+//   createdAt: string;
+//   product: {
+//     id: number;
+//     product_name: string;
+//     createdAt: string;
+//     description: string;
+//     images: string;
+//   }
+// }
+
+export type Favorite = {
+  "id": number;// 1
+  "created_at": string;// "2021-09-23T07: 02: 00.000000Z";
+  "product": Product;
 }

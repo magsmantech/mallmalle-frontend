@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -61,7 +61,34 @@ const api = createApi({
         method: 'POST',
       })
     }),
-
+    // 
+    // 
+    // Favorite
+    // 
+    // 
+    addToFavorite: builder.mutation<Favorite, { productId: number }>({ //working
+      query: ({ productId }) => ({
+        url: `user/favorites/add/${productId}`,
+        method: 'POST',
+      })
+    }),
+    getFavorites: builder.query<Favorite, undefined>({ //not working
+      query: (_args) => ({
+        url: `user/favorites`,
+        method: 'GET',
+      })
+    }),
+    removeFromFavorite: builder.mutation<Favorite, { productId: number }>({ //working
+      query: ({ productId }) => ({
+        url: `user/favorites/remove/${productId}`,
+        method: 'DELETE',
+      }),
+    }),
+    // 
+    // 
+    // Favorite
+    // 
+    // 
     updateQuantity: builder.mutation<Cart, { cartItemId: number, quantity: number }>({
       query: ({ cartItemId, quantity }) => ({
         url: `/bag/${cartItemId}?quantity=${quantity}`,

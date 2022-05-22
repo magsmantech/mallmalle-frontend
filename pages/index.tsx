@@ -14,6 +14,7 @@ import Responsive from "../config/Responsive";
 import RadioButton from "../components/customStyle/RadioButton";
 import DropDown from "../components/customStyle/DropDown";
 import SidebarFilter from "../components/customStyle/SidebarFilter";
+import SearchBar from "../components/search-bar";
 
 
 const Home: NextPage = () => {
@@ -66,7 +67,9 @@ const Home: NextPage = () => {
 
       {/* <SidebarFilter /> */}
 
-
+      <SearchWrapper>
+        <SearchBar/>
+      </SearchWrapper>
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
         <OneSaleItemWrapper>
@@ -148,6 +151,30 @@ const Home: NextPage = () => {
   );
 };
 
+
+
+
+const SearchWrapper = styled.div`
+      div {
+        border-color: #DBDBDB;
+          svg {
+            g {
+              stroke: #DBDBDB;
+            }
+          }
+      }
+      input{
+        color: #DBDBDB;
+          &::placeholder  {
+            color: #DBDBDB;
+          }
+      }
+      display: none;
+        ${Responsive.mobile}{
+          display: block;
+          margin-bottom: 30px;
+        }
+`;
 const ItemsContainerStyle = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
