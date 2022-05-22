@@ -8,7 +8,7 @@ import DropDown from "./customStyle/DropDown";
 import RadioButton from "./customStyle/RadioButton";
 import { useState } from "react";
 import SidebarFilter from "./customStyle/SidebarFilter";
-
+import MoreFilterIcon from '../public/icons/more-filter-icon.svg'
 
 
 
@@ -91,7 +91,10 @@ function Favorites() {
                     </FilltersBox>
 
                     <FilltersBox>
-                        <button onClick={() => setOpenModal(true)}>მეტი ფილტრი</button>
+                        <MoreFilterBtn onClick={() => setOpenModal(true)}>
+                            მეტი ფილტრი
+                            <MoreFilterIconStyle />
+                        </MoreFilterBtn>
                     </FilltersBox>
 
                     {openModal && <SidebarFilter openModal={setOpenModal} />}
@@ -115,7 +118,46 @@ function Favorites() {
 
 
 
-
+const MoreFilterBtn = styled.button`
+    display: flex;
+    align-items: center;
+    box-shadow: unset !important;
+    padding: 10px 10px 10px 15px;
+    border: 0px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #424F60;
+    user-select: none;
+    font-family: 'helvetica';
+    font-weight: 500;
+    background-color: #F2F2F2;
+    color: #424F60;
+    position: relative;
+    &:hover {
+        background-color: #C9F5EB;
+        color: #424F60;
+    }
+    &::after {
+        content: '';
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        border: 0px;
+        margin-left: 20px;
+        cursor: pointer;
+    }
+`;
+const MoreFilterIconStyle = styled(MoreFilterIcon)`
+    position: absolute;
+    right: 13.2px;
+    transform: scale(0.75);
+    
+`;
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
