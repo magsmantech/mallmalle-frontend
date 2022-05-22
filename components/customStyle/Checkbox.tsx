@@ -46,6 +46,7 @@ const Label = styled.label`
     padding-left: 14px;
     font-family: 'helvetica';
     font-weight: 500;
+    margin-top: -3px;
 `;
 const Input = styled.input.attrs({ type: "checkbox" })`
     -webkit-appearance: none;

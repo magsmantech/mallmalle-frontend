@@ -12,7 +12,7 @@ export const PageWrapper = styled.div`
     width: 100%;
     z-index: 1;
     padding: 40px;
-    margin-top: 100px;
+    margin-top: 125px;
     
     @media(max-width: 600px) {
         & {

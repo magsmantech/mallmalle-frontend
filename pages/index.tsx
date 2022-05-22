@@ -16,7 +16,6 @@ import DropDown from "../components/customStyle/DropDown";
 import SidebarFilter from "../components/customStyle/SidebarFilter";
 
 
-
 const Home: NextPage = () => {
   const _scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -66,7 +65,7 @@ const Home: NextPage = () => {
         /> */}
 
       {/* <SidebarFilter /> */}
-      
+
 
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
@@ -101,7 +100,7 @@ const Home: NextPage = () => {
               imageUrl={
                 product?.images?.length
                   ? config.imagesEndpoint + JSON.parse(product?.images)[0]
-                  : "/assets/2.png"
+                  : "../public/assets/2.png"
               }
             ></Item>
           ))
@@ -116,12 +115,9 @@ const Home: NextPage = () => {
       </MiddleContainer>
 
       <SectionTitle className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
-      <div
-        className={styles.itemsContainer}
-        style={{ marginBottom: "17.5rem" }}
-      >
+      <ItemsContainerStyle>
         {newProducts?.length ? (
-          newProducts.map((product: Product, index: number) => (
+          newProducts.slice(0, 12).map((product: Product, index: number) => (
             <Item
               name={product.product_name}
               price="85,99"
@@ -132,17 +128,18 @@ const Home: NextPage = () => {
                   : ""
               }
               currency="gel"
-              imageUrl={
-                product?.images?.length
-                  ? config.imagesEndpoint + JSON.parse(product?.images)[0]
-                  : "/assets/2.png"
-              }
+              imageUrl={"../../../assets/2.png"}
+            // imageUrl={
+            //   product?.images?.length
+            //     ? config.imagesEndpoint + JSON.parse(product?.images)[0]
+            //     : "../../../assets/2.png"
+            // }
             ></Item>
           ))
         ) : (
           <p>Loading...</p>
         )}
-      </div>
+      </ItemsContainerStyle>
 
       <div className={styles.scrollToTopButton} onClick={_scrollToTop}>
         <ArrowTop className={styles.scrollButtonIcon} />
@@ -151,7 +148,18 @@ const Home: NextPage = () => {
   );
 };
 
-
+const ItemsContainerStyle = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-row-gap: 50px;
+  grid-column-gap: 30px;
+  /* background-color: red; */
+    ${Responsive.mobile}{
+      grid-column-gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+      grid-row-gap: 30px;
+    }
+`;
 const SaleItemWrapper = styled.div`
   height: 100vh;
   max-height: 580px;
