@@ -72,7 +72,7 @@ const api = createApi({
         method: 'POST',
       })
     }),
-    getFavorites: builder.query<Favorite, undefined>({ //not working
+    getFavorites: builder.query<Favorite[], undefined>({ //working
       query: (_args) => ({
         url: `user/favorites`,
         method: 'GET',

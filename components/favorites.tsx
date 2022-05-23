@@ -57,7 +57,9 @@ const Favorites: React.FC<{}> = ({ }) => {
         <>
 
 
-
+        {favorites.map((item, index) => (
+            <h1>{item.id}</h1>
+        ))}
 
             <Wrapper>
                 <TopSideWrapper>
