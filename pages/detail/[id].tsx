@@ -261,7 +261,7 @@ const ProductDetails: NextPage = () => {
 
   const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
   console.log(product, product?.variations);
-
+  const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
 
   const { data: authData, isLoading: isUserLoading } = api.useProfileQuery(undefined);
@@ -345,6 +345,7 @@ const ProductDetails: NextPage = () => {
       addToFavorite(product.id).then(({ data }) => {
         alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
         setdisableFavoriteBtn(true);
+        refetchFavorites();
       });
     }
   };
