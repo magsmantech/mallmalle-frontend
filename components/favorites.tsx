@@ -17,8 +17,6 @@ import { removeFromFavorite } from '../services/checkout-services';
 
 
 
-
-
 const Favorites: React.FC<{}> = ({ }) => {
 
     const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
@@ -38,29 +36,9 @@ const Favorites: React.FC<{}> = ({ }) => {
     const [openModal, setOpenModal] = useState(false);
 
 
-    // const ItemWithButton = ({ imageUrl, style, price, oldPrice, name, currency = 'gel' }: Props) => {
-    //     return (
-    //         <>
-
-    //         </>
-    //     )
-    // }
-
-    // const result = Object.keys(favorites).map((key) => {
-    //     return { [key]: favorites[key as keyof typeof favorites] };
-    // });
-
-    // console.log(result)
-
 
     return isFavoritesLoading ? <Loader /> : !favorites ? (<span>Not Fount Favorites</span>) : (
         <>
-
-
-        {favorites.map((item, index) => (
-            <h1>{item.id}</h1>
-        ))}
-
             <Wrapper>
                 <TopSideWrapper>
                     <FilterWrapper>
@@ -116,40 +94,30 @@ const Favorites: React.FC<{}> = ({ }) => {
 
 
                     </FilterWrapper>
-                    <FavoriteCount>სულ მოიძებნა: <span>13 შენახული</span></FavoriteCount>
+                    <FavoriteCount>სულ მოიძებნა: <span>{favorites.length} შენახული</span></FavoriteCount>
                 </TopSideWrapper>
 
                 <Grid>
 
-                    <button onClick={async () => { //works
+                    {/* <button onClick={async () => { //works
                         const result = await removeFromFavorite({
                             productId: 1,
                             // variationId: item.variation_id,
                         });
                         await refetchFavorites();
                         console.log('removeFromFavorite result:', result);
-                    }}>washla</button>
+                    }}>washla</button> */}
 
-                    {/* {favorites.map((f, index) => (
-                        <h1>{f.}</h1>
-                    ))} */}
-                    {/* {favorites.product.map((f, index) => (
-                        <ItemWrapper>
-                            <h1>
-                                {index}
-                            </h1>
-                            <Item name={`levani${f.product}`} price={"80"} oldPrice={"50"} currency={"gelll"} imageUrl={"dasdas"}></Item>
+               
+                    {favorites.map((f, index) => (
+                        <ItemWrapper key={index}>
+                            <Item name={f.product.product_name} price="80.00" oldPrice='125.00' currency='gel' imageUrl={"/assets/default-image.png"}></Item>
+                            {/* TODO image from api */}
                             <CartButton
                                 onClick={_showFeedback}
                             >კალათაში დამატება</CartButton>
                         </ItemWrapper>
-                    ))} */}
-                    {/* <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/2.png'}></ItemWithButton>
-                    <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/5.png'}></ItemWithButton>
-                    <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/4.png'}></ItemWithButton>
-                    <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/6.png'}></ItemWithButton>
-                    <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/2.png'}></ItemWithButton>
-                    <ItemWithButton name="საზაფხულო ფეხსაცმელი" price="80.00" oldPrice='125.00' currency='gel' imageUrl={'/assets/5.png'}></ItemWithButton> */}
+                    ))}
                 </Grid>
             </Wrapper>
         </>)
@@ -237,7 +205,7 @@ const FavoriteCount = styled.div`
     color: var(--text-color);
     opacity: 0.8;
     margin-left: 20px;
-    margin-top: 3px;
+    margin-top: 12px;
     white-space: nowrap;
         span {
             font-weight: 700;

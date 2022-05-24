@@ -23,6 +23,7 @@ export const CategoriesContext = createContext<any>(null);
 
 export default function Layout({ children }: any) {
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart, isSuccess: isCartSucces } = api.useGetCartQuery(undefined);
+  const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const [openSidebar, setOpenSidebar] = useState(false);
   // const [showFeedback, setShowFeedback] = useState(false);
   const [ratio, setRatio] = useState(10)
@@ -125,7 +126,16 @@ export default function Layout({ children }: any) {
       {showFeedback && feedbackType === 'info' && <div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
       {showFeedback && <Feedback className={feedbackClasses} />}
       {openSidebar && <Sidebar onSidebarClose={_closeSidebar} categories={categories} />}
-      {isCartLoading ? <Loader /> : !cart ? (<span>Not Found</span>) : (<Navbar cart={cart} onSidebarOpen={_openSidebar} />)}
+
+      {isCartLoading || isFavoritesLoading ? <Loader /> : !cart || !favorites ? (<span>Not Found</span>) : (
+
+        <Navbar
+          cart={cart}
+          favorite={favorites}
+          onSidebarOpen={_openSidebar}
+          
+        />)}
+
       <h1>{cart?.items?.length}</h1>
       <CategoriesContext.Provider value={categories}>
         <PageWrapper>{children}</PageWrapper>
