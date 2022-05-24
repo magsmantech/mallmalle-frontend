@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -126,6 +126,24 @@ const api = createApi({
     getProductById: builder.query<Product, number>({
       query: (productId) => ({
         url: `/product/${productId}`,
+        method: 'GET',
+      })
+    }),
+    //
+    // get order history
+    //
+    getMyOrders: builder.query<Order[], undefined>({
+      query: (_args) => ({
+        url: `user/orders`,
+        method: 'GET',
+      })
+    }),
+    //
+    // order details
+    //
+    getOrderDetails: builder.query<OrderDetails, number>({
+      query: (orderId) => ({
+        url: `user/order/${orderId}`,
         method: 'GET',
       })
     }),

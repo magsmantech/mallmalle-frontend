@@ -1,27 +1,21 @@
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
-import { calculateProductPrices, CartItem } from "../domain/shop";
+import { OrderItems } from "../domain/shop";
 
 
 
-const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
-  const { product, product_id, variation_id, quantity, total } = item;
-  const {
-    selectedVariation,
-    selectedSize,
-    selectedColor,
-  } = calculateProductPrices(item.product, variation_id);
+const OrderItem: React.FC<{ item: OrderItems; style?: any }> = ({ item, style }) => {
 
-  return (
-    <ItemWrapper style={{ ...style }}>
-      <ItemImg src={'/assets/default-image.png'} />
-      <ItemTextWrapper>
-        <ItemName>{product.product_name}</ItemName>
-        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>
-        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{selectedColor?.color_name}</ItemValue></div>
-      </ItemTextWrapper>
-    </ItemWrapper>
-  )
+    return (
+        <ItemWrapper style={{ ...style }}>
+            <ItemImg src={'/assets/default-image.png'} />
+            <ItemTextWrapper>
+                <ItemName>saxeli</ItemName>
+                <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>zoma</ItemValue></div>
+                <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>feri</ItemValue></div>
+            </ItemTextWrapper>
+        </ItemWrapper>
+    )
 
 };
 
@@ -95,4 +89,4 @@ width: 100%;
 
 `;
 
-export default Item;
+export default OrderItem;

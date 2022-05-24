@@ -1,4 +1,3 @@
-
 export type Page = {
   "id": number;// 1,
   "slug": string;// "contact",
@@ -158,24 +157,52 @@ export type User = {
   "updated_at": string;// "2022-05-09T18:20:21.000000Z"
 };
 
+export type OrderItems = {
+  id: number;
+  user_id: number;
+  product_id: number;
+  price: string;
+  discounted_price: number;
+  order_id: number;
+  created_at: string;
+  updated_at: string;
+  variation_id: number;
+  quantity: number;
+  product: OrderProduct;
+  
+}
+export type OrderProduct = {
+  id: number;// 1
+  product_name: string;// "ქალის მოსაცმელი";
+  created_at: string;// "2021-09-23T07: 02: 00.000000Z";
+  description: string | null;
+  images: string | null;// JSON string: '["1.jpg","2.jpg"]'
+  variations: ProductVariation[];
+  user_id: number;
+  product_id: number;
+  price: string;
+  discounted_price: number;
+  order_id: number;
+  updated_at: string;
+  variation_id: number;
+  quantity: number;
+  product: OrderProduct;
+}
 export type Order = {
   id: number;
   status: number;
   sub_total: string;
   discounted_sub_total: number;
 }
+export type OrderDetails = {
+  id: number;
+  status: number;
+  sub_total: string;
+  discounted_sub_total: number;
+  address: Address;
+  "order_items": OrderItems[];
+}
 
-// export type Favorite = {
-//   id: number;
-//   createdAt: string;
-//   product: {
-//     id: number;
-//     product_name: string;
-//     createdAt: string;
-//     description: string;
-//     images: string;
-//   }
-// }
 
 export type Favorite = {
   "id": number;// 1

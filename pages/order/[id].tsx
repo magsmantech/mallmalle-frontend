@@ -3,27 +3,28 @@ import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import styled from "styled-components";
-import Item from "./cartItem";
-import Quantity from "./quantity";
-import { ChipWrapper, ChipTitle } from "./styled/Chips";
-import Responsive from "../config/Responsive"
-import { Order, } from '../domain/shop';
-import api from "../features/api";
-import Loader from "./Loader";
-
-
-
+import CartItem from "../../components/cartItem";
+import Responsive from "../../config/Responsive"
+import { Order, } from '../../domain/shop';
+import api from "../../features/api";
+import Loader from "../../components/Loader";
+import { ChipWrapper, ChipTitle } from '../../components/styled/Chips';
+import Quantity from '../../components/quantity';
+import { useRouter } from 'next/router';
+import OrderItem from '../../components/OrderItem';
 
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
+    const router = useRouter();
+    const orderID = parseInt(router.query.id as string);
+    console.log("order id --> " + orderID)
 
 
-    const [orderID, setorderID] = useState(1);
+    const { data: orderDetail, isLoading: isOrderDetailLoading, refetch: refetchOrderDetail, isSuccess: isOrderDetailSucces } = api.useGetOrderDetailsQuery(orderID);
 
     const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
     const { data: products, isLoading: isProductsLoading, refetch: refetchProducts, isSuccess: isProductsSucces } = api.useGetProductsQuery(undefined);
     const { data: myOrders, isLoading: isMyOrdersLoading, refetch: refetchMyOrders, isSuccess: isMyOrdersSucces } = api.useGetMyOrdersQuery(undefined);
-    // const { data: orderDetails, isLoading: isOrderDetailsLoading, refetch: refetchOrderDetails, isSuccess: isOrderDetailsSucces } = api.useGetOrderDetailsQuery(orderID);
 
     const items: itemType[] = [
         {
@@ -68,16 +69,17 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
     }
 
 
+    // console.log("order detail --> " + JSON.stringify(orderDetail?.orderItems))
 
 
 
-
-    return isProfileLoading ? (
+    return isOrderDetailLoading ? (
         <Loader />
-    ) : !profile ? (
-        <span>Not Found</span>
+    ) : !orderDetail ? (
+        <span>Not Found order</span>
     ) : (
         <>
+            {/* <h1>last order {orderDetail.id}</h1> */}
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
                     <OrderListTopSideInsideWrapper>
@@ -101,46 +103,38 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     <HeaderItem>სტატუსი</HeaderItem>
                 </Headers>
 
-                {/* {myOrders && products ? (
-                    myOrders.map((o, index) => {
-                        const product = products.find(p => p.id == o.id);
-                        return (
-                           <div>
-                                <h1>{product?.product_name}</h1>
-                                <h1>{product?.discount}</h1>
-                           </div>
-                        )
-                    })
-                ) : (<h1>product not found</h1>)} */}
+                {/* <h1>{orderDetail.id}</h1> */}
+
+                {/* {orderDetail.order_items ? (
+                    orderDetail.order_items.map((o, index) => (
+                        <h1>{o.product.product_name}</h1>
+                    ))
+                ) : <span>not found order items</span>} */}
 
 
-                {/* {isOrderDetailsLoading ? (<Loader />) : !orderDetails ? (<span>Not Found</span>) : ( TODO Levan Maduarshvili
-                    <>
-                        {orderDetails.orderItems?.map((o, index) => (
-                            <>
-                                <h2>{o.product.product_name}</h2>
-                            </>
-                        ))}
-                    </>
-                )} */}
 
-
-                {/* {profile.order_history.map((o, index) => (
+                {orderDetail.order_items.map((o, index) => (
                     <ItemFlexWrapper key={index}>
                         <ItemWrapperStyle>
-                            @ts-ignore
-                            <Item name={item.name} size={item.size} color={item.color} />
+                            <OrderItem item={o.product} />
                         </ItemWrapperStyle>
                         <NumberWrapperStyle>
-                            <Number>{item.quantity}x</Number>
+                            <Number>{o.quantity}x</Number>
                         </NumberWrapperStyle>
                         <PriceWrapperStyle>
-                            <Price>{o.sub_total}</Price>
-                            <OldPrice>{o.discounted_sub_total}</OldPrice>
+                            <Price>{o.price} ₾</Price>
+                            <OldPrice>{o.discounted_price} ₾</OldPrice>
                         </PriceWrapperStyle>
 
                         <BadgeWrapperStyle>
-                            <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
+                            <BadgeWrapperStyle>
+                                {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
+                                <Badge
+                                    color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
+                                    backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
+                                    {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
+                                </Badge>
+                            </BadgeWrapperStyle>
                         </BadgeWrapperStyle>
                         <ButtonWrapperStyle>
                             <Link href="/history">
@@ -150,7 +144,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             </Link>
                         </ButtonWrapperStyle>
                     </ItemFlexWrapper>
-                ))} */}
+                ))}
 
                 {/* {items.map((item, i) => <>
                     <ItemFlexWrapper key={i}>
@@ -180,20 +174,46 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                 </>)} */}
 
 
+                {/* {myOrders?.map((o, index) => {
+
+                    return (
+                        <ItemFlexWrapper key={index}>
+                            <ItemWrapperStyle>
+
+                                <Item name={item.name} size={item.size} color={item.color} />
+                            </ItemWrapperStyle>
+                            <NumberWrapperStyle>
+                                <Number>x</Number>
+                            </NumberWrapperStyle>
+                            <PriceWrapperStyle>
+                                <Price>$79.90</Price>
+                                <OldPrice>$123.90</OldPrice>
+                            </PriceWrapperStyle>
+
+                            <BadgeWrapperStyle>
+                                <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
+                            </BadgeWrapperStyle>
+                            <ButtonWrapperStyle>
+                                <Link href="/history">
+                                    <IconWrapper>
+                                        <RightArrowStyle color={'#3A7BD5'} />
+                                    </IconWrapper>
+                                </Link>
+                            </ButtonWrapperStyle>
+                        </ItemFlexWrapper>
+                    )
+                })} */}
 
 
+                {/* {myOrders?.map((o, index) => (
+                    <div style={{ display: 'flex' }} key={index} >
+                        <h1>{o.id}</h1>
+                        <button>
+                            {o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დასასრულები"}
+                        </button>
+                    </div>
+                ))} */}
 
-                {/* order list in profile */}
-                {myOrders?.map((o, index) => (
-                    <Link href={`/order/${o.id}`}>
-                        <div style={{ display: 'flex' }} key={index} >
-                            <h1>{o.id}</h1>
-                            <button>
-                                {o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დასასრულები"}
-                            </button>
-                        </div>
-                    </Link>
-                ))}
             </OrderListWrapper>
 
         </>)
