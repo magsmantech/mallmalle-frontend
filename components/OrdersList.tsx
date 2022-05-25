@@ -17,12 +17,7 @@ import Loader from "./Loader";
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
-
-
-    const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
-    const { data: products, isLoading: isProductsLoading, refetch: refetchProducts, isSuccess: isProductsSucces } = api.useGetProductsQuery(undefined);
     const { data: myOrders, isLoading: isMyOrdersLoading, refetch: refetchMyOrders, isSuccess: isMyOrdersSucces } = api.useGetMyOrdersQuery(undefined);
-    // const { data: orderDetails, isLoading: isOrderDetailsLoading, refetch: refetchOrderDetails, isSuccess: isOrderDetailsSucces } = api.useGetOrderDetailsQuery(orderID);
 
     const items: itemType[] = [
         {
@@ -68,7 +63,6 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
     const [statusID, setStatusID] = useState<number>(999);
 
-
     return isMyOrdersLoading ? (
         <Loader />
     ) : !myOrders ? (
@@ -78,16 +72,16 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
                     <OrderListTopSideInsideWrapper>
-                        <ChipWrapper onClick={() => setStatusID(1)}>
+                        <ChipWrapper color={statusID === 1 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(1)}>
                             <ChipTitle>დადასტურებული</ChipTitle>
                         </ChipWrapper>
-                        <ChipWrapper onClick={() => setStatusID(3)}>
+                        <ChipWrapper color={statusID === 3 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(3)}>
                             <ChipTitle>პროცესში</ChipTitle>
                         </ChipWrapper>
-                        <ChipWrapper onClick={() => setStatusID(2)}>
+                        <ChipWrapper color={statusID === 2 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(2)}>
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
-                        <ChipWrapper onClick={() => setStatusID(999)}>
+                        <ChipWrapper color={statusID === 999 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(999)}>
                             <ChipTitle>ყველა</ChipTitle>
                         </ChipWrapper>
                     </OrderListTopSideInsideWrapper>
