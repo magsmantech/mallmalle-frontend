@@ -18,7 +18,6 @@ import Loader from "./Loader";
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
 
-    const [orderID, setorderID] = useState(1);
 
     const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
     const { data: products, isLoading: isProductsLoading, refetch: refetchProducts, isSuccess: isProductsSucces } = api.useGetProductsQuery(undefined);
@@ -67,157 +66,117 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
         },
     }
 
+    const [statusID, setStatusID] = useState<number>(999);
 
 
-
-
-
-    return isProfileLoading ? (
+    return isMyOrdersLoading ? (
         <Loader />
-    ) : !profile ? (
+    ) : !myOrders ? (
         <span>Not Found</span>
     ) : (
         <>
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
                     <OrderListTopSideInsideWrapper>
-                        <ChipWrapper>
+                        <ChipWrapper onClick={() => setStatusID(1)}>
                             <ChipTitle>დადასტურებული</ChipTitle>
                         </ChipWrapper>
-                        <ChipWrapper color={'rgba(34, 213, 174, .25)'}>
+                        <ChipWrapper onClick={() => setStatusID(3)}>
                             <ChipTitle>პროცესში</ChipTitle>
                         </ChipWrapper>
-                        <ChipWrapper>
+                        <ChipWrapper onClick={() => setStatusID(2)}>
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
+                        <ChipWrapper onClick={() => setStatusID(999)}>
+                            <ChipTitle>ყველა</ChipTitle>
+                        </ChipWrapper>
                     </OrderListTopSideInsideWrapper>
-                    <SearchCount>სულ მოიძებნა: <SearchCountText>12 შეკვეთა</SearchCountText></SearchCount>
+                    <SearchCount>სულ მოიძებნა: <SearchCountText>{myOrders.length} შეკვეთა</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
 
-                <Headers>
+                {/* <Headers>
                     <HeaderItem>პროდუქტი</HeaderItem>
                     <HeaderItem>რაოდენობა</HeaderItem>
                     <HeaderItem>ფასი</HeaderItem>
                     <HeaderItem>სტატუსი</HeaderItem>
-                </Headers>
-
-                {/* {myOrders && products ? (
-                    myOrders.map((o, index) => {
-                        const product = products.find(p => p.id == o.id);
-                        return (
-                           <div>
-                                <h1>{product?.product_name}</h1>
-                                <h1>{product?.discount}</h1>
-                           </div>
-                        )
-                    })
-                ) : (<h1>product not found</h1>)} */}
+                </Headers> */}
 
 
-                {/* {isOrderDetailsLoading ? (<Loader />) : !orderDetails ? (<span>Not Found</span>) : ( TODO Levan Maduarshvili
-                    <>
-                        {orderDetails.orderItems?.map((o, index) => (
-                            <>
-                                <h2>{o.product.product_name}</h2>
-                            </>
-                        ))}
-                    </>
-                )} */}
+                {myOrders.filter(order => order.status === statusID).map(filteredStatus => (
 
-
-                {/* {profile.order_history.map((o, index) => (
-                    <ItemFlexWrapper key={index}>
-                        <ItemWrapperStyle>
-                            @ts-ignore
-                            <Item name={item.name} size={item.size} color={item.color} />
-                        </ItemWrapperStyle>
-                        <NumberWrapperStyle>
-                            <Number>{item.quantity}x</Number>
-                        </NumberWrapperStyle>
-                        <PriceWrapperStyle>
-                            <Price>{o.sub_total}</Price>
-                            <OldPrice>{o.discounted_sub_total}</OldPrice>
-                        </PriceWrapperStyle>
-
-                        <BadgeWrapperStyle>
-                            <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
-                        </BadgeWrapperStyle>
-                        <ButtonWrapperStyle>
-                            <Link href="/history">
-                                <IconWrapper>
-                                    <RightArrowStyle color={'#3A7BD5'} />
-                                </IconWrapper>
-                            </Link>
-                        </ButtonWrapperStyle>
-                    </ItemFlexWrapper>
-                ))} */}
-
-                {/* {items.map((item, i) => <>
-                    <ItemFlexWrapper key={i}>
-                        <ItemWrapperStyle>
-                            @ts-ignore
-                            <Item name={item.name} size={item.size} color={item.color} />
-                        </ItemWrapperStyle>
-                        <NumberWrapperStyle>
-                            <Number>{item.quantity}x</Number>
-                        </NumberWrapperStyle>
-                        <PriceWrapperStyle>
-                            <Price>$79.90</Price>
-                            <OldPrice>$123.90</OldPrice>
-                        </PriceWrapperStyle>
-
-                        <BadgeWrapperStyle>
-                            <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
-                        </BadgeWrapperStyle>
-                        <ButtonWrapperStyle>
-                            <Link href="/history">
-                                <IconWrapper>
-                                    <RightArrowStyle color={'#3A7BD5'} />
-                                </IconWrapper>
-                            </Link>
-                        </ButtonWrapperStyle>
-                    </ItemFlexWrapper>
-                </>)} */}
-
-
-
-
-
-                {/* order list in profile */}
-                {myOrders?.map((o, index) => (
-                    <Link href={`/order/${o.id}`}>
-                        <div style={{ display: 'flex' }} key={index} >
-                            <h1>{o.id}</h1>
-                            <button>
-                                {o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დასასრულები"}
-                            </button>
-                        </div>
+                    <Link href={`/order/${filteredStatus.id}`}>
+                        <OrderWrapper style={{
+                            background: filteredStatus.status === 1 ? "rgba(34, 213, 174, .21)" : filteredStatus.status === 2 ? "rgba(213, 34, 34, .21)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, .21)" : "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)",
+                            color: filteredStatus.status === 1 ? "#22D5AE" : filteredStatus.status === 2 ? "rgba(213, 34, 34, 1)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, 1)" : "white"
+                        }}>
+                            <StatusDiv>{filteredStatus.status === 1 ? "დადასტურებული" : filteredStatus.status === 2 ? "გაუქმებული" : filteredStatus.status === 3 ? "პროცესში" : "დაუსრულებელი"}</StatusDiv>
+                            <Money>თანხა: </Money>
+                            <MoneyCount>{filteredStatus.discounted_sub_total} ₾</MoneyCount>
+                        </OrderWrapper>
                     </Link>
+
                 ))}
+
+                {statusID === 999 ? (
+                    myOrders.map((o, index) => (
+                        <Link href={`/order/${o.id}`}>
+                            <OrderWrapper key={index} style={{
+                                background: o.status === 1 ? "rgba(34, 213, 174, .21)" : o.status === 2 ? "rgba(213, 34, 34, .21)" : o.status === 3 ? "rgba(213, 213, 34, .21)" : "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)",
+                                color: o.status === 1 ? "#22D5AE" : o.status === 2 ? "rgba(213, 34, 34, 1)" : o.status === 3 ? "rgba(213, 213, 34, 1)" : "white"
+                            }}>
+                                <StatusDiv>{o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დაუსრულებელი"}</StatusDiv>
+                                <Money>თანხა: </Money>
+                                <MoneyCount>{o.discounted_sub_total} ₾</MoneyCount>
+                            </OrderWrapper>
+                        </Link>
+                    ))
+                ) : null}
+
+
             </OrderListWrapper>
 
         </>)
 };
 
 
+const OrderWrapper = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 200px;
+    height: 60px;
+    transition: all .2s;
+    width: 100%;
+    margin: 10px 0px;
+    padding: 10px 10px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: "BPG WEB 002 Caps";
+    font-size: 17px;
+        &:hover {
+            transition: all .2s;
+            opacity: 0.7;
+        }
+`;
+const StatusDiv = styled.div`
+    padding-top: 3px;
+    width: 30%;
+`;
+const Money = styled.div`
 
-{/* <BadgeWrapperStyle>
-                            started: 0 | success: 1 | error: 2 | in_progress: 3
-                            <Badge 
-                                color={o.status === 1 ? "#22D5AE" : o.status === 2 ? "rgba(213, 34, 34, 1)" : o.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
-                                backgroundColor={o.status === 1 ? "rgba(34, 213, 174, .21)" : o.status === 2 ? "rgba(213, 34, 34, .21)" : o.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
-                                {o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დასასრულები"}
-                            </Badge>
-                        </BadgeWrapperStyle> */}
-
+`;
+const MoneyCount = styled.div`
+    margin-left: 10px;
+    font-size: 18px;
+`;
 
 const Grid = styled.div`
-display: grid;
-row-gap: 5.0rem;
-grid-template-columns: repeat(4, 1fr);
-width: 100%;
-margin-right: 1.5rem;
-height: min-content;
+    display: grid;
+    row-gap: 5.0rem;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    margin-right: 1.5rem;
+    height: min-content;
 `;
 
 const Headers = styled.div`

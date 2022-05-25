@@ -1,22 +1,31 @@
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
 import { OrderItems } from "../domain/shop";
+import api from "../features/api";
+import Loader from "./Loader";
 
 
 
-const OrderItem: React.FC<{ item: OrderItems; style?: any }> = ({ item, style }) => {
+const OrderItemComponent: React.FC<{ productId: number; orderId: number; style?: any }> = ({ productId, orderId, style }) => {
 
-    return (
-        <ItemWrapper style={{ ...style }}>
-            <ItemImg src={'/assets/default-image.png'} />
-            <ItemTextWrapper>
-                <ItemName>saxeli</ItemName>
-                <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>zoma</ItemValue></div>
-                <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>feri</ItemValue></div>
-            </ItemTextWrapper>
-        </ItemWrapper>
-    )
+  const { data: orderDetail, isLoading: isOrderDetailLoading, refetch: refetchOrderDetail, isSuccess: isOrderDetailSucces } = api.useGetOrderDetailsQuery(orderId);
 
+  // console.log(JSON.stringify(orderDetail?.order_items))
+
+  return isOrderDetailLoading ? <Loader /> : !orderDetail ? (<span>not found</span>) : (
+    <ItemWrapper style={{ ...style }}>
+      <ItemImg src={'/assets/default-image.png'} />
+      <ItemTextWrapper>
+        <ItemName>{productId} {orderId}</ItemName>
+        {orderDetail.order_items.map((o, index) => {
+          <div>{o.product.product_name} asdasas</div>
+      })}
+        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>zoma</ItemValue></div>
+        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>feri</ItemValue></div>
+      </ItemTextWrapper>
+    
+    </ItemWrapper>
+  )
 };
 
 
@@ -89,4 +98,4 @@ width: 100%;
 
 `;
 
-export default OrderItem;
+export default OrderItemComponent;

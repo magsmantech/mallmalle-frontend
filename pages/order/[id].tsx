@@ -11,7 +11,7 @@ import Loader from "../../components/Loader";
 import { ChipWrapper, ChipTitle } from '../../components/styled/Chips';
 import Quantity from '../../components/quantity';
 import { useRouter } from 'next/router';
-import OrderItem from '../../components/OrderItem';
+import OrderItemComponent from '../../components/OrderItemComponent';
 
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
@@ -79,7 +79,6 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
         <span>Not Found order</span>
     ) : (
         <>
-            {/* <h1>last order {orderDetail.id}</h1> */}
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
                     <OrderListTopSideInsideWrapper>
@@ -93,7 +92,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
                     </OrderListTopSideInsideWrapper>
-                    <SearchCount>სულ მოიძებნა: <SearchCountText>12 შეკვეთა</SearchCountText></SearchCount>
+                    <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items.length} შეკვეთა</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
 
                 <Headers>
@@ -103,20 +102,19 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     <HeaderItem>სტატუსი</HeaderItem>
                 </Headers>
 
-                {/* <h1>{orderDetail.id}</h1> */}
-
-                {/* {orderDetail.order_items ? (
-                    orderDetail.order_items.map((o, index) => (
-                        <h1>{o.product.product_name}</h1>
-                    ))
-                ) : <span>not found order items</span>} */}
-
-
 
                 {orderDetail.order_items.map((o, index) => (
                     <ItemFlexWrapper key={index}>
                         <ItemWrapperStyle>
-                            <OrderItem item={o.product} />
+                            <ItemWrapper>
+                                <ItemImg src={'/assets/default-image.png'} />
+                                <ItemTextWrapper>
+                                    <ItemName>{o.product.product_name}</ItemName>
+                                    <div><ItemLabel>ზომა:</ItemLabel> {o.product.variations.map((v, i) => (<ItemValue key={i}>{v.title} / </ItemValue>))}</div>
+                                    <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>Nan</ItemValue></div>
+                                </ItemTextWrapper>
+                            </ItemWrapper>
+
                         </ItemWrapperStyle>
                         <NumberWrapperStyle>
                             <Number>{o.quantity}x</Number>
@@ -125,7 +123,6 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             <Price>{o.price} ₾</Price>
                             <OldPrice>{o.discounted_price} ₾</OldPrice>
                         </PriceWrapperStyle>
-
                         <BadgeWrapperStyle>
                             <BadgeWrapperStyle>
                                 {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
@@ -146,74 +143,6 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     </ItemFlexWrapper>
                 ))}
 
-                {/* {items.map((item, i) => <>
-                    <ItemFlexWrapper key={i}>
-                        <ItemWrapperStyle>
-                            @ts-ignore
-                            <Item name={item.name} size={item.size} color={item.color} />
-                        </ItemWrapperStyle>
-                        <NumberWrapperStyle>
-                            <Number>{item.quantity}x</Number>
-                        </NumberWrapperStyle>
-                        <PriceWrapperStyle>
-                            <Price>$79.90</Price>
-                            <OldPrice>$123.90</OldPrice>
-                        </PriceWrapperStyle>
-
-                        <BadgeWrapperStyle>
-                            <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
-                        </BadgeWrapperStyle>
-                        <ButtonWrapperStyle>
-                            <Link href="/history">
-                                <IconWrapper>
-                                    <RightArrowStyle color={'#3A7BD5'} />
-                                </IconWrapper>
-                            </Link>
-                        </ButtonWrapperStyle>
-                    </ItemFlexWrapper>
-                </>)} */}
-
-
-                {/* {myOrders?.map((o, index) => {
-
-                    return (
-                        <ItemFlexWrapper key={index}>
-                            <ItemWrapperStyle>
-
-                                <Item name={item.name} size={item.size} color={item.color} />
-                            </ItemWrapperStyle>
-                            <NumberWrapperStyle>
-                                <Number>x</Number>
-                            </NumberWrapperStyle>
-                            <PriceWrapperStyle>
-                                <Price>$79.90</Price>
-                                <OldPrice>$123.90</OldPrice>
-                            </PriceWrapperStyle>
-
-                            <BadgeWrapperStyle>
-                                <Badge color={colors[item.status]?.text} backgroundColor={colors[item.status]?.bg}>{item.statusLabel}</Badge>
-                            </BadgeWrapperStyle>
-                            <ButtonWrapperStyle>
-                                <Link href="/history">
-                                    <IconWrapper>
-                                        <RightArrowStyle color={'#3A7BD5'} />
-                                    </IconWrapper>
-                                </Link>
-                            </ButtonWrapperStyle>
-                        </ItemFlexWrapper>
-                    )
-                })} */}
-
-
-                {/* {myOrders?.map((o, index) => (
-                    <div style={{ display: 'flex' }} key={index} >
-                        <h1>{o.id}</h1>
-                        <button>
-                            {o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დასასრულები"}
-                        </button>
-                    </div>
-                ))} */}
-
             </OrderListWrapper>
 
         </>)
@@ -221,23 +150,15 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
 
 
-{/* <BadgeWrapperStyle>
-                            started: 0 | success: 1 | error: 2 | in_progress: 3
-                            <Badge 
-                                color={o.status === 1 ? "#22D5AE" : o.status === 2 ? "rgba(213, 34, 34, 1)" : o.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
-                                backgroundColor={o.status === 1 ? "rgba(34, 213, 174, .21)" : o.status === 2 ? "rgba(213, 34, 34, .21)" : o.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
-                                {o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დასასრულები"}
-                            </Badge>
-                        </BadgeWrapperStyle> */}
 
 
 const Grid = styled.div`
-display: grid;
-row-gap: 5.0rem;
-grid-template-columns: repeat(4, 1fr);
-width: 100%;
-margin-right: 1.5rem;
-height: min-content;
+    display: grid;
+    row-gap: 5.0rem;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    margin-right: 1.5rem;
+    height: min-content;
 `;
 
 const Headers = styled.div`
@@ -466,6 +387,71 @@ const SearchCountText = styled.span`
 const RightArrowStyle = styled(BsArrowRight)`
     font-size: 22px;
 `;
+const ItemName = styled.span`
+color: var(--text-color);
+font-size: 24px;
+line-height: 21px;
+font-family: fira-go;
+font-weight: 600;
+margin-bottom: 15px;
+  ${Responsive.mobile}{
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: 10px;
+    padding-right: 30px;
+  }
+`;
 
+const ItemLabel = styled.span`
+color: var(--text-color);
+font-size: 18px;
+font-family: 'helvetica';
+opacity: 0.5;
+font-weight: 500;
+  ${Responsive.mobile}{
+    font-size: 14px;
+  }
+`;
+
+const ItemValue = styled.span`
+color: var(--text-color);
+font-size: 18px;
+font-weight: 500;
+font-family: fira-go ;
+  ${Responsive.mobile}{
+    font-size: 14px;
+  }
+`;
+
+const ItemImg = styled.img`
+height: 130px;
+width: 130px;
+border-radius: 14px;
+object-fit: cover;
+object-position: center;
+margin-right: 20px;
+min-width: 130px;
+  ${Responsive.mobile}{
+    height: 78px;
+    width: 78px;
+    min-width: 78px;
+    margin-right: 10px;
+  }
+`;
+
+const ItemTextWrapper = styled.div`
+display: flex;
+flex-direction: column;
+margin-top: 5px;
+  ${Responsive.mobile}{
+    margin-top: 1px;
+  }
+`;
+
+const ItemWrapper = styled.div`
+display: flex;
+width: 100%;
+
+`;
 
 export default OrdersList;
