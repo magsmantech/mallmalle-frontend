@@ -11,6 +11,7 @@ import EditIcon from '../public/icons/react-icons/edit';
 import { calculateCartPrices, Cart } from '../domain/shop';
 import api from '../features/api';
 import Responsive from '../config/Responsive';
+import Loader from './Loader';
 
 const CustomButton = styled.button`
     
@@ -223,7 +224,7 @@ const OrderDetails: React.FC<{
     cart,
     selectedAddressId,
 }) => {
-
+        const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
         const cartPrices = calculateCartPrices(cart);
         const {
             itemsSubtotalOriginalPrice,
@@ -239,39 +240,40 @@ const OrderDetails: React.FC<{
         return (
             <>
                 <ContainerStyle className={styles.container}>
-                    <HeaderStyle>
-                        <IconWrapperStyle className={styles.iconWrapper}>
-                            {/* <FaUserAlt size={'2.0rem'} color={'#2EAAC1'}/> */}
-                            <ProfileIconStyle />
-                        </IconWrapperStyle>
-                        <div className={styles.headerText}>
-                            <NameStyle>გაგი მურჯიკნელი</NameStyle>
-                            <OrderNoStyle>ორდერის ID: 124532</OrderNoStyle>
-                        </div>
-                    </HeaderStyle>
-                    <div>
-                        <AddressTitleStyle>მისამართი:</AddressTitleStyle>
-                        <AddressItemStyle>
-                            <EditIconStyle />
-                            {/* <div> */}
-                            <IoLocationSharpStyle />
-                            {/* </div> */}
-                            <AddressItemTextStyle >
-                                <div className={styles.city}>Tbilisi</div>
-                                <div className={styles.address}>მუხიანი, ალეკო გობრონიძის #11 / ბინა 177</div>
-                                <div className={styles.zip}>ZIP კოდი: 01103</div>
-                            </AddressItemTextStyle>
-                        </AddressItemStyle>
-                        <AddressItemStyle>
-                            {/* <div>Icon</div> */}
-                            <BsFillTelephoneFillStyle color={'var(--text-color)'} />
-                            <AddressItemTextStyle>
-                                (+995) 577 48 88 96
-                            </AddressItemTextStyle>
-                        </AddressItemStyle>
+                    {isProfileLoading ? <Loader /> : !profile ? (<span>not found profile</span>) : (
+                        <>
+                            <HeaderStyle>
+                                <IconWrapperStyle className={styles.iconWrapper}>
+                                    {/* <FaUserAlt size={'2.0rem'} color={'#2EAAC1'}/> */}
+                                    <ProfileIconStyle />
+                                </IconWrapperStyle>
+                                <div className={styles.headerText}>
+                                    <NameStyle>{profile.profile?.user.first_name} {profile.profile?.user.last_name}</NameStyle>
+                                    <OrderNoStyle>ორდერის ID: 124532</OrderNoStyle>
+                                </div>
+                            </HeaderStyle>
+                            <div>
+                                <AddressTitleStyle>მისამართი:</AddressTitleStyle>
+                                <AddressItemStyle>
+                                    <EditIconStyle />
+                                    <IoLocationSharpStyle />
+                                    <AddressItemTextStyle >
+                                        <div className={styles.city}>{profile.profile?.addresses.slice(0, 1).map((a, i) => <span>{a.city}</span>)}</div>
+                                        <div className={styles.address}>{profile.profile?.addresses.slice(0, 1).map((a, i) => <span>{a.address_1}</span>)}</div>
+                                        <div className={styles.zip}>ZIP კოდი: {profile.profile?.addresses.slice(0, 1).map((a, i) => <span>{a.zip}</span>)}</div>
+                                    </AddressItemTextStyle>
+                                </AddressItemStyle>
+                                <AddressItemStyle>
+                                    {/* <div>Icon</div> */}
+                                    <BsFillTelephoneFillStyle color={'var(--text-color)'} />
+                                    <AddressItemTextStyle>
+                                        (+995) {profile.profile?.user.mobile}
+                                    </AddressItemTextStyle>
+                                </AddressItemStyle>
 
-                        <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle>
-                    </div>
+                                <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle>
+                            </div>
+                        </>)}
                     <InputWrapperStyle>
                         <InputStyle placeholder="PROMO CODE"></InputStyle>
                         <CustomButton>შემოწმება</CustomButton>

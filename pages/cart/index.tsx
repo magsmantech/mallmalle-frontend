@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { calculateProductPrices, Cart, CartItem } from "../../domain/shop";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
+import Loader from '../../components/Loader';
 
 
 
@@ -217,6 +218,7 @@ const CartScreen: NextPage = () => {
   // }, []);
 
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
+  const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
 
   const [updateQuantity, { isLoading: isUpdateQuantityLoading }] = api.useUpdateQuantityMutation();
 
@@ -292,9 +294,11 @@ const CartScreen: NextPage = () => {
             );
           })}
         </Grid>
+
         <OrderDetailsWrapper>
           <OrderDetails cart={cart} selectedAddressId={selectedAddressId}></OrderDetails>
         </OrderDetailsWrapper>
+
       </Container>
     </>
   );

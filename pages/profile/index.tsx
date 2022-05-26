@@ -296,6 +296,7 @@ const EditIconStyle = styled(EditIcon)`
   position: absolute;
   right: 0;
   top: 0;
+  cursor: pointer;
 `;
 const DividerStyle = styled.div`
     border-bottom: .1rem solid rgba(34, 34, 34, 0.2);
@@ -333,7 +334,14 @@ const PersonalInfo = () => {
 
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
 
-  const userInfo = profile
+
+  const [showAddressInput, setshowAddressInput] = useState(false);
+  const [newAddress, setnewAddress] = useState();
+
+  const toggleAddress = () => {
+    setshowAddressInput(!showAddressInput);
+  }
+
 
   return isProfileLoading ? (
     <Loader />
@@ -443,12 +451,17 @@ const PersonalInfo = () => {
         <GridItem className={styles.gridItem}>
           <AddressTitle className={styles.addressTitle}>მისამართი:</AddressTitle>
           <AddressItem className={styles.addressItem}>
-            <EditIconStyle
 
-            />
-            {/* <div> */}
+            <EditIconStyle onClick={toggleAddress} />
+
+            {showAddressInput === true ? (
+              <div>
+                {newAddress}
+                <input type="text" value={newAddress} onChange={(e: any) => setnewAddress(e.target.value)} />
+              </div>
+            ) : null}
+
             <LocationIconStyle color={"var(--text-color)"} />
-            {/* </div> */}
             {profile.profile?.addresses.map((a, index) => (
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
