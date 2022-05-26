@@ -8,14 +8,14 @@ const Checkbox: React.FC<{
     label: string;
     route?: string;
     linkText?: string;
-    onChange?: (_: boolean) => void;
+    onChange: (_: boolean) => void;
 }> = ({
     id,
     name,
     label,
     route,
     linkText,
-    onChange = undefined,
+    onChange,
 }) => {
 
         return (
