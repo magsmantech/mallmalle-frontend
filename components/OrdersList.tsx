@@ -147,6 +147,7 @@ const OrderWrapper = styled.div`
     cursor: pointer;
     font-family: "BPG WEB 002 Caps";
     font-size: 17px;
+    letter-spacing: 1px;
         &:hover {
             transition: all .2s;
             opacity: 0.7;
@@ -155,6 +156,7 @@ const OrderWrapper = styled.div`
 const StatusDiv = styled.div`
     padding-top: 3px;
     width: 30%;
+    letter-spacing: 1px;
 `;
 const Money = styled.div`
 

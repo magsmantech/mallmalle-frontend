@@ -12,6 +12,7 @@ import { ChipWrapper, ChipTitle } from '../../components/styled/Chips';
 import Quantity from '../../components/quantity';
 import { useRouter } from 'next/router';
 import OrderItemComponent from '../../components/OrderItemComponent';
+import { SectionTitle } from '../cart';
 
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
@@ -81,7 +82,8 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
         <>
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
-                    <OrderListTopSideInsideWrapper>
+                <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                    {/* <OrderListTopSideInsideWrapper>
                         <ChipWrapper>
                             <ChipTitle>დადასტურებული</ChipTitle>
                         </ChipWrapper>
@@ -91,7 +93,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                         <ChipWrapper>
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
-                    </OrderListTopSideInsideWrapper>
+                    </OrderListTopSideInsideWrapper> */}
                     <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items.length} შეკვეთა</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
 
@@ -134,7 +136,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             </BadgeWrapperStyle>
                         </BadgeWrapperStyle>
                         <ButtonWrapperStyle>
-                            <Link href="/history">
+                            <Link href={`/history/${orderID}`}>
                                 <IconWrapper>
                                     <RightArrowStyle color={'#3A7BD5'} />
                                 </IconWrapper>
@@ -352,7 +354,7 @@ export const Badge = styled.div`
 const OrderListWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    padding-top: 65px;
+    /* padding-top: 65px; */
 `;
 const OrderListTopSideWrapper = styled.div`
     display: flex;

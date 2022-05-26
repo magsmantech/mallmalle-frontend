@@ -10,6 +10,9 @@ import { Badge } from "../../components/OrdersList";
 import { IoLocationSharp } from "react-icons/io5";
 import Link from "next/link";
 import Responsive from "../../config/Responsive";
+import { useRouter } from "next/router";
+import api from "../../features/api";
+import Loader from '../../components/Loader';
 
 
 
@@ -49,11 +52,17 @@ const Item = () => {
 }
 
 const History: NextPage = () => {
-    return (
+
+    const router = useRouter();
+    const orderID = parseInt(router.query.id as string);
+    const { data: orderDetail, isLoading: isOrderDetailLoading, refetch: refetchOrderDetail, isSuccess: isOrderDetailSucces } = api.useGetOrderDetailsQuery(orderID);
+
+
+    return isOrderDetailLoading ? <Loader /> : !orderDetail ? (<span>not found</span>) : (
         <>
             <SectionStyle className={styles.section}>
                 <div className={styles.container}>
-                    <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                    <SectionTitle>ყიდვის ისტორია {orderID}</SectionTitle>
                     <Breadcrumbs>მთავარი / პროდუქტები / ყიდვის ისტორია / Reima Overalls</Breadcrumbs>
                     <Link href={{
                         pathname: '/profile',
@@ -70,16 +79,21 @@ const History: NextPage = () => {
                         <ItemWrapper>
                             <Item />
                         </ItemWrapper>
-                        <BadgeStyle>დადასტურებული</BadgeStyle>
+                        {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
+                        <Badge
+                            color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
+                            backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
+                            {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
+                        </Badge>
                         <AddressWrapperStyle>
 
                             <AddressTitle>მისამართი:</AddressTitle>
                             <AddressItem>
                                 <LocationIconStyle />
                                 <div className={styles.addressItemText}>
-                                    <div className={styles.city}>Tbilisi</div>
-                                    <div className={styles.address}>მუხიანი, ალეკო გობრონიძის #11 / ბინა 177</div>
-                                    <div className={styles.zip}>ZIP კოდი: 01103</div>
+                                    <div className={styles.city}>{orderDetail.address.city}</div>
+                                    <div className={styles.address}>{orderDetail.address.address_1}</div>
+                                    <div className={styles.zip}>ZIP კოდი: {orderDetail.address.zip}</div>
                                 </div>
                             </AddressItem>
 
