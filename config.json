@@ -1,4 +1,4 @@
 {
   "apiEndpoint": "https://api.mallmalle.com/api/",
-  "imagesEndpoint": "https://api.mallmalle.com/storage/"
+  "imagesEndpoint": "https://mallmalle-images.s3.eu-central-1.amazonaws.com/"
 }

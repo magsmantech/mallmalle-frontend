@@ -15,7 +15,7 @@ import RadioButton from "../components/customStyle/RadioButton";
 import DropDown from "../components/customStyle/DropDown";
 import SidebarFilter from "../components/customStyle/SidebarFilter";
 import SearchBar from "../components/search-bar";
-import api from "../features/api";
+import api, { uploadUrl } from "../features/api";
 import Loader from '../components/Loader';
 import DiscountItem from "../components/DiscountItem";
 
@@ -26,10 +26,10 @@ const Home: NextPage = () => {
   };
 
   const { data: AllDiscount, isLoading: isAllDiscountLoading, refetch: refetchAllDiscount } = api.useGetAllDiscountQuery(undefined);
-
   const [offers, setOffers] = useState<any>(null);
   const [newProducts, setNewProducts] = useState<any>(null);
   const [discounts, setDiscounts] = useState<any>(null);
+
 
 
   useEffect(() => {
@@ -101,22 +101,24 @@ const Home: NextPage = () => {
       </div> */}
 
       {isAllDiscountLoading ? <Loader /> : !AllDiscount ? (<span>not fount discount</span>) : (
+
         <DiscountItemContainerStyle>
-          {AllDiscount.slice(0, 12).map((d, index) => (
-            <DiscountItem
-              name={d.name}
-              id={d.id}
-              price="85,99"
-              oldPrice={`125`}
-              currency="gel"
+          {console.log(AllDiscount)}
+          {AllDiscount.slice(0, 12).map((d, index) => {
+
+            return (
+              <DiscountItem
+                name={d.name}
+                id={d.id}
+                price="85,99"
+                oldPrice={`125`}
+                currency="gel"
+                // imageUrl={uploadUrl(d.backgorund_image)}
               imageUrl={"../../../assets/default-image.png"}
-              // imageUrl={
-              //   product?.images?.length
-              //     ? config.imagesEndpoint + JSON.parse(product?.images)[0]
-              //     : "../public/assets/2.png"
-              // }
-            />
-          ))}
+              // imageUrl={config.imagesEndpoint + JSON.parse(d.backgorund_image)}
+              />
+            )
+          })}
         </DiscountItemContainerStyle>
       )}
 

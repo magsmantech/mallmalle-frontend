@@ -5,7 +5,7 @@ import { getToken } from '../state/store';
 const config = require('../config.json');
 
 export const uploadUrl = (uploadedFile: string) =>
-  `https://api.mallmalle.com/storage/${uploadedFile}`;
+  `https://mallmalle-images.s3.eu-central-1.amazonaws.com/${JSON.parse(uploadedFile)}`;
 
 // Define a service using a base URL and expected endpoints
 // only use default import to avoid confusion
