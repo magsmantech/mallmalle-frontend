@@ -350,10 +350,10 @@ const PersonalInfo = () => {
             </IconWrapper>
             <div className={styles.headerText}>
               <UserName className={styles.name}>
-                {profile.profile.user.first_name} {profile.profile.user.last_name}
+                {profile.profile?.user.first_name} {profile.profile?.user.last_name}
               </UserName>
               <OrderNo className={styles.orderNo}>
-                რეგისტრაციის დრო: {getYearFromDate(profile.profile.user.created_at)} წელი
+                რეგისტრაციის დრო: {getYearFromDate(profile.profile?.user.created_at)} წელი
               </OrderNo>
             </div>
           </HeaderStyle>
@@ -391,7 +391,7 @@ const PersonalInfo = () => {
           <InputWrapper >
             <InputModified
               placeholder="ელ-ფოსტა"
-              defaultValue={profile.profile.user.email}
+              defaultValue={profile.profile?.user.email}
             />
             <InputIconWrapper>
               <EmailIcon />
@@ -403,7 +403,7 @@ const PersonalInfo = () => {
           <InputWrapper>
             <InputModified
               placeholder="(+955) 555 78 97 93"
-              defaultValue={"+995 " + profile.profile.user.mobile}
+              defaultValue={"+995 " + profile.profile?.user.mobile}
             />
             <InputIconWrapper>
               <PhoneIcon />
@@ -449,7 +449,7 @@ const PersonalInfo = () => {
             {/* <div> */}
             <LocationIconStyle color={"var(--text-color)"} />
             {/* </div> */}
-            {profile.profile.addresses.map((a, index) => (
+            {profile.profile?.addresses.map((a, index) => (
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
                 <AddressStyle className={styles.address}>

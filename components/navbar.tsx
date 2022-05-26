@@ -78,8 +78,10 @@ const Navbar: React.FC<{
                             {/* <BsBookmark size={"3.2rem"} color={"white"} /> */}
                             <BookmarkIcon />
                             <ItemLabel>რჩეულები</ItemLabel>
-                            {favorite.length <= 0 || loggedIn === false ? null : (
-                                <FavoriteCount>{favorite.length}</FavoriteCount>
+                            {loggedIn === false ? null : (
+                                favorite.length <= 0 ? null : favorite.length == undefined ? null :(
+                                    <FavoriteCount>{favorite.length}</FavoriteCount>
+                                )
                             )}
                         </ItemWrapper>
                     </Link>
@@ -91,7 +93,7 @@ const Navbar: React.FC<{
                                 <CartIconStyle />
                                 <ItemLabel>კალათა</ItemLabel>
                                 {loggedIn === true ? (
-                                    cart.items?.length < 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
+                                    cart.items?.length <= 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
                                 ) : null}
                             </ItemWrapper>
                         </Link>
