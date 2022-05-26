@@ -15,6 +15,9 @@ import RadioButton from "../components/customStyle/RadioButton";
 import DropDown from "../components/customStyle/DropDown";
 import SidebarFilter from "../components/customStyle/SidebarFilter";
 import SearchBar from "../components/search-bar";
+import api from "../features/api";
+import Loader from '../components/Loader';
+import DiscountItem from "../components/DiscountItem";
 
 
 const Home: NextPage = () => {
@@ -22,10 +25,11 @@ const Home: NextPage = () => {
     window.scrollTo(0, 0);
   };
 
+  const { data: AllDiscount, isLoading: isAllDiscountLoading, refetch: refetchAllDiscount } = api.useGetAllDiscountQuery(undefined);
+
   const [offers, setOffers] = useState<any>(null);
   const [newProducts, setNewProducts] = useState<any>(null);
   const [discounts, setDiscounts] = useState<any>(null);
-
 
 
   useEffect(() => {
@@ -51,24 +55,8 @@ const Home: NextPage = () => {
   const [selected, setselected] = useState();
   return (
     <>
-
-
-      {/* <DropDown/> */}
-
-      {/* <RadioButton
-          id="userType"
-          onChange={(value) => setselected(value)}
-          options={[
-            { label: "i am levan", value: "levan" },
-            { label: "i am giorgi", value: "giorgi" },
-          ]}
-          value={selected}
-        /> */}
-
-      {/* <SidebarFilter /> */}
-
       <SearchWrapper>
-        <SearchBar/>
+        <SearchBar />
       </SearchWrapper>
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
@@ -89,7 +77,7 @@ const Home: NextPage = () => {
 
       <SectionTitle className={styles.sectionTitle}>შემოთავაზება</SectionTitle>
 
-      <div className={styles.itemsContainer}>
+      {/* <div className={styles.itemsContainer}>
         {offers?.length ? (
           offers.map((product: Product, index: number) => (
             <Item
@@ -110,7 +98,29 @@ const Home: NextPage = () => {
         ) : (
           <p>Loading...</p>
         )}
-      </div>
+      </div> */}
+
+      {isAllDiscountLoading ? <Loader /> : !AllDiscount ? (<span>not fount discount</span>) : (
+        <DiscountItemContainerStyle>
+          {AllDiscount.slice(0, 12).map((d, index) => (
+            <DiscountItem
+              name={d.name}
+              id={d.id}
+              price="85,99"
+              oldPrice={`125`}
+              currency="gel"
+              imageUrl={"../../../assets/default-image.png"}
+              // imageUrl={
+              //   product?.images?.length
+              //     ? config.imagesEndpoint + JSON.parse(product?.images)[0]
+              //     : "../public/assets/2.png"
+              // }
+            />
+          ))}
+        </DiscountItemContainerStyle>
+      )}
+
+
 
       <MiddleContainer className={styles.middleContainer}>
         <SaleItem big imageUrl={"/assets/122.png"} gradient />
@@ -131,7 +141,7 @@ const Home: NextPage = () => {
                   : ""
               }
               currency="gel"
-              imageUrl={"../../../assets/2.png"}
+              imageUrl={"../../../assets/default-image.png"}
             // imageUrl={
             //   product?.images?.length
             //     ? config.imagesEndpoint + JSON.parse(product?.images)[0]
@@ -185,6 +195,16 @@ const ItemsContainerStyle = styled.div`
       grid-column-gap: 10px;
       grid-template-columns: repeat(2, 1fr);
       grid-row-gap: 30px;
+    }
+`;
+
+const DiscountItemContainerStyle = styled(ItemsContainerStyle)`
+  margin-bottom: 100px;
+    ${Responsive.laptop} {
+      margin-bottom: 80px;
+    }
+    ${Responsive.tabletMobile}{
+      margin-bottom: 50px;
     }
 `;
 const SaleItemWrapper = styled.div`
