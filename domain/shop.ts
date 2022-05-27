@@ -92,7 +92,7 @@ export type Discount = {
   "is_active": 1 | 0;// 1
   "name": string;// "ფასდაკლება 20%";
   "value": number;// 10
-  "backgorund_image": string;// "discounts\/March2022\/9wS4Qsr9kTWivOi0OZjs.png";
+  "background_image": string;// "discounts\/March2022\/9wS4Qsr9kTWivOi0OZjs.png";
   "decoded_images": [] | string;
   "created_at": Date;// "2022-03-08T15: 54: 26.000000Z";
   "updated_at": Date;// "2022-03-08T15: 54: 26.000000Z";

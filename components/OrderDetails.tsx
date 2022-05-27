@@ -8,10 +8,13 @@ import Button from './styled/button';
 
 import ProfileIcon from '../public/icons/react-icons/profile';
 import EditIcon from '../public/icons/react-icons/edit';
-import { calculateCartPrices, Cart } from '../domain/shop';
+import { Address, calculateCartPrices, Cart } from '../domain/shop';
 import api from '../features/api';
 import Responsive from '../config/Responsive';
 import Loader from './Loader';
+import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CustomButton = styled.button`
     
@@ -128,6 +131,7 @@ const EditIconStyle = styled(EditIcon)`
     position: absolute;
     right: 0;
     top: 0;
+    cursor: pointer;
         ${Responsive.mobile}{
             width: 19px;
             height: 19px;
@@ -184,6 +188,20 @@ const InputStyle = styled(Input)`
             font-size: 13px;
         }
 `;
+const UpdateInputStyle = styled.input`
+  width: 100%;
+  margin-bottom: 20px;
+  height: 64px;
+  min-height: 64px;
+  border-radius: 14px;
+  border: 2px solid #EBEBEB;
+  outline: none;
+  font-size: 16px;
+  padding: 0px 15px;
+    &:focus {
+      border-color: #94EBD8;
+    }
+`;
 const DividerStyle = styled.div`
     border-bottom: .1rem solid rgba(42, 114, 129, .3);
     margin: 40px 0px 35px 0px;
@@ -213,7 +231,65 @@ const PaymentItemStyle = styled.div`
                 }
         }
 `;
+const BootstrapModalWrapper = styled(Modal)`
+    font-family: "BPG WEB 002 Caps"; 
+`;
+const AddressButton = styled(Button)`
+  /* background-image: none; */
+  height: 77px;
+  /* color: #22D5AE; */
+  border: 0.2rem solid #22d5ae;
+  margin-top: 55px;
+  background: -webkit-linear-gradient(to right, #22d2af 0%, #3885d1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  &:hover {
+    /* background-color: #22D5AE; */
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: white;
+    border: none;
+    /* color: white; */
+    background-image: var(--header-gradient);
+  }
+`;
 
+const TwoInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+    input {
+      flex-basis: 49%;
+    }
+    ${Responsive.mobile} {
+      flex-direction: column;
+      flex-basis: 100%;
+    }
+`;
+
+const ModalContent = styled.div`
+  min-height: 140px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+const DeleteAddressBtn = styled(AddressButton)`
+  border-color: #FF4A4A !important;
+  color: #FF4A4A;
+  margin-top: 25px;
+  background-image: linear-gradient(to right,#FF4A4A,#FF4A4A) !important;
+`;
+
+
+
+
+
+type Props = {
+    show: boolean;
+    address: Address[];
+    onHide: () => void;
+}
 
 
 
@@ -237,93 +313,207 @@ const OrderDetails: React.FC<{
         const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
         const [initiatePayment, { isLoading: isInitiatePaymentLoading }] = api.useInitiatePaymentMutation();
 
-        return (
-            <>
-                <ContainerStyle className={styles.container}>
-                    {isProfileLoading ? <Loader /> : !profile ? (<span>not found profile</span>) : (
-                        <>
-                            <HeaderStyle>
-                                <IconWrapperStyle className={styles.iconWrapper}>
-                                    {/* <FaUserAlt size={'2.0rem'} color={'#2EAAC1'}/> */}
-                                    <ProfileIconStyle />
-                                </IconWrapperStyle>
-                                <div className={styles.headerText}>
-                                    <NameStyle>{profile.profile?.user.first_name} {profile.profile?.user.last_name}</NameStyle>
-                                    <OrderNoStyle>ორდერის ID: 124532</OrderNoStyle>
-                                </div>
-                            </HeaderStyle>
-                            <div>
-                                <AddressTitleStyle>მისამართი:</AddressTitleStyle>
-                                <AddressItemStyle>
-                                    <EditIconStyle />
-                                    <IoLocationSharpStyle />
-                                    <AddressItemTextStyle >
-                                        <div className={styles.city}>{profile.profile?.addresses.slice(0, 1).map((a, i) => <span>{a.city}</span>)}</div>
-                                        <div className={styles.address}>{profile.profile?.addresses.slice(0, 1).map((a, i) => <span>{a.address_1}</span>)}</div>
-                                        <div className={styles.zip}>ZIP კოდი: {profile.profile?.addresses.slice(0, 1).map((a, i) => <span>{a.zip}</span>)}</div>
-                                    </AddressItemTextStyle>
-                                </AddressItemStyle>
-                                <AddressItemStyle>
-                                    {/* <div>Icon</div> */}
-                                    <BsFillTelephoneFillStyle color={'var(--text-color)'} />
-                                    <AddressItemTextStyle>
-                                        (+995) {profile.profile?.user.mobile}
-                                    </AddressItemTextStyle>
-                                </AddressItemStyle>
 
-                                <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle>
-                            </div>
-                        </>)}
-                    <InputWrapperStyle>
-                        <InputStyle placeholder="PROMO CODE"></InputStyle>
-                        <CustomButton>შემოწმება</CustomButton>
-                    </InputWrapperStyle>
 
-                    <DividerStyle></DividerStyle>
+        const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
 
-                    <div className={styles.paymentWrapper}>
+        const isMainLoader = isProfileLoading || isDeleteAddressLoading
 
-                        <PaymentItemStyle >
-                            <span>სრული თანხა</span>
-                            <span>$ {cartTotal}</span>
-                        </PaymentItemStyle>
-                        {cartPrices.hasDiscount ? (
-                            <PaymentItemStyle>
-                                <span>ფასდაკლება</span>
-                                <span >-$ {itemsSubtotal}</span>
-                            </PaymentItemStyle>
-                        ) : null}
-                        <PaymentItemStyle>
-                            <span>{cart?.items?.length} ნივთი</span>
-                            <span>$ {itemsSubtotalOriginalPrice}</span>
-                        </PaymentItemStyle>
-                        <PaymentItemStyle>
-                            <span>მიტანა</span>
-                            <span>$ {shippingCost}</span>
-                        </PaymentItemStyle>
+        const [updateAddresId, setupdateAddresId] = useState<number>(0);
+        const [modalShow, setModalShow] = useState(false);
+
+
+        const [Address] = api.useUpdateAddressMutation();
+
+
+        function UpdateProfileItem(props: Props) { //onClick={props.onHide}
+            const [newAddress, setnewAddress] = useState();
+
+            const findAddress = props.address.find(x => x.id == updateAddresId);
+
+            const [updateStreet, setupdateStreet] = useState<string>(findAddress?.address_1 || "");
+            const [updateCity, setupdateCity] = useState<string>(findAddress?.city || "");
+            const [updateCountry, setupdateCountry] = useState<string>(findAddress?.country || "");
+            const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
+            const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
+
+            const [addressUpdatedMsg, setaddressUpdatedMsg] = useState<string>();
+            const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
+
+            const updateAddressPut = async () => {
+                setModalShow(false);
+                refetchProfile();
+
+                try {
+                    await Address({
+                        address_1: updateStreet,
+                        country: updateCountry,
+                        state: updateState,
+                        city: updateCity,
+                        zip: updateZipCode,
+                        id: updateAddresId
+                    });
+                    setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
+                    console.log("contact form submit");
+                    setaddressSubmitBtn(true);
+                    alert("form submited");
+                    console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
+                    console.log(Address)
+                } catch (error) {
+                    setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
+                    setaddressSubmitBtn(false);
+                    console.log("login error", error);
+                    alert("form not submited")
+                }
+            };
+
+            const deleteSelectedAddress = async () => {
+                deleteAddress(updateAddresId);
+                setModalShow(false);
+                refetchProfile();
+            }
+
+            return (
+
+                <BootstrapModalWrapper
+                    {...props}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter-1"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter-1">
+                            მისამართის ჩასწორება {updateAddresId}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ModalContent>
+                            <UpdateInputStyle type="text" placeholder="ქუჩის სახელი" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+                            <TwoInputWrapper>
+                                <UpdateInputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
+                                <UpdateInputStyle type="text" placeholder="ქვეყანა" value={updateCountry} onChange={(e: any) => setupdateCountry(e.target.value)} />
+                            </TwoInputWrapper>
+                            <UpdateInputStyle type="text" placeholder="რეგიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+
+                            <AddressButton onClick={updateAddressPut}>
+                                ჩასწორება
+                            </AddressButton>
+
+                            <DeleteAddressBtn onClick={deleteSelectedAddress}>მისამართის წაშლა</DeleteAddressBtn>
+
+
+                        </ModalContent>
+                    </Modal.Body>
+
+
+                </BootstrapModalWrapper>
+            );
+        }
+
+
+
+
+
+
+        return isMainLoader ? <Loader /> : !profile ? (<span>not found profile</span>) : (
+            <ContainerStyle className={styles.container}>
+                <HeaderStyle>
+                    <IconWrapperStyle className={styles.iconWrapper}>
+                        {/* <FaUserAlt size={'2.0rem'} color={'#2EAAC1'}/> */}
+                        <ProfileIconStyle />
+                    </IconWrapperStyle>
+                    <div className={styles.headerText}>
+                        <NameStyle>{profile.profile?.user.first_name} {profile.profile?.user.last_name}</NameStyle>
+                        <OrderNoStyle>ორდერის ID: 124532</OrderNoStyle>
                     </div>
+                </HeaderStyle>
+                <div>
+                    <AddressTitleStyle>მისამართი:</AddressTitleStyle>
+                    {profile.profile?.addresses.map((a, index) => (
+                        <AddressItemStyle>
+                            <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
+                            <IoLocationSharpStyle />
 
-                    <Button onClick={async () => {
-                        if (!selectedAddressId) {
-                            alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
-                            return;
-                        }
+                            <AddressItemTextStyle >
+                                <div className={styles.city}>{a.city}</div>
+                                <div className={styles.address}>{a.address_1}</div>
+                                <div className={styles.zip}>ZIP კოდი: {a.zip}</div>
+                            </AddressItemTextStyle>
+
+                        </AddressItemStyle>
+
+                    ))}
+
+                    <UpdateProfileItem
+                        show={modalShow}
+                        address={profile.profile?.addresses}
+                        onHide={() => setModalShow(false)}
+                    />
+
+
+
+
+                    <AddressItemStyle>
+                        {/* <div>Icon</div> */}
+                        <BsFillTelephoneFillStyle color={'var(--text-color)'} />
+                        <AddressItemTextStyle>
+                            (+995) {profile.profile?.user.mobile}
+                        </AddressItemTextStyle>
+                    </AddressItemStyle>
+
+                    <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle>
+                </div>
+
+                <InputWrapperStyle>
+                    <InputStyle placeholder="PROMO CODE"></InputStyle>
+                    <CustomButton>შემოწმება</CustomButton>
+                </InputWrapperStyle>
+
+                <DividerStyle></DividerStyle>
+
+                <div className={styles.paymentWrapper}>
+
+                    <PaymentItemStyle >
+                        <span>სრული თანხა</span>
+                        <span>$ {cartTotal}</span>
+                    </PaymentItemStyle>
+                    {cartPrices.hasDiscount ? (
+                        <PaymentItemStyle>
+                            <span>ფასდაკლება</span>
+                            <span >-$ {itemsSubtotal}</span>
+                        </PaymentItemStyle>
+                    ) : null}
+                    <PaymentItemStyle>
+                        <span>{cart?.items?.length} ნივთი</span>
+                        <span>$ {itemsSubtotalOriginalPrice}</span>
+                    </PaymentItemStyle>
+                    <PaymentItemStyle>
+                        <span>მიტანა</span>
+                        <span>$ {shippingCost}</span>
+                    </PaymentItemStyle>
+                </div>
+
+                <Button onClick={async () => {
+                    if (!selectedAddressId) {
+                        alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
+                        return;
+                    }
+                    // @ts-ignore
+                    const { data: response } = await createOrder({ addressId: selectedAddressId });
+                    if ('success' in response && response.success) {
+                        const orderId = response.data.id;
+                        // redirect to payment
+                        // alert(response.success + ' -- TODO redirect to card payment URL');
                         // @ts-ignore
-                        const { data: response } = await createOrder({ addressId: selectedAddressId });
-                        if ('success' in response && response.success) {
-                            const orderId = response.data.id;
-                            // redirect to payment
-                            // alert(response.success + ' -- TODO redirect to card payment URL');
-                            // @ts-ignore
-                            const { data: payment } = await initiatePayment({ orderId });
-                            const { redirect_url } = payment;
-                            document.location.href = redirect_url;
-                        } else {
-                            alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
-                        }
-                    }}>გადახდაზე გადასვალა</Button>
-                </ContainerStyle>
-            </>
+                        const { data: payment } = await initiatePayment({ orderId });
+                        const { redirect_url } = payment;
+                        document.location.href = redirect_url;
+                    } else {
+                        alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
+                    }
+                }}>გადახდაზე გადასვალა</Button>
+            </ContainerStyle>
         )
     }
 

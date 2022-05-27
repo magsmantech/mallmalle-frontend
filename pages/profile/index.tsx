@@ -390,7 +390,7 @@ const PersonalInfo = () => {
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
 
 
-  const [deleteAddress, {isLoading: isDeleteAddressLoading}] = api.useDeleteAddressMutation();  
+  const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
 
   const isMainLoader = isProfileLoading || isDeleteAddressLoading
 
@@ -418,6 +418,9 @@ const PersonalInfo = () => {
     const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
 
     const updateAddressPut = async () => {
+      setModalShow(false);
+      refetchProfile();
+
       try {
         await Address({
           address_1: updateStreet,
@@ -430,7 +433,9 @@ const PersonalInfo = () => {
         setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
         console.log("contact form submit");
         setaddressSubmitBtn(true);
-        alert("form submited")
+        alert("form submited");
+        console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
+        console.log(Address)
       } catch (error) {
         setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
         setaddressSubmitBtn(false);
@@ -600,12 +605,6 @@ const PersonalInfo = () => {
 
               <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
 
-              <MyVerticallyCenteredModal
-                show={modalShow}
-                address={profile.profile?.addresses}
-                onHide={() => setModalShow(false)}
-              />
-
               <LocationIconStyle color={"var(--text-color)"} />
 
               <AddressItemText key={index} className={styles.addressItemText}>
@@ -619,6 +618,12 @@ const PersonalInfo = () => {
             </AddressItem>
           ))}
 
+          <MyVerticallyCenteredModal
+            show={modalShow}
+            address={profile.profile?.addresses}
+            onHide={() => setModalShow(false)}
+          />
+          
           <AddressButton>
             მისამართის დამატება
           </AddressButton>

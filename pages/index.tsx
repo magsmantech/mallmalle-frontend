@@ -35,9 +35,9 @@ const Home: NextPage = () => {
 
   // const 
 
-  
+
   // const productWithImages = getProductImages(newProducts);
-  
+
 
   useEffect(() => {
     getDashboardData()
@@ -122,7 +122,11 @@ const Home: NextPage = () => {
                 currency="gel"
                 // imageUrl={uploadUrl(d.)}
                 imageUrl={"../../../assets/default-image.png"}
-              // imageUrl={config.imagesEndpoint + JSON.parse(d.backgorund_image)[0]}
+                // imageUrl={
+                //   d?.background_image?.length
+                //     ? config.imagesEndpoint + JSON.parse(d.background_image)[0]
+                //     : "../../../assets/default-image.png"
+                // }
               />
             )
           })}
