@@ -401,11 +401,11 @@ const PersonalInfo = () => {
 
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
 
-
   const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
+  const [Address, {isLoading: isUpdateAddressLoading}] = api.useUpdateAddressMutation();
+  const [addAddress, {isLoading: isAddAddressLoading}] = api.useAddAddressMutation();
 
-  const isMainLoader = isProfileLoading || isDeleteAddressLoading
-
+  const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading || isAddAddressLoading;
 
   const [updateAddresId, setupdateAddresId] = useState<number>(0);
   const [modalShow, setModalShow] = useState(false);
@@ -413,11 +413,10 @@ const PersonalInfo = () => {
 
 
 
-  const [Address] = api.useUpdateAddressMutation();
-  
 
 
-  function MyVerticallyCenteredModal(props: Props) { //onClick={props.onHide}
+
+  function UpdateAddressFunction(props: Props) { //onClick={props.onHide}
     const [newAddress, setnewAddress] = useState();
 
     const findAddress = props.address.find(x => x.id == updateAddresId);
@@ -433,7 +432,6 @@ const PersonalInfo = () => {
 
     const updateAddressPut = async () => {
       setModalShow(false);
-      refetchProfile();
 
       try {
         await Address({
@@ -456,6 +454,8 @@ const PersonalInfo = () => {
         console.log("login error", error);
         alert("form not submited")
       }
+
+      refetchProfile();
     };
 
     const deleteSelectedAddress = async () => {
@@ -504,17 +504,17 @@ const PersonalInfo = () => {
 
 
   function AddAddress(props: AddAddressProps) {
-    const [addAddress] = api.useAddAddressMutation();
     
+
     const [addAddressStreet, setAddAddressStreet] = useState<string>('');
     const [addAddressCity, setAddAddressCity] = useState<string>('');
     const [addAddressCountry, setAddAddressCountry] = useState<string>('');
     const [addAddressState, setAddAddressState] = useState<string>('');
     const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
-  
+
     const addNewAddress = async () => {
       setAddAddressModalShow(false);
-  
+
       try {
         await addAddress({
           address_1: addAddressStreet,
@@ -523,16 +523,16 @@ const PersonalInfo = () => {
           city: addAddressState,
           zip: addAddressZipCode
         });
-      
+
         alert("form submited");
         console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
       } catch (error) {
-    
+
         alert("form not submited")
       }
       refetchProfile();
     };
-  
+
     return (
       <BootstrapModalWrapper
         {...props}
@@ -554,11 +554,11 @@ const PersonalInfo = () => {
             </TwoInputWrapper>
             <InputStyle type="text" placeholder="რეგიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
-  
+
             <AddressButton onClick={addNewAddress}>
               დამატება
             </AddressButton>
-  
+
           </ModalContent>
         </Modal.Body>
       </BootstrapModalWrapper>
@@ -694,7 +694,7 @@ const PersonalInfo = () => {
             </AddressItem>
           ))}
 
-          <MyVerticallyCenteredModal
+          <UpdateAddressFunction
             show={modalShow}
             address={profile.profile?.addresses}
             onHide={() => setModalShow(false)}

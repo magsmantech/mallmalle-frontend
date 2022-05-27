@@ -234,6 +234,7 @@ const CartScreen: NextPage = () => {
     }
   }, [addresses]);
 
+
   return (
     <>
       <MainTitle>

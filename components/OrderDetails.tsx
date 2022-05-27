@@ -300,7 +300,9 @@ const OrderDetails: React.FC<{
     cart,
     selectedAddressId,
 }) => {
+        const { data: addresses, isLoading: isAddressesLoading, refetch: refetchAddresses } = api.useGetAddressesQuery(undefined);
         const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
+        
         const cartPrices = calculateCartPrices(cart);
         const {
             itemsSubtotalOriginalPrice,
@@ -313,17 +315,16 @@ const OrderDetails: React.FC<{
         const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
         const [initiatePayment, { isLoading: isInitiatePaymentLoading }] = api.useInitiatePaymentMutation();
 
-
-
+        const [Address, {isLoading: isUpdateAddressLoading}] = api.useUpdateAddressMutation();
         const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
 
-        const isMainLoader = isProfileLoading || isDeleteAddressLoading
 
         const [updateAddresId, setupdateAddresId] = useState<number>(0);
         const [modalShow, setModalShow] = useState(false);
 
 
-        const [Address] = api.useUpdateAddressMutation();
+        const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading;
+        
 
 
         function UpdateProfileItem(props: Props) { //onClick={props.onHide}
@@ -342,7 +343,7 @@ const OrderDetails: React.FC<{
 
             const updateAddressPut = async () => {
                 setModalShow(false);
-                refetchProfile();
+                
 
                 try {
                     await Address({
@@ -365,6 +366,7 @@ const OrderDetails: React.FC<{
                     console.log("login error", error);
                     alert("form not submited")
                 }
+                refetchProfile();
             };
 
             const deleteSelectedAddress = async () => {
@@ -373,7 +375,7 @@ const OrderDetails: React.FC<{
                 refetchProfile();
             }
 
-            return (
+            return  (
 
                 <BootstrapModalWrapper
                     {...props}

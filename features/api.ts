@@ -215,9 +215,10 @@ const api = createApi({
     // 
     // 
     updateAddress: builder.mutation<Address, Partial<Address> & Pick<Address, 'id'>>({ //not working
-      query: (body) => ({
-        url: `user/address/${body.id}`,
+      query: (Address) => ({
+        url: `user/address/${Address.id}`,
         method: 'PUT',
+        body: Address
       })
     }),
     // 
@@ -229,7 +230,18 @@ const api = createApi({
       query: (addAddress) => ({
         url: `user/address`,
         method: 'POST',
-        body: addAddress,
+        body: addAddress
+      })
+    }),
+    // 
+    // 
+    // get all address
+    // 
+    // 
+    getAllAddress: builder.query<Address, undefined>({
+      query: (_arg) => ({
+        url: `user/addresses`,
+        method: 'GET',
       })
     }),
     // 
