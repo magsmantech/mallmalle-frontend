@@ -111,7 +111,7 @@ const Favorites: React.FC<{}> = ({ }) => {
                
                     {favorites.map((f, index) => (
                         <ItemWrapper key={index}>
-                            <Item name={f.product.product_name} price="80.00" oldPrice='125.00' currency='gel' imageUrl={"/assets/default-image.png"}></Item>
+                            <Item name={f.product.product_name} id={f.product.id} price="80.00" oldPrice='125.00' currency='gel' imageUrl={"/assets/default-image.png"}></Item>
                             {/* TODO image from api */}
                             <CartButton
                                 onClick={_showFeedback}

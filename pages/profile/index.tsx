@@ -26,6 +26,10 @@ import Responsive from "../../config/Responsive";
 import Loader from "../../components/Loader";
 import api from "../../features/api";
 import { profile } from "console";
+import { Modal } from "react-bootstrap";
+
+import { Address } from '../../domain/shop';
+
 
 type TabItemProps = {
   selected?: boolean;
@@ -270,6 +274,7 @@ const AddressItemText = styled.div`
 const LocationIconStyle = styled(IoLocationSharp)`
   font-size: 22px;
   margin-right: 10px;
+  margin-top: 4px;
     ${Responsive.tablet}{
       width: 35px;
     }
@@ -309,8 +314,58 @@ const CustomBorder = styled.div`
     display: none;
   }
 `;
+const BootstrapModalWrapper = styled(Modal)`
+    font-family: "BPG WEB 002 Caps"; 
+`;
+const ModalContent = styled.div`
+  min-height: 140px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+const TwoInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+    input {
+      flex-basis: 49%;
+    }
+    ${Responsive.mobile} {
+      flex-direction: column;
+      flex-basis: 100%;
+    }
+`;
+
+const InputStyle = styled.input`
+  width: 100%;
+  margin-bottom: 20px;
+  height: 64px;
+  min-height: 64px;
+  border-radius: 14px;
+  border: 2px solid #EBEBEB;
+  outline: none;
+  font-size: 16px;
+  padding: 0px 15px;
+    &:focus {
+      border-color: #94EBD8;
+    }
+`;
+
+const DeleteAddressBtn = styled(AddressButton)`
+  border-color: #FF4A4A !important;
+  color: #FF4A4A;
+  margin-top: 25px;
+  background-image: linear-gradient(to right,#FF4A4A,#FF4A4A) !important;
+`;
 
 
+type Props = {
+  show: boolean;
+  address: Address[];
+  onHide: () => void;
+}
 
 
 const PersonalInfo = () => {
@@ -335,15 +390,104 @@ const PersonalInfo = () => {
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
 
 
-  const [showAddressInput, setshowAddressInput] = useState(false);
-  const [newAddress, setnewAddress] = useState();
+  const [deleteAddress, {isLoading: isDeleteAddressLoading}] = api.useDeleteAddressMutation();  
 
-  const toggleAddress = () => {
-    setshowAddressInput(!showAddressInput);
+  const isMainLoader = isProfileLoading || isDeleteAddressLoading
+
+
+  const [updateAddresId, setupdateAddresId] = useState<number>(0);
+  const [modalShow, setModalShow] = useState(false);
+
+
+
+  const [Address] = api.useUpdateAddressMutation();
+
+
+  function MyVerticallyCenteredModal(props: Props) { //onClick={props.onHide}
+    const [newAddress, setnewAddress] = useState();
+
+    const findAddress = props.address.find(x => x.id == updateAddresId);
+
+    const [updateStreet, setupdateStreet] = useState<string>(findAddress?.address_1 || "");
+    const [updateCity, setupdateCity] = useState<string>(findAddress?.city || "");
+    const [updateCountry, setupdateCountry] = useState<string>(findAddress?.country || "");
+    const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
+    const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
+
+    const [addressUpdatedMsg, setaddressUpdatedMsg] = useState<string>();
+    const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
+
+    const updateAddressPut = async () => {
+      try {
+        await Address({
+          address_1: updateStreet,
+          country: updateCountry,
+          state: updateState,
+          city: updateCity,
+          zip: updateZipCode,
+          id: updateAddresId
+        });
+        setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
+        console.log("contact form submit");
+        setaddressSubmitBtn(true);
+        alert("form submited")
+      } catch (error) {
+        setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
+        setaddressSubmitBtn(false);
+        console.log("login error", error);
+        alert("form not submited")
+      }
+    };
+
+    const deleteSelectedAddress = async () => {
+      deleteAddress(updateAddresId);
+      setModalShow(false);
+      refetchProfile();
+    }
+
+    return (
+
+      <BootstrapModalWrapper
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            მისამართის ჩასწორება {updateAddresId}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ModalContent>
+            <InputStyle type="text" placeholder="ქუჩის სახელი" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+            <TwoInputWrapper>
+              <InputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
+              <InputStyle type="text" placeholder="ქვეყანა" value={updateCountry} onChange={(e: any) => setupdateCountry(e.target.value)} />
+            </TwoInputWrapper>
+            <InputStyle type="text" placeholder="რეგიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+            <InputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+
+            <AddressButton onClick={updateAddressPut}>
+              ჩასწორება
+            </AddressButton>
+
+            <DeleteAddressBtn onClick={deleteSelectedAddress}>მისამართის წაშლა</DeleteAddressBtn>
+
+
+          </ModalContent>
+        </Modal.Body>
+
+
+      </BootstrapModalWrapper>
+    );
   }
 
 
-  return isProfileLoading ? (
+
+
+
+  return isMainLoader ? (
     <Loader />
   ) : !profile ? (
     <span>Not Found</span>
@@ -450,19 +594,20 @@ const PersonalInfo = () => {
         </GridItem>
         <GridItem className={styles.gridItem}>
           <AddressTitle className={styles.addressTitle}>მისამართი:</AddressTitle>
-          <AddressItem className={styles.addressItem}>
 
-            <EditIconStyle onClick={toggleAddress} />
+          {profile.profile?.addresses.map((a, index) => (
+            <AddressItem className={styles.addressItem}>
 
-            {showAddressInput === true ? (
-              <div>
-                {newAddress}
-                <input type="text" value={newAddress} onChange={(e: any) => setnewAddress(e.target.value)} />
-              </div>
-            ) : null}
+              <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
 
-            <LocationIconStyle color={"var(--text-color)"} />
-            {profile.profile?.addresses.map((a, index) => (
+              <MyVerticallyCenteredModal
+                show={modalShow}
+                address={profile.profile?.addresses}
+                onHide={() => setModalShow(false)}
+              />
+
+              <LocationIconStyle color={"var(--text-color)"} />
+
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
                 <AddressStyle className={styles.address}>
@@ -470,8 +615,10 @@ const PersonalInfo = () => {
                 </AddressStyle>
                 <ZipCodeStyle className={styles.zip}>ZIP კოდი: {a.zip}</ZipCodeStyle>
               </AddressItemText>
-            ))}
-          </AddressItem>
+
+            </AddressItem>
+          ))}
+
           <AddressButton>
             მისამართის დამატება
           </AddressButton>

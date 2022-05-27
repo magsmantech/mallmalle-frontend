@@ -196,6 +196,14 @@ export type Address = {
   "mobile": string | null
 };
 
+export type UpdateAddress = {
+  "address_1": string, 
+	"country": string, 
+	"state": string, 
+	"city": string, 
+	"zip": string 
+};
+
 
 export type User = {
   "id": number;
