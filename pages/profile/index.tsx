@@ -21,7 +21,7 @@ import ProfileIcon from "../../public/icons/react-icons/profile";
 import EditIcon from "../../public/icons/react-icons/edit";
 import { relative } from "path/posix";
 import { useDispatch } from "react-redux";
-import { removeAccessToken, getUserData } from "../../services/auth-services";
+import { removeAccessToken, getUserData, addAddress } from '../../services/auth-services';
 import Responsive from "../../config/Responsive";
 import Loader from "../../components/Loader";
 import api from "../../features/api";
@@ -367,6 +367,18 @@ type Props = {
   onHide: () => void;
 }
 
+type AddAddressProps = {
+  show: boolean;
+  onHide: () => void;
+}
+
+
+
+
+
+
+
+
 
 const PersonalInfo = () => {
   const dispatch = useDispatch();
@@ -397,10 +409,12 @@ const PersonalInfo = () => {
 
   const [updateAddresId, setupdateAddresId] = useState<number>(0);
   const [modalShow, setModalShow] = useState(false);
+  const [addAddressModalShow, setAddAddressModalShow] = useState(false);
 
 
 
   const [Address] = api.useUpdateAddressMutation();
+  
 
 
   function MyVerticallyCenteredModal(props: Props) { //onClick={props.onHide}
@@ -488,6 +502,68 @@ const PersonalInfo = () => {
     );
   }
 
+
+  function AddAddress(props: AddAddressProps) {
+    const [addAddress] = api.useAddAddressMutation();
+    
+    const [addAddressStreet, setAddAddressStreet] = useState<string>('');
+    const [addAddressCity, setAddAddressCity] = useState<string>('');
+    const [addAddressCountry, setAddAddressCountry] = useState<string>('');
+    const [addAddressState, setAddAddressState] = useState<string>('');
+    const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
+  
+    const addNewAddress = async () => {
+      setAddAddressModalShow(false);
+  
+      try {
+        await addAddress({
+          address_1: addAddressStreet,
+          country: addAddressCity,
+          state: addAddressCountry,
+          city: addAddressState,
+          zip: addAddressZipCode
+        });
+      
+        alert("form submited");
+        console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
+      } catch (error) {
+    
+        alert("form not submited")
+      }
+      refetchProfile();
+    };
+  
+    return (
+      <BootstrapModalWrapper
+        {...props}
+        size="lg"
+        aria-labelledby="add-address"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="add-address">
+            ახალი მისამართის დამატება
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ModalContent>
+            <InputStyle type="text" placeholder="ქუჩის სახელი" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
+            <TwoInputWrapper>
+              <InputStyle type="text" placeholder="ქალაქი" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
+              <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry} onChange={(e: any) => setAddAddressCountry(e.target.value)} />
+            </TwoInputWrapper>
+            <InputStyle type="text" placeholder="რეგიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
+            <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
+  
+            <AddressButton onClick={addNewAddress}>
+              დამატება
+            </AddressButton>
+  
+          </ModalContent>
+        </Modal.Body>
+      </BootstrapModalWrapper>
+    );
+  }
 
 
 
@@ -623,10 +699,14 @@ const PersonalInfo = () => {
             address={profile.profile?.addresses}
             onHide={() => setModalShow(false)}
           />
-          
-          <AddressButton>
+
+          <AddressButton onClick={() => setAddAddressModalShow(true)}>
             მისამართის დამატება
           </AddressButton>
+          <AddAddress
+            show={addAddressModalShow}
+            onHide={() => setAddAddressModalShow(false)}
+          />
         </GridItem>
       </PersonalInfoWrapper>
     </>

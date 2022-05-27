@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdateAddress } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -218,6 +218,18 @@ const api = createApi({
       query: (body) => ({
         url: `user/address/${body.id}`,
         method: 'PUT',
+      })
+    }),
+    // 
+    // 
+    // update address
+    // 
+    // 
+    addAddress: builder.mutation<Address, Partial<Address>>({
+      query: (addAddress) => ({
+        url: `user/address`,
+        method: 'POST',
+        body: addAddress,
       })
     }),
     // 
