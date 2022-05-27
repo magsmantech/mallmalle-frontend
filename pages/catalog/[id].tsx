@@ -254,7 +254,7 @@ const Item = ({ product }: { product: Product }) => {
 
   const imgSrc = product?.images?.length
   ? config.imagesEndpoint + product?.images[0]
-  : "/assets/2.png";
+  : "/assets/default-image.png";
 
   const dispatch = useDispatch();
 

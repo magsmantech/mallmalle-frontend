@@ -8,7 +8,7 @@ import { getDashboardData } from "../services/dashboard-services";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import config from "../config.json";
-import { Product } from "../domain/shop";
+import { getProductImages, Product } from "../domain/shop";
 import styled from 'styled-components';
 import Responsive from "../config/Responsive";
 import RadioButton from "../components/customStyle/RadioButton";
@@ -26,11 +26,18 @@ const Home: NextPage = () => {
   };
 
   const { data: AllDiscount, isLoading: isAllDiscountLoading, refetch: refetchAllDiscount } = api.useGetAllDiscountQuery(undefined);
+
+
+
   const [offers, setOffers] = useState<any>(null);
   const [newProducts, setNewProducts] = useState<any>(null);
   const [discounts, setDiscounts] = useState<any>(null);
 
+  // const 
 
+  
+  // const productWithImages = getProductImages(newProducts);
+  
 
   useEffect(() => {
     getDashboardData()
@@ -113,9 +120,9 @@ const Home: NextPage = () => {
                 price="85,99"
                 oldPrice={`125`}
                 currency="gel"
-                // imageUrl={uploadUrl(d.backgorund_image)}
-              imageUrl={"../../../assets/default-image.png"}
-              // imageUrl={config.imagesEndpoint + JSON.parse(d.backgorund_image)}
+                // imageUrl={uploadUrl(d.)}
+                imageUrl={"../../../assets/default-image.png"}
+              // imageUrl={config.imagesEndpoint + JSON.parse(d.backgorund_image)[0]}
               />
             )
           })}
@@ -143,12 +150,13 @@ const Home: NextPage = () => {
                   : ""
               }
               currency="gel"
-              imageUrl={"../../../assets/default-image.png"}
-            // imageUrl={
-            //   product?.images?.length
-            //     ? config.imagesEndpoint + JSON.parse(product?.images)[0]
-            //     : "../../../assets/2.png"
-            // }
+              // imageUrl={uploadUrl(product.images)}
+              // imageUrl={"../../../assets/default-image.png"}
+              imageUrl={
+                product?.images?.length
+                  ? config.imagesEndpoint + JSON.parse(product?.images)[0]
+                  : "../../../assets/2.png"
+              }
             ></Item>
           ))
         ) : (

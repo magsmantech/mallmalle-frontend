@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import Responsive from '../config/Responsive';
+import { uploadUrl } from '../features/api';
 
 type TabImageProps = {
     selected: boolean,
@@ -77,11 +78,11 @@ const ItemPreview = ({ images }: Props) => {
             <Wrapper>
                 <TabsWrapper>
                     {images.map((image, index) =>
-                        <TabImage src={image} key={index} selected={index === selected} onClick={() => _imageSelected(index)} />
+                        <TabImage src={uploadUrl(image)} key={index} selected={index === selected} onClick={() => _imageSelected(index)} />
                     )}
                 </TabsWrapper>
                 <ImageWrapperDiv>
-                    <SelectedImage src={images[selected]} />
+                    <SelectedImage src={uploadUrl(images[selected])} />
                 </ImageWrapperDiv>
             </Wrapper>
         </>

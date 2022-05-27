@@ -12,6 +12,60 @@ export const roundToCents = (amount: number | undefined) => {
   return Math.round(amount * 100) / 100;
 }
 
+// export const parse = (imgUrl: string) => {
+//   const parse = JSON.parse(imgUrl);
+//   return parse
+// }
+
+// const getProductImages = (product: Product) => {
+//   try {
+//     const images = JSON.parse(product.images);
+//     console.log('product images:', images);
+//     return "";
+//   } catch (error) {
+//     console.log('product images error:', error);
+//     return null;
+//   }
+// }
+
+
+type ProductWithImages = Product & {
+  mainImage?: string;
+  allImages: string[];
+}
+
+
+export const getProductImages = (product: Product): ProductWithImages => {
+  if (!product.images) {
+    return {
+      ...product,
+      mainImage: undefined,
+      allImages: [],
+    }
+  }
+
+  const allImages = JSON.parse(product.images);
+  console.log('product images:', allImages);
+  const mainImage = allImages[0];
+  console.log('main image:', mainImage);
+  const productWithImages: ProductWithImages = {
+    ...product,
+    mainImage,
+    allImages,
+  };
+  console.log('productWithImages:', productWithImages);
+  return productWithImages;
+}
+
+
+
+
+
+
+
+
+
+
 export type Category = {
   id: number;// 1
   category_name: string;// "ქალი"
@@ -39,6 +93,7 @@ export type Discount = {
   "name": string;// "ფასდაკლება 20%";
   "value": number;// 10
   "backgorund_image": string;// "discounts\/March2022\/9wS4Qsr9kTWivOi0OZjs.png";
+  "decoded_images": [] | string;
   "created_at": Date;// "2022-03-08T15: 54: 26.000000Z";
   "updated_at": Date;// "2022-03-08T15: 54: 26.000000Z";
   "pivot": {
@@ -169,7 +224,7 @@ export type OrderItems = {
   variation_id: number;
   quantity: number;
   product: OrderProduct;
-  
+
 }
 export type OrderProduct = {
   id: number;// 1
