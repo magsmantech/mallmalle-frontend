@@ -23,7 +23,7 @@ type ItemProps = {
 
 
 export const Number=styled.span`
-    font-size: 2.6rem;
+    font-size: 26px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,7 +32,7 @@ export const Number=styled.span`
     font-weight: 600;
     background-color: ${({selected}: ItemProps)=> selected? '#22D5AE': 'transparent'};
     color: ${({selected}: ItemProps)=> selected? 'white': 'var(--text-color)'};
-    height: 5.2rem;
-    width: 5.2rem;
+    height: 52px;
+    width: 52px;
     cursor: pointer;
 `;

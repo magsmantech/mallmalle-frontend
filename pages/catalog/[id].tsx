@@ -48,6 +48,7 @@ import Responsive from "../../config/Responsive";
 import DropDown from "../../components/customStyle/DropDown";
 import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from "../../components/customStyle/SidebarFilter";
+import Loader from "../../components/Loader";
 
 const Heading = styled.h1`
   color: var(--text-color);
@@ -146,7 +147,7 @@ const Img = styled.div`
   position: relative;
   
   &:hover {
-    /* background-size: 110%; */
+    background-size: 110%;
   }
 
   background-position: center center;
@@ -956,7 +957,7 @@ const Catalog: NextPage = () => {
             ></Item>
           ))
         ) : (
-          <p>Loading...</p>
+          <Loader/>
         )}
         {/* <Item id={2} imgSrc={'/assets/3112.png'}></Item>
                 <Item id={3} imgSrc={'/assets/6.png'}></Item>

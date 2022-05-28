@@ -167,8 +167,8 @@ const VerticalLine = styled.div`
 const Nav = styled.nav`
     padding: 0px 40px;
         ${Responsive.tabletMobile} {
-            padding: 31px 24px 0px 24px;
-            height: 100px;
+            padding: 20px 24px 0px 24px;
+            height: 120px;
         }
 `;
 const UserIcon = styled(HdUser)`

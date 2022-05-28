@@ -77,10 +77,10 @@ const Home: NextPage = () => {
           <SaleItem imageUrl={"/assets/photo-1.jpg"} />
         </FourSaleItemWrapper>
       </SaleItemWrapper>
-      <div className={styles.dividerWrapper}>
+      <DividerWrapperStyle>
         <div className={styles.divider}></div>
-        <img className={styles.dividerImage} src={"/assets/mallmalle.png"} />
-      </div>
+        <DividerImageStyle src={"/assets/mallmalle.png"} />
+      </DividerWrapperStyle>
 
       <SectionTitle className={styles.sectionTitle}>შემოთავაზება</SectionTitle>
 
@@ -176,6 +176,24 @@ const Home: NextPage = () => {
 };
 
 
+const DividerImageStyle = styled.img`
+  z-index: 1;
+  width: 290px;
+    ${Responsive.mobile} {
+      width: 158px;
+    }
+`;
+const DividerWrapperStyle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 70px;
+    ${Responsive.mobile}{
+      margin-bottom: 50px;
+    }
+`;
 
 
 const SearchWrapper = styled.div`

@@ -19,15 +19,19 @@ import FilterIcon from '../../public/icons/react-icons/filter';
 import { useDispatch } from 'react-redux';
 import { showFeedback } from '../../features/feedbackSlice';
 import { getProducts, getProductsById } from '../../services/products-service';
+import Responsive from '../../config/Responsive';
 
 const Heading = styled.h1`
     color: var(--text-color);
-    font-size: 4.4rem;
+    font-size: 44px;
     font-family: 'BPG WEB 002 Caps';
     font-weight: 400;
     margin: 0;
     /* text-transform: uppercase;
     font-feature-settings: "case" on; */
+        ${Responsive.mobile} {
+            font-size: 28px;
+        }
 
 `;
 
@@ -36,16 +40,21 @@ const Quantity = styled.span`
     color: var(--text-color);
     opacity: 0.5;
     font-family: fira-go;
-    font-size: 1.6rem;
+    font-size: 16px;
     transform: translateY(-0.9rem);
-    margin-left: 2.2rem;
+    margin-left: 50px;
 `;
 
 const Grid = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 3.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-gap: 32px;
+    grid-row-gap: 80px;
+    ${Responsive.mobile} {
+        grid-template-columns: 1fr;
+        grid-row-gap: 50px;
+    }
 `;
 
 
@@ -75,18 +84,30 @@ const ItemBackground = styled.div`
 
 const Img = styled.div`
     width: 100%;
-    height: 54.2rem;
+    height: 540px;
     background-image: ${(props: { backgroundImage: string }) => `url(${props.backgroundImage})`};
     background-size: 105%;
     background-repeat: no-repeat;
     
     transition: all 150ms ease-in-out;
     position: center;
-    border-radius: 1.4rem;
+    border-radius: 14px;
     position: relative;
     &:hover {
         background-size: 110%;
     } 
+
+    background-position: center center;
+    background-size: cover;
+    ${Responsive.laptop} {
+    height: 450px;
+    }
+    ${Responsive.tablet} {
+    height: 420px;
+    }
+    ${Responsive.mobile} {
+        height: 420px;
+    }
 `;
 
 const ItemOverlay = styled.div`
@@ -109,8 +130,8 @@ const BookmarkWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 9.5rem;
-    height: 9.5rem;
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
     backdrop-filter: blur(10px);
     /* -webkit-backdrop-filter: blur(10px); */
@@ -120,12 +141,12 @@ const BookmarkWrapper = styled.div`
 const ItemButton = styled(Button)`
     position: absolute;
     width: 100%;
-    bottom: -7.0rem;
+    bottom: -7rem;
     z-index: 1;
-    height: 5.6rem;
+    height: 77px;
     font-weight: 600;
     font-family: fira-go;
-    font-size: 1.6rem;
+    font-size: 18px;
     background-image: var(--button-gradient);
     /* margin-top: 2.0rem; */
     /* display: none; */
@@ -133,14 +154,14 @@ const ItemButton = styled(Button)`
 `;
 
 const Price = styled.span`
-    font-size: 2.8rem;
+    font-size: 28px;
     color: var(--text-color);
     font-weight: 700;
     font-family: fira-go;
 `;
 
 const OldPrice = styled.span`
-    font-size: 1.8rem;
+    font-size: 18px;
     
     font-family: 'helvetica';
     color: var(--text-color);
@@ -157,24 +178,28 @@ const Title = styled.span`
     font-feature-settings: "case" on;
 
     font-weight: 700;
-    font-size: 1.8rem;
+    font-size: 18px;
     
     font-family: 'helvetica';
 `;
 
 
 export const Count = styled.span`
-    font-size: 1.4rem;
-    font-family: 'helvetica';
+    font-size: 16px;
+    font-family: "helvetica";
     color: var(--text-color);
-
+    margin-top: -3px;
+    ${Responsive.mobile}{
+        font-size: 12px;
+        margin-top: -4px;
+    }
 `;
 
 const Badge = styled.span`
-    font-size: 1.8rem;
+    font-size: 18px;
     font-family: 'helvetica';
     color: #22D5AE;
-    padding: .2rem .8rem;
+    padding: 5px 8px;
     border-radius: 2.1rem;
     border: .15rem solid #22D5AE;
     display: flex;
@@ -193,54 +218,86 @@ const HoverButton = styled(Button)`
         background-image: linear-gradient(to right, #22D5AE, #3A7BD5);
     }
 `;
+const TopSideWrapper = styled.div`
+    margin: 20px 0px 60px 0px;
+    display: flex;
+    align-items: flex-end;
+        ${Responsive.mobile} {
+            margin: 10px 0px 30px 0px;
+        }
+`;
+const PriceWrapperStyle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0px 15px 0px;
+`;
+const PriceTitleStyle = styled.span`
+    color: var(--text-color);
+    font-family: 'helvetica';
+    font-size: 18px;
+    text-transform: uppercase;
+    font-feature-settings: 'case' on;
+`;
+const StartsWrapperStyle = styled.div`
+    display: flex;
+    gap: 7px;
+    margin-right: 10px;
+        svg {
+            width: 16px;
+        }
+      ${Responsive.mobile} {
+        svg {
+          width: 14px;
+        }
+      }
+`;
+const PaginationWrapper = styled.div`
+    margin-top: 100px;
+`;
 
 
 const Item = ({ imgSrc, id }: any) => {
     const [hovered, setHovered] = useState(false);
 
     const dispatch = useDispatch();
-    
+
     const _addToCart = () => {
         dispatch(showFeedback({
             show: true,
         }))
     }
 
-    return <><Link href={ "/detail/"+ id }><ItemWrapper className={styles.wrapper}
+    return <><Link href={"/detail/" + id}><ItemWrapper className={styles.wrapper}
         onMouseOver={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
     >
         <Img backgroundImage={imgSrc} className={styles.child}>
-            {(hovered)  && <ItemOverlay>
-                <BookmarkWrapper style={{zIndex: 20}}>                    
-                    <BsBookmarkPlusFill size={'3.6rem'} color={'#ffffff'}/>
+            {(hovered) && <ItemOverlay>
+                <BookmarkWrapper style={{ zIndex: 20 }}>
+                    <BsBookmarkPlusFill size={'30px'} color={'#ffffff'} />
                 </BookmarkWrapper>
             </ItemOverlay>
             }
         </Img>
-        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1.8rem 0 1.5rem 0' }} className={styles.child}>
+        <PriceWrapperStyle className={styles.child}>
             <div style={{ display: 'flex', alignItems: 'flex-start' }}>
                 <Price style={{ marginRight: '1.6rem' }}>85,99 ₾</Price>
                 <OldPrice>120,00 ₾</OldPrice>
             </div>
             <Badge>-10%</Badge>
-        </div>
-        <span className={styles.child} style={{
-            marginBottom: '1.0rem',
-            color: 'var(--text-color)',
-            fontFamily: "'helvetica", fontSize: '1.6rem',
-            textTransform: 'uppercase',
-            fontFeatureSettings: '"case" on'}}><Title >ზედა სული</Title> / შავი ზედა...</span>
+        </PriceWrapperStyle>
+        <PriceTitleStyle className={styles.child}><Title >ზედა სული</Title> / შავი ზედა...</PriceTitleStyle>
         <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
-            <div style={{ display: 'flex', gap: '.4rem', marginRight: '.8rem' }} >
+            <StartsWrapperStyle>
                 <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                 <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                 <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                 <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                 <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-            </div>
+            </StartsWrapperStyle>
             <Count>402 ნახვა</Count>
         </div>
+
         {hovered && <ItemButton
             className={styles.child}
             // onClick={_addToCart}
@@ -256,7 +313,7 @@ type FilterSideBarProps = {
     onEnter: Function,
 };
 
-const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
+const FilterSideBar = ({ onClose, onEnter }: FilterSideBarProps) => {
     const [select, setSelect] = useState('all');
     const handleSelectChange = (event: any) => {
         const value = event.target.value;
@@ -292,7 +349,7 @@ const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
             label: 'ფეხსაცმელები',
             value: 'shoes'
         },
-        
+
         {
             label: 'დიდი ზომები',
             value: 'big'
@@ -335,7 +392,7 @@ const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
         '#345fec',
         '#a527f3',
         '#fea6fb',
-      ]);
+    ]);
     const [arr1, setArr1] = useState(array1)
     const [arr2, setArr2] = useState(array2)
 
@@ -344,8 +401,8 @@ const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
         <div className={styles.filterSideBar}>
             <div className={styles.filterTitle} >კატეგორიები</div>
             <Wrapper>
-                {arr1.map((item, i) => 
-                    <RadioItem 
+                {arr1.map((item, i) =>
+                    <RadioItem
                         key={i}>
                         <RadioButton
                             type="radio"
@@ -353,17 +410,17 @@ const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
                             value={item.value}
                             checked={select === item.value}
                             onChange={(event) => handleSelectChange(event)}
-                            />
+                        />
                         <RadioButtonLabel />
                         <div className={styles.radioButtonLabel}>{item.label}</div>
-                    </RadioItem>            
+                    </RadioItem>
                 )}
             </Wrapper>
             <div className={styles.divider}></div>
             <div className={styles.filterTitle} >ფასი</div>
             <Slider></Slider>
-            <Wrapper style={{marginTop: '5.0rem'}}>
-            {arr2.map((item, i) => 
+            <Wrapper style={{ marginTop: '5.0rem' }}>
+                {arr2.map((item, i) =>
                     <RadioItem key={i}>
                         <RadioButton
                             type="radio"
@@ -371,20 +428,20 @@ const FilterSideBar = ({onClose, onEnter}: FilterSideBarProps) => {
                             value={item.value}
                             checked={select === item.value}
                             onChange={(event) => handleSelectChange(event)}
-                            />
+                        />
                         <RadioButtonLabel />
                         <div>{item.label}</div>
-                    </RadioItem>            
+                    </RadioItem>
                 )}
             </Wrapper>
-            <div className={styles.filterTitle} style={{marginTop: '4.2rem'}} >ფერები</div>
+            <div className={styles.filterTitle} style={{ marginTop: '4.2rem' }} >ფერები</div>
             <div>
                 {/* @ts-ignore */}
-                <ColorSelector colors={colors} small style={{justifyContent: 'space-between'}}/>
+                <ColorSelector colors={colors} small style={{ justifyContent: 'space-between' }} />
             </div>
             <div className={styles.filterFooter}>
-                <HoverButton style={{fontWeight: 500, height: '7.1rem'}} lowercase onClick={()=> onClose()}>გაუქმება</HoverButton>
-                <Button style={{fontWeight: 500, height: '7.1rem'}} lowercase onClick={()=> onEnter()}>აჩვენე 124</Button>
+                <HoverButton style={{ fontWeight: 500, height: '7.1rem' }} lowercase onClick={() => onClose()}>გაუქმება</HoverButton>
+                <Button style={{ fontWeight: 500, height: '7.1rem' }} lowercase onClick={() => onEnter()}>აჩვენე 124</Button>
             </div>
 
         </div>
@@ -396,30 +453,30 @@ const Search: NextPage = () => {
     const [openFilters, setOpenFilters] = useState(false)
 
     useEffect(() => {
-        document.body.style.overflow = openFilters ? "hidden": 'auto';
+        document.body.style.overflow = openFilters ? "hidden" : 'auto';
     }, [openFilters])
 
     useEffect(() => {
         getProductsById(1).then((res) => {
             console.log(res);
-            
+
         })
-        .catch(err => {
-            console.log(err);
-            
-        })
+            .catch(err => {
+                console.log(err);
+
+            })
     }, []);
 
     return (
         <>
-            {openFilters && <div className={styles.overlay} onClick={()=> setOpenFilters(false)}></div>}
-            {openFilters && <FilterSideBar onClose={()=> setOpenFilters(false) } onEnter={()=>setOpenFilters(false)}/>}
-            <Breadcrumbs style={{marginBottom: '2.0rem'}}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
-            <div style={{ margin: '2.0rem 0 6.0rem 0', display: 'flex', alignItems: 'flex-end' }}>
+            {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
+            {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />}
+            <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
+            <TopSideWrapper>
                 <Heading>ძებნის შედეგები</Heading>
                 <Quantity>12 323 პროდუქტი</Quantity>
-            </div>
-            <div style={{ display: 'flex',
+            </TopSideWrapper>
+            {/* <div style={{ display: 'flex',
                     alignItems: 'center',
                     gap: '2.4rem',
                     padding: '1.7rem',
@@ -451,30 +508,25 @@ const Search: NextPage = () => {
                         <FilterIcon width={'2.4rem'} height={'2.4rem'}/>
                     </ChipIconWrapper>
                 </ChipWrapper>
-            </div>
+            </div> */}
             <Grid>
                 <Item id={1} imgSrc={'/assets/2.png'}></Item>
                 <Item id={2} imgSrc={'/assets/3112.png'}></Item>
                 <Item id={3} imgSrc={'/assets/6.png'}></Item>
                 <Item id={4} imgSrc={'/assets/3112.png'}></Item>
-
-                <Item id={1} imgSrc={'/assets/6.png'}></Item>
-                <Item id={2} imgSrc={'/assets/2.png'}></Item>
-                <Item id={3} imgSrc={'/assets/2.png'}></Item>
-                <Item id={4} imgSrc={'/assets/3112.png'}></Item>
-
-                <Item id={1} imgSrc={'/assets/6.png'}></Item>
-                <Item id={1} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={1} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={1} imgSrc={'/assets/2.png'}></Item>
+                <Item id={5} imgSrc={'/assets/3112.png'}></Item>
+                <Item id={6} imgSrc={'/assets/3112.png'}></Item>
+                <Item id={7} imgSrc={'/assets/3112.png'}></Item>
             </Grid>
 
-            <Pagination style={{ margin: '3.2rem 0 3.7rem 0' }} gap={'1.4rem'}>
-                <Number selected>1</Number>
-                <Number>2</Number>
-                <Number>3</Number>
-                <Number>4</Number>
-            </Pagination>
+            <PaginationWrapper>
+                <Pagination gap={'30px'}>
+                    <Number selected>1</Number>
+                    <Number>2</Number>
+                    <Number>3</Number>
+                    <Number>4</Number>
+                </Pagination>
+            </PaginationWrapper>
 
         </>
     )
