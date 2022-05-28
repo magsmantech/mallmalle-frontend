@@ -146,7 +146,7 @@ const FavoriteCount = styled.div`
 `;
 const HoriontalFixedLine = styled.div`
     ${Responsive.tabletMobile}{
-        top: 120px; //TODO Levan Madurashvili
+        top: 100px; //TODO Levan Madurashvili
         height: 24px;
     }
 `;
@@ -167,8 +167,8 @@ const VerticalLine = styled.div`
 const Nav = styled.nav`
     padding: 0px 40px;
         ${Responsive.tabletMobile} {
-            padding: 20px 24px 0px 24px;
-            height: 120px;
+            padding: 31px 24px 0px 24px;
+            height: 100px;
         }
 `;
 const UserIcon = styled(HdUser)`
