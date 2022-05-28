@@ -9,7 +9,7 @@ import { ChipIconWrapper, ChipTitle, ChipWrapper } from '../../components/styled
 import Link from 'next/link';
 import Button from '../../components/styled/button';
 import { useState, useEffect } from 'react';
-import { Wrapper, Item as RadioItem, RadioButtonLabel, RadioButton } from '../../components/styled/radioButton';
+import { Wrapper, Item as RadioItem, RadioButtonLabel } from '../../components/styled/radioButton';
 import Slider from '../../components/slider';
 import FilterSelect from '../../components/filterSelect';
 import { Breadcrumbs } from '../../components/styled/breadcrumbs';
@@ -20,6 +20,12 @@ import { useDispatch } from 'react-redux';
 import { showFeedback } from '../../features/feedbackSlice';
 import { getProducts, getProductsById } from '../../services/products-service';
 import Responsive from '../../config/Responsive';
+import MoreFilterIcon from '../../public/icons/more-filter-icon.svg'
+import DropDown from '../../components/customStyle/DropDown';
+import RadioButton from "../../components/customStyle/RadioButton";
+import SidebarFilter from '../../components/customStyle/SidebarFilter';
+
+
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -43,6 +49,11 @@ const Quantity = styled.span`
     font-size: 16px;
     transform: translateY(-0.9rem);
     margin-left: 50px;
+        ${Responsive.mobile} {
+            margin-left: 0px;
+            margin-top: 20px;
+            margin-right: auto;
+        }
 `;
 
 const Grid = styled.div`
@@ -219,11 +230,11 @@ const HoverButton = styled(Button)`
     }
 `;
 const TopSideWrapper = styled.div`
-    margin: 20px 0px 60px 0px;
     display: flex;
     align-items: flex-end;
-        ${Responsive.mobile} {
-            margin: 10px 0px 30px 0px;
+    margin-bottom: 20px;
+        ${Responsive.mobile}{
+            flex-direction: column;
         }
 `;
 const PriceWrapperStyle = styled.div`
@@ -252,8 +263,99 @@ const StartsWrapperStyle = styled.div`
       }
 `;
 const PaginationWrapper = styled.div`
-    margin-top: 100px;
+    margin-top: 150px;
+      ${Responsive.mobile} {
+          margin-top: 80px;
+      }
 `;
+const FilterWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    /* position: fixed;
+    right: 20px;
+    top: 200px;
+    z-index: 10;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 60px; */
+  
+        ${Responsive.tabletMobile} {
+            flex-wrap: wrap;
+        }
+        
+`;
+const FilltersBox = styled.div`
+    margin-right: 24px;
+        &:last-child {
+            margin-right: 0px;
+        }
+        ${Responsive.tabletMobile}{
+            margin-bottom: 20px;
+        }
+`;
+const MoreFilterBtn = styled.button`
+    display: flex;
+    align-items: center;
+    box-shadow: unset !important;
+    padding: 10px 10px 10px 15px;
+    border: 0px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #424F60;
+    user-select: none;
+    font-family: 'helvetica';
+    font-weight: 500;
+    background-color: #F2F2F2;
+    color: #424F60;
+    position: relative;
+    &:hover {
+        background-color: #C9F5EB;
+        color: #424F60;
+    }
+    &::after {
+        content: '';
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        border: 0px;
+        margin-left: 20px;
+        cursor: pointer;
+    }
+`;
+const MoreFilterIconStyle = styled(MoreFilterIcon)`
+    position: absolute;
+    right: 13.2px;
+    transform: scale(0.75);
+    
+`;
+const HeadWrapperStyle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 20px 0px 60px 0px;
+        ${Responsive.mobile} {
+            margin: 10px 0px 30px 0px;
+        }
+`;
+
+
+
+
+
+
+
+
+
+
+
 
 
 const Item = ({ imgSrc, id }: any) => {
@@ -313,140 +415,141 @@ type FilterSideBarProps = {
     onEnter: Function,
 };
 
-const FilterSideBar = ({ onClose, onEnter }: FilterSideBarProps) => {
-    const [select, setSelect] = useState('all');
-    const handleSelectChange = (event: any) => {
-        const value = event.target.value;
-        setSelect(value);
-    };
 
-    const array1 = [
-        {
-            label: 'ყველა',
-            value: 'all'
-        },
-        {
-            label: 'ახალდამატებული',
-            value: 'new'
-        },
-        {
-            label: 'ზედები',
-            value: 'tops'
-        },
-        {
-            label: 'შარვლები',
-            value: 'pants'
-        },
-        {
-            label: 'კაბები',
-            value: 'dresses'
-        },
-        {
-            label: 'კორსეტები და პიჯაკები',
-            value: 'coreset'
-        },
-        {
-            label: 'ფეხსაცმელები',
-            value: 'shoes'
-        },
+// const FilterSideBar = ({ onClose, onEnter }: FilterSideBarProps) => {
+//     const [select, setSelect] = useState('all');
+//     const handleSelectChange = (event: any) => {
+//         const value = event.target.value;
+//         setSelect(value);
+//     };
 
-        {
-            label: 'დიდი ზომები',
-            value: 'big'
-        },
-        {
-            label: 'აქსესუარები',
-            value: 'accessories'
-        },
-    ];
+//     const array1 = [
+//         {
+//             label: 'ყველა',
+//             value: 'all'
+//         },
+//         {
+//             label: 'ახალდამატებული',
+//             value: 'new'
+//         },
+//         {
+//             label: 'ზედები',
+//             value: 'tops'
+//         },
+//         {
+//             label: 'შარვლები',
+//             value: 'pants'
+//         },
+//         {
+//             label: 'კაბები',
+//             value: 'dresses'
+//         },
+//         {
+//             label: 'კორსეტები და პიჯაკები',
+//             value: 'coreset'
+//         },
+//         {
+//             label: 'ფეხსაცმელები',
+//             value: 'shoes'
+//         },
 
-    const array2 = [
-        {
-            label: 'ფასდაკლებები',
-            value: 'sale'
-        },
-        {
-            label: 'პოპულარულები',
-            value: 'popular'
-        },
-        {
-            label: 'ექსკლუზიურები',
-            value: 'exclusive'
-        },
-        {
-            label: 'დაბალ ბიუჯეტურები',
-            value: 'low-budget'
-        },
-        {
-            label: 'შეთავაზებები',
-            value: 'offers'
-        },
-    ];
+//         {
+//             label: 'დიდი ზომები',
+//             value: 'big'
+//         },
+//         {
+//             label: 'აქსესუარები',
+//             value: 'accessories'
+//         },
+//     ];
 
-    const [colors, setColors] = useState([
-        '#000000',
-        '#794428',
-        '#f6881b',
-        '#fee41f',
-        '#2bb430',
-        '#345fec',
-        '#a527f3',
-        '#fea6fb',
-    ]);
-    const [arr1, setArr1] = useState(array1)
-    const [arr2, setArr2] = useState(array2)
+//     const array2 = [
+//         {
+//             label: 'ფასდაკლებები',
+//             value: 'sale'
+//         },
+//         {
+//             label: 'პოპულარულები',
+//             value: 'popular'
+//         },
+//         {
+//             label: 'ექსკლუზიურები',
+//             value: 'exclusive'
+//         },
+//         {
+//             label: 'დაბალ ბიუჯეტურები',
+//             value: 'low-budget'
+//         },
+//         {
+//             label: 'შეთავაზებები',
+//             value: 'offers'
+//         },
+//     ];
+
+//     const [colors, setColors] = useState([
+//         '#000000',
+//         '#794428',
+//         '#f6881b',
+//         '#fee41f',
+//         '#2bb430',
+//         '#345fec',
+//         '#a527f3',
+//         '#fea6fb',
+//     ]);
+//     const [arr1, setArr1] = useState(array1)
+//     const [arr2, setArr2] = useState(array2)
 
 
-    return (<>
-        <div className={styles.filterSideBar}>
-            <div className={styles.filterTitle} >კატეგორიები</div>
-            <Wrapper>
-                {arr1.map((item, i) =>
-                    <RadioItem
-                        key={i}>
-                        <RadioButton
-                            type="radio"
-                            name="radio"
-                            value={item.value}
-                            checked={select === item.value}
-                            onChange={(event) => handleSelectChange(event)}
-                        />
-                        <RadioButtonLabel />
-                        <div className={styles.radioButtonLabel}>{item.label}</div>
-                    </RadioItem>
-                )}
-            </Wrapper>
-            <div className={styles.divider}></div>
-            <div className={styles.filterTitle} >ფასი</div>
-            <Slider></Slider>
-            <Wrapper style={{ marginTop: '5.0rem' }}>
-                {arr2.map((item, i) =>
-                    <RadioItem key={i}>
-                        <RadioButton
-                            type="radio"
-                            name="radio"
-                            value={item.value}
-                            checked={select === item.value}
-                            onChange={(event) => handleSelectChange(event)}
-                        />
-                        <RadioButtonLabel />
-                        <div>{item.label}</div>
-                    </RadioItem>
-                )}
-            </Wrapper>
-            <div className={styles.filterTitle} style={{ marginTop: '4.2rem' }} >ფერები</div>
-            <div>
-                {/* @ts-ignore */}
-                <ColorSelector colors={colors} small style={{ justifyContent: 'space-between' }} />
-            </div>
-            <div className={styles.filterFooter}>
-                <HoverButton style={{ fontWeight: 500, height: '7.1rem' }} lowercase onClick={() => onClose()}>გაუქმება</HoverButton>
-                <Button style={{ fontWeight: 500, height: '7.1rem' }} lowercase onClick={() => onEnter()}>აჩვენე 124</Button>
-            </div>
+//     return (<>
+//         <div className={styles.filterSideBar}>
+//             <div className={styles.filterTitle} >კატეგორიები</div>
+//             <Wrapper>
+//                 {arr1.map((item, i) =>
+//                     <RadioItem
+//                         key={i}>
+//                         <RadioButton
+//                             type="radio"
+//                             name="radio"
+//                             value={item.value}
+//                             checked={select === item.value}
+//                             onChange={(event) => handleSelectChange(event)}
+//                         />
+//                         <RadioButtonLabel />
+//                         <div className={styles.radioButtonLabel}>{item.label}</div>
+//                     </RadioItem>
+//                 )}
+//             </Wrapper>
+//             <div className={styles.divider}></div>
+//             <div className={styles.filterTitle} >ფასი</div>
+//             <Slider></Slider>
+//             <Wrapper style={{ marginTop: '5.0rem' }}>
+//                 {arr2.map((item, i) =>
+//                     <RadioItem key={i}>
+//                         <RadioButton
+//                             type="radio"
+//                             name="radio"
+//                             value={item.value}
+//                             checked={select === item.value}
+//                             onChange={(event) => handleSelectChange(event)}
+//                         />
+//                         <RadioButtonLabel />
+//                         <div>{item.label}</div>
+//                     </RadioItem>
+//                 )}
+//             </Wrapper>
+//             <div className={styles.filterTitle} style={{ marginTop: '4.2rem' }} >ფერები</div>
+//             <div>
+//                 {/* @ts-ignore */}
+//                 <ColorSelector colors={colors} small style={{ justifyContent: 'space-between' }} />
+//             </div>
+//             <div className={styles.filterFooter}>
+//                 <HoverButton style={{ fontWeight: 500, height: '7.1rem' }} lowercase onClick={() => onClose()}>გაუქმება</HoverButton>
+//                 <Button style={{ fontWeight: 500, height: '7.1rem' }} lowercase onClick={() => onEnter()}>აჩვენე 124</Button>
+//             </div>
 
-        </div>
-    </>)
-}
+//         </div>
+//     </>)
+// }
 
 
 const Search: NextPage = () => {
@@ -467,15 +570,18 @@ const Search: NextPage = () => {
             })
     }, []);
 
+    const [popular, setPopular] = useState();
+    const [brand, setBrand] = useState();
+    const [price, setPrice] = useState();
+
+    const [openModal, setOpenModal] = useState(false);
+
     return (
         <>
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
-            {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />}
+            {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
             <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
-            <TopSideWrapper>
-                <Heading>ძებნის შედეგები</Heading>
-                <Quantity>12 323 პროდუქტი</Quantity>
-            </TopSideWrapper>
+
             {/* <div style={{ display: 'flex',
                     alignItems: 'center',
                     gap: '2.4rem',
@@ -509,6 +615,67 @@ const Search: NextPage = () => {
                     </ChipIconWrapper>
                 </ChipWrapper>
             </div> */}
+
+            <HeadWrapperStyle>
+                <TopSideWrapper>
+                    <Heading>ძებნის შედეგები</Heading>
+                    <Quantity>12 323 პროდუქტი</Quantity>
+                </TopSideWrapper>
+                <FilterWrapper>
+                    <FilltersBox>
+                        <DropDown dropdownTitle="პოპულარული">
+                            <RadioButton
+                                id="popular-id"
+                                onChange={(value) => setPopular(value)}
+                                options={[
+                                    { label: "პოპულარული 1", value: "პოპულარული 1" },
+                                    { label: "პოპულარული 2", value: "პოპულარული 2" },
+                                ]}
+                                value={popular}
+                            />
+                        </DropDown>{popular === undefined ? null : popular}
+                    </FilltersBox>
+                    <FilltersBox>
+                        <DropDown dropdownTitle="ბრენდი">
+                            <RadioButton
+                                id="brand-id"
+                                onChange={(value) => setBrand(value)}
+                                options={[
+                                    { label: "ბრენდი 1", value: "ბრენდი 1" },
+                                    { label: "ბრენდი 2", value: "ბრენდი 2" },
+                                ]}
+                                value={brand}
+                            />
+                        </DropDown>{brand === undefined ? null : brand}
+                    </FilltersBox>
+
+                    <FilltersBox>
+                        <DropDown dropdownTitle="ფასი">
+                            <RadioButton
+                                id="price-id"
+                                onChange={(value) => setPrice(value)}
+                                options={[
+                                    { label: "ფასი 1", value: "ფასი 1" },
+                                    { label: "ფასი 2", value: "ფასი 2" },
+                                ]}
+                                value={price}
+                            />
+                        </DropDown>{price === undefined ? null : price}
+                    </FilltersBox>
+
+                    <FilltersBox>
+                        <MoreFilterBtn onClick={() => setOpenModal(true)}>
+                            მეტი ფილტრი
+                            <MoreFilterIconStyle />
+                        </MoreFilterBtn>
+                    </FilltersBox>
+
+                    {openModal && <SidebarFilter openModal={setOpenModal} />}
+
+
+                </FilterWrapper>
+            </HeadWrapperStyle>
+
             <Grid>
                 <Item id={1} imgSrc={'/assets/2.png'}></Item>
                 <Item id={2} imgSrc={'/assets/3112.png'}></Item>
