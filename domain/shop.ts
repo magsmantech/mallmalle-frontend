@@ -86,6 +86,7 @@ export type Product = {
   "variations": ProductVariation[];
   "discount": Discount[];
   "categories": Category[];
+ 
 }
 export type Discount = {
   "id": number;// 4
@@ -224,7 +225,6 @@ export type OrderItems = {
   variation_id: number;
   quantity: number;
   product: OrderProduct;
-
 }
 export type OrderProduct = {
   id: number;// 1
@@ -242,6 +242,7 @@ export type OrderProduct = {
   variation_id: number;
   quantity: number;
   product: OrderProduct;
+  "decoded_images": [] | string;
 }
 export type Order = {
   id: number;

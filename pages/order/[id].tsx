@@ -13,7 +13,7 @@ import Quantity from '../../components/quantity';
 import { useRouter } from 'next/router';
 import OrderItemComponent from '../../components/OrderItemComponent';
 import { SectionTitle } from '../cart';
-
+import config from "../../config.json";
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
     const router = useRouter();
@@ -82,7 +82,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
         <>
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
-                <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                    <SectionTitle>ყიდვის ისტორია</SectionTitle>
                     {/* <OrderListTopSideInsideWrapper>
                         <ChipWrapper>
                             <ChipTitle>დადასტურებული</ChipTitle>
@@ -105,47 +105,68 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                 </Headers>
 
 
-                {orderDetail.order_items.map((o, index) => (
-                    <ItemFlexWrapper key={index}>
-                        <ItemWrapperStyle>
-                            <ItemWrapper>
-                                <ItemImg src={'/assets/default-image.png'} />
-                                <ItemTextWrapper>
-                                    <ItemName>{o.product.product_name}</ItemName>
-                                    <div><ItemLabel>ზომა:</ItemLabel> {o.product.variations.map((v, i) => (<ItemValue key={i}>{v.title} / </ItemValue>))}</div>
-                                    <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>Nan</ItemValue></div>
-                                </ItemTextWrapper>
-                            </ItemWrapper>
+                {orderDetail.order_items.map((o, index) => {
 
-                        </ItemWrapperStyle>
-                        <NumberWrapperStyle>
-                            <Number>{o.quantity}x</Number>
-                        </NumberWrapperStyle>
-                        <PriceWrapperStyle>
-                            <Price>{o.price} ₾</Price>
-                            <OldPrice>{o.discounted_price} ₾</OldPrice>
-                        </PriceWrapperStyle>
-                        <BadgeWrapperStyle>
+                    // const ImgScr = o.product.decoded_images[0] ? config.imagesEndpoint + JSON.parse(o.product.decoded_images[0])[0] : "../../asdas";
+
+                    return (
+                        <ItemFlexWrapper key={index}>
+                            <ItemWrapperStyle>
+
+                                <ItemWrapper>
+                                    <ItemImg src={"/assets/default-image.png"} />
+                                    <ItemTextWrapper>
+                                        <ItemName>{o.product.product_name}</ItemName>
+                                        {o.product.variations.map((v, index) => {
+
+                                            const getVariant = orderDetail.order_items.find(x => x.variation_id === v.id);
+
+                                            if (o.variation_id === v.id) {
+                                                return (
+                                                   <>
+                                                    <div><ItemLabel>ზომა:</ItemLabel><ItemValue>{v.title}</ItemValue></div>
+                                                    {/* <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>Nan</ItemValue></div> */}
+                                                   </>
+                                                )
+                                            }else {
+                                                return null
+                                            }
+
+                                            
+                                        })}
+                                    </ItemTextWrapper>
+                                </ItemWrapper>
+
+                            </ItemWrapperStyle>
+                            <NumberWrapperStyle>
+                                <Number>{o.quantity}x</Number>
+                            </NumberWrapperStyle>
+                            <PriceWrapperStyle>
+                                <Price>{o.price} ₾</Price>
+                                <OldPrice>{o.discounted_price} ₾</OldPrice>
+                            </PriceWrapperStyle>
                             <BadgeWrapperStyle>
-                                {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
-                                <Badge
-                                    color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
-                                    backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
-                                    {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
-                                </Badge>
+                                <BadgeWrapperStyle>
+                                    {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
+                                    <Badge
+                                        color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
+                                        backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
+                                        {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
+                                    </Badge>
+                                </BadgeWrapperStyle>
                             </BadgeWrapperStyle>
-                        </BadgeWrapperStyle>
-                        <ButtonWrapperStyle>
-                            <Link href={`/history/${orderID}`}>
-                                <IconWrapper>
-                                    <RightArrowStyle color={'#3A7BD5'} />
-                                </IconWrapper>
-                            </Link>
-                        </ButtonWrapperStyle>
-                    </ItemFlexWrapper>
-                ))}
+                            <ButtonWrapperStyle>
+                                <Link href={`/history/${orderID}`}>
+                                    <IconWrapper>
+                                        <RightArrowStyle color={'#3A7BD5'} />
+                                    </IconWrapper>
+                                </Link>
+                            </ButtonWrapperStyle>
+                        </ItemFlexWrapper>
+            )
+                })}
 
-            </OrderListWrapper>
+        </OrderListWrapper>
 
         </>)
 };
