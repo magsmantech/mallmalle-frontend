@@ -19,7 +19,7 @@ import { removeFromFavorite } from '../services/checkout-services';
 
 const Favorites: React.FC<{}> = ({ }) => {
 
-    const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
+    const { data: favorite, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
     const [removeFromFavorite, { isLoading: isRemoveFromFavoriteLoading }] = api.useRemoveFromFavoriteMutation();
     const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ const Favorites: React.FC<{}> = ({ }) => {
 
 
 
-    return isFavoritesLoading ? <Loader /> : !favorites ? (<span>Not Fount Favorites</span>) : (
+    return isFavoritesLoading ? <Loader /> : !favorite ? (<span>Not Fount Favorites</span>) : (
         <>
             <Wrapper>
                 <TopSideWrapper>
@@ -94,7 +94,7 @@ const Favorites: React.FC<{}> = ({ }) => {
 
 
                     </FilterWrapper>
-                    <FavoriteCount>სულ მოიძებნა: <span>{favorites.length} შენახული</span></FavoriteCount>
+                    <FavoriteCount>სულ მოიძებნა: <span>{favorite.length} შენახული</span></FavoriteCount>
                 </TopSideWrapper>
 
                 <Grid>
@@ -109,7 +109,7 @@ const Favorites: React.FC<{}> = ({ }) => {
                     }}>washla</button> */}
 
                
-                    {favorites.map((f, index) => (
+                    {favorite.map((f, index) => (
                         <ItemWrapper key={index}>
                             <Item name={f.product.product_name} id={f.product.id} price="80.00" oldPrice='125.00' currency='gel' imageUrl={"/assets/default-image.png"}></Item>
                             {/* TODO image from api */}

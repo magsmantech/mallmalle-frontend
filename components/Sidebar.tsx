@@ -22,6 +22,7 @@ import ShirtIcon from '../public/icons/react-icons/sidebar-icons/shirt';
 import ShoeIcon from '../public/icons/react-icons/sidebar-icons/shoe';
 import WatchIcon from '../public/icons/react-icons/sidebar-icons/watch';
 import ToyIcon from '../public/icons/react-icons/sidebar-icons/toy';
+import Responsive from '../config/Responsive';
 
 
 
@@ -60,18 +61,51 @@ const Button = styled.div`
 
     }
 `;
-
+const PromoItemBackground = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 230px;
+    width: 100%;
+    border-radius: 14px;
+    justify-content: flex-end;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 1.8rem;
+    position: relative;
+`;
+const PromoItemTextSale = styled.div`
+    font-size: 16px;
+`;
+const PromoItemTextTime = styled.div`
+    font-size: 16px;
+`;
+const MibileSecondMenuWrapper = styled.div`
+    display: none;
+        ${Responsive.tablet} {
+            display: block;
+        }
+`;
+const ForMobile = styled.div`
+    height: 100%;
+    ${Responsive.tablet}{
+        display: none !important;
+    }
+    ${Responsive.mobile}{
+        display: none !important;
+    }
+`;
 
 
 const PromoItem = ({ imageUrl = '/assets/testt.png' }: PromoItemProps) => {
     return (<>
-        <div className={styles.promoItemBackground} style={{ backgroundImage: `url(${imageUrl})` }}>
+        <PromoItemBackground className={styles.promoItemBackground} style={{ backgroundImage: `url(${imageUrl})` }}>
             <div className={styles.promoItemText}>
-                <div className={styles.promoItemTextSale}>ფასდაკლება</div>
-                <div className={styles.promoItemTextTime}>03:12:34 საათი</div>
+                <PromoItemTextSale className={styles.promoItemTextSale}>ფასდაკლება</PromoItemTextSale>
+                <PromoItemTextTime className={styles.promoItemTextTime}>03:12:34 საათი</PromoItemTextTime>
             </div>
             <div className={styles.promoItemOverlay}></div>
-        </div>
+        </PromoItemBackground>
     </>)
 }
 
@@ -83,6 +117,8 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const [detailMenuItems, setDetailMenuItems] = useState<any>([]);
     const [selectedItemTitle, setSelectedItemTitle] = useState<string>('');
     // const [selectedSubItemIndex, setSelectedSubItemIndex] = useState<number>(0);
+
+    const [showSiteBarInMobile, setshowSiteBarInMobile] = useState(false);
 
 
     const tree = [
@@ -428,7 +464,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
             <SidebarItemWrapper className={styles.itemsContainer}>
                 {categories.map((item: any, index: number) => <Link href={'/catalog/' + item.id} key={index}>
                     <SidebarItem className={styles.item}
-                        onClick={() => onSidebarClose()}
+                        onClick={() => [onSidebarClose(), () => setshowSiteBarInMobile(true)]}
                         onMouseEnter={() => mouseEnterItem(index)}
                         onMouseLeave={mouseLeaveItem}>
                         <SidebarItemIconWrapper className={styles.iconWrapper}>
@@ -442,6 +478,8 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
             </SidebarItemWrapper>
         );
     };
+
+     
 
 
     const SubmenuItems = () => {
@@ -476,15 +514,15 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
             <div >
                 {detailMenuItems.map((item: any, index: number) =>
                     <Link href={'/catalog/' + item.id} key={index}>
-                        <div
+                        <MainTittleStyle
                             onClick={() => onSidebarClose()}
                             className={styles.detailMenuitem}>
                             {item.category_name}
-                        </div>
+                        </MainTittleStyle>
                     </Link>
                 )}
             </div>
-            <Button>ყველა კატეგორია</Button>
+            {/* <Button>ყველა კატეგორია</Button> */}
             <div className={styles.promoItemsWrapper}>
                 <PromoItem></PromoItem>
                 <PromoItem></PromoItem>
@@ -495,7 +533,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
     return (
         <>
-         <BackgroundShadow onClick={() => onSidebarClose()} />
+            <BackgroundShadow onClick={() => onSidebarClose()} />
             <div className={styles.wrapper} onClick={(e) => console.log(e)}>
                 <SideBarWrapper className={styles.container}>
                     <SideBarTopSideWrapper className={styles.header}>
@@ -509,11 +547,11 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         <SidebarItems />
                     </div>
                 </SideBarWrapper>
-
-                {showSubMenu && !!subMenuItems.length && <SecondSideBar className={styles.container}
-                    onMouseLeave={() => setInSubMenu(false)}
-                    onMouseEnter={() => setInSubMenu(true)}>
-                    {/* <div className={styles.header}>
+                <ForMobile>
+                    {showSubMenu && !!subMenuItems.length && <SecondSideBar className={styles.container}
+                        onMouseLeave={() => setInSubMenu(false)}
+                        onMouseEnter={() => setInSubMenu(true)}>
+                        {/* <div className={styles.header}>
                     <a className={styles.iconWrapper}>
                         <HiArrowLeft size={'2.0rem'} color='#424F60'/>
                     </div>
@@ -523,39 +561,53 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </div>
                 </div> */}
 
-                    <div className={styles.content}>
+                        <div className={styles.content}>
+                            <SubmenuTitle className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
+                            <SideBarSubMenuTitle className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
+                            <SubmenuItems />
+                        </div>
+                    </SecondSideBar>}
+                </ForMobile>
+                <ForMobile>
+                    {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
+                        onMouseLeave={() => setShowDetailMenu(false)}
+                        onMouseEnter={() => setShowDetailMenu(true)}>
+                        <DetailMenu />
+                    </div>}
+                </ForMobile>
+                {showSiteBarInMobile === true ? (
+                    <MibileSecondMenuWrapper>
                         <SubmenuTitle className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
                         <SideBarSubMenuTitle className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
                         <SubmenuItems />
-                    </div>
-                </SecondSideBar>}
-
-                {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
-                    onMouseLeave={() => setShowDetailMenu(false)}
-                    onMouseEnter={() => setShowDetailMenu(true)}>
-                    <DetailMenu />
-                </div>}
-
+                    </MibileSecondMenuWrapper>
+                ) : null}
             </div>
         </>);
 };
 
 
 
-
+const MainTittleStyle = styled.div`
+    font-size: 20px;
+    font-family: "fira-go";
+    padding: 10px 0px;
+    margin: 5px 0px;
+`;
 const SubmenuTitle = styled.div`
     font-size: 32px;
     margin-top: 10px;
 `;
-const SideBarSubMenuTitle =  styled.div`
+const SideBarSubMenuTitle = styled.div`
     font-size: 24px;
     margin-top: 24px;
     width: fit-content;
 `;
 const SideBarWrapper = styled.div`
-    /* background-color: red; */
-    /* width: 400px; */
     height: 100vh;
+        ${Responsive.tablet} {
+            /* background-color: red; */
+        }
 `;
 const SecondSideBar = styled.div`
     /* background-color: aqua; */
@@ -611,6 +663,9 @@ const BackgroundShadow = styled.div`
     opacity: 0.49;
     height: 100%;
     width: 100%;
+        ${Responsive.tablet} {
+            /* background-color: red; */
+        }
 `;
 
 
