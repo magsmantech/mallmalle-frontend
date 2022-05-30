@@ -78,11 +78,11 @@ const ItemPreview = ({ images }: Props) => {
             <Wrapper>
                 <TabsWrapper>
                     {images.map((image, index) =>
-                        <TabImage src={uploadUrl(image)} key={index} selected={index === selected} onClick={() => _imageSelected(index)} />
+                        <TabImage src={images.length <= 1 ? image : uploadUrl(image)} key={index} selected={index === selected} onClick={() => _imageSelected(index)} />
                     )}
                 </TabsWrapper>
                 <ImageWrapperDiv>
-                    <SelectedImage src={uploadUrl(images[selected])} />
+                    <SelectedImage src={images.length <= 1 ? images[selected] : uploadUrl(images[selected])} />
                 </ImageWrapperDiv>
             </Wrapper>
         </>

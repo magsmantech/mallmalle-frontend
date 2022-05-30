@@ -42,14 +42,14 @@ const Home: NextPage = () => {
         მთავარი / წესები და პირობები
       </Breadcrumbs>
       <div className={styles.column}>
-                <span className={styles.item}>წესები და პირობები</span>
-                <span className={styles.item}>ხშირად დასმული კითხვები</span>
-                <span className={styles.item}>დაბრუნების და გაცვლის პოლიტიკა</span>
-                <span className={styles.item}>კონფიდენციალურობა</span>
-                <span className={styles.item}>დახმარება</span>
-                <span className={styles.item}>MallMalle-ს შესახებ</span>
-                <span className={styles.item}>კონტაქტი</span>
-            </div>
+        <span className={styles.item}>წესები და პირობები</span>
+        <span className={styles.item}>ხშირად დასმული კითხვები</span>
+        <span className={styles.item}>დაბრუნების და გაცვლის პოლიტიკა</span>
+        <span className={styles.item}>კონფიდენციალურობა</span>
+        <span className={styles.item}>დახმარება</span>
+        <span className={styles.item}>MallMalle-ს შესახებ</span>
+        <span className={styles.item}>კონტაქტი</span>
+      </div>
     </>
   );
 };

@@ -35,29 +35,29 @@ const Footer = () => {
                     <FooterListTitle className={styles.title}>პირობები</FooterListTitle>
                     {/* <FooterListItem className={styles.item} */}
                     <FooterListItem>
-                        <Link href="/mallmalle/terms-and-conditions">წესები და პირობები</Link>
+                        <FooterLink href="/mallmalle/terms-and-conditions">წესები და პირობები</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <Link href="/mallmalle/faq">ხშირად დასმული კითხვები</Link>
+                        <FooterLink href="/mallmalle/faq">ხშირად დასმული კითხვები</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <Link href="/mallmalle/return-policy">დაბრუნების და გაცვლის პოლიტიკა</Link>
+                        <FooterLink href="/mallmalle/return-policy">დაბრუნების და გაცვლის პოლიტიკა</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <Link href="/mallmalle/privacy-policy">კონფიდენციალურობა</Link>
+                        <FooterLink href="/mallmalle/privacy-policy">კონფიდენციალურობა</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <Link href="/mallmalle/support">დახმარება</Link>
+                        <FooterLink href="/mallmalle/support">დახმარება</FooterLink>
                     </FooterListItem>
                 </FooterColumn>
 
                 <FooterColumn className={styles.column}>
                     <FooterListTitle className={styles.title}>ჩვენს შესახებ</FooterListTitle>
                     <FooterListItem>
-                        <Link href="/mallmalle/about-us">MallMalle-ს შესახებ</Link>
+                        <FooterLink href="/mallmalle/about-us">MallMalle-ს შესახებ</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <Link href="/mallmalle/contact">კონტაქტი</Link>
+                        <FooterLink href="/mallmalle/contact">კონტაქტი</FooterLink>
                     </FooterListItem>
                 </FooterColumn>
 
@@ -138,8 +138,20 @@ const FooterListItem = styled.span`
     font-family: 'helvetica';
     cursor: pointer;
     display: block;
+    color: #000;
+    text-decoration: none;
+        &:hover {
+            opacity: 0.8;
+        }
   }
 `;
+const FooterLink = styled(Link)`
+    font-size: 15px;
+    font-family: 'helvetica';
+    color: #000;
+`;
+
+
 const FbIcon = styled(FacebookIcon)`
     width: 24px;
     height: 27px;
