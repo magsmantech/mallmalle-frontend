@@ -330,7 +330,7 @@ const OrderDetails: React.FC<{
         function UpdateProfileItem(props: Props) { //onClick={props.onHide}
             const [newAddress, setnewAddress] = useState();
 
-            const findAddress = props.address.find(x => x.id == updateAddresId);
+            const findAddress = props.address?.find(x => x.id == updateAddresId);
 
             const [updateStreet, setupdateStreet] = useState<string>(findAddress?.address_1 || "");
             const [updateCity, setupdateCity] = useState<string>(findAddress?.city || "");
