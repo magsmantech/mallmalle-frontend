@@ -157,13 +157,27 @@ const StatusDiv = styled.div`
     padding-top: 3px;
     width: 30%;
     letter-spacing: 1px;
+        ${Responsive.tablet} {
+            width: 45%;
+        }
+        ${Responsive.mobile} {
+            width: unset;
+            margin-right: auto;
+            font-size: 14px;
+            letter-spacing: 0.4px;
+        }
 `;
 const Money = styled.div`
-
+${Responsive.mobile} {
+            font-size: 14px;
+        }
 `;
 const MoneyCount = styled.div`
     margin-left: 10px;
     font-size: 18px;
+        ${Responsive.mobile} {
+            font-size: 14px;
+        }
 `;
 
 const Grid = styled.div`
