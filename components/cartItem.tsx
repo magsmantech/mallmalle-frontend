@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
 import { calculateProductPrices, CartItem } from "../domain/shop";
+import { uploadUrl } from "../features/api";
 
 
 
@@ -12,9 +13,12 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
     selectedColor,
   } = calculateProductPrices(item.product, variation_id);
 
+  var imgUrl = item.product.decoded_images;
+  console.log("first " + imgUrl);
+
   return (
     <ItemWrapper style={{ ...style }}>
-      <ItemImg src={'/assets/default-image.png'} />
+      <ItemImg src={uploadUrl(imgUrl[0])} />
       <ItemTextWrapper>
         <ItemName>{product.product_name}</ItemName>
         <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>

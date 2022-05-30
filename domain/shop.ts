@@ -86,7 +86,7 @@ export type Product = {
   "variations": ProductVariation[];
   "discount": Discount[];
   "categories": Category[];
- 
+  "decoded_images": [] | string;
 }
 export type Discount = {
   "id": number;// 4

@@ -9,7 +9,7 @@ import RadioButton from "./customStyle/RadioButton";
 import { useState } from "react";
 import SidebarFilter from "./customStyle/SidebarFilter";
 import MoreFilterIcon from '../public/icons/more-filter-icon.svg'
-import api from "../features/api";
+import api, { uploadUrl } from "../features/api";
 import Loader from "./Loader";
 import { removeFromFavorite } from '../services/checkout-services';
 
@@ -108,16 +108,20 @@ const Favorites: React.FC<{}> = ({ }) => {
                         console.log('removeFromFavorite result:', result);
                     }}>washla</button> */}
 
-               
-                    {favorite.map((f, index) => (
-                        <ItemWrapper key={index}>
-                            <Item name={f.product.product_name} id={f.product.id} price="80.00" oldPrice='125.00' currency='gel' imageUrl={"/assets/default-image.png"}></Item>
-                            {/* TODO image from api */}
-                            <CartButton
-                                onClick={_showFeedback}
-                            >კალათაში დამატება</CartButton>
-                        </ItemWrapper>
-                    ))}
+
+                    {favorite.map((f, index) => {
+                        var imgUrl = f.product.decoded_images;
+                        console.log("first " + imgUrl);
+                        return (
+                            <ItemWrapper key={index}>
+                                <Item name={f.product.product_name} id={f.product.id} price="80.00" oldPrice='125.00' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>
+                                {/* TODO image from api */}
+                                <CartButton
+                                    onClick={_showFeedback}
+                                >კალათაში დამატება</CartButton>
+                            </ItemWrapper>
+                        )
+                    })}
                 </Grid>
             </Wrapper>
         </>)
