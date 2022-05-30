@@ -284,7 +284,7 @@ const CartScreen: NextPage = () => {
                   <CloseIconStyle onClick={async () => {
                     const result = await removeFromCart({
                       cartItemId: item.id,
-                      // variationId: item.variation_id,
+                      variationId: item.variation_id,
                     });
                     await refetchCart();
                     console.log('removeFromCart result:', result);
