@@ -14,6 +14,8 @@ import { useRouter } from 'next/router';
 import OrderItemComponent from '../../components/OrderItemComponent';
 import { SectionTitle } from '../cart';
 import config from "../../config.json";
+import { uploadUrl } from '../../features/api';
+
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
     const router = useRouter();
@@ -109,12 +111,15 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
                     // const ImgScr = o.product.decoded_images[0] ? config.imagesEndpoint + JSON.parse(o.product.decoded_images[0])[0] : "../../asdas";
 
+                    var imgUrl = o.product.decoded_images
+                    console.log("first " + imgUrl);
+
                     return (
                         <ItemFlexWrapper key={index}>
                             <ItemWrapperStyle>
 
                                 <ItemWrapper>
-                                    <ItemImg src={"/assets/default-image.png"} />
+                                    <ItemImg src={uploadUrl(imgUrl[0])} />
                                     <ItemTextWrapper>
                                         <ItemName>{o.product.product_name}</ItemName>
                                         {o.product.variations.map((v, index) => {

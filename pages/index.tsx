@@ -112,7 +112,11 @@ const Home: NextPage = () => {
         <DiscountItemContainerStyle>
           {console.log(AllDiscount)}
           {AllDiscount.slice(0, 12).map((d, index) => {
-
+            var imgUrl = d.background_image;
+            console.log("first " + imgUrl);
+            // var b = JSON.stringify(imgUrl);
+            // const str = b.replace(/\\/g, '');
+            // console.log(str);
             return (
               <DiscountItem
                 name={d.name}
@@ -120,12 +124,12 @@ const Home: NextPage = () => {
                 price="85,99"
                 oldPrice={`125`}
                 currency="gel"
-                // imageUrl={uploadUrl(d.)}
-                imageUrl={"../../../assets/default-image.png"}
+                imageUrl={uploadUrl(imgUrl)}
+                // imageUrl={"../../../assets/default-image.png"}
                 // imageUrl={
-                //   d?.background_image?.length
-                //     ? config.imagesEndpoint + JSON.parse(d.background_image)[0]
-                //     : "../../../assets/default-image.png"
+                //   d?.decoded_images?.length
+                //     ? config.imagesEndpoint + JSON.parse(d?.background_image)[0]
+                //     : "default-image.png"
                 // }
               />
             )
