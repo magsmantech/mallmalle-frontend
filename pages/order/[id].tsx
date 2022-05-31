@@ -96,7 +96,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
                     </OrderListTopSideInsideWrapper> */}
-                    <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items.length} შეკვეთა</SearchCountText></SearchCount>
+                    <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items?.length} შეკვეთა</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
 
                 <Headers>
@@ -117,28 +117,12 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     return (
                         <ItemFlexWrapper key={index}>
                             <ItemWrapperStyle>
-
                                 <ItemWrapper>
                                     <ItemImg src={uploadUrl(imgUrl[0])} />
                                     <ItemTextWrapper>
                                         <ItemName>{o.product.product_name}</ItemName>
-                                        {o.product.variations.map((v, index) => {
-
-                                            const getVariant = orderDetail.order_items.find(x => x.variation_id === v.id);
-
-                                            if (o.variation_id === v.id) {
-                                                return (
-                                                   <>
-                                                    <div><ItemLabel>ზომა:</ItemLabel><ItemValue>{v.title}</ItemValue></div>
-                                                    {/* <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>Nan</ItemValue></div> */}
-                                                   </>
-                                                )
-                                            }else {
-                                                return null
-                                            }
-
-                                            
-                                        })}
+                                        <div><ItemLabel>ზომა:</ItemLabel><ItemValue> {o.variation.size_variation.size_name}</ItemValue></div>
+                                        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{o.variation.color_variation.color_name}</ItemValue></div>
                                     </ItemTextWrapper>
                                 </ItemWrapper>
 
@@ -147,8 +131,8 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                 <Number>{o.quantity}x</Number>
                             </NumberWrapperStyle>
                             <PriceWrapperStyle>
-                                <Price>{o.price} ₾</Price>
-                                <OldPrice>{o.discounted_price} ₾</OldPrice>
+                                <Price>{o.discounted_price} ₾</Price>
+                                <OldPrice>{o.price} ₾</OldPrice>
                             </PriceWrapperStyle>
                             <BadgeWrapperStyle>
                                 <BadgeWrapperStyle>
@@ -161,17 +145,17 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                 </BadgeWrapperStyle>
                             </BadgeWrapperStyle>
                             <ButtonWrapperStyle>
-                                <Link href={`/history/${orderID}`}>
+                                <Link href={`/history/${orderID}?itemID=${o.id}`}>
                                     <IconWrapper>
                                         <RightArrowStyle color={'#3A7BD5'} />
                                     </IconWrapper>
                                 </Link>
                             </ButtonWrapperStyle>
                         </ItemFlexWrapper>
-            )
+                    )
                 })}
 
-        </OrderListWrapper>
+            </OrderListWrapper>
 
         </>)
 };

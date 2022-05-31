@@ -13,39 +13,12 @@ import Responsive from "../../config/Responsive";
 import { useRouter } from "next/router";
 import api from "../../features/api";
 import Loader from '../../components/Loader';
-
-
+import { uploadUrl } from './../../features/api';
 
 const Item = () => {
     return (
         <>
-            <ItemWrapperStyle>
-                <ItemImage src={'/assets/123123.png'} />
-                <div className={styles.itemTextContainer}>
-                    <ItemName>Reima Overalls  1x</ItemName>
-                    <StarsWrapper>
-                        <Stars >
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                            <StartIcon color={'#22D5AE'} />
-                        </Stars>
-                        <ViewCount>402 ნახვა</ViewCount>
-                    </StarsWrapper>
-                    <ItemListWrapper>
-                        <ItemLabel>ზომა: </ItemLabel> <ItemValue>XL</ItemValue>
-                    </ItemListWrapper>
-                    <ItemListWrapper>
-                        <ItemLabel>ფერი: </ItemLabel> <ItemValue>მწვანე</ItemValue>
-                    </ItemListWrapper>
-                    <ItemListWrapper>
-                        <ItemLabel>რაოდენობა: </ItemLabel> <ItemValue>1x</ItemValue>
-                    </ItemListWrapper>
-                    <Price>$79.90</Price>
-                    <OldPrice>$123.90</OldPrice>
-                </div>
-            </ItemWrapperStyle>
+
         </>
     )
 
@@ -55,71 +28,111 @@ const History: NextPage = () => {
 
     const router = useRouter();
     const orderID = parseInt(router.query.id as string);
+    const itemID =  parseInt(router.query.itemID as string);
+ 
+
     const { data: orderDetail, isLoading: isOrderDetailLoading, refetch: refetchOrderDetail, isSuccess: isOrderDetailSucces } = api.useGetOrderDetailsQuery(orderID);
 
+    const selectedItem = orderDetail?.order_items?.find(i => i.id === itemID);
+    // const selectedItemAddress = orderDetail?.id === selectedItem?.order_id ? return 
+
+    var imgUrl = selectedItem?.product.decoded_images[0];
+    console.log("first " + imgUrl); 
 
     return isOrderDetailLoading ? <Loader /> : !orderDetail ? (<span>not found</span>) : (
         <>
-            <SectionStyle className={styles.section}>
-                <div className={styles.container}>
-                    <SectionTitle>ყიდვის ისტორია {orderID}</SectionTitle>
-                    <Breadcrumbs>მთავარი / პროდუქტები / ყიდვის ისტორია / Reima Overalls</Breadcrumbs>
-                    <Link href={{
-                        pathname: '/profile',
-                        query: { tab: 'orders-history' },
-                    }} >
-                        <div className={styles.backButton}>
-                            <IconWrapper>
-                                <BsArrowLeft color={'#3A7BD5'} />
-                            </IconWrapper>
-                            უკან დაბრუნება
-                        </div>
-                    </Link>
-                    <WrapperStyle className={styles.wrapper}>
-                        <ItemWrapper>
-                            <Item />
-                        </ItemWrapper>
-                        {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
-                        <Badge
-                            color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
-                            backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
-                            {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
-                        </Badge>
-                        <AddressWrapperStyle>
 
-                            <AddressTitle>მისამართი:</AddressTitle>
-                            <AddressItem>
-                                <LocationIconStyle />
-                                <div className={styles.addressItemText}>
-                                    <div className={styles.city}>{orderDetail.address.city}</div>
-                                    <div className={styles.address}>{orderDetail.address.address_1}</div>
-                                    <div className={styles.zip}>ZIP კოდი: {orderDetail.address.zip}</div>
-                                </div>
-                            </AddressItem>
+            <div>
+                <SectionStyle className={styles.section}>
+                    <div className={styles.container}>
+                        <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                        <Breadcrumbs>მთავარი / პროდუქტები / ყიდვის ისტორია / Reima Overalls</Breadcrumbs>
+                        <Link href={{
+                            pathname: `/order/${orderID}`,
+                            // query: { tab: 'orders-history' },
+                        }} >
+                            <div className={styles.backButton}>
+                                <IconWrapper>
+                                    <BsArrowLeft color={'#3A7BD5'} />
+                                </IconWrapper>
+                                უკან დაბრუნება
+                            </div>
+                        </Link>
+                        <WrapperStyle className={styles.wrapper}>
+                            <ItemWrapper>
 
-                        </AddressWrapperStyle>
+                                <ItemWrapperStyle>
+                                    <ItemImage src={uploadUrl(imgUrl ? imgUrl : "/assets/123123.png")} />
+                                    <div className={styles.itemTextContainer}>
+                                        <ItemName>{selectedItem?.product.product_name} {selectedItem?.quantity}x</ItemName>
+                                        <StarsWrapper>
+                                            <Stars >
+                                                <StartIcon color={'#22D5AE'} />
+                                                <StartIcon color={'#22D5AE'} />
+                                                <StartIcon color={'#22D5AE'} />
+                                                <StartIcon color={'#22D5AE'} />
+                                                <StartIcon color={'#22D5AE'} />
+                                            </Stars>
+                                            {/* <ViewCount>402 ნახვა</ViewCount> */}
+                                        </StarsWrapper>
+                                        <ItemListWrapper>
+                                            <ItemLabel>ზომა: </ItemLabel> <ItemValue>{selectedItem?.variation.size_variation.size_name}</ItemValue>
+                                        </ItemListWrapper>
+                                        <ItemListWrapper>
+                                            <ItemLabel>ფერი: </ItemLabel> <ItemValue>{selectedItem?.variation.color_variation.color_name}</ItemValue>
+                                        </ItemListWrapper>
+                                        <ItemListWrapper>
+                                            <ItemLabel>რაოდენობა: </ItemLabel> <ItemValue>{selectedItem?.quantity}x</ItemValue>
+                                        </ItemListWrapper>
+                                        <Price>₾ {selectedItem?.discounted_price}</Price>
+                                        <OldPrice>₾ {selectedItem?.price}</OldPrice>
+                                    </div>
+                                </ItemWrapperStyle>
 
-                        <PayMentMethodWrapper>
-                            <AddressTitle>გადახდის მეთოდი</AddressTitle>
-                            <PayMentMethod>უნაღდო ანგარიშწორება</PayMentMethod>
-                            {/* <div className={styles.paymentMethod}>
+                            </ItemWrapper>
+                            {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
+                            <Badge
+                                color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
+                                backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
+                                {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
+                            </Badge>
+                            <AddressWrapperStyle>
+
+                                <AddressTitle>მისამართი:</AddressTitle>
+                                <AddressItem>
+                                    <LocationIconStyle />
+                                    <div className={styles.addressItemText}>
+                                        <div className={styles.city}>{orderDetail.address.city}</div>
+                                        <div className={styles.address}>{orderDetail.address.address_1}</div>
+                                        <div className={styles.zip}>ZIP კოდი: {orderDetail.address.zip}</div>
+                                    </div>
+                                </AddressItem>
+
+                            </AddressWrapperStyle>
+
+                            <PayMentMethodWrapper>
+                                <AddressTitle>გადახდის მეთოდი</AddressTitle>
+                                <PayMentMethod>უნაღდო ანგარიშწორება</PayMentMethod>
+                                {/* <div className={styles.paymentMethod}>
                                 <img className={styles.paymentIcon} src={'/assets/visa.png'} />
                                 <div className={styles.cardNumber}>4332 **** **** **83  </div>
                             </div> */}
-                        </PayMentMethodWrapper>
-                    </WrapperStyle>
+                            </PayMentMethodWrapper>
+                        </WrapperStyle>
 
-                </div>
+                    </div>
 
-                <DividerStyle />
+                    <DividerStyle />
 
-                <DescriptionTitle>
-                    დამატებითი ინფორმაცია
-                </DescriptionTitle>
-                <DescriptionText>
-                    შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის
-                </DescriptionText>
-            </SectionStyle>
+                    <DescriptionTitle>
+                        დამატებითი ინფორმაცია
+                    </DescriptionTitle>
+                    <DescriptionText>
+                        {selectedItem?.product.description}
+                    </DescriptionText>
+                </SectionStyle>
+            </div>
+
         </>
     )
 }
@@ -297,6 +310,7 @@ const StartIcon = styled(BsStarFill)`
     width: 20px;
     margin-right: 10px !important;
         &:last-child {
+
             margin-right: 0px;
         }
 `;

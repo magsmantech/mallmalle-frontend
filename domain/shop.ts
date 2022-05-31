@@ -225,7 +225,22 @@ export type OrderItems = {
   variation_id: number;
   quantity: number;
   product: OrderProduct;
+  variation: OrderVariation;
 }
+export type OrderVariation = {
+  id: number;
+  product_id: number;
+  title: string;
+  price: string;
+  image: [] | string;
+  quantity: number;
+  product_sku: string;
+  "size_variation": SizeVariation;
+  "color_variation": ColorVariation;
+}
+
+
+
 export type OrderProduct = {
   id: number;// 1
   product_name: string;// "ქალის მოსაცმელი";
