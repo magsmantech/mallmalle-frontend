@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { showFeedback } from "../../features/feedbackSlice";
 import Responsive from "../../config/Responsive";
-
+import BlurPopup from "../../components/BlurPopup";
 type TabItemProps = {
   selected?: boolean;
 };
@@ -356,6 +356,8 @@ const Auth: NextPage = () => {
   const AuthForm = () => {
     const [loading, setLoading] = useState(false);
 
+    
+
     const validationSchema = yup.object({
       email: yup
         .string()
@@ -635,6 +637,8 @@ const Auth: NextPage = () => {
   const Register = () => {
     const [step, setStep] = useState("personal-info");
     const [loading, setLoading] = useState(false);
+    const [popOnCLose, setPopOnCLose] = useState(true);
+    
 
     const validationSchema = yup.object({
       firstName: yup.string().required("First Name is required"),
@@ -679,6 +683,7 @@ const Auth: NextPage = () => {
       AuthService.register({ firstName, lastName, phone, email, password })
         .then((res: RegisterResponse) => {
           setStep("add-address");
+          setPopOnCLose(false);
           const { data } = res;
           AuthService.setAccessToken(data, dispatch);
           const jwt = AuthService.decodeJwt();
@@ -719,6 +724,7 @@ const Auth: NextPage = () => {
     };
 
     const addressSubmit = (values: AddAddressParams) => {
+      const router = useRouter();
       setLoading(true);
       console.log(values);
       AuthService.addAddress(values)
@@ -727,6 +733,7 @@ const Auth: NextPage = () => {
           const { data } = res;
           console.log(data);
           setLoading(false);
+          router.push("/profile")
         })
         .catch((err) => {
           console.log(err);
@@ -746,15 +753,17 @@ const Auth: NextPage = () => {
       onSubmit: addressSubmit,
     });
 
+    // <div>{JSON.stringify(formik.errors)}</div>
+
     return (
       <>
         {step === "personal-info" && (
           <>
+          
             <Title>რეგისტრაცია</Title>
             <Text>
               შეიყვანეთ თქვენი მონაცემები
             </Text>
-            <div>{JSON.stringify(formik.errors)}</div>
             <form onSubmit={formik.handleSubmit}>
               <FormLayout>
                 <Input
@@ -846,6 +855,7 @@ const Auth: NextPage = () => {
             <Title>
               დაამატეთ თქვენი მისამართი
             </Title>
+            <BlurPopup boldMessage={"თქვენ წარმატებით დარეგისტრირდით"} normalMessage={"პროფილზე გადასვლა"} routeText={"პროფილი"} routeLink={"/profile"} onClose={false}/>
             <Text>
               შეიყვანეთ თქვენი მონაცემები
             </Text>
@@ -903,6 +913,7 @@ const Auth: NextPage = () => {
   };
 
   const Success = () => {
+   
     return (
       <>
         <Title>
