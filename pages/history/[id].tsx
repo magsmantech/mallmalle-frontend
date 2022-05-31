@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import api from "../../features/api";
 import Loader from '../../components/Loader';
 import { uploadUrl } from './../../features/api';
+import ReactHtmlParser from 'react-html-parser';
 
 const Item = () => {
     return (
@@ -128,7 +129,7 @@ const History: NextPage = () => {
                         დამატებითი ინფორმაცია
                     </DescriptionTitle>
                     <DescriptionText>
-                        {selectedItem?.product.description}
+                        {selectedItem?.product?.description ? ReactHtmlParser(selectedItem?.product?.description) : null}
                     </DescriptionText>
                 </SectionStyle>
             </div>
