@@ -27,6 +27,7 @@ import { calculateProductPrices, Product } from "../../domain/shop";
 import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
+import { Alert, Snackbar } from "@mui/material";
 
 type ButtonProps = {
   secondary?: boolean;
@@ -266,6 +267,10 @@ const ProductDetails: NextPage = () => {
 
   const { data: authData, isLoading: isUserLoading } = api.useProfileQuery(undefined);
 
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState('');
+  const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+
   useEffect(() => {
     console.log(id, router);
     if (!id) return;
@@ -310,7 +315,10 @@ const ProductDetails: NextPage = () => {
 
   const _showFeedback = () => {
     if (!authData?.profile?.user) {
-      alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setOpenSnack(true);
+      setsnackMsgStatus('info');
       return;
     }
     console.log("test", product);
@@ -328,7 +336,10 @@ const ProductDetails: NextPage = () => {
       if (product && variation) {
         // TODO use api.getAddToCartMutation()
         addToCart(product.id, variation.id, 1).then(({ data }) => {
-          alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          setOpenSnack(true);
+          setsnackMsgStatus(data.success ? 'success' : data.error ? "error" : "info");
         });
       }
     }
@@ -337,15 +348,22 @@ const ProductDetails: NextPage = () => {
 
   const _showFavoriteFeedback = () => {
     if (!authData?.profile?.user) {
-      alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      // alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setdisableFavoriteBtn(true)
+
+      setSnackMessage("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setOpenSnack(true);
+      setsnackMsgStatus('info');
       return;
     }
     if (product) {
       addToFavorite(product.id).then(({ data }) => {
-        alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
+        // alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
         setdisableFavoriteBtn(true);
         refetchFavorites();
+        setSnackMessage("პროდუქტი დაემატა ფავორიტებში");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
       });
     }
   };
@@ -466,6 +484,15 @@ const ProductDetails: NextPage = () => {
           </DetailsWrapper>
         </DetailMainWrapper>
       </Section>
+
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={5000}
+        onClose={() => setOpenSnack(false)}>
+        <Alert severity={snackMsgStatus}>
+          {snackMessage}
+        </Alert>
+      </Snackbar>
 
 
       <SectionTitle>
