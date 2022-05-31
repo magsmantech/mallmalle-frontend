@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { CgClose } from "react-icons/cg";
 import styled from "styled-components";
 import CartItem from "../../components/cartItem";
@@ -85,6 +85,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
                     <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                   
                     {/* <OrderListTopSideInsideWrapper>
                         <ChipWrapper>
                             <ChipTitle>დადასტურებული</ChipTitle>
@@ -98,7 +99,17 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     </OrderListTopSideInsideWrapper> */}
                     <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items?.length} შეკვეთა</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
-
+                <Link href={{
+                       pathname: '/profile',
+                       query: { tab: 'orders-history' },
+                    }} >
+                        <BackBtnStyle >
+                            <IconWrapper>
+                                <BsArrowLeft color={'#3A7BD5'} />
+                            </IconWrapper>
+                            <span>უკან დაბრუნება</span>
+                        </BackBtnStyle>
+                    </Link>
                 <Headers>
                     <HeaderItem>პროდუქტი</HeaderItem>
                     <HeaderItem>რაოდენობა</HeaderItem>
@@ -163,7 +174,20 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
 
 
-
+const BackBtnStyle = styled.div`
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-family: fira-go;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    margin-bottom: 40px;
+    margin-right: auto;
+        span {
+            padding-left: 20px;
+        }
+`;
 const Grid = styled.div`
     display: grid;
     row-gap: 5.0rem;
