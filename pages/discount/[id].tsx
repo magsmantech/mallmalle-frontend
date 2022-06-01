@@ -27,6 +27,7 @@ import { calculateProductPrices, Product } from "../../domain/shop";
 import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
+import { Alert, Snackbar } from "@mui/material";
 
 type ButtonProps = {
   secondary?: boolean;
@@ -245,12 +246,16 @@ const ProductDetails: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const discountId = parseInt(router.query.id as string);
-  
+
   const { data: discount, isLoading: isDiscountsLoading, refetch: refetchDiscount } = api.useGetDiscountByIdQuery(discountId);
 
   const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<SizeType[]>([]);
   const [colors, setColors] = useState<ColorType[]>([]);
+
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState('');
+  const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
 
   const [disableFavoriteBtn, setdisableFavoriteBtn] = useState(false);
 
@@ -313,7 +318,10 @@ const ProductDetails: NextPage = () => {
 
   const _showFeedback = () => {
     if (!authData?.profile?.user) {
-      alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setOpenSnack(true);
+      setsnackMsgStatus('info');
       return;
     }
     console.log("test", product);
@@ -331,7 +339,11 @@ const ProductDetails: NextPage = () => {
       if (product && variation) {
         // TODO use api.getAddToCartMutation()
         addToCart(product.id, variation.id, 1).then(({ data }) => {
-          alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          refetchCart();
+          setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          setOpenSnack(true);
+          setsnackMsgStatus(data.success ? 'success' : 'error');
         });
       }
     }
@@ -340,15 +352,21 @@ const ProductDetails: NextPage = () => {
 
   const _showFavoriteFeedback = () => {
     if (!authData?.profile?.user) {
-      alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      // alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setdisableFavoriteBtn(true)
+      setSnackMessage("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+      setOpenSnack(true);
+      setsnackMsgStatus('info');
       return;
     }
     if (product) {
       addToFavorite(product.id).then(({ data }) => {
-        alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
+        // alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
         setdisableFavoriteBtn(true);
         refetchFavorites();
+        setSnackMessage("პროდუქტი წარმატებით დაემატა ფავორიტებში");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
       });
     }
   };
@@ -468,6 +486,14 @@ const ProductDetails: NextPage = () => {
             <Text>შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის</Text>
           </DetailsWrapper>
         </DetailMainWrapper>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={5000}
+          onClose={() => setOpenSnack(false)}>
+          <Alert severity={snackMsgStatus}>
+            {snackMessage}
+          </Alert>
+        </Snackbar>
       </Section>
 
 

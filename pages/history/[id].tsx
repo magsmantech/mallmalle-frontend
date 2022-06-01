@@ -103,9 +103,9 @@ const History: NextPage = () => {
                                 <AddressItem>
                                     <LocationIconStyle />
                                     <div className={styles.addressItemText}>
-                                        <div className={styles.city}>{orderDetail.address.city}</div>
-                                        <div className={styles.address}>{orderDetail.address.address_1}</div>
-                                        <div className={styles.zip}>ZIP კოდი: {orderDetail.address.zip}</div>
+                                        <div className={styles.city}>{orderDetail.address?.city}</div>
+                                        <div className={styles.address}>{orderDetail.address?.address_1}</div>
+                                        <div className={styles.zip}>ZIP კოდი: {orderDetail.address?.zip}</div>
                                     </div>
                                 </AddressItem>
 
