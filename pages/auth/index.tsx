@@ -28,6 +28,15 @@ import { showFeedback } from "../../features/feedbackSlice";
 import Responsive from "../../config/Responsive";
 import BlurPopup from "../../components/BlurPopup";
 import api from "../../features/api";
+import { Alert, Snackbar } from "@mui/material";
+
+
+
+
+
+
+
+
 type TabItemProps = {
   selected?: boolean;
 };
@@ -357,8 +366,10 @@ const Auth: NextPage = () => {
 
   const AuthForm = () => {
     const [loading, setLoading] = useState(false);
+    const [openSnack, setOpenSnack] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+    const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
 
-    
 
     const validationSchema = yup.object({
       email: yup
@@ -394,12 +405,16 @@ const Auth: NextPage = () => {
         })
         .catch((err) => {
           setLoading(false);
-          dispatch(
-            showFeedback({
-              show: true,
-              type: "error",
-            })
-          );
+          // dispatch(
+          //   showFeedback({
+          //     show: true,
+          //     type: "error",
+          //   })
+          // );
+          // alert(err)
+          setSnackMessage("მოხდა შეცდომა, გადაამოწემეთ თქვენი მონაცემები ან სცადეთ მოგვიანებით");
+          setOpenSnack(true);
+          setsnackMsgStatus('error');
           console.log(err);
         });
     };
@@ -452,6 +467,14 @@ const Auth: NextPage = () => {
               შესვლა
             </Button>
           </FormLayout>
+          <Snackbar
+            open={openSnack}
+            autoHideDuration={5000}
+            onClose={() => setOpenSnack(false)}>
+            <Alert severity={snackMsgStatus}>
+              {snackMessage}
+            </Alert>
+          </Snackbar>
         </form>
       </>
     );
@@ -568,7 +591,7 @@ const Auth: NextPage = () => {
                     recoverFormik.touched.email && recoverFormik.errors.email
                   }
                 />
-                <br/>
+                <br />
                 <Button type="submit" disabled={loading}>
                   გაგზავნა
                 </Button>
@@ -642,7 +665,7 @@ const Auth: NextPage = () => {
     const [step, setStep] = useState("personal-info");
     const [loading, setLoading] = useState(false);
     const [popOnCLose, setPopOnCLose] = useState(true);
-    
+
 
     const validationSchema = yup.object({
       firstName: yup.string().required("First Name is required"),
@@ -763,7 +786,7 @@ const Auth: NextPage = () => {
       <>
         {step === "personal-info" && (
           <>
-          
+
             <Title>რეგისტრაცია</Title>
             <Text>
               შეიყვანეთ თქვენი მონაცემები
@@ -859,7 +882,7 @@ const Auth: NextPage = () => {
             <Title>
               დაამატეთ თქვენი მისამართი
             </Title>
-            <BlurPopup boldMessage={"თქვენ წარმატებით დარეგისტრირდით"} normalMessage={"პროფილზე გადასვლა"} routeText={"პროფილი"} routeLink={"/profile"} onClose={false}/>
+            <BlurPopup boldMessage={"თქვენ წარმატებით დარეგისტრირდით"} normalMessage={"პროფილზე გადასვლა"} routeText={"პროფილი"} routeLink={"/profile"} onClose={false} />
             <Text>
               შეიყვანეთ თქვენი მონაცემები
             </Text>
@@ -917,7 +940,7 @@ const Auth: NextPage = () => {
   };
 
   const Success = () => {
-   
+
     return (
       <>
         <Title>

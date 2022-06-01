@@ -15,7 +15,7 @@ import api from "../../features/api";
 import Responsive from "../../config/Responsive";
 import Loader from '../../components/Loader';
 import { Alert, Snackbar } from "@mui/material";
-
+import Link from "next/link";
 
 
 const FlexRow = styled.div`
@@ -198,6 +198,11 @@ const CloseIconStyle = styled(CloseIcon)`
     }
 `;
 
+const DetailLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+`;
+
 
 const CartScreen: NextPage = () => {
 
@@ -266,9 +271,11 @@ const CartScreen: NextPage = () => {
             console.log('cart item prices:', { hasDiscount, originalPrice, finalPrice, item });
             return (
               <FlexRowWrapper key={i}>
-                <ItemWrapper>
-                  <Item item={item} />
-                </ItemWrapper>
+                <DetailLink href={`detail/${item.product_id}`}>
+                  <ItemWrapper>
+                    <Item item={item} />
+                  </ItemWrapper>
+                </DetailLink>
                 <QuantityWrapper>
                   <Quantity value={item.quantity} onChange={async (newQuantity) => {
                     const result = await updateQuantity({
