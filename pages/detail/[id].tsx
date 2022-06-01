@@ -337,6 +337,7 @@ const ProductDetails: NextPage = () => {
         // TODO use api.getAddToCartMutation()
         addToCart(product.id, variation.id, 1).then(({ data }) => {
           // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+          refetchCart();
           setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
           setOpenSnack(true);
           setsnackMsgStatus(data.success ? 'success' : data.error ? "error" : "info");

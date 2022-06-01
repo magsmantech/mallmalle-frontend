@@ -27,6 +27,7 @@ import { useDispatch } from "react-redux";
 import { showFeedback } from "../../features/feedbackSlice";
 import Responsive from "../../config/Responsive";
 import BlurPopup from "../../components/BlurPopup";
+import api from "../../features/api";
 type TabItemProps = {
   selected?: boolean;
 };
@@ -337,7 +338,8 @@ const Auth: NextPage = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState<string>("");
   const [authStep, setAuthStep] = useState("email");
-
+  const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
+  const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   useEffect(() => {
     if (router?.query && router?.query["change-password"]) {
       // setStep('change-password');
@@ -387,6 +389,8 @@ const Auth: NextPage = () => {
 
           AuthService.setAccessToken(res.data, dispatch);
           router.push("/profile");
+          refetchCart();
+          refetchFavorites();
         })
         .catch((err) => {
           setLoading(false);

@@ -384,9 +384,13 @@ type AddAddressProps = {
 const PersonalInfo = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
+  const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const _logOut = () => {
     removeAccessToken(dispatch);
     router.push("/");
+    refetchCart();
+    refetchFavorites();
   };
 
   const [openSnack, setOpenSnack] = useState(false);
