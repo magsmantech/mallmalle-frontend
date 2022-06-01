@@ -29,6 +29,7 @@ import { profile } from "console";
 import { Modal } from "react-bootstrap";
 
 import { Address } from '../../domain/shop';
+import { Alert, Snackbar } from "@mui/material";
 
 
 type TabItemProps = {
@@ -388,6 +389,10 @@ const PersonalInfo = () => {
     router.push("/");
   };
 
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState('');
+  const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+
   const getYearFromDate = (dateString: string): string | number => {
     if (!dateString) return "";
 
@@ -402,8 +407,8 @@ const PersonalInfo = () => {
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
 
   const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
-  const [Address, {isLoading: isUpdateAddressLoading}] = api.useUpdateAddressMutation();
-  const [addAddress, {isLoading: isAddAddressLoading}] = api.useAddAddressMutation();
+  const [Address, { isLoading: isUpdateAddressLoading }] = api.useUpdateAddressMutation();
+  const [addAddress, { isLoading: isAddAddressLoading }] = api.useAddAddressMutation();
 
   const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading || isAddAddressLoading;
 
@@ -430,6 +435,8 @@ const PersonalInfo = () => {
     const [addressUpdatedMsg, setaddressUpdatedMsg] = useState<string>();
     const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
 
+
+
     const updateAddressPut = async () => {
       setModalShow(false);
 
@@ -442,17 +449,20 @@ const PersonalInfo = () => {
           zip: updateZipCode,
           id: updateAddresId
         });
-        setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
-        console.log("contact form submit");
         setaddressSubmitBtn(true);
-        alert("form submited");
+        // alert("form submited");
+        setSnackMessage("მისამართი წარმატები განახლდა");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
         console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
         console.log(Address)
       } catch (error) {
-        setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
         setaddressSubmitBtn(false);
         console.log("login error", error);
-        alert("form not submited")
+        // alert("form not submited")
+        setSnackMessage("ვერ მოხერხდა მისამართის განახლება");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
       }
 
       refetchProfile();
@@ -462,6 +472,9 @@ const PersonalInfo = () => {
       deleteAddress(updateAddresId);
       setModalShow(false);
       refetchProfile();
+      setSnackMessage("მისამართი წარმატებით წაიშალა");
+      setOpenSnack(true);
+      setsnackMsgStatus('success');
     }
 
     return (
@@ -504,13 +517,15 @@ const PersonalInfo = () => {
 
 
   function AddAddress(props: AddAddressProps) {
-    
+
 
     const [addAddressStreet, setAddAddressStreet] = useState<string>('');
     const [addAddressCity, setAddAddressCity] = useState<string>('');
     const [addAddressCountry, setAddAddressCountry] = useState<string>('');
     const [addAddressState, setAddAddressState] = useState<string>('');
     const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
+
+
 
     const addNewAddress = async () => {
       setAddAddressModalShow(false);
@@ -524,11 +539,18 @@ const PersonalInfo = () => {
           zip: addAddressZipCode
         });
 
-        alert("form submited");
+        // alert("form submited");
+        setSnackMessage("მისამართი წარმატებით დაემატა");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
+     
         console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
       } catch (error) {
 
-        alert("form not submited")
+        // alert("form not submited")
+        setSnackMessage("ვერ მოხერხდა მისამართის დამატება!");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
       }
       refetchProfile();
     };
@@ -708,6 +730,14 @@ const PersonalInfo = () => {
             onHide={() => setAddAddressModalShow(false)}
           />
         </GridItem>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={5000}
+          onClose={() => setOpenSnack(false)}>
+          <Alert severity={snackMsgStatus}>
+            {snackMessage}
+          </Alert>
+        </Snackbar>
       </PersonalInfoWrapper>
     </>
   );

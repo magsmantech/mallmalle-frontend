@@ -14,6 +14,7 @@ import { calculateProductPrices, Cart, CartItem } from "../../domain/shop";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
 import Loader from '../../components/Loader';
+import { Alert, Snackbar } from "@mui/material";
 
 
 
@@ -217,6 +218,10 @@ const CartScreen: NextPage = () => {
   //     });
   // }, []);
 
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState('');
+  const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
 
@@ -284,9 +289,12 @@ const CartScreen: NextPage = () => {
                   <CloseIconStyle onClick={async () => {
                     const result = await removeFromCart({
                       cartItemId: item.id,
-                      variationId: item.variation_id,
+                      // variationId: item.variation_id,
                     });
                     await refetchCart();
+                    setSnackMessage("მისამართი წარმატებით წაიშალა კალათიდან");
+                    setOpenSnack(true);
+                    setsnackMsgStatus('success');
                     console.log('removeFromCart result:', result);
                   }}
                   />
@@ -299,7 +307,14 @@ const CartScreen: NextPage = () => {
         <OrderDetailsWrapper>
           <OrderDetails cart={cart} selectedAddressId={selectedAddressId}></OrderDetails>
         </OrderDetailsWrapper>
-
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={5000}
+          onClose={() => setOpenSnack(false)}>
+          <Alert severity={snackMsgStatus}>
+            {snackMessage}
+          </Alert>
+        </Snackbar>
       </Container>
     </>
   );
