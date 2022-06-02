@@ -395,7 +395,7 @@ const OrderDetails: React.FC<{
                                 <UpdateInputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
                                 <UpdateInputStyle type="text" placeholder="ქვეყანა" value={updateCountry} onChange={(e: any) => setupdateCountry(e.target.value)} />
                             </TwoInputWrapper>
-                            <UpdateInputStyle type="text" placeholder="რეგიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
                             <UpdateInputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
 
                             <AddressButton onClick={updateAddressPut}>

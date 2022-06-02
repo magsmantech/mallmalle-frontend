@@ -501,7 +501,7 @@ const PersonalInfo = () => {
               <InputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
               <InputStyle type="text" placeholder="ქვეყანა" value={updateCountry} onChange={(e: any) => setupdateCountry(e.target.value)} />
             </TwoInputWrapper>
-            <InputStyle type="text" placeholder="რეგიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+            <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
 
             <AddressButton onClick={updateAddressPut}>
@@ -578,7 +578,7 @@ const PersonalInfo = () => {
               <InputStyle type="text" placeholder="ქალაქი" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
               <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry} onChange={(e: any) => setAddAddressCountry(e.target.value)} />
             </TwoInputWrapper>
-            <InputStyle type="text" placeholder="რეგიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
+            <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
 
             <AddressButton onClick={addNewAddress}>
