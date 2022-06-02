@@ -189,6 +189,8 @@ const TextButton = styled.button`
   font-weight: 500;
   cursor: pointer;
   display: inline-flex;
+  margin-bottom: 25px;
+  margin-left: 3px;
   &:hover {
     opacity: 0.65;
   }
@@ -390,6 +392,7 @@ const Auth: NextPage = () => {
       data: string;
       [x: string]: any;
     };
+
     const onSubmit = async (values: LogInParams) => {
       console.log(values);
       setLoading(true);
@@ -441,16 +444,6 @@ const Auth: NextPage = () => {
               onChange={formik.handleChange}
               invalid={formik.touched.email && formik.errors.email}
             />
-            {/* <PasswordInputWrapper>
-              <Input placeholder="პაროლი" type="password"
-                id="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                invalid={formik.touched.password && formik.errors.password}
-              />
-              <IconWrapper><EyeIcon width={'2.62rem'} /></IconWrapper>
-            </PasswordInputWrapper> */}
             <PasswordInputWrapperTest
               placeholder="პაროლი"
               id="password"
@@ -459,13 +452,14 @@ const Auth: NextPage = () => {
               onChange={formik.handleChange}
               invalid={formik.touched.password && formik.errors.password}
             />
-            <TextButton onClick={() => setRecover(!recover)}
-            >
-              დაგავიწყდა მონაცემები?
-            </TextButton>
-            <Button disabled={loading} type="submit">
-              შესვლა
-            </Button>
+            <div style={{ display: 'flex', flexDirection: "column-reverse" }}>
+              <Button disabled={loading} type="submit">
+                შესვლა
+              </Button>
+              <TextButton onClick={() => setRecover(!recover)}>
+                დაგავიწყდა მონაცემები?
+              </TextButton>
+            </div>
           </FormLayout>
           <Snackbar
             open={openSnack}
@@ -476,6 +470,7 @@ const Auth: NextPage = () => {
             </Alert>
           </Snackbar>
         </form>
+
       </>
     );
   };

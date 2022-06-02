@@ -24,6 +24,9 @@ import MoreFilterIcon from '../../public/icons/more-filter-icon.svg'
 import DropDown from '../../components/customStyle/DropDown';
 import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from '../../components/customStyle/SidebarFilter';
+import api from '../../features/api';
+import Loader from '../../components/Loader';
+import { Product } from '../../domain/shop';
 
 
 
@@ -555,28 +558,45 @@ type FilterSideBarProps = {
 const Search: NextPage = () => {
     const [openFilters, setOpenFilters] = useState(false)
 
-    useEffect(() => {
-        document.body.style.overflow = openFilters ? "hidden" : 'auto';
-    }, [openFilters])
+    const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
+    const { data: productById, isLoading: isProductByIdLoading, refetch: refetchProductById } = api.useGetProductByIdQuery(1);
 
-    useEffect(() => {
-        getProductsById(1).then((res) => {
-            console.log(res);
+    // useEffect(() => {
+    //     document.body.style.overflow = openFilters ? "hidden" : 'auto';
+    // }, [openFilters])
 
-        })
-            .catch(err => {
-                console.log(err);
+    // useEffect(() => {
+    //     getProductsById(1).then((res) => {
+    //         console.log(res);
 
-            })
-    }, []);
+    //     })
+    //         .catch(err => {
+    //             console.log(err);
+
+    //         })
+    // }, []);
 
     const [popular, setPopular] = useState();
     const [brand, setBrand] = useState();
     const [price, setPrice] = useState();
 
     const [openModal, setOpenModal] = useState(false);
+    const MainLoader = isAllProductLoading || isProductByIdLoading;
 
-    return (
+    const [query, setQuery] = useState<any>("");
+    console.log(allProduct?.filter(product => product.product_name.toLowerCase().includes("თე")))
+
+
+    const serch = (allProduct: Product[]) => {
+      
+        return allProduct.filter(product => 
+            product.product_name.toLowerCase().includes(query) 
+        )
+    }
+
+
+
+    return MainLoader ? <Loader /> : !allProduct ? (<span>not found all products</span>) : (
         <>
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
             {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
@@ -617,6 +637,22 @@ const Search: NextPage = () => {
             </div> */}
 
             <HeadWrapperStyle>
+
+
+                <div>
+                    <input type="text" placeholder='search...' onChange={(e) => setQuery(e.target.value)} />
+                    {serch(allProduct).map((p, index) => {
+
+                        return (
+                            <div key={p.id}>
+                                {p.product_name}  ID {p.id}
+                            </div>
+                        )
+                    })}
+                </div>
+
+
+
                 <TopSideWrapper>
                     <Heading>ძებნის შედეგები</Heading>
                     <Quantity>12 323 პროდუქტი</Quantity>
