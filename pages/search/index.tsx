@@ -24,10 +24,10 @@ import MoreFilterIcon from '../../public/icons/more-filter-icon.svg'
 import DropDown from '../../components/customStyle/DropDown';
 import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from '../../components/customStyle/SidebarFilter';
-import api from '../../features/api';
+import api, { uploadUrl } from '../../features/api';
 import Loader from '../../components/Loader';
 import { Product } from '../../domain/shop';
-
+import { useRouter } from "next/router";
 
 
 const Heading = styled.h1`
@@ -348,7 +348,11 @@ const HeadWrapperStyle = styled.div`
             margin: 10px 0px 30px 0px;
         }
 `;
-
+const SearchCount = styled.div`
+    font-size: 16px;
+    color: #000;
+    height: 300px;
+`;
 
 
 
@@ -372,45 +376,45 @@ const Item = ({ imgSrc, id }: any) => {
         }))
     }
 
-    return <><Link href={"/detail/" + id}><ItemWrapper className={styles.wrapper}
-        onMouseOver={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-    >
-        <Img backgroundImage={imgSrc} className={styles.child}>
-            {(hovered) && <ItemOverlay>
-                <BookmarkWrapper style={{ zIndex: 20 }}>
-                    <BsBookmarkPlusFill size={'30px'} color={'#ffffff'} />
-                </BookmarkWrapper>
-            </ItemOverlay>
-            }
-        </Img>
-        <PriceWrapperStyle className={styles.child}>
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                <Price style={{ marginRight: '1.6rem' }}>85,99 ₾</Price>
-                <OldPrice>120,00 ₾</OldPrice>
-            </div>
-            <Badge>-10%</Badge>
-        </PriceWrapperStyle>
-        <PriceTitleStyle className={styles.child}><Title >ზედა სული</Title> / შავი ზედა...</PriceTitleStyle>
-        <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
-            <StartsWrapperStyle>
-                <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-            </StartsWrapperStyle>
-            <Count>402 ნახვა</Count>
-        </div>
-
-        {hovered && <ItemButton
-            className={styles.child}
-            // onClick={_addToCart}
+    return <>
+        <Link href={"/detail/" + id}><ItemWrapper className={styles.wrapper}
             onMouseOver={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-        >კალათაში დამატება</ItemButton>}
-        {hovered && <ItemBackground />}
-    </ItemWrapper></Link></>
+            onMouseLeave={() => setHovered(false)}>
+            <Img backgroundImage={imgSrc} className={styles.child}>
+                {(hovered) && <ItemOverlay>
+                    <BookmarkWrapper style={{ zIndex: 20 }}>
+                        <BsBookmarkPlusFill size={'30px'} color={'#ffffff'} />
+                    </BookmarkWrapper>
+                </ItemOverlay>
+                }
+            </Img>
+            <PriceWrapperStyle className={styles.child}>
+                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                    <Price style={{ marginRight: '1.6rem' }}>85,99 ₾</Price>
+                    <OldPrice>120,00 ₾</OldPrice>
+                </div>
+                <Badge>-10%</Badge>
+            </PriceWrapperStyle>
+            <PriceTitleStyle className={styles.child}><Title >ზედა სული</Title> / შავი ზედა...</PriceTitleStyle>
+            <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
+                <StartsWrapperStyle>
+                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                </StartsWrapperStyle>
+                <Count>402 ნახვა</Count>
+            </div>
+
+            {hovered && <ItemButton
+                className={styles.child}
+                // onClick={_addToCart}
+                onMouseOver={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+            >კალათაში დამატება</ItemButton>}
+            {hovered && <ItemBackground />}
+        </ItemWrapper></Link></>
 }
 
 type FilterSideBarProps = {
@@ -556,6 +560,10 @@ type FilterSideBarProps = {
 
 
 const Search: NextPage = () => {
+    const router = useRouter();
+    const searchResult =  router.query.result as any;
+    console.log("search result " + searchResult);
+
     const [openFilters, setOpenFilters] = useState(false)
 
     const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
@@ -583,14 +591,14 @@ const Search: NextPage = () => {
     const [openModal, setOpenModal] = useState(false);
     const MainLoader = isAllProductLoading || isProductByIdLoading;
 
-    const [query, setQuery] = useState<any>("");
+
     console.log(allProduct?.filter(product => product.product_name.toLowerCase().includes("თე")))
 
 
     const serch = (allProduct: Product[]) => {
-      
-        return allProduct.filter(product => 
-            product.product_name.toLowerCase().includes(query) 
+
+        return allProduct.filter(product =>
+            product.product_name.toLowerCase().includes(searchResult)
         )
     }
 
@@ -601,7 +609,6 @@ const Search: NextPage = () => {
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
             {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
             <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
-
             {/* <div style={{ display: 'flex',
                     alignItems: 'center',
                     gap: '2.4rem',
@@ -638,24 +645,9 @@ const Search: NextPage = () => {
 
             <HeadWrapperStyle>
 
-
-                <div>
-                    <input type="text" placeholder='search...' onChange={(e) => setQuery(e.target.value)} />
-                    {serch(allProduct).map((p, index) => {
-
-                        return (
-                            <div key={p.id}>
-                                {p.product_name}  ID {p.id}
-                            </div>
-                        )
-                    })}
-                </div>
-
-
-
                 <TopSideWrapper>
                     <Heading>ძებნის შედეგები</Heading>
-                    <Quantity>12 323 პროდუქტი</Quantity>
+                    <Quantity>{serch(allProduct).length} პროდუქტი</Quantity>
                 </TopSideWrapper>
                 <FilterWrapper>
                     <FilltersBox>
@@ -712,27 +704,27 @@ const Search: NextPage = () => {
                 </FilterWrapper>
             </HeadWrapperStyle>
 
-            <Grid>
-                <Item id={1} imgSrc={'/assets/2.png'}></Item>
-                <Item id={2} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={3} imgSrc={'/assets/6.png'}></Item>
-                <Item id={4} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={5} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={6} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={7} imgSrc={'/assets/3112.png'}></Item>
+            <Grid style={{marginBottom: "80px"}}>
+                {serch(allProduct).length <= 0 ? (<SearchCount>მოიძებნა 0 პროდუქტი</SearchCount>) : (
+                    serch(allProduct).map((p, index) => (
+                        <Item key={p.id} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
+                    )))}
+
             </Grid>
 
-            <PaginationWrapper>
+            {/* <PaginationWrapper>
                 <Pagination gap={'30px'}>
                     <Number selected>1</Number>
                     <Number>2</Number>
                     <Number>3</Number>
                     <Number>4</Number>
                 </Pagination>
-            </PaginationWrapper>
+            </PaginationWrapper> */}
 
         </>
     )
 }
+
+
 
 export default Search;
