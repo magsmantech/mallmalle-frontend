@@ -299,7 +299,7 @@ const CartScreen: NextPage = () => {
                       // variationId: item.variation_id,
                     });
                     await refetchCart();
-                    setSnackMessage("მისამართი წარმატებით წაიშალა კალათიდან");
+                    setSnackMessage("პროდუქტი წარმატებით წაიშალა კალათიდან");
                     setOpenSnack(true);
                     setsnackMsgStatus('success');
                     console.log('removeFromCart result:', result);

@@ -77,6 +77,7 @@ const ItemWrapper = styled.div`
     flex-direction: column;
     position: relative;
     cursor: pointer;
+    overflow: hidden;
     /* z-index: ; */
     /* &:hover {
         z-index: 3;
@@ -366,7 +367,11 @@ const SearchCount = styled.div`
 
 
 const Item = ({ imgSrc, id }: any) => {
+    const [productID, setproductID] = useState<number>(id);
+
+    const { data: productById, isLoading: isProductByIdLoading, refetch: refetchProductById } = api.useGetProductByIdQuery(productID);
     const [hovered, setHovered] = useState(false);
+
 
     const dispatch = useDispatch();
 
@@ -376,45 +381,53 @@ const Item = ({ imgSrc, id }: any) => {
         }))
     }
 
-    return <>
-        <Link href={"/detail/" + id}><ItemWrapper className={styles.wrapper}
-            onMouseOver={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}>
-            <Img backgroundImage={imgSrc} className={styles.child}>
-                {(hovered) && <ItemOverlay>
-                    <BookmarkWrapper style={{ zIndex: 20 }}>
-                        <BsBookmarkPlusFill size={'30px'} color={'#ffffff'} />
-                    </BookmarkWrapper>
-                </ItemOverlay>
-                }
-            </Img>
-            <PriceWrapperStyle className={styles.child}>
-                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                    <Price style={{ marginRight: '1.6rem' }}>85,99 ₾</Price>
-                    <OldPrice>120,00 ₾</OldPrice>
-                </div>
-                <Badge>-10%</Badge>
-            </PriceWrapperStyle>
-            <PriceTitleStyle className={styles.child}><Title >ზედა სული</Title> / შავი ზედა...</PriceTitleStyle>
-            <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
-                <StartsWrapperStyle>
-                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                    <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                </StartsWrapperStyle>
-                <Count>402 ნახვა</Count>
-            </div>
+    return isProductByIdLoading ? <Loader /> : !productById ? (<span>not found product detail by id</span>) : (
 
-            {hovered && <ItemButton
-                className={styles.child}
-                // onClick={_addToCart}
+        <>
+            <Link href={"/detail/" + id}><ItemWrapper className={styles.wrapper}
                 onMouseOver={() => setHovered(true)}
-                onMouseLeave={() => setHovered(false)}
-            >კალათაში დამატება</ItemButton>}
-            {hovered && <ItemBackground />}
-        </ItemWrapper></Link></>
+                onMouseLeave={() => setHovered(false)}>
+                <Img backgroundImage={imgSrc} className={styles.child}>
+                    {(hovered) && <ItemOverlay>
+                        <BookmarkWrapper style={{ zIndex: 20 }}>
+                            <BsBookmarkPlusFill size={'30px'} color={'#ffffff'} />
+                        </BookmarkWrapper>
+                    </ItemOverlay>
+                    }
+                </Img>
+                {productById.variations.slice(0, 1).map((v, index) => (
+                    <PriceWrapperStyle className={styles.child}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                            <Price style={{ marginRight: '1.6rem' }}>{v.price} ₾</Price>
+                            <OldPrice>{''}</OldPrice>
+                        </div>
+                        <Badge>-10%</Badge>
+                    </PriceWrapperStyle>
+                ))}
+
+                <PriceTitleStyle className={styles.child}><Title >{productById.product_name}</Title></PriceTitleStyle>
+                <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
+                    <StartsWrapperStyle>
+                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
+                    </StartsWrapperStyle>
+                    {/* <Count>402 ნახვა</Count> */}
+                </div>
+
+                {hovered && <ItemButton
+                    className={styles.child}
+                    onClick={() => alert("selected")}
+                    onMouseOver={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                >კალათაში დამატება</ItemButton>}
+                {hovered && <ItemBackground />}
+            </ItemWrapper>
+            </Link>
+        </>
+    )
 }
 
 type FilterSideBarProps = {
@@ -561,7 +574,7 @@ type FilterSideBarProps = {
 
 const Search: NextPage = () => {
     const router = useRouter();
-    const searchResult =  router.query.result as any;
+    const searchResult = router.query.result as any;
     console.log("search result " + searchResult);
 
     const [openFilters, setOpenFilters] = useState(false)
@@ -704,7 +717,7 @@ const Search: NextPage = () => {
                 </FilterWrapper>
             </HeadWrapperStyle>
 
-            <Grid style={{marginBottom: "80px"}}>
+            <Grid style={{ marginBottom: "80px" }}>
                 {serch(allProduct).length <= 0 ? (<SearchCount>მოიძებნა 0 პროდუქტი</SearchCount>) : (
                     serch(allProduct).map((p, index) => (
                         <Item key={p.id} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
