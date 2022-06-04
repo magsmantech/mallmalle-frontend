@@ -397,7 +397,7 @@ const ProductDetails: NextPage = () => {
 
   const canAddToFavorite = typeof (selectedColorId) !== 'undefined' && typeof (selectedSizeId) !== 'undefined';
 
-  const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
+  // const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
 
   // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
 

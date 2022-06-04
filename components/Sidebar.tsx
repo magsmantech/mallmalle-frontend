@@ -26,6 +26,7 @@ import Responsive from '../config/Responsive';
 
 
 
+
 type Props = {
     onSidebarClose: Function,
     categories?: any,
@@ -120,312 +121,313 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
     const [showSiteBarInMobile, setshowSiteBarInMobile] = useState(false);
 
+    const uploadUrl = "https://mallmalle-images.s3.eu-central-1.amazonaws.com/";
 
-    const tree = [
-        {
-            title: 'ქალი',
-            color: styles.itemIconWoman,
-            icon: <><WomanIcon className={styles.itemIconWoman} /></>,
-            subItems: [
-                {
-                    title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-                    color: styles.itemIconClothes,
-                    subItems: [
-                        {
-                            title: 'პერანგი'
-                        },
-                        {
-                            title: 'მაისური'
-                        },
-                        {
-                            title: 'კაბა'
-                        },
-                        {
-                            title: 'შარვალი'
-                        },
-                        {
-                            title: 'პიჯაკი'
-                        },
-                        {
-                            title: 'ქვედაბოლო'
-                        },
-                        {
-                            title: 'ქურთუკი'
-                        },
-                    ],
-                },
-                {
-                    title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-                    color: styles.itemIconShoes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'დაბალძირიანი'
-                        },
-                        {
-                            title: 'ქუსლიანი'
-                        },
-                    ],
-                },
-                {
-                    title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-                    color: styles.itemIconAccessories,
-                },
-            ],
-        },
-        {
-            title: 'კაცი',
-            icon: <><ManIcon className={styles.itemIconMan} /></>,
-            color: styles.itemIconMan,
-            subItems: [
-                {
-                    title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-                    color: styles.itemIconClothes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'შარვალი'
-                        },
-                        {
-                            title: 'პიჯაკი'
-                        },
-                    ],
+    // const tree = [
+    //     {
+    //         title: 'ქალი',
+    //         color: styles.itemIconWoman,
+    //         icon: <><WomanIcon className={styles.itemIconWoman} /></>,
+    //         subItems: [
+    //             {
+    //                 title: 'ტანსაცმელი',
+    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
+    //                 color: styles.itemIconClothes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'პერანგი'
+    //                     },
+    //                     {
+    //                         title: 'მაისური'
+    //                     },
+    //                     {
+    //                         title: 'კაბა'
+    //                     },
+    //                     {
+    //                         title: 'შარვალი'
+    //                     },
+    //                     {
+    //                         title: 'პიჯაკი'
+    //                     },
+    //                     {
+    //                         title: 'ქვედაბოლო'
+    //                     },
+    //                     {
+    //                         title: 'ქურთუკი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'ფეხსაცმელი',
+    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
+    //                 color: styles.itemIconShoes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'დაბალძირიანი'
+    //                     },
+    //                     {
+    //                         title: 'ქუსლიანი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'აქსესუარები',
+    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
+    //                 color: styles.itemIconAccessories,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         title: 'კაცი',
+    //         icon: <><ManIcon className={styles.itemIconMan} /></>,
+    //         color: styles.itemIconMan,
+    //         subItems: [
+    //             {
+    //                 title: 'ტანსაცმელი',
+    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
+    //                 color: styles.itemIconClothes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'შარვალი'
+    //                     },
+    //                     {
+    //                         title: 'პიჯაკი'
+    //                     },
+    //                 ],
 
-                },
-                {
-                    title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-                    color: styles.itemIconShoes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'დაბალძირიანი'
-                        },
-                        {
-                            title: 'ქუსლიანი'
-                        },
-                    ],
-                },
-                {
-                    title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-                    color: styles.itemIconAccessories,
-                },
-            ],
-        },
-        {
-            title: 'ბავშვი',
-            icon: <><ChildIcon className={styles.itemIconChild} /></>,
-            color: styles.itemIconChild,
-            subItems: [
-                {
-                    title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-                    color: styles.itemIconClothes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'შარვალი'
-                        },
-                        {
-                            title: 'პიჯაკი'
-                        },
-                    ],
-                },
-                {
-                    title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-                    color: styles.itemIconShoes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'დაბალძირიანი'
-                        },
-                        {
-                            title: 'ქუსლიანი'
-                        },
-                    ],
-                },
-                {
-                    title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-                    color: styles.itemIconAccessories,
-                },
-                {
-                    title: 'სათამაშოები',
-                    icon: <><ToyIcon className={styles.itemIconToys} /></>,
-                    color: styles.itemIconToys,
-                },
-            ],
-        },
-        {
-            title: 'სხვადასხვა',
-            icon: <><MessageIcon className={styles.itemIconOther} /></>,
-            color: styles.itemIconOther,
-            subItems: [
-                {
-                    title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-                    color: styles.itemIconClothes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'შარვალი'
-                        },
-                        {
-                            title: 'პიჯაკი'
-                        },
-                    ],
-                },
-                {
-                    title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-                    color: styles.itemIconShoes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'დაბალძირიანი'
-                        },
-                        {
-                            title: 'ქუსლიანი'
-                        },
-                    ],
-                },
-                {
-                    title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-                    color: styles.itemIconAccessories,
-                },
-                {
-                    title: 'სათამაშოები',
-                    icon: <><ToyIcon className={styles.itemIconToys} /></>,
-                    color: styles.itemIconToys,
-                },
-            ],
-        },
-        {
-            title: 'ბოქსები',
-            icon: <><BoxesIcon className={styles.itemIconBoxes} /></>,
+    //             },
+    //             {
+    //                 title: 'ფეხსაცმელი',
+    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
+    //                 color: styles.itemIconShoes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'დაბალძირიანი'
+    //                     },
+    //                     {
+    //                         title: 'ქუსლიანი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'აქსესუარები',
+    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
+    //                 color: styles.itemIconAccessories,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         title: 'ბავშვი',
+    //         icon: <><ChildIcon className={styles.itemIconChild} /></>,
+    //         color: styles.itemIconChild,
+    //         subItems: [
+    //             {
+    //                 title: 'ტანსაცმელი',
+    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
+    //                 color: styles.itemIconClothes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'შარვალი'
+    //                     },
+    //                     {
+    //                         title: 'პიჯაკი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'ფეხსაცმელი',
+    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
+    //                 color: styles.itemIconShoes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'დაბალძირიანი'
+    //                     },
+    //                     {
+    //                         title: 'ქუსლიანი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'აქსესუარები',
+    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
+    //                 color: styles.itemIconAccessories,
+    //             },
+    //             {
+    //                 title: 'სათამაშოები',
+    //                 icon: <><ToyIcon className={styles.itemIconToys} /></>,
+    //                 color: styles.itemIconToys,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         title: 'სხვადასხვა',
+    //         icon: <><MessageIcon className={styles.itemIconOther} /></>,
+    //         color: styles.itemIconOther,
+    //         subItems: [
+    //             {
+    //                 title: 'ტანსაცმელი',
+    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
+    //                 color: styles.itemIconClothes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'შარვალი'
+    //                     },
+    //                     {
+    //                         title: 'პიჯაკი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'ფეხსაცმელი',
+    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
+    //                 color: styles.itemIconShoes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'დაბალძირიანი'
+    //                     },
+    //                     {
+    //                         title: 'ქუსლიანი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'აქსესუარები',
+    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
+    //                 color: styles.itemIconAccessories,
+    //             },
+    //             {
+    //                 title: 'სათამაშოები',
+    //                 icon: <><ToyIcon className={styles.itemIconToys} /></>,
+    //                 color: styles.itemIconToys,
+    //             },
+    //         ],
+    //     },
+    //     {
+    //         title: 'ბოქსები',
+    //         icon: <><BoxesIcon className={styles.itemIconBoxes} /></>,
 
-            color: styles.itemIconBoxes,
-            subItems: [
-                {
-                    title: 'ტანსაცმელი',
-                    icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-                    color: styles.itemIconClothes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'შარვალი'
-                        },
-                        {
-                            title: 'პიჯაკი'
-                        },
-                    ],
-                },
-                {
-                    title: 'ფეხსაცმელი',
-                    icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-                    color: styles.itemIconShoes,
-                    subItems: [
-                        {
-                            title: 'სპორტული'
-                        },
-                        {
-                            title: 'კლასიკური'
-                        },
-                        {
-                            title: 'ყოვედღიური'
-                        },
-                        {
-                            title: 'დაბალძირიანი'
-                        },
-                        {
-                            title: 'ქუსლიანი'
-                        },
-                    ],
-                },
-                {
-                    title: 'აქსესუარები',
-                    icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-                    color: styles.itemIconAccessories,
-                },
-                {
-                    title: 'სათამაშოები',
-                    icon: <><ToyIcon className={styles.itemIconToys} /></>,
-                    color: styles.itemIconToys,
-                },
-            ],
-        },
-    ]
+    //         color: styles.itemIconBoxes,
+    //         subItems: [
+    //             {
+    //                 title: 'ტანსაცმელი',
+    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
+    //                 color: styles.itemIconClothes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'შარვალი'
+    //                     },
+    //                     {
+    //                         title: 'პიჯაკი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'ფეხსაცმელი',
+    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
+    //                 color: styles.itemIconShoes,
+    //                 subItems: [
+    //                     {
+    //                         title: 'სპორტული'
+    //                     },
+    //                     {
+    //                         title: 'კლასიკური'
+    //                     },
+    //                     {
+    //                         title: 'ყოვედღიური'
+    //                     },
+    //                     {
+    //                         title: 'დაბალძირიანი'
+    //                     },
+    //                     {
+    //                         title: 'ქუსლიანი'
+    //                     },
+    //                 ],
+    //             },
+    //             {
+    //                 title: 'აქსესუარები',
+    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
+    //                 color: styles.itemIconAccessories,
+    //             },
+    //             {
+    //                 title: 'სათამაშოები',
+    //                 icon: <><ToyIcon className={styles.itemIconToys} /></>,
+    //                 color: styles.itemIconToys,
+    //             },
+    //         ],
+    //     },
+    // ]
 
     const mouseEnterItem = (index: number) => {
         const items = categories[index]?.childrens;
@@ -469,7 +471,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         onMouseLeave={mouseLeaveItem}>
                         <SidebarItemIconWrapper className={styles.iconWrapper}>
                             {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
-                            {item.icon || tree[index].icon}
+                            <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                         </SidebarItemIconWrapper>
                         <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
                     </SidebarItem>
@@ -479,12 +481,12 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
         );
     };
 
-     
+
 
 
     const SubmenuItems = () => {
         return (
-            <div className={styles.itemsContainer}>
+            <SidebarItemWrapper className={styles.itemsContainer}>
                 {subMenuItems.map((item: any, index: number) =>
                     <Link href={'/catalog/' + item.id} key={index}>
                         <div className={styles.item} onClick={() => onSidebarClose()}
@@ -492,7 +494,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                             onMouseEnter={() => mouseEnterSubItem(index)}>
                             <SidebarItemIconWrapper className={styles.iconWrapper}>
                                 {/* <FaTshirt size={'2.5rem'} className={item.color} /> */}
-                                {item.icon}
+                                <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                             </SidebarItemIconWrapper>
 
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
@@ -500,7 +502,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </Link>
 
                 )}
-            </div>
+            </SidebarItemWrapper>
         );
     };
 
@@ -600,7 +602,7 @@ const SubmenuTitle = styled.div`
 `;
 const SideBarSubMenuTitle = styled.div`
     font-size: 24px;
-    margin-top: 24px;
+    margin-top: 50px;
     width: fit-content;
 `;
 const SideBarWrapper = styled.div`
@@ -637,7 +639,11 @@ const SideBarTitle = styled.span`
     width: fit-content;
 `;
 const SidebarItemWrapper = styled.div`
-
+    margin-top: 37px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-gap: 28px;
 `;
 const SidebarItem = styled.div`
 `;

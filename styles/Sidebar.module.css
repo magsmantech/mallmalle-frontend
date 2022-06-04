@@ -49,11 +49,7 @@
 }
 
 .itemsContainer {
-    margin-top: 3.5rem;
-    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr;
-    grid-gap: 2.8rem;
+  
 }
 
 .item {
@@ -158,7 +154,7 @@
     font-family: fira-go;
     font-weight: 600;
     font-feature-settings: "case" on;
-    margin-bottom: 1.6rem;
+    /* margin-bottom: 1.6rem; */
   
 }
 
@@ -189,7 +185,7 @@
 .detailMenuitem {
     color: var(--text-color);
     font-size: 2.0rem;
-    margin-bottom: 1.6rem;
+    /* margin-bottom: 1.6rem; */
     cursor: pointer;
 }
 
