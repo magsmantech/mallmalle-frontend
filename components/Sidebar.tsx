@@ -550,7 +550,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </div>
                 </SideBarWrapper>
                 <ForMobile>
-                    {showSubMenu && !!subMenuItems.length && <SecondSideBar className={styles.container}
+                    {showSubMenu && !!subMenuItems.length && <SideBarWrapper className={styles.container}
                         onMouseLeave={() => setInSubMenu(false)}
                         onMouseEnter={() => setInSubMenu(true)}>
                         {/* <div className={styles.header}>
@@ -568,7 +568,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                             <SideBarSubMenuTitle className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
                             <SubmenuItems />
                         </div>
-                    </SecondSideBar>}
+                    </SideBarWrapper>}
                 </ForMobile>
                 <ForMobile>
                     {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
@@ -597,19 +597,26 @@ const MainTittleStyle = styled.div`
     margin: 5px 0px;
 `;
 const SubmenuTitle = styled.div`
+    margin-top: 14px !important;
     font-size: 32px;
-    margin-top: 10px;
+    line-height: 33px;
+    margin-bottom: 48px;
 `;
 const SideBarSubMenuTitle = styled.div`
     font-size: 24px;
-    margin-top: 50px;
+    /* margin-top: 38px; */
     width: fit-content;
 `;
 const SideBarWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 45px 40px;
+    width: 100vw;
+    max-width: 390px;
+    overflow-x: hidden;
     height: 100vh;
-        ${Responsive.tablet} {
-            /* background-color: red; */
-        }
+
 `;
 const SecondSideBar = styled.div`
     /* background-color: aqua; */
@@ -644,6 +651,7 @@ const SidebarItemWrapper = styled.div`
     width: 100%;
     grid-template-columns: 1fr;
     grid-gap: 28px;
+    
 `;
 const SidebarItem = styled.div`
 `;

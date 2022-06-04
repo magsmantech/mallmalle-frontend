@@ -11,16 +11,7 @@
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
     
-    background-color: white;
-    /* padding: 4.7rem 3.4rem 0 4.2rem; */
-    padding: 45px 40px;
-    width: 100vw;
-    max-width: 390px;
-    overflow-x: hidden;
-    height: 100%;
 }
 
 .header {
