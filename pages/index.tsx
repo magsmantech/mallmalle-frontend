@@ -113,7 +113,7 @@ const Home: NextPage = () => {
           {console.log(AllDiscount)}
           {AllDiscount.slice(0, 12).map((d, index) => {
             var imgUrl = d.background_image;
-            console.log("first " + imgUrl);
+            // console.log("first " + imgUrl);
             // var b = JSON.stringify(imgUrl);
             // const str = b.replace(/\\/g, '');
             // console.log(str);

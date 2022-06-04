@@ -38,7 +38,7 @@ const History: NextPage = () => {
     // const selectedItemAddress = orderDetail?.id === selectedItem?.order_id ? return 
 
     var imgUrl = selectedItem?.product.decoded_images[0];
-    console.log("first " + imgUrl); 
+    // console.log("first " + imgUrl); 
 
     return isOrderDetailLoading ? <Loader /> : !orderDetail ? (<span>not found</span>) : (
         <>

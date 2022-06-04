@@ -111,7 +111,7 @@ const Favorites: React.FC<{}> = ({ }) => {
 
                     {favorite.map((f, index) => {
                         var imgUrl = f.product.decoded_images;
-                        console.log("first " + imgUrl);
+                        // console.log("first " + imgUrl);
                         return (
                             <ItemWrapper key={index}>
                                 <Item name={f.product.product_name} id={f.product.id} price="80.00" oldPrice='125.00' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>

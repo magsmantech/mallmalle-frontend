@@ -123,7 +123,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     // const ImgScr = o.product.decoded_images[0] ? config.imagesEndpoint + JSON.parse(o.product.decoded_images[0])[0] : "../../asdas";
 
                     var imgUrl = o.product.decoded_images
-                    console.log("first " + imgUrl);
+                    // console.log("first " + imgUrl);
 
                     return (
                         <ItemFlexWrapper key={index}>

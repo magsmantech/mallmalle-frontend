@@ -443,9 +443,13 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
     const mouseLeaveItem = () => {
         if (inSubMenu) {
-            return;
+            setShowSubMenu(true);
+            return
         }
-        setShowSubMenu(false);
+        // if (!inSubMenu) {
+        //     setShowSubMenu(false);
+        //     return
+        // }
     };
 
 
@@ -464,18 +468,20 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const SidebarItems = () => {
         return (
             <SidebarItemWrapper className={styles.itemsContainer}>
-                {categories.map((item: any, index: number) => <Link href={'/catalog/' + item.id} key={index}>
-                    <SidebarItem className={styles.item}
-                        onClick={() => [onSidebarClose(), () => setshowSiteBarInMobile(true)]}
-                        onMouseEnter={() => mouseEnterItem(index)}
-                        onMouseLeave={mouseLeaveItem}>
-                        <SidebarItemIconWrapper className={styles.iconWrapper}>
-                            {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
-                            <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
-                        </SidebarItemIconWrapper>
-                        <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
-                    </SidebarItem>
-                </Link>
+                {categories.map((item: any, index: number) =>
+                    <Link href={'/catalog/' + item.id} key={index}>
+                        <SidebarItem className={styles.item}
+                            onClick={() => [onSidebarClose(), () => setshowSiteBarInMobile(true)]}
+                            onMouseEnter={() => mouseEnterItem(index)}
+                            onMouseLeave={mouseLeaveItem}
+                        >
+                            <SidebarItemIconWrapper className={styles.iconWrapper}>
+                                {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
+                                <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
+                            </SidebarItemIconWrapper>
+                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                        </SidebarItem>
+                    </Link>
                 )}
             </SidebarItemWrapper>
         );
@@ -553,15 +559,6 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     {showSubMenu && !!subMenuItems.length && <SideBarWrapper className={styles.container}
                         onMouseLeave={() => setInSubMenu(false)}
                         onMouseEnter={() => setInSubMenu(true)}>
-                        {/* <div className={styles.header}>
-                    <a className={styles.iconWrapper}>
-                        <HiArrowLeft size={'2.0rem'} color='#424F60'/>
-                    </div>
-
-                    <a className={styles.iconWrapper}>
-                        <CgClose size={'2.0rem'} color='#424F60'/>
-                    </div>
-                </div> */}
 
                         <div className={styles.content}>
                             <SubmenuTitle className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>

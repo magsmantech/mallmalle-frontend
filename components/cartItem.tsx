@@ -14,7 +14,7 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
   } = calculateProductPrices(item.product, variation_id);
 
   var imgUrl = item.product.decoded_images;
-  console.log("first " + imgUrl);
+  // console.log("first " + imgUrl);
 
   return (
     <ItemWrapper style={{ ...style }}>
