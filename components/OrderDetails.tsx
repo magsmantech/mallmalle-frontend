@@ -322,6 +322,7 @@ const OrderDetails: React.FC<{
         const [updateAddresId, setupdateAddresId] = useState<number>(0);
         const [modalShow, setModalShow] = useState(false);
 
+        const primaryAddress = profile?.profile?.addresses.find(x => x.is_primary == 1);
 
         const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading;
         
@@ -385,7 +386,8 @@ const OrderDetails: React.FC<{
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter-1">
-                            მისამართის ჩასწორება {updateAddresId}
+                            მისამართის ჩასწორება 
+                            {/* {updateAddresId} */}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -432,20 +434,21 @@ const OrderDetails: React.FC<{
                 </HeaderStyle>
                 <div>
                     <AddressTitleStyle>მისამართი:</AddressTitleStyle>
-                    {profile.profile?.addresses.map((a, index) => (
+                   
+                            
                         <AddressItemStyle>
-                            <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
+                            <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(primaryAddress?.id ? primaryAddress?.id : 0 )]} />
                             <IoLocationSharpStyle />
-
+                           
                             <AddressItemTextStyle >
-                                <div className={styles.city}>{a.city}</div>
-                                <div className={styles.address}>{a.address_1}</div>
-                                <div className={styles.zip}>ZIP კოდი: {a.zip}</div>
+                                <div className={styles.city}>{primaryAddress?.city}</div>
+                                <div className={styles.address}>{primaryAddress?.address_1}</div>
+                                <div className={styles.zip}>ZIP კოდი: {primaryAddress?.zip}</div>
                             </AddressItemTextStyle>
 
                         </AddressItemStyle>
 
-                    ))}
+                 
 
                     <UpdateProfileItem
                         show={modalShow}
