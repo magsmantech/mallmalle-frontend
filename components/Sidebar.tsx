@@ -86,8 +86,11 @@ const MibileSecondMenuWrapper = styled.div`
         ${Responsive.tablet} {
             display: block;
         }
+        ${Responsive.mobile} {
+            display: block;
+        }
 `;
-const ForMobile = styled.div`
+const HideInMobile = styled.div`
     height: 100%;
     ${Responsive.tablet}{
         display: none !important;
@@ -95,6 +98,29 @@ const ForMobile = styled.div`
     ${Responsive.mobile}{
         display: none !important;
     }
+`;
+const HideInDesktop = styled.div`
+    height: 100%;
+    display: none;
+    ${Responsive.tablet}{
+        display: block !important;
+    }
+    ${Responsive.mobile}{
+        display: block !important;
+    }
+`;
+const MobileSubMenu = styled.div`
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 390px;
+    width: 100%;
+    background-color: #fff;
+    height: 100vh;
+`;
+const MobileSubMenuContent = styled.div`
+    margin-right: 0px !important;
+    padding: 45px 24px;
 `;
 
 
@@ -119,315 +145,13 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const [selectedItemTitle, setSelectedItemTitle] = useState<string>('');
     // const [selectedSubItemIndex, setSelectedSubItemIndex] = useState<number>(0);
 
-    const [showSiteBarInMobile, setshowSiteBarInMobile] = useState(false);
+    const [shoMobileSecondSideBar, setshoMobileSecondSideBar] = useState(false);
+
+
 
     const uploadUrl = "https://mallmalle-images.s3.eu-central-1.amazonaws.com/";
 
-    // const tree = [
-    //     {
-    //         title: 'ქალი',
-    //         color: styles.itemIconWoman,
-    //         icon: <><WomanIcon className={styles.itemIconWoman} /></>,
-    //         subItems: [
-    //             {
-    //                 title: 'ტანსაცმელი',
-    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-    //                 color: styles.itemIconClothes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'პერანგი'
-    //                     },
-    //                     {
-    //                         title: 'მაისური'
-    //                     },
-    //                     {
-    //                         title: 'კაბა'
-    //                     },
-    //                     {
-    //                         title: 'შარვალი'
-    //                     },
-    //                     {
-    //                         title: 'პიჯაკი'
-    //                     },
-    //                     {
-    //                         title: 'ქვედაბოლო'
-    //                     },
-    //                     {
-    //                         title: 'ქურთუკი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'ფეხსაცმელი',
-    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-    //                 color: styles.itemIconShoes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'დაბალძირიანი'
-    //                     },
-    //                     {
-    //                         title: 'ქუსლიანი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'აქსესუარები',
-    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-    //                 color: styles.itemIconAccessories,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         title: 'კაცი',
-    //         icon: <><ManIcon className={styles.itemIconMan} /></>,
-    //         color: styles.itemIconMan,
-    //         subItems: [
-    //             {
-    //                 title: 'ტანსაცმელი',
-    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-    //                 color: styles.itemIconClothes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'შარვალი'
-    //                     },
-    //                     {
-    //                         title: 'პიჯაკი'
-    //                     },
-    //                 ],
 
-    //             },
-    //             {
-    //                 title: 'ფეხსაცმელი',
-    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-    //                 color: styles.itemIconShoes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'დაბალძირიანი'
-    //                     },
-    //                     {
-    //                         title: 'ქუსლიანი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'აქსესუარები',
-    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-    //                 color: styles.itemIconAccessories,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         title: 'ბავშვი',
-    //         icon: <><ChildIcon className={styles.itemIconChild} /></>,
-    //         color: styles.itemIconChild,
-    //         subItems: [
-    //             {
-    //                 title: 'ტანსაცმელი',
-    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-    //                 color: styles.itemIconClothes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'შარვალი'
-    //                     },
-    //                     {
-    //                         title: 'პიჯაკი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'ფეხსაცმელი',
-    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-    //                 color: styles.itemIconShoes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'დაბალძირიანი'
-    //                     },
-    //                     {
-    //                         title: 'ქუსლიანი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'აქსესუარები',
-    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-    //                 color: styles.itemIconAccessories,
-    //             },
-    //             {
-    //                 title: 'სათამაშოები',
-    //                 icon: <><ToyIcon className={styles.itemIconToys} /></>,
-    //                 color: styles.itemIconToys,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         title: 'სხვადასხვა',
-    //         icon: <><MessageIcon className={styles.itemIconOther} /></>,
-    //         color: styles.itemIconOther,
-    //         subItems: [
-    //             {
-    //                 title: 'ტანსაცმელი',
-    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-    //                 color: styles.itemIconClothes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'შარვალი'
-    //                     },
-    //                     {
-    //                         title: 'პიჯაკი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'ფეხსაცმელი',
-    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-    //                 color: styles.itemIconShoes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'დაბალძირიანი'
-    //                     },
-    //                     {
-    //                         title: 'ქუსლიანი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'აქსესუარები',
-    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-    //                 color: styles.itemIconAccessories,
-    //             },
-    //             {
-    //                 title: 'სათამაშოები',
-    //                 icon: <><ToyIcon className={styles.itemIconToys} /></>,
-    //                 color: styles.itemIconToys,
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         title: 'ბოქსები',
-    //         icon: <><BoxesIcon className={styles.itemIconBoxes} /></>,
-
-    //         color: styles.itemIconBoxes,
-    //         subItems: [
-    //             {
-    //                 title: 'ტანსაცმელი',
-    //                 icon: <><ShirtIcon className={styles.itemIconClothes} /></>,
-    //                 color: styles.itemIconClothes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'შარვალი'
-    //                     },
-    //                     {
-    //                         title: 'პიჯაკი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'ფეხსაცმელი',
-    //                 icon: <><ShoeIcon className={styles.itemIconShoes} /></>,
-    //                 color: styles.itemIconShoes,
-    //                 subItems: [
-    //                     {
-    //                         title: 'სპორტული'
-    //                     },
-    //                     {
-    //                         title: 'კლასიკური'
-    //                     },
-    //                     {
-    //                         title: 'ყოვედღიური'
-    //                     },
-    //                     {
-    //                         title: 'დაბალძირიანი'
-    //                     },
-    //                     {
-    //                         title: 'ქუსლიანი'
-    //                     },
-    //                 ],
-    //             },
-    //             {
-    //                 title: 'აქსესუარები',
-    //                 icon: <><WatchIcon className={styles.itemIconAccessories} /></>,
-    //                 color: styles.itemIconAccessories,
-    //             },
-    //             {
-    //                 title: 'სათამაშოები',
-    //                 icon: <><ToyIcon className={styles.itemIconToys} /></>,
-    //                 color: styles.itemIconToys,
-    //             },
-    //         ],
-    //     },
-    // ]
 
     const mouseEnterItem = (index: number) => {
         const items = categories[index]?.childrens;
@@ -464,14 +188,13 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     };
 
 
-
     const SidebarItems = () => {
         return (
             <SidebarItemWrapper className={styles.itemsContainer}>
                 {categories.map((item: any, index: number) =>
                     <Link href={'/catalog/' + item.id} key={index}>
                         <SidebarItem className={styles.item}
-                            onClick={() => [onSidebarClose(), () => setshowSiteBarInMobile(true)]}
+                            onClick={() => [onSidebarClose()]}
                             onMouseEnter={() => mouseEnterItem(index)}
                             onMouseLeave={mouseLeaveItem}
                         >
@@ -506,7 +229,6 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
                         </div>
                     </Link>
-
                 )}
             </SidebarItemWrapper>
         );
@@ -542,7 +264,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     return (
         <>
             <BackgroundShadow onClick={() => onSidebarClose()} />
-            <div className={styles.wrapper} onClick={(e) => console.log(e)}>
+            <div className={styles.wrapper}>
                 <SideBarWrapper className={styles.container}>
                     <SideBarTopSideWrapper className={styles.header}>
                         <SideBarMainIcon src={'/assets/mallmalle.png'} />
@@ -552,10 +274,32 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </SideBarTopSideWrapper>
                     <div className={styles.content}>
                         <SideBarTitle className={styles['content-title']}>კატეგორიები</SideBarTitle>
-                        <SidebarItems />
+                        <HideInMobile>
+                            <SidebarItems />
+                        </HideInMobile>
+
+                        <HideInDesktop>
+                            <SidebarItemWrapper className={styles.itemsContainer}>
+                                {categories.map((item: any, index: number) =>
+                                    <div key={index} onClick={() => [setshoMobileSecondSideBar(!!subMenuItems.length ? true : false), () => mouseEnterItem(index)]}>
+                                        <SidebarItem className={styles.item}
+                                            onMouseEnter={() => mouseEnterItem(index)}
+                                            onMouseLeave={mouseLeaveItem}
+                                        >
+                                            <SidebarItemIconWrapper className={styles.iconWrapper}>
+                                                <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
+                                            </SidebarItemIconWrapper>
+                                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                                        </SidebarItem>
+                                    </div>
+                                )}
+                            </SidebarItemWrapper>
+                        </HideInDesktop>
+
                     </div>
                 </SideBarWrapper>
-                <ForMobile>
+
+                <HideInMobile>
                     {showSubMenu && !!subMenuItems.length && <SideBarWrapper className={styles.container}
                         onMouseLeave={() => setInSubMenu(false)}
                         onMouseEnter={() => setInSubMenu(true)}>
@@ -566,21 +310,53 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                             <SubmenuItems />
                         </div>
                     </SideBarWrapper>}
-                </ForMobile>
-                <ForMobile>
+                </HideInMobile>
+
+                <HideInMobile>
                     {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
                         onMouseLeave={() => setShowDetailMenu(false)}
                         onMouseEnter={() => setShowDetailMenu(true)}>
                         <DetailMenu />
                     </div>}
-                </ForMobile>
-                {showSiteBarInMobile === true ? (
-                    <MibileSecondMenuWrapper>
-                        <SubmenuTitle className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
-                        <SideBarSubMenuTitle className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
-                        <SubmenuItems />
-                    </MibileSecondMenuWrapper>
+                </HideInMobile>
+
+                {shoMobileSecondSideBar === true ? (
+                    <MobileSubMenu className={styles.container}
+                        onMouseLeave={() => setInSubMenu(false)}
+                        onMouseEnter={() => setInSubMenu(true)}>
+
+                        <MobileSubMenuContent className={styles.content}>
+                            <div style={{display: "flex", justifyContent: "space-between", marginBottom: "35px" }}>
+                                <CloseBtnWrapper className={styles.iconWrapper} onClick={() => setshoMobileSecondSideBar(false)}>
+                                    <HiArrowLeft size={30} color='#424F60' />
+                                </CloseBtnWrapper>
+                                <CloseBtnWrapper className={styles.iconWrapper} onClick={() => onSidebarClose()}>
+                                    <CloseIcon color='#424F60' />
+                                </CloseBtnWrapper>
+                            </div>
+                            <SubmenuTitle style={{marginBottom: "10px"}} className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
+                            <SideBarSubMenuTitle style={{fontSize: '16px'}} className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
+                            <SidebarItemWrapper className={styles.itemsContainer}>
+                                {subMenuItems.map((item: any, index: number) =>
+                                    <Link href={'/catalog/' + item.id} key={index}>
+                                        <div className={styles.item} onClick={() => onSidebarClose()}
+                                            onMouseLeave={() => setShowDetailMenu(false)}
+                                            onMouseEnter={() => mouseEnterSubItem(index)}>
+                                            <SidebarItemIconWrapper className={styles.iconWrapper}>
+                                                <img src={uploadUrl + `${item.icon ? item.icon : "not found icon"}`} alt="item icon" />
+                                            </SidebarItemIconWrapper>
+
+                                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                                        </div>
+                                    </Link>
+                                )}
+                            </SidebarItemWrapper>
+                        </MobileSubMenuContent>
+                    </MobileSubMenu>
                 ) : null}
+
+
+
             </div>
         </>);
 };
@@ -613,6 +389,12 @@ const SideBarWrapper = styled.div`
     max-width: 390px;
     overflow-x: hidden;
     height: 100vh;
+        ${Responsive.tablet} {
+            padding: 45px 24px;
+        }
+        ${Responsive.mobile} {
+            padding: 45px 24px;
+        }
 
 `;
 const SecondSideBar = styled.div`
