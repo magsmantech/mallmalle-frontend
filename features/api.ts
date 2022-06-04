@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -265,6 +265,17 @@ const api = createApi({
         url: `user/address/${addressId}`,
         method: "DELETE",
       }),
+    }),
+    // 
+    // 
+    // change password
+    // 
+    // 
+    changePassword: builder.mutation<UpdatePassword, { currentPassword: string, newPassword: string }>({
+      query: ({ currentPassword, newPassword }) => ({
+        url: `user/change-password?current_password=${currentPassword}&new_password=${newPassword}`,
+        method: 'POST',
+      })
     }),
   }),
 })

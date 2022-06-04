@@ -280,3 +280,8 @@ export type Favorite = {
   "created_at": string;// "2021-09-23T07: 02: 00.000000Z";
   "product": Product;
 }
+
+export type UpdatePassword = {
+  success: boolean;
+  message: string;
+}

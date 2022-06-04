@@ -426,13 +426,14 @@ const PersonalInfo = () => {
   const [Address, { isLoading: isUpdateAddressLoading }] = api.useUpdateAddressMutation();
   const [addAddress, { isLoading: isAddAddressLoading }] = api.useAddAddressMutation();
   const [addPrimaryAddress, { isLoading: isAddPrimaryAddressLoading }] = api.useAddPrimaryAddressMutation();
+  const [changePassword, { isLoading: isChangePasswordLoading }] = api.useChangePasswordMutation();
 
-  const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading || isAddPrimaryAddressLoading;
+  const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading || isAddPrimaryAddressLoading || isChangePasswordLoading;
 
   const [updateAddresId, setupdateAddresId] = useState<number>(0);
   const [modalShow, setModalShow] = useState(false);
   const [addAddressModalShow, setAddAddressModalShow] = useState(false);
-  
+
 
   const makeAddressPrimary = (event: { currentTarget: { id: any; }; }) => {
     console.log(event.currentTarget.id);
@@ -453,7 +454,34 @@ const PersonalInfo = () => {
   };
 
 
+  // 
+  const [currentPassword, setcurrentPassword] = useState<string>("");
+  const [newPassword, setnewPassword] = useState<string>("");
+  const [repeatNewPassword, setrepeatNewPassword] = useState<string>(""); //TODO for davit osadze
 
+  
+
+  const changePasswordPost = async () => {
+    try {
+      await changePassword({ currentPassword: currentPassword, newPassword: newPassword })
+      .then((res) => {
+        console.log(res)
+        setSnackMessage("პაროლი წარმატებით შეიცვალა");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
+        setcurrentPassword("")
+        setnewPassword("")
+      }).catch((err) => {
+        console.log(err)
+        setSnackMessage("გთხოვთ სცადოთ თავიდან !");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
+      })
+      console.log("password update try error ")
+    } catch (error) {
+      console.log("password update chtch error ")
+    }
+  };
 
 
   function UpdateAddressFunction(props: Props) { //onClick={props.onHide}
@@ -468,6 +496,7 @@ const PersonalInfo = () => {
     const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
 
     const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
+
 
 
 
@@ -710,25 +739,25 @@ const PersonalInfo = () => {
             პაროლის შეცვლა
           </ChangePassTitle>
           <InputWrapper >
-            <InputModified placeholder="ძველი პაროლი" />
+            <InputModified placeholder="ძველი პაროლი" value={currentPassword} onChange={(e: any) => setcurrentPassword(e.target.value)}  />
             <InputIconWrapper>
               <UnlockIcon />
             </InputIconWrapper>
           </InputWrapper>
           <InputWrapper>
-            <InputModified placeholder="ახალი პაროლი" />
-            <InputIconWrapper>
+            <InputModified placeholder="ახალი პაროლი" value={newPassword} onChange={(e: any) => setnewPassword(e.target.value)} />
+            <InputIconWrapper> 
               <UnlockIcon />
             </InputIconWrapper>
           </InputWrapper>
-          <InputWrapper>
+          {/* <InputWrapper>
             <InputModified placeholder="გაიმეორე ახალი პაროლი" />
             <InputIconWrapper>
               <UnlockIcon />
             </InputIconWrapper>
-          </InputWrapper>
+          </InputWrapper> */}
 
-          <Button>შეცვლა</Button>
+          <Button onClick={changePasswordPost} disabled={currentPassword.trim().length <= 0 || newPassword.trim().length <= 0 ? true : false} >შეცვლა</Button>
         </GridItem>
         <GridItem className={styles.gridItem}>
           <AddressTitle className={styles.addressTitle}>მისამართი:</AddressTitle>
@@ -740,7 +769,7 @@ const PersonalInfo = () => {
 
               <LocationIconStyle color={"var(--text-color)"} />
               {/* {`${a.is_primary}`} */}
-              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? {backgroundColor: "#EDEDED", borderColor: "#EDEDED"} : {backgroundColor: "transparent", borderColor: "#22D5AE"}} onClick={makeAddressPrimary}></AddressPrimaryButton>
+              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
 
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
