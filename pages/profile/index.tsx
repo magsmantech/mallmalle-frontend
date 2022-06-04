@@ -32,6 +32,7 @@ import { Address } from '../../domain/shop';
 import { Alert, Snackbar } from "@mui/material";
 
 
+
 type TabItemProps = {
   selected?: boolean;
 };
@@ -360,6 +361,17 @@ const DeleteAddressBtn = styled(AddressButton)`
   margin-top: 25px;
   background-image: linear-gradient(to right,#FF4A4A,#FF4A4A) !important;
 `;
+const AddressPrimaryButton = styled.button`
+  position: absolute;
+  right: 0;
+  top: 38px;
+  transform: rotate(180deg);
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  border: 6px solid #22D5AE;
+  background-color: transparent;
+`;
 
 
 type Props = {
@@ -413,13 +425,32 @@ const PersonalInfo = () => {
   const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
   const [Address, { isLoading: isUpdateAddressLoading }] = api.useUpdateAddressMutation();
   const [addAddress, { isLoading: isAddAddressLoading }] = api.useAddAddressMutation();
+  const [addPrimaryAddress, { isLoading: isAddPrimaryAddressLoading }] = api.useAddPrimaryAddressMutation();
 
-  const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading || isAddAddressLoading;
+  const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading || isAddPrimaryAddressLoading;
 
   const [updateAddresId, setupdateAddresId] = useState<number>(0);
   const [modalShow, setModalShow] = useState(false);
   const [addAddressModalShow, setAddAddressModalShow] = useState(false);
+  
 
+  const makeAddressPrimary = (event: { currentTarget: { id: any; }; }) => {
+    console.log(event.currentTarget.id);
+
+    const addPrimaryAddressPost = async () => {
+      if (event.currentTarget.id) {
+        try {
+          await addPrimaryAddress(event.currentTarget.id);
+        } catch (error) {
+        }
+      }
+      else {
+        alert("address primary error")
+      }
+    };
+    addPrimaryAddressPost();
+    refetchProfile();
+  };
 
 
 
@@ -436,7 +467,6 @@ const PersonalInfo = () => {
     const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
     const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
 
-    const [addressUpdatedMsg, setaddressUpdatedMsg] = useState<string>();
     const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
 
 
@@ -531,6 +561,7 @@ const PersonalInfo = () => {
 
 
 
+
     const addNewAddress = async () => {
       setAddAddressModalShow(false);
 
@@ -547,7 +578,7 @@ const PersonalInfo = () => {
         setSnackMessage("მისამართი წარმატებით დაემატა");
         setOpenSnack(true);
         setsnackMsgStatus('success');
-     
+
         console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
       } catch (error) {
 
@@ -708,6 +739,8 @@ const PersonalInfo = () => {
               <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
 
               <LocationIconStyle color={"var(--text-color)"} />
+              {/* {`${a.is_primary}`} */}
+              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? {backgroundColor: "#EDEDED", borderColor: "#EDEDED"} : {backgroundColor: "transparent", borderColor: "#22D5AE"}} onClick={makeAddressPrimary}></AddressPrimaryButton>
 
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>

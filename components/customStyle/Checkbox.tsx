@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 const Checkbox: React.FC<{
     id: string;
+    isChecked?: boolean;
     name?: string;
     label: string;
     route?: string;
@@ -11,6 +12,7 @@ const Checkbox: React.FC<{
     onChange: (_: boolean) => void;
 }> = ({
     id,
+    isChecked,
     name,
     label,
     route,
@@ -20,7 +22,7 @@ const Checkbox: React.FC<{
 
         return (
             <Wrapper>
-                <Input type="checkbox" name={name} id={id} onChange={(event) => onChange(event.target.checked)} />
+                <Input type="checkbox" checked={isChecked} name={name} id={id} onChange={(event) => onChange(event.target.checked)} />
                 <Label htmlFor={id}>{label}{route && linkText ? <CheckboxLink href={route}>{linkText}</CheckboxLink> : null}</Label>
             </Wrapper>
         )

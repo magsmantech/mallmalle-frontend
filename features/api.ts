@@ -235,6 +235,17 @@ const api = createApi({
     }),
     // 
     // 
+    // add primary address
+    // 
+    // 
+    addPrimaryAddress: builder.mutation<Address, number>({
+      query: (id) => ({
+        url: `user/address/${id}`,
+        method: 'POST',
+      })
+    }),
+    // 
+    // 
     // get all address
     // 
     // 
