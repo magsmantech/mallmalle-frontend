@@ -285,3 +285,31 @@ export type UpdatePassword = {
   success: boolean;
   message: string;
 }
+
+export type NewAdded = {
+  id: number;
+  product_name: string;
+  created_at: string;
+  description: string;
+  images: [] | string;
+  decoded_images: [] | string;
+  discount: Discount[] | [];
+}
+
+export type Offers = {
+  id: number;
+  product_name: string;
+  created_at: string;
+  description: string;
+  images: [] | string;
+  decoded_images: [] | string;
+  discount: Discount[];
+}
+
+export type DashboardData = {
+  data: {
+    discounts: Discount[];
+    offers: Offers[];
+    newAdded: NewAdded[];
+  }
+}

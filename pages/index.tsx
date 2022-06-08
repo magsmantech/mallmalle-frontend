@@ -8,7 +8,7 @@ import { getDashboardData } from "../services/dashboard-services";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import config from "../config.json";
-import { getProductImages, Product } from "../domain/shop";
+import { getProductImages, Product, DashboardData } from '../domain/shop';
 import styled from 'styled-components';
 import Responsive from "../config/Responsive";
 import RadioButton from "../components/customStyle/RadioButton";
@@ -27,7 +27,7 @@ const Home: NextPage = () => {
 
   const { data: AllDiscount, isLoading: isAllDiscountLoading, refetch: refetchAllDiscount } = api.useGetAllDiscountQuery(undefined);
 
-
+  const { data: DashboardData, isLoading: isDashboardDataLoading, refetch: refetchDashboardData } = api.useGetDashboardDataQuery(undefined);
 
   const [offers, setOffers] = useState<any>(null);
   const [newProducts, setNewProducts] = useState<any>(null);
@@ -60,7 +60,9 @@ const Home: NextPage = () => {
     "/assets/cover.png",
   ];
   const [selected, setselected] = useState();
-  return (
+
+
+  return isDashboardDataLoading ? <Loader /> : !DashboardData ? (<span>not found dashboard data</span>) : (
     <>
       <SearchWrapper>
         <SearchBar />
@@ -84,60 +86,22 @@ const Home: NextPage = () => {
 
       <SectionTitle className={styles.sectionTitle}>შემოთავაზება</SectionTitle>
 
-      {/* <div className={styles.itemsContainer}>
-        {offers?.length ? (
-          offers.map((product: Product, index: number) => (
-            <Item
-              name={product.product_name}
-              id={product.id}
+      {/* offers */}
+      <DiscountItemContainerStyle>
+        {DashboardData.data.offers.map((o, index) => {
+          return (
+            <DiscountItem
+              name={o.product_name}
+              id={o.id}
               price="85,99"
-              oldPrice={
-                product.discount ? "-" + product.discount[0].value + "%" : ""
-              }
+              oldPrice={`125`}
               currency="gel"
-              imageUrl={
-                product?.images?.length
-                  ? config.imagesEndpoint + JSON.parse(product?.images)[0]
-                  : "../public/assets/2.png"
-              }
-            ></Item>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div> */}
-
-      {isAllDiscountLoading ? <Loader /> : !AllDiscount ? (<span>not fount discount</span>) : (
-
-        <DiscountItemContainerStyle>
-          {console.log(AllDiscount)}
-          {AllDiscount.slice(0, 12).map((d, index) => {
-            var imgUrl = d.background_image;
-            // console.log("first " + imgUrl);
-            // var b = JSON.stringify(imgUrl);
-            // const str = b.replace(/\\/g, '');
-            // console.log(str);
-            return (
-              <DiscountItem
-                name={d.name}
-                id={d.id}
-                price="85,99"
-                oldPrice={`125`}
-                currency="gel"
-                imageUrl={uploadUrl(imgUrl)}
-                // imageUrl={"../../../assets/default-image.png"}
-                // imageUrl={
-                //   d?.decoded_images?.length
-                //     ? config.imagesEndpoint + JSON.parse(d?.background_image)[0]
-                //     : "default-image.png"
-                // }
-              />
-            )
-          })}
-        </DiscountItemContainerStyle>
-      )}
-
-
+              imageUrl={uploadUrl(o.decoded_images[0])}
+            />
+          )
+        })}
+      </DiscountItemContainerStyle>
+      {/* offers */}
 
       <MiddleContainer className={styles.middleContainer}>
         <SaleItem big imageUrl={"/assets/122.png"} gradient />
@@ -145,33 +109,24 @@ const Home: NextPage = () => {
       </MiddleContainer>
 
       <SectionTitle className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
+      {/* new products */}
       <ItemsContainerStyle>
-        {newProducts?.length ? (
-          newProducts.slice(0, 12).map((product: Product, index: number) => (
+        {DashboardData.data.newAdded.slice(0, 12).map((n, index) => {
+          return (
             <Item
-              name={product.product_name}
+              name={n.product_name}
+              id={n.id}
               price="85,99"
-              id={product.id}
-              oldPrice={
-                product.discount?.length
-                  ? "-" + product.discount[0].value + "%"
-                  : ""
-              }
+              oldPrice={`125`}
               currency="gel"
-              // imageUrl={uploadUrl(product.images)}
-              // imageUrl={"../../../assets/default-image.png"}
-              imageUrl={
-                product?.images?.length
-                  ? config.imagesEndpoint + JSON.parse(product?.images)[0]
-                  : "../../../assets/2.png"
-              }
-            ></Item>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+              imageUrl={uploadUrl(n.decoded_images[0])}
+            />
+          )
+        })}
       </ItemsContainerStyle>
+      {/* new products */}
 
+      
       <div className={styles.scrollToTopButton} onClick={_scrollToTop}>
         <ArrowTop className={styles.scrollButtonIcon} />
       </div>
