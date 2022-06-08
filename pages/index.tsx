@@ -25,41 +25,37 @@ const Home: NextPage = () => {
     window.scrollTo(0, 0);
   };
 
-  const { data: AllDiscount, isLoading: isAllDiscountLoading, refetch: refetchAllDiscount } = api.useGetAllDiscountQuery(undefined);
-
   const { data: DashboardData, isLoading: isDashboardDataLoading, refetch: refetchDashboardData } = api.useGetDashboardDataQuery(undefined);
 
   const [offers, setOffers] = useState<any>(null);
   const [newProducts, setNewProducts] = useState<any>(null);
   const [discounts, setDiscounts] = useState<any>(null);
 
-  // const 
 
 
-  // const productWithImages = getProductImages(newProducts);
 
 
-  useEffect(() => {
-    getDashboardData()
-      .then((res) => {
-        const { data } = res;
-        setOffers(data.data.offers);
-        setNewProducts(data.data.newAdded);
-        setDiscounts(data.data.discounts);
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   getDashboardData()
+  //     .then((res) => {
+  //       const { data } = res;
+  //       setOffers(data.data.offers);
+  //       setNewProducts(data.data.newAdded);
+  //       setDiscounts(data.data.discounts);
+  //       console.log(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
+  // carousel images
   const images = [
     "/assets/cover.png",
     "/assets/cover.png",
     "/assets/cover.png",
     "/assets/cover.png",
   ];
-  const [selected, setselected] = useState();
 
 
   return isDashboardDataLoading ? <Loader /> : !DashboardData ? (<span>not found dashboard data</span>) : (
@@ -109,6 +105,7 @@ const Home: NextPage = () => {
       </MiddleContainer>
 
       <SectionTitle className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
+
       {/* new products */}
       <ItemsContainerStyle>
         {DashboardData.data.newAdded.slice(0, 12).map((n, index) => {

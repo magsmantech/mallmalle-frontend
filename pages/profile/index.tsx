@@ -442,6 +442,7 @@ const PersonalInfo = () => {
       if (event.currentTarget.id) {
         try {
           await addPrimaryAddress(event.currentTarget.id);
+          refetchProfile();
         } catch (error) {
         }
       }
@@ -450,7 +451,6 @@ const PersonalInfo = () => {
       }
     };
     addPrimaryAddressPost();
-    refetchProfile();
   };
 
 

@@ -448,16 +448,14 @@ const Item = ({ product }: { product: Product }) => {
             style={{ display: "flex", alignItems: "center" }}
             className={styles.child}
           >
-            <StartsWrapper
-
-            >
+            <StartsWrapper>
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
             </StartsWrapper>
-            <Count>402 ნახვა</Count>
+            {/* <Count>402 ნახვა</Count> */}
           </div>
           {hovered && (
             null
