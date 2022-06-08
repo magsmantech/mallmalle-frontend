@@ -17,13 +17,13 @@ const Footer = () => {
                     <FooterMainIcon src={'/assets/mallmalle.png'} className={styles.logo} />
                     <FooterIconText className={styles.motto}>ამერიკული პროდუქტის ხელმისაწვდომობა საქართველოში</FooterIconText>
                     <SocialIconsWrapper className={styles.socials}>
-                        <a href='https://facebook.com'>
+                        <a href='https://facebook.com' target={"_blank"}>
                             <FbIcon />
                         </a>
-                        <a href='https://instagram.com'>
+                        <a href='https://instagram.com' target={"_blank"}>
                             <InstIcon />
                         </a>
-                        <a href='https://youtube.com'>
+                        <a href='https://youtube.com' target={"_blank"}>
                             <YouTICon />
                         </a>
                         {/* <AiFillFacebook size={'2.4rem'} />
@@ -61,14 +61,13 @@ const Footer = () => {
                     </FooterListItem>
                 </FooterColumn>
 
-                <FooterColumn className={classNames({ [styles.column]: true, [styles.lastColumn]: true })}>
+                {/* <FooterColumn className={classNames({ [styles.column]: true, [styles.lastColumn]: true })}>
                     <FooterListTitle className={styles.title}>სიახლეების გამოწერა</FooterListTitle>
                     <InputWrapper>
                         <IWBInput placeholder="ელ-ფოსტა" />
                         <IWBButton lowercase>გამოწერა</IWBButton>
                     </InputWrapper>
-
-                </FooterColumn>
+                </FooterColumn> */}
             </FooterWrapper>
             <RightsReserved className={styles.rightsReserved}>
                 <div className={styles.rightsReservedTitle}>ყველა უფლება დაცულია</div>
