@@ -41,7 +41,7 @@ import { getFilteredItems, getFilters } from "../../services/category-services";
 import config from "../../config.json";
 
 import Respinsive from "../../config/Responsive"
-import { calculateProductPrices, Category, Product } from "../../domain/shop";
+import { calculateProductPrices, Category, Product, FilteredCategory, FilterWithProps } from '../../domain/shop';
 import MoreFilterIcon from '../../public/icons/more-filter-icon.svg'
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
@@ -666,8 +666,6 @@ const Catalog: NextPage = () => {
 
   const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(19);
 
-  console.log("beqidaaan " + JSON.stringify(filtered))
-
 
   const getFirstLevelFilters = (root: any, array: any) => {
     if (!root.childrens) return;
@@ -693,9 +691,9 @@ const Catalog: NextPage = () => {
     // if(found) {
     //     return found;
     // }
-    console.log(id, tree);
+    // console.log(id, tree);
     for (const item of tree) {
-      console.log(id, item.id);
+      // console.log(id, item.id);
       if (item.id === id) {
         return { level: 1, root: item, category: item };
       }
@@ -703,7 +701,7 @@ const Catalog: NextPage = () => {
         continue;
       }
       for (const elem of item.childrens) {
-        console.log(id, elem.id);
+        // console.log(id, elem.id);
         if (id === elem.id) {
           return { level: 2, root: elem, category: elem };
         }
@@ -711,7 +709,7 @@ const Catalog: NextPage = () => {
           continue;
         }
         for (const child of elem.childrens) {
-          console.log(id, child.id);
+          // console.log(id, child.id);
           if (id === child.id) {
             return { level: 3, root: elem, selectedId: id, category: child };
           }
@@ -727,17 +725,17 @@ const Catalog: NextPage = () => {
       categories: [event.category],
       color_variation: event.color,
     };
-    console.log(event);
+    // console.log(event);
     if (!id) return;
     try {
       const resp = await getFilteredItems(+id, params);
-      console.log(resp);
+      // console.log(resp);
       const array = _formatProductsData(resp?.data?.data);
-      console.log(array, "ascacacas");
+      // console.log(array, "ascacacas");
 
       setProducts(array);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -764,12 +762,12 @@ const Catalog: NextPage = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
 
   const context = useContext(CategoriesContext);
-  console.log(context);
+  // console.log(context);
 
   const router = useRouter();
 
   const { id } = router.query;
-  console.log(id);
+  // console.log(id);
 
   const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
 
@@ -784,29 +782,29 @@ const Catalog: NextPage = () => {
   }, [openFilters]);
 
   useEffect(() => {
-    console.log(id, router);
+    // console.log(id, router);
     if (!id) return;
 
     Promise.all([getFilters(+id), getProductsById(+id)])
       .then(([filtersResp, dataResp]) => {
-        console.log(filtersResp);
+        // console.log(filtersResp);
         const {
           data: { color_variations },
         } = filtersResp;
         setColorFilters(color_variations);
         const array = _formatProductsData(dataResp?.data);
-        console.log(array, "ascacacas");
+        // console.log(array, "ascacacas");
         setProducts(array);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [id]);
 
   useEffect(() => {
     if (!id || !context?.length) return;
     const filtersNode = findCategoryNode(+id, context);
-    console.log(filtersNode);
+    // console.log(filtersNode);
     const array: any = [];
     if (filtersNode.level === 1) {
       getFirstLevelFilters(filtersNode.root, array);
@@ -817,22 +815,41 @@ const Catalog: NextPage = () => {
       setSelectedFilterId(filtersNode.selectedId);
     }
 
-    console.log(array);
+    // console.log(array);
     setItems(array);
   }, [id, context]);
 
 
+  const product_id = router.query.id as any;
 
-  const [popular, setPopular] = useState();
+  let parseId = parseInt(product_id, 10);
+
+
+
   const [brand, setBrand] = useState();
   const [price, setPrice] = useState();
 
+  const [sizeVariationID, setsizeVariationID] = useState<number>();
+  const [colorVariationID, setcolorVariationID] = useState<number>();
+  const [startPrice, setstartPrice] = useState<string>("");
+  const [endPrice, setendPrice] = useState<string>("500");
+  const [productID, setproductID] = useState<number>(parseId);
+
+
   const [openModal, setOpenModal] = useState(false);
 
-  console.log("kategoria  " + JSON.stringify(category))
+  // console.log("kategoria  " + JSON.stringify(category))
 
 
-  return (
+
+  const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({ sizeVariationID, colorVariationID, startPrice, endPrice, productID });
+
+  console.log(FilteredCategory)
+  
+  
+  const MainLoading = isFilteredLoading || isFilteredCategoryLoading;
+
+  return MainLoading ? <Loader /> : !filtered ? (<span>not found filtered data</span>) : (
     <>
       {openFilters && (
         <div
@@ -852,7 +869,7 @@ const Catalog: NextPage = () => {
       <Breadcrumbs>
         მთავარი / კატეგორიები / {category?.category_name}
       </Breadcrumbs>
-    
+
       {/* <div
         style={{
           display: "flex",
@@ -892,58 +909,58 @@ const Catalog: NextPage = () => {
 
 
       <HeadWrapperStyle>
-      <TitileWrapper>
-        <Heading>{category?.category_name}</Heading>
-        {/* <Quantity>12 323 პროდუქტი</Quantity> */}
-      </TitileWrapper>
-      <FilterWrapper>
-    
-        <FilltersBox>
-          <DropDown dropdownTitle="ბრენდი">
-            <RadioButton
-              id="brand-id"
-              onChange={(value) => setBrand(value)}
-              options={[
-                { label: "ბრენდი 1", value: "ბრენდი 1" },
-                { label: "ბრენდი 2", value: "ბრენდი 2" },
-              ]}
-              value={brand}
-            />
-          </DropDown>{brand === undefined ? null : brand}
-        </FilltersBox>
+        <TitileWrapper>
+          <Heading>{category?.category_name}</Heading>
+          {/* <Quantity>12 323 პროდუქტი</Quantity> */}
+        </TitileWrapper>
+        <FilterWrapper>
+      
+          <FilltersBox>
+            <DropDown dropdownTitle="ბრენდი">
+              <RadioButton
+                id="brand-id"
+                onChange={(value) => setBrand(value)}
+                options={[
+                  { label: "ბრენდი 1", value: "ბრენდი 1" },
+                  { label: "ბრენდი 2", value: "ბრენდი 2" },
+                ]}
+                value={brand}
+              />
+            </DropDown>{brand === undefined ? null : brand}
+          </FilltersBox>
 
-        <FilltersBox>
-          <DropDown dropdownTitle="ფასი">
-            <RadioButton
-              id="price-id"
-              onChange={(value) => setPrice(value)}
-              options={[
-                { label: "0 - 100 ₾", value: "1" },
-                { label: "100 - 200 ₾", value: "2" },
-                { label: "200 - 300 ₾", value: "3" },
-                { label: "300 - 400 ₾", value: "4" },
-                { label: "400 - 500 ₾", value: "5" },
-                { label: "500 - 600 ₾", value: "6" },
-                { label: "600 - 700 ₾", value: "7" },
-                { label: "700 - 800 ₾", value: "8" },
-              ]}
-              value={price}
-            />
-          </DropDown>{price === undefined ? null : price}
-        </FilltersBox>
+          <FilltersBox>
+            <DropDown dropdownTitle="ფასი">
+              <RadioButton
+                id="price-id"
+                onChange={(value) => setPrice(value)}
+                options={[
+                  { label: "0 - 100 ₾", value: "1" },
+                  { label: "100 - 200 ₾", value: "2" },
+                  { label: "200 - 300 ₾", value: "3" },
+                  { label: "300 - 400 ₾", value: "4" },
+                  { label: "400 - 500 ₾", value: "5" },
+                  { label: "500 - 600 ₾", value: "6" },
+                  { label: "600 - 700 ₾", value: "7" },
+                  { label: "700 - 800 ₾", value: "8" },
+                ]}
+                value={price}
+              />
+            </DropDown>{price === undefined ? null : price}
+          </FilltersBox>
 
-        <FilltersBox>
-          <MoreFilterBtn onClick={() => setOpenModal(true)}>
-            მეტი ფილტრი
-            <MoreFilterIconStyle />
-          </MoreFilterBtn>
-        </FilltersBox>
+          <FilltersBox>
+            <MoreFilterBtn onClick={() => setOpenModal(true)}>
+              მეტი ფილტრი
+              <MoreFilterIconStyle />
+            </MoreFilterBtn>
+          </FilltersBox>
 
-        {openModal && <SidebarFilter openModal={setOpenModal} />}
+          {openModal && <SidebarFilter openModal={setOpenModal} />}
 
 
-      </FilterWrapper>
-         </HeadWrapperStyle>
+        </FilterWrapper>
+      </HeadWrapperStyle>
 
 
       <Grid>
@@ -955,7 +972,7 @@ const Catalog: NextPage = () => {
             ></Item>
           ))
         ) : (
-          <Loader/>
+          <Loader />
         )}
         {/* <Item id={2} imgSrc={'/assets/3112.png'}></Item>
                 <Item id={3} imgSrc={'/assets/6.png'}></Item>

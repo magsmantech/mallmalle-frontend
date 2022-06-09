@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -291,13 +291,25 @@ const api = createApi({
     }),
     // 
     // 
-    // get filtered data
+    // get filtered category data
     // 
     // 
     filter: builder.query<FilteredCategory, number>({
       query: (category_id) => ({
         url: `categories/${category_id}/filters`,
         method: 'GET',
+      })
+    }),
+    // 
+    // 
+    // get filtered product data
+    // 
+    // 
+    filteredCategory: builder.query<FilteredProduct, { sizeVariationID?: number, colorVariationID?: number, startPrice?: string, endPrice?: string, productID: number }>({
+      query: ({ sizeVariationID, colorVariationID, startPrice, endPrice, productID }) => ({
+        url: `products/${productID}/filters`,
+        method: 'GET',
+        json: sizeVariationID, colorVariationID, startPrice, endPrice
       })
     }),
     // 

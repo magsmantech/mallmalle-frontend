@@ -355,3 +355,40 @@ export type Recommended = {
   highest_price: string;
   discount: Discount[];
 }
+export type FilteredProduct = {
+  current_page: number;
+  data: FilteredProductData[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: FilteredProductLinks[];
+  next_page_url: string;
+  path: string;
+  per_page: string;
+  prev_page_url: string;
+  to: number;
+  total: number;
+}
+export type FilteredProductData = {
+  id: number;
+  product_name: string;
+  created_at: string;
+  description: string;
+  images: [] | string;
+  decoded_images: [] | string;
+  lowest_price: string;
+  highest_price: string;
+}
+export type FilteredProductLinks = {
+  url: string;
+  label: string;
+  active: boolean;
+}
+export type FilterWithProps = {
+  size_variation?: number | 0;
+  color_variation?: number;
+  start_price?: string;
+  end_price?: string;
+  product_id: number;
+}
