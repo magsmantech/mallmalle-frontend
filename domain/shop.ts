@@ -111,6 +111,8 @@ export type Product = {
   "discount": Discount[];
   "categories": Category[];
   "decoded_images": [] | string;
+  "lowest_price": string;
+  "highest_price": string;
 }
 export type Discount = {
   "id": number;// 4
@@ -318,6 +320,8 @@ export type NewAdded = {
   images: [] | string;
   decoded_images: [] | string;
   discount: Discount[] | [];
+  lowest_price: string;
+  highest_price: string;
 }
 
 export type Offers = {
@@ -328,6 +332,8 @@ export type Offers = {
   images: [] | string;
   decoded_images: [] | string;
   discount: Discount[];
+  lowest_price: string;
+  highest_price: string;
 }
 
 export type DashboardData = {
@@ -336,4 +342,16 @@ export type DashboardData = {
     offers: Offers[];
     newAdded: NewAdded[];
   }
+}
+
+export type Recommended = {
+  id: number;
+  product_name: string;
+  created_at: string;
+  description: string;
+  images: [] | string;
+  decoded_images: [] | string;
+  lowest_price: string;
+  highest_price: string;
+  discount: Discount[];
 }

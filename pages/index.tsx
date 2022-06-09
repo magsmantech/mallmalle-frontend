@@ -89,8 +89,8 @@ const Home: NextPage = () => {
             <DiscountItem
               name={o.product_name}
               id={o.id}
-              price="85,99"
-              oldPrice={`125`}
+              price={o.lowest_price}
+              oldPrice={''}
               currency="gel"
               imageUrl={uploadUrl(o.decoded_images[0])}
             />
@@ -113,8 +113,8 @@ const Home: NextPage = () => {
             <Item
               name={n.product_name}
               id={n.id}
-              price="85,99"
-              oldPrice={`125`}
+              price={n.lowest_price}
+              oldPrice={``}
               currency="gel"
               imageUrl={uploadUrl(n.decoded_images[0])}
             />

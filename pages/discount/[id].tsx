@@ -23,11 +23,13 @@ import { getProductDetailsById } from "../../services/products-service";
 import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
-import { calculateProductPrices, Product } from "../../domain/shop";
+import { calculateProductPrices, Product, Recommended } from '../../domain/shop';
 import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
 import { Alert, Snackbar } from "@mui/material";
+import Loader from "../../components/Loader";
+import { uploadUrl } from '../../features/api';
 
 type ButtonProps = {
   secondary?: boolean;
@@ -184,14 +186,28 @@ const SectionTitle = styled.div`
 const Grid = styled.section`
   margin-top: 50px;
   overflow-x: scroll;
-  display: grid;
-  grid-auto-flow:column; 
-  grid-gap: 30px; 
-  white-space: nowrap;
   padding-bottom: 20px;
   border-radius: 14px;
+  display: flex;
 `;
-
+const GridChild = styled.div`
+  margin: 0px 30px;
+  min-width: 280px;
+      &:first-child {
+        margin-left: 0px;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+    ${Responsive.tablet} {
+      min-width: 250px;
+      margin: 0px 20px;
+    }
+    ${Responsive.mobile} {
+      min-width: 170px;
+      margin: 0px 10px;
+    }
+`;
 const RevieStartWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -248,6 +264,7 @@ const ProductDetails: NextPage = () => {
   const discountId = parseInt(router.query.id as string);
 
   const { data: discount, isLoading: isDiscountsLoading, refetch: refetchDiscount } = api.useGetDiscountByIdQuery(discountId);
+  const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
 
   const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<SizeType[]>([]);
@@ -263,6 +280,8 @@ const ProductDetails: NextPage = () => {
   const [selectedSizeId, setSelectedSizeId] = useState<any>(undefined);
 
   const [product, setProduct] = useState<Product | null>(null);
+
+  const MainLoading = isDiscountsLoading || isRecommendedLoading;
 
   const { id } = router.query;
   console.log(id);
@@ -401,7 +420,7 @@ const ProductDetails: NextPage = () => {
 
   // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
 
-  return (
+  return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
       <Section>
         <ItemPreviewWrapper>
@@ -424,7 +443,7 @@ const ProductDetails: NextPage = () => {
             </Breadcrumbs>
             <Title>{product?.product_name}</Title>
             <RevieStartWrapper>
-              <div
+              {/* <div
                 style={{ display: "flex", gap: ".4rem", marginRight: ".8rem" }}
               >
                 <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
@@ -432,8 +451,10 @@ const ProductDetails: NextPage = () => {
                 <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
                 <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
                 <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              </div>
-              <DetailCount>402 ნახვა</DetailCount>
+              </div> */}
+              <DetailCount>
+                {/* 402 ნახვა */}
+              </DetailCount>
             </RevieStartWrapper>
             <PriceWrapperStyle>
               <Price>{finalPrice}</Price>
@@ -483,7 +504,6 @@ const ProductDetails: NextPage = () => {
               დამატებითი ინფორმაცია
             </Subtitle>
             {product?.description && <Text>{ReactHtmlParser(product?.description)}</Text>}
-            <Text>შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის. შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად მიახლოებული შაბლონი წარუდგინონ შემფასებელს. ხშირადაა შემთხვევა, როდესაც დიზაინის</Text>
           </DetailsWrapper>
         </DetailMainWrapper>
         <Snackbar
@@ -501,48 +521,18 @@ const ProductDetails: NextPage = () => {
         რეკომენდირებული
       </SectionTitle>
       <Grid>
-        <Item
-          name="საზაფხულო ფეხსაცმელი"
-          price="80.00"
-          oldPrice="125.00"
-          currency="gel"
-          imageUrl={"/assets/2.png"}
-        ></Item>
-        <Item
-          name="საზაფხულო ფეხსაცმელი"
-          price="80.00"
-          oldPrice="125.00"
-          currency="gel"
-          imageUrl={"/assets/5.png"}
-        ></Item>
-        <Item
-          name="საზაფხულო ფეხსაცმელი"
-          price="80.00"
-          oldPrice="125.00"
-          currency="gel"
-          imageUrl={"/assets/4.png"}
-        ></Item>
-        <Item
-          name="საზაფხულო ფეხსაცმელი"
-          price="80.00"
-          oldPrice="125.00"
-          currency="gel"
-          imageUrl={"/assets/6.png"}
-        ></Item>
-        <Item
-          name="საზაფხულო ფეხსაცმელი"
-          price="80.00"
-          oldPrice="125.00"
-          currency="gel"
-          imageUrl={"/assets/2.png"}
-        ></Item>
-        <Item
-          name="საზაფხულო ფეხსაცმელი"
-          price="80.00"
-          oldPrice="125.00"
-          currency="gel"
-          imageUrl={"/assets/5.png"}
-        ></Item>
+        {recommended.map((r, index) => (
+          <GridChild key={index}>
+            <Item
+              id={r.id}
+              name={r.product_name}
+              price={r.lowest_price}
+              oldPrice={''}
+              currency="gel"
+              imageUrl={uploadUrl(r.decoded_images[0])}
+            />
+          </GridChild>
+        ))}
       </Grid>
     </>
   );

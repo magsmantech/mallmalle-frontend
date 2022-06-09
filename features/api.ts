@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -264,6 +264,17 @@ const api = createApi({
     getAllAddress: builder.query<Address, undefined>({
       query: (_arg) => ({
         url: `user/addresses`,
+        method: 'GET',
+      })
+    }),
+    // 
+    // 
+    // get recommendes
+    // 
+    // 
+    getRecommended: builder.query<Recommended[], undefined>({
+      query: (_arg) => ({
+        url: `recommended`,
         method: 'GET',
       })
     }),
