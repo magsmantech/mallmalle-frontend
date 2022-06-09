@@ -523,6 +523,7 @@ const ProductDetails: NextPage = () => {
             <Item
               name={r.product_name}
               price={r.lowest_price}
+              id={r.id}
               oldPrice={''}
               currency="gel"
               imageUrl={uploadUrl(r.decoded_images[0])}

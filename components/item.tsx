@@ -100,7 +100,7 @@ const SaleItem = ({
 
   return (
     <>
-      <Link href={"/detail/" + id}>
+      <Link href={`/detail/${id}`}>
         <Wrapper>
           {/* <ItemImage backgroundImage={imageUrl}></ItemImage> */}
           <ProductItemImgWrapper className={styles.productItemImgWrapper}>
