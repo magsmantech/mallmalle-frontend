@@ -448,13 +448,13 @@ const Item = ({ product }: { product: Product }) => {
             style={{ display: "flex", alignItems: "center" }}
             className={styles.child}
           >
-            <StartsWrapper>
+            {/* <StartsWrapper>
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-            </StartsWrapper>
+            </StartsWrapper> */}
             {/* <Count>402 ნახვა</Count> */}
           </div>
           {hovered && (
@@ -664,6 +664,10 @@ type FilterSideBarProps = {
 
 const Catalog: NextPage = () => {
 
+  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(19);
+
+  console.log("beqidaaan " + JSON.stringify(filtered))
+
 
   const getFirstLevelFilters = (root: any, array: any) => {
     if (!root.childrens) return;
@@ -825,6 +829,8 @@ const Catalog: NextPage = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
+  console.log("kategoria  " + JSON.stringify(category))
+
 
   return (
     <>
@@ -891,19 +897,7 @@ const Catalog: NextPage = () => {
         {/* <Quantity>12 323 პროდუქტი</Quantity> */}
       </TitileWrapper>
       <FilterWrapper>
-        <FilltersBox>
-          <DropDown dropdownTitle="პოპულარული">
-            <RadioButton
-              id="popular-id"
-              onChange={(value) => setPopular(value)}
-              options={[
-                { label: "პოპულარული 1", value: "პოპულარული 1" },
-                { label: "პოპულარული 2", value: "პოპულარული 2" },
-              ]}
-              value={popular}
-            />
-          </DropDown>{popular === undefined ? null : popular}
-        </FilltersBox>
+    
         <FilltersBox>
           <DropDown dropdownTitle="ბრენდი">
             <RadioButton
@@ -924,8 +918,14 @@ const Catalog: NextPage = () => {
               id="price-id"
               onChange={(value) => setPrice(value)}
               options={[
-                { label: "ფასი 1", value: "ფასი 1" },
-                { label: "ფასი 2", value: "ფასი 2" },
+                { label: "0 - 100 ₾", value: "1" },
+                { label: "100 - 200 ₾", value: "2" },
+                { label: "200 - 300 ₾", value: "3" },
+                { label: "300 - 400 ₾", value: "4" },
+                { label: "400 - 500 ₾", value: "5" },
+                { label: "500 - 600 ₾", value: "6" },
+                { label: "600 - 700 ₾", value: "7" },
+                { label: "700 - 800 ₾", value: "8" },
               ]}
               value={price}
             />

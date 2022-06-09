@@ -45,15 +45,15 @@ export const getProductImages = (product: Product): ProductWithImages => {
   }
 
   const allImages = JSON.parse(product.images);
-  console.log('product images:', allImages);
+  // console.log('product images:', allImages);
   const mainImage = allImages[0];
-  console.log('main image:', mainImage);
+  // console.log('main image:', mainImage);
   const productWithImages: ProductWithImages = {
     ...product,
     mainImage,
     allImages,
   };
-  console.log('productWithImages:', productWithImages);
+  // console.log('productWithImages:', productWithImages);
   return productWithImages;
 }
 
@@ -72,6 +72,30 @@ export type Category = {
   icon: string | null;// null
   childrens?: Category[] | null;
 }
+export type FilteredCategory = {
+  categories: FilteredCategories[];
+  size_variations: FilteredSizeVariations[];
+  color_variations: FilteredColorVariations[];
+}
+export type FilteredCategories = {
+  id: number;
+  category_name: string;
+  icon: string;
+}
+export type FilteredSizeVariations = {
+  id: number;
+  size_name: string;
+}
+export type FilteredColorVariations = {
+  id: number;
+  color_name: string;
+  color: string;
+}
+
+export type Subscribe = {
+  email: string;
+}
+
 
 export type CategoryWithParent = Category & {
   parent_id: number;
@@ -139,7 +163,7 @@ export const calculateProductPrices = (product: Product | null, variationId = 0)
         : originalPrice
     )
     : null;
-  console.log('calculateProductPrices', { product, variationId, originalPrice, finalPrice });
+  // console.log('calculateProductPrices', { product, variationId, originalPrice, finalPrice });
   return {
     selectedVariation,
     selectedSize: selectedVariation?.size_variation,

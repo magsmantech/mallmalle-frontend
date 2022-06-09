@@ -10,7 +10,7 @@ export const apiCall = (url: string, method: Method='GET', data: any={}): Promis
     }
 
     const token = getToken();
-    console.log('token', token);
+    
     if (token) {
         options.headers = {
             Authorization: `Bearer ${token}`,

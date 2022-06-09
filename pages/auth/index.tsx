@@ -547,16 +547,18 @@ const Auth: NextPage = () => {
         .then((res) => {
           setLoading(false);
           console.log(res);
+          router.push("/auth");
         })
         .catch((err) => {
           console.log(err);
           setLoading(false);
-          dispatch(
-            showFeedback({
-              show: true,
-              type: "error",
-            })
-          );
+          
+          // dispatch(
+          //   showFeedback({
+          //     show: true,
+          //     type: "error",
+          //   })
+          // );
         });
     };
 

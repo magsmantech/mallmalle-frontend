@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -235,6 +235,18 @@ const api = createApi({
     }),
     // 
     // 
+    // subscribe notification
+    // 
+    // 
+    subscribe: builder.mutation<string, Subscribe>({
+      query: (email) => ({
+        url: `subscribe`,
+        method: 'POST',
+        body: email
+      })
+    }),
+    // 
+    // 
     // add primary address
     // 
     // 
@@ -263,6 +275,17 @@ const api = createApi({
     getDashboardData: builder.query<DashboardData, undefined>({
       query: (_arg) => ({
         url: `dashboard`,
+        method: 'GET',
+      })
+    }),
+    // 
+    // 
+    // get filtered data
+    // 
+    // 
+    filter: builder.query<FilteredCategory, number>({
+      query: (category_id) => ({
+        url: `categories/${category_id}/filters`,
         method: 'GET',
       })
     }),

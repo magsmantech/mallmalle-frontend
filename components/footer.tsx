@@ -8,9 +8,47 @@ import YoutubeIcon from '../public/icons/react-icons/youtube';
 import InstagramIcon from '../public/icons/react-icons/instagram';
 import Responsive from '../config/Responsive';
 import Link from "next/link";
+import { useState } from 'react';
+import api from '../features/api';
+import Loader from './Loader';
+import { Alert, Snackbar } from '@mui/material';
 
 const Footer = () => {
-    return (
+
+    const [subscribeEmail, setsubscribeEmail] = useState<string>('');
+    const [subscribe, { isLoading: isSubscribeLoading }] = api.useSubscribeMutation();
+
+    const [openSnack, setOpenSnack] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+    const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+    const subscribePost = async () => {
+        if (emailRegex.test(subscribeEmail)) {
+            try {
+                await subscribe({
+                    email: subscribeEmail
+                });
+                setsubscribeEmail('');
+                setSnackMessage("იმეილი წარმატებით გაიგზავნა");
+                setOpenSnack(true);
+                setsnackMsgStatus('success');
+            } catch (error) {
+                setSnackMessage("გთხოვთ შეიყვანოთ სწორი მეილი");
+                setOpenSnack(true);
+                setsnackMsgStatus('error');
+            }
+        }
+        else {
+            setSnackMessage("გთხოვთ შეიყვანოთ სწორი მეილი");
+            setOpenSnack(true);
+            setsnackMsgStatus('error');
+        }
+
+    };
+
+    return isSubscribeLoading ? <Loader /> : (
         <>
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
@@ -61,17 +99,25 @@ const Footer = () => {
                     </FooterListItem>
                 </FooterColumn>
 
-                {/* <FooterColumn className={classNames({ [styles.column]: true, [styles.lastColumn]: true })}>
+                <FooterColumn className={classNames({ [styles.column]: true, [styles.lastColumn]: true })}>
                     <FooterListTitle className={styles.title}>სიახლეების გამოწერა</FooterListTitle>
                     <InputWrapper>
-                        <IWBInput placeholder="ელ-ფოსტა" />
-                        <IWBButton lowercase>გამოწერა</IWBButton>
+                        <IWBInput placeholder="ელ-ფოსტა" type='email' value={subscribeEmail} onChange={(e: any) => setsubscribeEmail(e.target.value)} />
+                        <IWBButton lowercase onClick={subscribePost} >გამოწერა</IWBButton>
                     </InputWrapper>
-                </FooterColumn> */}
+                </FooterColumn>
             </FooterWrapper>
             <RightsReserved className={styles.rightsReserved}>
                 <div className={styles.rightsReservedTitle}>ყველა უფლება დაცულია</div>
             </RightsReserved>
+            <Snackbar
+                open={openSnack}
+                autoHideDuration={5000}
+                onClose={() => setOpenSnack(false)}>
+                <Alert severity={snackMsgStatus}>
+                    {snackMessage}
+                </Alert>
+            </Snackbar>
         </>);
 };
 

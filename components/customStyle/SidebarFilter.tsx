@@ -35,9 +35,9 @@ const SidebarFilter: React.FC<{
                             />
                         </RadioBox>
 
-                        <MediumTitle style={{ marginTop: "auto" }}>ფასი</MediumTitle>
+                        {/* <MediumTitle style={{ marginTop: "auto" }}>ფასი</MediumTitle> */}
 
-                        <MuiSlider />
+                        {/* <MuiSlider /> */}
 
                         <Checkbox id={"testId"} label={"ფასდაკლებები"} onChange={checked => {
                             if (checked) {
@@ -50,7 +50,7 @@ const SidebarFilter: React.FC<{
 
                     <BottomContent>
                         <BtnWithBorder>გასუფთავება</BtnWithBorder>
-                        <FillBtn>აჩვენე 124</FillBtn>
+                        <FillBtn>აჩვენე</FillBtn>
                     </BottomContent>
                 </Content>
 
