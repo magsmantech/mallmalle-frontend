@@ -664,8 +664,8 @@ type FilterSideBarProps = {
 
 const Catalog: NextPage = () => {
 
-  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(19);
 
+  const [showHideLoader, setshowHideLoader] = useState(false);
 
   const getFirstLevelFilters = (root: any, array: any) => {
     if (!root.childrens) return;
@@ -769,7 +769,6 @@ const Catalog: NextPage = () => {
   const { id } = router.query;
   // console.log(id);
 
-  const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
 
   // const category = findCategoryInAllCategories(+id, allCategories || []);
   // const categoryWithParents = findCategoryAndParents(id, allCategories);
@@ -788,6 +787,7 @@ const Catalog: NextPage = () => {
     Promise.all([getFilters(+id), getProductsById(+id)])
       .then(([filtersResp, dataResp]) => {
         // console.log(filtersResp);
+        setshowHideLoader(true);
         const {
           data: { color_variations },
         } = filtersResp;
@@ -795,6 +795,7 @@ const Catalog: NextPage = () => {
         const array = _formatProductsData(dataResp?.data);
         // console.log(array, "ascacacas");
         setProducts(array);
+        setshowHideLoader(false)
       })
       .catch((err) => {
         // console.log(err);
@@ -820,9 +821,10 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
-  const product_id = router.query.id as any;
-
-  let parseId = parseInt(product_id, 10);
+  const categoryID = router.query.id as any;
+  // console.log(categoryID);
+  // console.log(typeof categoryID)
+  // sizeVariationID, colorVariationID, startPrice, endPrice
 
 
 
@@ -831,23 +833,36 @@ const Catalog: NextPage = () => {
 
   const [sizeVariationID, setsizeVariationID] = useState<number>();
   const [colorVariationID, setcolorVariationID] = useState<number>();
-  const [startPrice, setstartPrice] = useState<string>("");
-  const [endPrice, setendPrice] = useState<string>("500");
-  const [productID, setproductID] = useState<number>(parseId);
+  const [startPrice, setstartPrice] = useState<string>('500');
+  const [endPrice, setendPrice] = useState<string>('500');
+
+
+  const [lowestPrice, setLowestPrice] = useState<string>("0");
+  const [highestPrice, setHighestPrice] = useState<string>("9999999999999");
 
 
   const [openModal, setOpenModal] = useState(false);
 
-  // console.log("kategoria  " + JSON.stringify(category))
+  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(parseInt(categoryID, 10));
+
+  // const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({
+  //   size_variation: sizeVariationID, color_variation: colorVariationID, start_price: startPrice, end_price: endPrice, category_id: parseInt(categoryID, 10)
+  // });
+
+  // console.log(FilteredCategory)
 
 
 
-  const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({ sizeVariationID, colorVariationID, startPrice, endPrice, productID });
+  // console.log(products)
 
-  console.log(FilteredCategory)
-  
-  
-  const MainLoading = isFilteredLoading || isFilteredCategoryLoading;
+  const mainFiltered = products.filter((p: Product) => {
+    return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
+  });
+  // console.log("esaaaa " + JSON.stringify(mainFiltered));
+
+
+
+  const MainLoading = isFilteredLoading
 
   return MainLoading ? <Loader /> : !filtered ? (<span>not found filtered data</span>) : (
     <>
@@ -857,55 +872,10 @@ const Catalog: NextPage = () => {
           onClick={() => setOpenFilters(false)}
         ></div>
       )}
-      {/* {openFilters && (
-        <FilterSideBar
-          colorFilters={colorFilters}
-          filters={items}
-          selectedFilter={selectedFilterId}
-          onClose={() => setOpenFilters(false)}
-          onEnter={(event: any) => onFilterEnter(event)}
-        />
-      )} */}
+
       <Breadcrumbs>
         მთავარი / კატეგორიები / {category?.category_name}
       </Breadcrumbs>
-
-      {/* <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "2.4rem",
-          padding: "1.7rem",
-          height: "8.2rem",
-          backgroundColor: "white",
-          position: "fixed",
-          zIndex: 3,
-          borderRadius: "4.2rem",
-          top: "21.0rem",
-          right: "2.4rem",
-        }}
-      >
-        <FilterSelect />
-        <ChipWrapper>
-          <ChipTitle>ბრენდი</ChipTitle>
-          <ChipIconWrapper>
-            <BsChevronDown size={"2.0rem"}></BsChevronDown>
-          </ChipIconWrapper>
-        </ChipWrapper>
-
-        <ChipWrapper>
-          <ChipTitle>ფასი</ChipTitle>
-          <ChipIconWrapper>
-            <BsChevronDown size={"2.0rem"}></BsChevronDown>
-          </ChipIconWrapper>
-        </ChipWrapper>
-        <ChipWrapper onClick={() => setOpenFilters(true)}>
-          <ChipTitle>მეტი ფილტრი</ChipTitle>
-          <ChipIconWrapper>
-            <FilterIcon width={"2.4rem"} height={"2.4rem"} />
-          </ChipIconWrapper>
-        </ChipWrapper>
-      </div> */}
 
 
       <HeadWrapperStyle>
@@ -914,39 +884,47 @@ const Catalog: NextPage = () => {
           {/* <Quantity>12 323 პროდუქტი</Quantity> */}
         </TitileWrapper>
         <FilterWrapper>
-      
+
+
+
           <FilltersBox>
-            <DropDown dropdownTitle="ბრენდი">
+            <DropDown dropdownTitle="მინ. ფასი">
               <RadioButton
-                id="brand-id"
-                onChange={(value) => setBrand(value)}
+                id="low-id"
+                onChange={(value) => setLowestPrice(value)}
                 options={[
-                  { label: "ბრენდი 1", value: "ბრენდი 1" },
-                  { label: "ბრენდი 2", value: "ბრენდი 2" },
+                  { label: "0 ₾", value: "0" },
+                  { label: "100 ₾", value: "100" },
+                  { label: "200 ₾", value: "200" },
+                  { label: "300 ₾", value: "300" },
+                  { label: "400 ₾", value: "400" },
+                  { label: "500 ₾", value: "500" },
+                  { label: "600 ₾", value: "600" },
+                  { label: "700 ₾", value: "700" },
                 ]}
-                value={brand}
+                value={lowestPrice}
               />
-            </DropDown>{brand === undefined ? null : brand}
+            </DropDown>
           </FilltersBox>
 
           <FilltersBox>
-            <DropDown dropdownTitle="ფასი">
+            <DropDown dropdownTitle="მახ. ფასი">
               <RadioButton
-                id="price-id"
-                onChange={(value) => setPrice(value)}
+                id="hight-id"
+                onChange={(value) => setHighestPrice(value)}
                 options={[
-                  { label: "0 - 100 ₾", value: "1" },
-                  { label: "100 - 200 ₾", value: "2" },
-                  { label: "200 - 300 ₾", value: "3" },
-                  { label: "300 - 400 ₾", value: "4" },
-                  { label: "400 - 500 ₾", value: "5" },
-                  { label: "500 - 600 ₾", value: "6" },
-                  { label: "600 - 700 ₾", value: "7" },
-                  { label: "700 - 800 ₾", value: "8" },
+                  { label: "განულება", value: "9999999999999" },
+                  { label: "100 ₾", value: "100" },
+                  { label: "200 ₾", value: "200" },
+                  { label: "300 ₾", value: "300" },
+                  { label: "400 ₾", value: "400" },
+                  { label: "500 ₾", value: "500" },
+                  { label: "600 ₾", value: "600" },
+                  { label: "700 ₾", value: "700" },
                 ]}
-                value={price}
+                value={highestPrice}
               />
-            </DropDown>{price === undefined ? null : price}
+            </DropDown>
           </FilltersBox>
 
           <FilltersBox>
@@ -964,16 +942,19 @@ const Catalog: NextPage = () => {
 
 
       <Grid>
-        {products?.length ? (
-          products.map((item: Product, i: number) => (
+        {mainFiltered?.length ? (
+          mainFiltered.map((item: Product, i: number) => (
             <Item
               product={item}
               key={i}
             ></Item>
           ))
         ) : (
-          <Loader />
+          <h1>0 შედეგი</h1>
         )}
+
+        {showHideLoader === true ? <Loader /> : null}
+
         {/* <Item id={2} imgSrc={'/assets/3112.png'}></Item>
                 <Item id={3} imgSrc={'/assets/6.png'}></Item>
                 <Item id={4} imgSrc={'/assets/3112.png'}></Item>
