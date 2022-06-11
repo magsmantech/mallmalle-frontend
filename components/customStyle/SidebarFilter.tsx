@@ -5,15 +5,20 @@ import { Scrollbar } from '../GlobalStyle';
 import RadioButton from './RadioButton';
 import MuiSlider from './MuiSlider';
 import Checkbox from './Checkbox';
+import { Product } from '../../domain/shop';
 
 
 const SidebarFilter: React.FC<{
     openModal: any;
+    product: Product[]
 }> = ({
-    openModal
+    openModal,
+    product
 }) => {
 
         const [selected, setSelected] = useState(); //radio button selected value
+
+   
 
         return (
             <Wrapper>

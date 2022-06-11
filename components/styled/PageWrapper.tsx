@@ -13,9 +13,11 @@ export const PageWrapper = styled.div`
     z-index: 1;
     padding: 40px;
     margin-top: 125px;
-    
+    min-height: calc(100vh - 492px);
     @media(max-width: 600px) {
+        
         & {
+            min-height: 50vh;
             padding: 40px 20px;
             margin-top: 80px;
         }

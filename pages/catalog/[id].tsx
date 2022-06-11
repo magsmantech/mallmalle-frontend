@@ -49,6 +49,7 @@ import DropDown from "../../components/customStyle/DropDown";
 import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from "../../components/customStyle/SidebarFilter";
 import Loader from "../../components/Loader";
+import { Scrollbar } from "../../components/GlobalStyle";
 
 
 const Heading = styled.h1`
@@ -385,6 +386,56 @@ const HeadWrapperStyle = styled.div`
       ${Responsive.mobile} {
         flex-direction: column;
       }
+`;
+const Shadow = styled.div`
+    position: fixed;
+    top: 125px;
+    left: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+        ${Responsive.tabletMobile}{
+            top: 120px;
+        }
+`;
+const MainFilterComponent = styled.div`
+
+`;
+const Content = styled.div`
+    position: fixed;
+    right: 0;
+    top: 125px;
+    background-color: #fff;
+    z-index: 22;
+    height: calc(100% - 125px);
+    width: 490px;
+    padding: 50px 30px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+        ${Responsive.tabletMobile}{
+            top: 120px;
+        }
+        ${Responsive.mobile}{
+            width: 100%;
+            height: 75%;
+            bottom: 0;
+            left: 0;
+            top: unset;
+            right: unset;
+            border-radius: 20px 20px 0px 0px;
+            overflow-x: scroll;
+        }
+`;
+const MediumTitle = styled.h4`
+    font-size: 18px;
+    color: #424F60;
+    font-family: 'BPG WEB 002 CAPS';
+    font-weight: 400;
+        ${Responsive.mobile}{
+            font-size: 14px;
+        }
 `;
 
 
@@ -854,13 +905,13 @@ const Catalog: NextPage = () => {
   // });
 
 
-  console.log(products)
+
 
   const mainFiltered = products.filter((p: Product) => {
     return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
   });
-  // console.log("esaaaa " + JSON.stringify(mainFiltered));
 
+  console.log(products)
 
 
   const MainLoading = isFilteredLoading
@@ -935,7 +986,16 @@ const Catalog: NextPage = () => {
             </MoreFilterBtn>
           </FilltersBox>
 
-          {openModal && <SidebarFilter openModal={setOpenModal} />}
+          {/* {openModal && <SidebarFilter product={products} openModal={setOpenModal} />} */}
+
+
+          {openModal && <MainFilterComponent>
+            <Shadow onClick={() => setOpenModal(false)} />
+            <Scrollbar hide={true} />
+            <Content>
+              <MediumTitle>ზომა</MediumTitle>
+            </Content>
+          </MainFilterComponent>}
 
 
         </FilterWrapper>
