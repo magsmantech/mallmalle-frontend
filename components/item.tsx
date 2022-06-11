@@ -111,7 +111,12 @@ const SaleItem = ({
               {price} {CurrencyMap[currency]}
             </Price>
             <Price old currency={currency}>
-              {oldPrice} {CurrencyMap[currency]}
+              {oldPrice === '' ? null : (
+                <>
+                  {oldPrice} {CurrencyMap[currency]}
+                </>
+              )}
+
             </Price>
           </ProductTextWrapper>
           <Title>{name}</Title>

@@ -50,6 +50,7 @@ import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from "../../components/customStyle/SidebarFilter";
 import Loader from "../../components/Loader";
 
+
 const Heading = styled.h1`
   color: var(--text-color);
   font-size: 44px;
@@ -664,6 +665,14 @@ type FilterSideBarProps = {
 
 const Catalog: NextPage = () => {
 
+  const router = useRouter();
+
+  const { id } = router.query;
+  const categoryID = parseInt(router.query.id as string)
+
+
+
+
 
   const [showHideLoader, setshowHideLoader] = useState(false);
 
@@ -764,10 +773,7 @@ const Catalog: NextPage = () => {
   const context = useContext(CategoriesContext);
   // console.log(context);
 
-  const router = useRouter();
 
-  const { id } = router.query;
-  // console.log(id);
 
 
   // const category = findCategoryInAllCategories(+id, allCategories || []);
@@ -821,20 +827,15 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
-  const categoryID = router.query.id as any;
+  // const categoryID = router.query.id as any;
   // console.log(categoryID);
   // console.log(typeof categoryID)
   // sizeVariationID, colorVariationID, startPrice, endPrice
 
 
 
-  const [brand, setBrand] = useState();
-  const [price, setPrice] = useState();
-
   const [sizeVariationID, setsizeVariationID] = useState<number>();
   const [colorVariationID, setcolorVariationID] = useState<number>();
-  const [startPrice, setstartPrice] = useState<string>('500');
-  const [endPrice, setendPrice] = useState<string>('500');
 
 
   const [lowestPrice, setLowestPrice] = useState<string>("0");
@@ -843,17 +844,17 @@ const Catalog: NextPage = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(parseInt(categoryID, 10));
+
+
+
+  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(19);
 
   // const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({
   //   size_variation: sizeVariationID, color_variation: colorVariationID, start_price: startPrice, end_price: endPrice, category_id: parseInt(categoryID, 10)
   // });
 
-  // console.log(FilteredCategory)
 
-
-
-  // console.log(products)
+  console.log(products)
 
   const mainFiltered = products.filter((p: Product) => {
     return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price

@@ -41,7 +41,8 @@ const Favorites: React.FC<{}> = ({ }) => {
         <>
             <Wrapper>
                 <TopSideWrapper>
-                    <FilterWrapper>
+
+                    {/* <FilterWrapper>
                         <FilltersBox>
                             <DropDown dropdownTitle="პოპულარული">
                                 <RadioButton
@@ -93,7 +94,10 @@ const Favorites: React.FC<{}> = ({ }) => {
                         {openModal && <SidebarFilter openModal={setOpenModal} />}
 
 
-                    </FilterWrapper>
+                    </FilterWrapper> */}
+
+
+
                     <FavoriteCount>სულ მოიძებნა: <span>{favorite.length} შენახული</span></FavoriteCount>
                 </TopSideWrapper>
 
@@ -114,11 +118,11 @@ const Favorites: React.FC<{}> = ({ }) => {
                         // console.log("first " + imgUrl);
                         return (
                             <ItemWrapper key={index}>
-                                <Item name={f.product.product_name} id={f.product.id} price="80.00" oldPrice='125.00' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>
+                                <Item name={f.product.product_name} id={f.product.id} price={f.product.lowest_price} oldPrice='' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>
                                 {/* TODO image from api */}
                                 <CartButton
                                     onClick={_showFeedback}
-                                >კალათაში დამატება</CartButton>
+                                >დეტალურად ნახვა</CartButton>
                             </ItemWrapper>
                         )
                     })}
