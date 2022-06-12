@@ -719,10 +719,14 @@ const Catalog: NextPage = () => {
   const router = useRouter();
 
   const { id } = router.query;
-  const categoryID = parseInt(router.query.id as string)
+  const { asPath } = useRouter()
 
+  // console.log(asPath)
 
+  const lastId = asPath.substring(asPath.lastIndexOf('/') + 1);
 
+  const category_id_parse = parseFloat(lastId)
+  console.log(typeof category_id_parse)
 
 
   const [showHideLoader, setshowHideLoader] = useState(false);
@@ -878,11 +882,6 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
-  // const categoryID = router.query.id as any;
-  // console.log(categoryID);
-  // console.log(typeof categoryID)
-  // sizeVariationID, colorVariationID, startPrice, endPrice
-
 
 
   const [sizeVariationID, setsizeVariationID] = useState<number>();
@@ -898,20 +897,20 @@ const Catalog: NextPage = () => {
 
 
 
-  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(19);
+  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(category_id_parse);
 
   // const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({
   //   size_variation: sizeVariationID, color_variation: colorVariationID, start_price: startPrice, end_price: endPrice, category_id: parseInt(categoryID, 10)
   // });
 
-
+  console.log(filtered)
 
 
   const mainFiltered = products.filter((p: Product) => {
     return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
   });
 
-  console.log(products)
+  // console.log(products)
 
 
   const MainLoading = isFilteredLoading
