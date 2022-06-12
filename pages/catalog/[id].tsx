@@ -413,7 +413,7 @@ const Content = styled.div`
     padding: 50px 30px 0px 30px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
         ${Responsive.tabletMobile}{
             top: 120px;
         }
@@ -437,7 +437,10 @@ const MediumTitle = styled.h4`
             font-size: 14px;
         }
 `;
-
+const FilterInnterWrapper = styled.div`
+  margin-bottom: 50px;
+  margin-top: 10px;
+`;
 
 
 const Item = ({ product }: { product: Product }) => {
@@ -726,7 +729,7 @@ const Catalog: NextPage = () => {
   const lastId = asPath.substring(asPath.lastIndexOf('/') + 1);
 
   const category_id_parse = parseFloat(lastId)
-  console.log(typeof category_id_parse)
+  // console.log(typeof category_id_parse)
 
 
   const [showHideLoader, setshowHideLoader] = useState(false);
@@ -882,6 +885,8 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
+  const [getColor, setGetColor] = useState();
+  const [getSize, setGetSize] = useState();
 
 
   const [sizeVariationID, setsizeVariationID] = useState<number>();
@@ -992,7 +997,49 @@ const Catalog: NextPage = () => {
             <Shadow onClick={() => setOpenModal(false)} />
             <Scrollbar hide={true} />
             <Content>
+              <MediumTitle>ფერი</MediumTitle>
+              <FilterInnterWrapper>
+                <RadioButton
+                  id="color-id"
+                  onChange={(value) => setGetColor(value)}
+                  options={[
+                    ...filtered.color_variations.map((c, index) => ({
+                      label: c.color_name,
+                      value: c.color
+                    })),
+                  ]}
+                  value={getColor}
+                />
+              </FilterInnterWrapper>
+
               <MediumTitle>ზომა</MediumTitle>
+
+              <FilterInnterWrapper>
+                <RadioButton
+                  id="size-id"
+                  onChange={(value) => setGetColor(value)}
+                  options={[
+                    ...filtered.size_variations.map((s, index) => ({
+                      label: s.size_name,
+                      value: s.id
+                    })),
+                  ]}
+                  value={getColor}
+                />
+              </FilterInnterWrapper>
+
+              {filtered.categories.length >= 1 ? (
+                <MediumTitle>კატეგორიები</MediumTitle>
+              ) : null}
+              <FilterInnterWrapper>
+                {filtered.categories.map((category, index) => {
+                  return (
+                    <div>{category.category_name}</div>
+                  )
+                })}
+              </FilterInnterWrapper>
+
+
             </Content>
           </MainFilterComponent>}
 
