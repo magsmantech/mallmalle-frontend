@@ -28,6 +28,7 @@ import api, { uploadUrl } from '../../features/api';
 import Loader from '../../components/Loader';
 import { Product } from '../../domain/shop';
 import { useRouter } from "next/router";
+import { Scrollbar } from '../../components/GlobalStyle';
 
 
 const Heading = styled.h1`
@@ -354,7 +355,60 @@ const SearchCount = styled.div`
     color: #000;
     height: 300px;
 `;
+const Shadow = styled.div`
+    position: fixed;
+    top: 125px;
+    left: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+        ${Responsive.tabletMobile}{
+            top: 120px;
+        }
+`;
+const MainFilterComponent = styled.div`
 
+`;
+const Content = styled.div`
+    position: fixed;
+    right: 0;
+    top: 125px;
+    background-color: #fff;
+    z-index: 22;
+    height: calc(100% - 125px);
+    width: 490px;
+    padding: 50px 30px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+        ${Responsive.tabletMobile}{
+            top: 120px;
+        }
+        ${Responsive.mobile}{
+            width: 100%;
+            height: 75%;
+            bottom: 0;
+            left: 0;
+            top: unset;
+            right: unset;
+            border-radius: 20px 20px 0px 0px;
+            overflow-x: scroll;
+        }
+`;
+const MediumTitle = styled.h4`
+    font-size: 18px;
+    color: #424F60;
+    font-family: 'BPG WEB 002 CAPS';
+    font-weight: 400;
+        ${Responsive.mobile}{
+            font-size: 14px;
+        }
+`;
+const FilterInnterWrapper = styled.div`
+  margin-bottom: 50px;
+  margin-top: 10px;
+`;
 
 
 
@@ -373,6 +427,7 @@ const Item = ({ imgSrc, id }: any) => {
     const [hovered, setHovered] = useState(false);
 
 
+
     const dispatch = useDispatch();
 
     const _addToCart = () => {
@@ -380,6 +435,7 @@ const Item = ({ imgSrc, id }: any) => {
             show: true,
         }))
     }
+
 
     return isProductByIdLoading ? <Loader /> : !productById ? (<span>not found product detail by id</span>) : (
 
@@ -406,7 +462,7 @@ const Item = ({ imgSrc, id }: any) => {
                 ))}
 
                 <PriceTitleStyle className={styles.child}><Title >{productById.product_name}</Title></PriceTitleStyle>
-                <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
+                {/* <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
                     <StartsWrapperStyle>
                         <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                         <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
@@ -414,8 +470,8 @@ const Item = ({ imgSrc, id }: any) => {
                         <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                         <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
                     </StartsWrapperStyle>
-                    {/* <Count>402 ნახვა</Count> */}
-                </div>
+                    <Count>402 ნახვა</Count>
+                </div> */}
 
                 {hovered && <ItemButton
                     className={styles.child}
@@ -578,12 +634,14 @@ const Search: NextPage = () => {
     console.log("search result " + searchResult);
 
     const [openFilters, setOpenFilters] = useState(false)
+    const [lowestPrice, setLowestPrice] = useState<string>("0");
+    const [highestPrice, setHighestPrice] = useState<string>("9999999999999");
+
 
     const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
-    const { data: productById, isLoading: isProductByIdLoading, refetch: refetchProductById } = api.useGetProductByIdQuery(1);
 
-    // useEffect(() => {
-    //     document.body.style.overflow = openFilters ? "hidden" : 'auto';
+
+
     // }, [openFilters])
 
     // useEffect(() => {
@@ -594,6 +652,9 @@ const Search: NextPage = () => {
     //         .catch(err => {
     //             console.log(err);
 
+    // useEffect(() => {
+    //     document.body.style.overflow = openFilters ? "hidden" : 'auto';
+
     //         })
     // }, []);
 
@@ -602,19 +663,24 @@ const Search: NextPage = () => {
     const [price, setPrice] = useState();
 
     const [openModal, setOpenModal] = useState(false);
-    const MainLoader = isAllProductLoading || isProductByIdLoading;
+    const MainLoader = isAllProductLoading;
 
 
-    console.log(allProduct?.filter(product => product.product_name.toLowerCase().includes("თე")))
+    // console.log(allProduct?.filter(product => product.product_name.toLowerCase().includes("თე")))
 
 
     const serch = (allProduct: Product[]) => {
 
         return allProduct.filter(product =>
-            product.product_name.toLowerCase().includes(searchResult)
+            product.product_name.toLowerCase().includes(searchResult) 
         )
     }
 
+    const mainFiltered = allProduct?.filter((p: Product) => {
+        return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
+    });
+
+    console.log(mainFiltered)
 
 
     return MainLoader ? <Loader /> : !allProduct ? (<span>not found all products</span>) : (
@@ -663,47 +729,49 @@ const Search: NextPage = () => {
                     <Quantity>{serch(allProduct).length} პროდუქტი</Quantity>
                 </TopSideWrapper>
                 <FilterWrapper>
+
                     <FilltersBox>
-                        <DropDown dropdownTitle="პოპულარული">
+                        <DropDown dropdownTitle="მინ. ფასი">
                             <RadioButton
-                                id="popular-id"
-                                onChange={(value) => setPopular(value)}
+                                id="low-id"
+                                onChange={(value) => setLowestPrice(value)}
                                 options={[
-                                    { label: "პოპულარული 1", value: "პოპულარული 1" },
-                                    { label: "პოპულარული 2", value: "პოპულარული 2" },
+                                    { label: "0 ₾", value: "0" },
+                                    { label: "100 ₾", value: "100" },
+                                    { label: "200 ₾", value: "200" },
+                                    { label: "300 ₾", value: "300" },
+                                    { label: "400 ₾", value: "400" },
+                                    { label: "500 ₾", value: "500" },
+                                    { label: "600 ₾", value: "600" },
+                                    { label: "700 ₾", value: "700" },
                                 ]}
-                                value={popular}
+                                value={lowestPrice}
                             />
-                        </DropDown>{popular === undefined ? null : popular}
-                    </FilltersBox>
-                    <FilltersBox>
-                        <DropDown dropdownTitle="ბრენდი">
-                            <RadioButton
-                                id="brand-id"
-                                onChange={(value) => setBrand(value)}
-                                options={[
-                                    { label: "ბრენდი 1", value: "ბრენდი 1" },
-                                    { label: "ბრენდი 2", value: "ბრენდი 2" },
-                                ]}
-                                value={brand}
-                            />
-                        </DropDown>{brand === undefined ? null : brand}
+                        </DropDown>
                     </FilltersBox>
 
                     <FilltersBox>
-                        <DropDown dropdownTitle="ფასი">
+                        <DropDown dropdownTitle="მახ. ფასი">
                             <RadioButton
-                                id="price-id"
-                                onChange={(value) => setPrice(value)}
+                                id="hight-id"
+                                onChange={(value) => setHighestPrice(value)}
                                 options={[
-                                    { label: "ფასი 1", value: "ფასი 1" },
-                                    { label: "ფასი 2", value: "ფასი 2" },
+                                    { label: "განულება", value: "9999999999999" },
+                                    { label: "100 ₾", value: "100" },
+                                    { label: "200 ₾", value: "200" },
+                                    { label: "300 ₾", value: "300" },
+                                    { label: "400 ₾", value: "400" },
+                                    { label: "500 ₾", value: "500" },
+                                    { label: "600 ₾", value: "600" },
+                                    { label: "700 ₾", value: "700" },
                                 ]}
-                                value={price}
+                                value={highestPrice}
                             />
-                        </DropDown>{price === undefined ? null : price}
+                        </DropDown>
                     </FilltersBox>
 
+
+                    
                     <FilltersBox>
                         <MoreFilterBtn onClick={() => setOpenModal(true)}>
                             მეტი ფილტრი
@@ -711,7 +779,30 @@ const Search: NextPage = () => {
                         </MoreFilterBtn>
                     </FilltersBox>
 
-                    {openModal && <SidebarFilter openModal={setOpenModal} />}
+                    {openModal && <MainFilterComponent>
+                        <Shadow onClick={() => setOpenModal(false)} />
+                        <Scrollbar hide={true} />
+                        <Content>
+                            <MediumTitle>ფერი</MediumTitle>
+                            <FilterInnterWrapper>
+                                {/* <RadioButton
+                                    id="color-id"
+                                    onChange={(value) => setGetColor(value)}
+                                    options={[
+                                        ...filtered.color_variations.map((c, index) => ({
+                                            label: c.color_name,
+                                            value: c.color
+                                        })),
+                                    ]}
+                                    value={getColor}
+                                /> */}
+                            </FilterInnterWrapper>
+
+                            <MediumTitle>ზომა</MediumTitle>
+
+
+                        </Content>
+                    </MainFilterComponent>}
 
 
                 </FilterWrapper>
@@ -720,7 +811,7 @@ const Search: NextPage = () => {
             <Grid style={{ marginBottom: "80px" }}>
                 {serch(allProduct).length <= 0 ? (<SearchCount>მოიძებნა 0 პროდუქტი</SearchCount>) : (
                     serch(allProduct).map((p, index) => (
-                        <Item key={p.id} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
+                        <Item key={index} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
                     )))}
 
             </Grid>

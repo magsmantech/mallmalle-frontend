@@ -10,7 +10,7 @@ import { Product } from '../../domain/shop';
 
 const SidebarFilter: React.FC<{
     openModal: any;
-    product: Product[]
+    product?: Product[]
 }> = ({
     openModal,
     product
