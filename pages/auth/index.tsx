@@ -737,6 +737,7 @@ const Auth: NextPage = () => {
       address: yup.string().required(),
       city: yup.string().required(),
       country: yup.string().required(),
+      state: yup.string().required(),
       zip: yup.string().required(),
     });
 
@@ -744,11 +745,15 @@ const Auth: NextPage = () => {
       address: "",
       city: "",
       country: "",
+      state: "",
       zip: "",
     };
 
+
+
+
     const addressSubmit = (values: AddAddressParams) => {
-      const router = useRouter();
+
       setLoading(true);
       console.log(values);
       AuthService.addAddress(values)
@@ -757,17 +762,17 @@ const Auth: NextPage = () => {
           const { data } = res;
           console.log(data);
           setLoading(false);
-          router.push("/profile")
+          router.push("/profile");
         })
         .catch((err) => {
           console.log(err);
           setLoading(false);
-          dispatch(
-            showFeedback({
-              show: true,
-              type: "error",
-            })
-          );
+          // dispatch(
+          //   showFeedback({
+          //     show: true,
+          //     type: "error",
+          //   })
+          // );
         });
     };
 
@@ -886,7 +891,7 @@ const Auth: NextPage = () => {
             <form onSubmit={addressFormik.handleSubmit}>
               <FormLayout>
                 <Input
-                  placeholder="ქუჩის სახელი"
+                  placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა"
                   name="address"
                   value={addressFormik.values.address}
                   onChange={addressFormik.handleChange}
@@ -917,6 +922,15 @@ const Auth: NextPage = () => {
                   />
                 </DoubleInputWrapper>
                 <Input
+                  placeholder="რეგიონი / რაიონი"
+                  name="state"
+                  value={addressFormik.values.state}
+                  onChange={addressFormik.handleChange}
+                  invalid={
+                    addressFormik.touched.state && addressFormik.errors.state
+                  }
+                />
+                <Input
                   placeholder="Zip კოდი"
                   name="zip"
                   value={addressFormik.values.zip}
@@ -925,7 +939,7 @@ const Auth: NextPage = () => {
                     addressFormik.touched.zip && addressFormik.errors.zip
                   }
                 />
-                <Button type="submit" disabled={loading}>
+                <Button type="submit" disabled={loading} >
                   მისამართის დამატება
                 </Button>
               </FormLayout>

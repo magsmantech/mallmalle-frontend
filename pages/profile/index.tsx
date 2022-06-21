@@ -556,7 +556,7 @@ const PersonalInfo = () => {
         </Modal.Header>
         <Modal.Body>
           <ModalContent>
-            <InputStyle type="text" placeholder="ქუჩის სახელი" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+            <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
             <TwoInputWrapper>
               <InputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
               <InputStyle type="text" placeholder="ქვეყანა" value={updateCountry} onChange={(e: any) => setupdateCountry(e.target.value)} />
@@ -634,7 +634,7 @@ const PersonalInfo = () => {
         </Modal.Header>
         <Modal.Body>
           <ModalContent>
-            <InputStyle type="text" placeholder="ქუჩის სახელი" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
+            <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
             <TwoInputWrapper>
               <InputStyle type="text" placeholder="ქალაქი" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
               <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry} onChange={(e: any) => setAddAddressCountry(e.target.value)} />
