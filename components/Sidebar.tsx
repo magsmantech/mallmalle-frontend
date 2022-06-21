@@ -36,7 +36,7 @@ type PromoItemProps = any;
 
 const Divider = styled.div`
     border-bottom: .1rem solid rgba(122, 112, 112, .2);
-    margin: 2.8rem 0;
+    margin: 28px 0;
     display: flex;
 `;
 
@@ -72,7 +72,7 @@ const PromoItemBackground = styled.div`
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 1.8rem;
+    padding: 18px;
     position: relative;
 `;
 const PromoItemTextSale = styled.div`
@@ -92,12 +92,28 @@ const MibileSecondMenuWrapper = styled.div`
 `;
 const HideInMobile = styled.div`
     height: 100%;
+  
     ${Responsive.tablet}{
         display: none !important;
     }
     ${Responsive.mobile}{
         display: none !important;
     }
+`;
+const HideInMobileDetailMenu = styled.div`
+    height: 100%;
+    background-color: white;
+    max-width: 390px;
+  
+    ${Responsive.tablet}{
+        display: none !important;
+    }
+    ${Responsive.mobile}{
+        display: none !important;
+    }
+`;
+const DetailMenuStyle = styled.div`
+  padding: 45px 40px;
 `;
 const HideInDesktop = styled.div`
     height: 100%;
@@ -121,6 +137,9 @@ const MobileSubMenu = styled.div`
 const MobileSubMenuContent = styled.div`
     margin-right: 0px !important;
     padding: 45px 24px;
+`;
+const DetailMenuTittle = styled.div`
+    font-size: 24px;
 `;
 
 
@@ -236,7 +255,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
 
     const DetailMenu = () => {
-        return (<>
+        return (<DetailMenuStyle>
             <SubmenuTitle className={styles.detailMenuTitle}>
                 შემოთავაზებული კატეგორიები
             </SubmenuTitle>
@@ -257,7 +276,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 <PromoItem></PromoItem>
                 <PromoItem></PromoItem>
             </div>
-        </>)
+        </DetailMenuStyle>)
     };
 
 
@@ -312,13 +331,13 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </SideBarWrapper>}
                 </HideInMobile>
 
-                <HideInMobile>
+                <HideInMobileDetailMenu>
                     {showDetailMenu && !!detailMenuItems.length && <div className={styles.container}
                         onMouseLeave={() => setShowDetailMenu(false)}
                         onMouseEnter={() => setShowDetailMenu(true)}>
                         <DetailMenu />
                     </div>}
-                </HideInMobile>
+                </HideInMobileDetailMenu>
 
                 {shoMobileSecondSideBar === true ? (
                     <MobileSubMenu className={styles.container}
@@ -366,7 +385,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 const MainTittleStyle = styled.div`
     font-size: 20px;
     font-family: "fira-go";
-    padding: 10px 0px;
+    padding: 5px 0px;
     margin: 5px 0px;
 `;
 const SubmenuTitle = styled.div`
