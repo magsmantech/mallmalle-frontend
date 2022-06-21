@@ -74,9 +74,16 @@ const Quantity = styled.span`
   color: var(--text-color);
   opacity: 0.5;
   font-family: fira-go;
-  font-size: 1.6rem;
+  font-size: 16px;
   transform: translateY(-0.9rem);
   margin-left: 2.2rem;
+  margin-top: auto;
+      ${Responsive.tablet} {
+        margin-bottom: 20px;
+      }
+      ${Responsive.mobile} {
+        margin-bottom: 20px;
+      }
 `;
 
 const Grid = styled.div`
@@ -462,6 +469,7 @@ const Item = ({ product }: { product: Product }) => {
     );
   };
 
+
   return (
     <>
       <Link href={"/detail/" + product.id}>
@@ -471,13 +479,13 @@ const Item = ({ product }: { product: Product }) => {
           onMouseLeave={() => setHovered(false)}
         >
           <Img backgroundImage={imgSrc} className={styles.child}>
-            {hovered && (
+            {/* {hovered && (
               <ItemOverlay>
                 <BookmarkWrapper style={{ zIndex: 20 }}>
                   <BsBookmarkPlusFillStyle color={"#ffffff"} />
                 </BookmarkWrapper>
               </ItemOverlay>
-            )}
+            )} */}
           </Img>
           <PriceWrapper
 
@@ -832,8 +840,6 @@ const Catalog: NextPage = () => {
   // console.log(context);
 
 
-
-
   // const category = findCategoryInAllCategories(+id, allCategories || []);
   // const categoryWithParents = findCategoryAndParents(id, allCategories);
 
@@ -857,7 +863,7 @@ const Catalog: NextPage = () => {
         } = filtersResp;
         setColorFilters(color_variations);
         const array = _formatProductsData(dataResp?.data);
-        // console.log(array, "ascacacas");
+        // console.log(array.lenght);
         setProducts(array);
         setshowHideLoader(false)
       })
@@ -908,7 +914,7 @@ const Catalog: NextPage = () => {
   //   size_variation: sizeVariationID, color_variation: colorVariationID, start_price: startPrice, end_price: endPrice, category_id: parseInt(categoryID, 10)
   // });
 
-  console.log(filtered)
+  // console.log(filtered)
 
 
   const mainFiltered = products.filter((p: Product) => {
@@ -937,7 +943,7 @@ const Catalog: NextPage = () => {
       <HeadWrapperStyle>
         <TitileWrapper>
           <Heading>{category?.category_name}</Heading>
-          {/* <Quantity>12 323 პროდუქტი</Quantity> */}
+          <Quantity>{products.length} პროდუქტი</Quantity>
         </TitileWrapper>
         <FilterWrapper>
 
