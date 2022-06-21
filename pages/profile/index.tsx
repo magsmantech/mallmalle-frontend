@@ -30,7 +30,8 @@ import { Modal } from "react-bootstrap";
 
 import { Address } from '../../domain/shop';
 import { Alert, Snackbar } from "@mui/material";
-
+import dayjs from "dayjs";
+require('dayjs/locale/ka');
 
 
 type TabItemProps = {
@@ -672,7 +673,7 @@ const PersonalInfo = () => {
                 {profile.profile?.user.first_name} {profile.profile?.user.last_name}
               </UserName>
               <OrderNo className={styles.orderNo}>
-                რეგისტრაციის დრო: {getYearFromDate(profile.profile?.user.created_at)} წელი
+                რეგისტრაციის დრო: {dayjs(profile.profile?.user.created_at).locale('ka').format('DD / MMMM / YYYY')} წელი
               </OrderNo>
             </div>
           </HeaderStyle>
@@ -849,14 +850,14 @@ const Profile: NextPage = () => {
     }
   }, []);
 
-  const tabTitles = ["პროფილი", "ყიდვის ისტორია", "ფავორიტები",];
+  const tabTitles = ["პროფილი", "ყიდვის ისტორია", "რჩეულები",];
 
-  const tabIndicators = ["", " / ყიდვის ისტორია", " / ფავორიტები", ""];
+  const tabIndicators = ["", " / ყიდვის ისტორია", " / რჩეულები", ""];
 
   const sectionTitles = [
     "პროფილი",
     "ყიდვის ისტორია",
-    "ფავორიტები",
+    "რჩეულები",
   ];
 
   return (

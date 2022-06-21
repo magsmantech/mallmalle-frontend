@@ -415,7 +415,7 @@ const Auth: NextPage = () => {
           //   })
           // );
           // alert(err)
-          setSnackMessage("მოხდა შეცდომა, გადაამოწემეთ თქვენი მონაცემები ან სცადეთ მოგვიანებით");
+          setSnackMessage("გადააამოწმეთ თქვენი მონაცემები");
           setOpenSnack(true);
           setsnackMsgStatus('error');
           console.log(err);
@@ -552,7 +552,7 @@ const Auth: NextPage = () => {
         .catch((err) => {
           console.log(err);
           setLoading(false);
-          
+
           // dispatch(
           //   showFeedback({
           //     show: true,
@@ -1005,9 +1005,7 @@ const Auth: NextPage = () => {
             გამოიწერე ჩვენი ვებ გვერდი და პირველმა მიიღე სიახლეები
           </ImgTitle>
           <ImgText>
-            შემთხვევითად გენერირებული ტექსტი ეხმარება დიზაინერებს და
-            ტიპოგრაფიული ნაწარმის შემქმნელებს, რეალურთან მაქსიმალურად
-            მიახლოებული შაბლონი წარუდგინონ შემფასებელს.{" "}
+            მიუთითეთ თქვენი მეილი
           </ImgText>
           <IWBWrapper>
             <IWBInput placeholder="ელ-ფოსტა" />

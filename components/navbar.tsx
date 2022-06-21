@@ -77,7 +77,7 @@ const Navbar: React.FC<{
                         <ItemWrapper >
                             {/* <BsBookmark size={"3.2rem"} color={"white"} /> */}
                             <BookmarkIcon />
-                            <ItemLabel>ფავორიტები</ItemLabel>
+                            <ItemLabel>რჩეულები</ItemLabel>
                             {loggedIn === false ? null : (
                                 favorite.length <= 0 ? null : favorite.length == undefined ? null :(
                                     <FavoriteCount>{favorite.length}</FavoriteCount>
