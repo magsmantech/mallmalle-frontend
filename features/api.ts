@@ -271,10 +271,10 @@ const api = createApi({
     // 
     // search
     // 
-    // 
-    search: builder.query<Search, string>({
-      query: (keyword) => ({
-        url: `search?keyword=${keyword}`,
+    // search?page=2&keyword=a
+    search: builder.query<Search, {keyword: string, page: number | string}>({
+      query: ({keyword, page}) => ({
+        url: `search?page=${page}&keyword=${keyword}`,
         method: 'GET',
       })
     }),

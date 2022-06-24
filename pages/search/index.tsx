@@ -5,12 +5,9 @@ import styles from '../../styles/Catalog.module.css'
 
 import { Wrapper as Pagination, Number } from '../../components/styled/pagination';
 
-import { ChipIconWrapper, ChipTitle, ChipWrapper } from '../../components/styled/Chips';
 import Link from 'next/link';
 import Button from '../../components/styled/button';
 import { useState, useEffect } from 'react';
-import { Wrapper, Item as RadioItem, RadioButtonLabel } from '../../components/styled/radioButton';
-import Slider from '../../components/slider';
 import FilterSelect from '../../components/filterSelect';
 import { Breadcrumbs } from '../../components/styled/breadcrumbs';
 import ColorSelector from '../../components/ColorSelector';
@@ -29,7 +26,6 @@ import Loader from '../../components/Loader';
 import { Product, ProductData } from '../../domain/shop';
 import { useRouter } from "next/router";
 import { Scrollbar } from '../../components/GlobalStyle';
-
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -629,10 +625,16 @@ const Search: NextPage = () => {
     const [openFilters, setOpenFilters] = useState(false)
     const [lowestPrice, setLowestPrice] = useState<string>("0");
     const [highestPrice, setHighestPrice] = useState<string>("9999999999999");
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
+    // reset current page
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [searchResult])
+    
 
     const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
-    const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery(searchResult);
+    const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery({ keyword: searchResult, page: currentPage });
 
 
     const [popular, setPopular] = useState();
@@ -643,21 +645,21 @@ const Search: NextPage = () => {
     const MainLoader = isAllProductLoading || isSearchResultsLoading;
 
 
-    console.log(searchResults)
+    // console.log(searchResults)
 
 
 
 
-    const serch = (allProduct: ProductData[]) => {
+    // const serch = (allProduct: ProductData[]) => {
 
-        return allProduct.filter(product =>
-            product.product_name.toLowerCase().includes(searchResult) 
-        )
-    }
+    //     return allProduct.filter(product =>
+    //         product.product_name.toLowerCase().includes(searchResult) 
+    //     )
+    // }
 
 
 
-    return MainLoader ? <Loader /> : !allProduct ? (<span>not found all products</span>) : (
+    return MainLoader ? <Loader /> : !searchResults ? (<span>მოიძებნა 0 პროდუქტი</span>) : (
         <>
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
             {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
@@ -700,7 +702,7 @@ const Search: NextPage = () => {
 
                 <TopSideWrapper>
                     <Heading>ძებნის შედეგები</Heading>
-                    {/* <Quantity>{serch(allProduct).length} პროდუქტი</Quantity> */}
+                    <Quantity>{searchResults.total} პროდუქტი</Quantity>
                 </TopSideWrapper>
                 <FilterWrapper>
 
@@ -745,7 +747,7 @@ const Search: NextPage = () => {
                     </FilltersBox>
 
 
-                    
+
                     <FilltersBox>
                         <MoreFilterBtn onClick={() => setOpenModal(true)}>
                             მეტი ფილტრი
@@ -773,23 +775,30 @@ const Search: NextPage = () => {
                             </FilterInnterWrapper>
 
                             <MediumTitle>ზომა</MediumTitle>
-
-
                         </Content>
                     </MainFilterComponent>}
-
-
                 </FilterWrapper>
             </HeadWrapperStyle>
 
-             <Grid style={{ marginBottom: "80px" }}>
-                {serch(allProduct.data).length <= 0 ? (<SearchCount>მოიძებნა 0 პროდუქტი</SearchCount>) : (
-                    serch(allProduct.data).map((p, index) => (
+
+            <Grid style={{ marginBottom: "80px" }}>
+                {searchResults?.data.length < 1 ? (<SearchCount></SearchCount>) : (
+                    searchResults.data.map((p, index) => (
                         <Item key={index} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
-                    )))}
-            </Grid> 
+                    ))
+                )}
+            </Grid>
 
 
+            {/* <button onClick={() => setCurrentPage(currentPage - 1)}>prev</button>
+            <button onClick={() => setCurrentPage(currentPage + 1)}>next</button> */}
+            {/* {currentPage} */}
+
+            <Pagination style={{ margin: '70px 0 50px 0' }} gap={'1.4rem'}>
+                {searchResults.links.slice(1, -1).map((n, index) => (
+                <Number selected={currentPage === parseInt(n.label) ? true : false} key={index} onClick={() => setCurrentPage(parseInt(n.label))}>{parseInt(n.label)}</Number>
+            ))}
+            </Pagination>
 
         </>
     )
