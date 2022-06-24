@@ -26,7 +26,7 @@ import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from '../../components/customStyle/SidebarFilter';
 import api, { uploadUrl } from '../../features/api';
 import Loader from '../../components/Loader';
-import { Product } from '../../domain/shop';
+import { Product, ProductData } from '../../domain/shop';
 import { useRouter } from "next/router";
 import { Scrollbar } from '../../components/GlobalStyle';
 
@@ -413,13 +413,6 @@ const FilterInnterWrapper = styled.div`
 
 
 
-
-
-
-
-
-
-
 const Item = ({ imgSrc, id }: any) => {
     const [productID, setproductID] = useState<number>(id);
 
@@ -631,7 +624,7 @@ type FilterSideBarProps = {
 const Search: NextPage = () => {
     const router = useRouter();
     const searchResult = router.query.result as any;
-    console.log("search result " + searchResult);
+    // console.log("search result " + searchResult);
 
     const [openFilters, setOpenFilters] = useState(false)
     const [lowestPrice, setLowestPrice] = useState<string>("0");
@@ -639,48 +632,29 @@ const Search: NextPage = () => {
 
 
     const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
+    const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery(searchResult);
 
-
-
-    // }, [openFilters])
-
-    // useEffect(() => {
-    //     getProductsById(1).then((res) => {
-    //         console.log(res);
-
-    //     })
-    //         .catch(err => {
-    //             console.log(err);
-
-    // useEffect(() => {
-    //     document.body.style.overflow = openFilters ? "hidden" : 'auto';
-
-    //         })
-    // }, []);
 
     const [popular, setPopular] = useState();
     const [brand, setBrand] = useState();
     const [price, setPrice] = useState();
 
     const [openModal, setOpenModal] = useState(false);
-    const MainLoader = isAllProductLoading;
+    const MainLoader = isAllProductLoading || isSearchResultsLoading;
 
 
-    // console.log(allProduct?.filter(product => product.product_name.toLowerCase().includes("თე")))
+    console.log(searchResults)
 
 
-    const serch = (allProduct: Product[]) => {
+
+
+    const serch = (allProduct: ProductData[]) => {
 
         return allProduct.filter(product =>
             product.product_name.toLowerCase().includes(searchResult) 
         )
     }
 
-    const mainFiltered = allProduct?.filter((p: Product) => {
-        return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
-    });
-
-    console.log(mainFiltered)
 
 
     return MainLoader ? <Loader /> : !allProduct ? (<span>not found all products</span>) : (
@@ -726,7 +700,7 @@ const Search: NextPage = () => {
 
                 <TopSideWrapper>
                     <Heading>ძებნის შედეგები</Heading>
-                    <Quantity>{serch(allProduct).length} პროდუქტი</Quantity>
+                    {/* <Quantity>{serch(allProduct).length} პროდუქტი</Quantity> */}
                 </TopSideWrapper>
                 <FilterWrapper>
 
@@ -808,22 +782,14 @@ const Search: NextPage = () => {
                 </FilterWrapper>
             </HeadWrapperStyle>
 
-            <Grid style={{ marginBottom: "80px" }}>
-                {serch(allProduct).length <= 0 ? (<SearchCount>მოიძებნა 0 პროდუქტი</SearchCount>) : (
-                    serch(allProduct).map((p, index) => (
+             <Grid style={{ marginBottom: "80px" }}>
+                {serch(allProduct.data).length <= 0 ? (<SearchCount>მოიძებნა 0 პროდუქტი</SearchCount>) : (
+                    serch(allProduct.data).map((p, index) => (
                         <Item key={index} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
                     )))}
+            </Grid> 
 
-            </Grid>
 
-            {/* <PaginationWrapper>
-                <Pagination gap={'30px'}>
-                    <Number selected>1</Number>
-                    <Number>2</Number>
-                    <Number>3</Number>
-                    <Number>4</Number>
-                </Pagination>
-            </PaginationWrapper> */}
 
         </>
     )

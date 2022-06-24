@@ -35,27 +35,27 @@ type ProductWithImages = Product & {
 }
 
 
-export const getProductImages = (product: Product): ProductWithImages => {
-  if (!product.images) {
-    return {
-      ...product,
-      mainImage: undefined,
-      allImages: [],
-    }
-  }
+// export const getProductImages = (product: Product): ProductWithImages => {
+//   if (!product.product_Data.images) {
+//     return {
+//       ...product,
+//       mainImage: undefined,
+//       allImages: [],
+//     }
+//   }
 
-  const allImages = JSON.parse(product.images);
-  // console.log('product images:', allImages);
-  const mainImage = allImages[0];
-  // console.log('main image:', mainImage);
-  const productWithImages: ProductWithImages = {
-    ...product,
-    mainImage,
-    allImages,
-  };
-  // console.log('productWithImages:', productWithImages);
-  return productWithImages;
-}
+//   const allImages = JSON.parse(product.product_Data.images);
+//   console.log('product images:', allImages);
+//   const mainImage = allImages[0];
+//   console.log('main image:', mainImage);
+//   const productWithImages: ProductWithImages = {
+//     ...product,
+//     mainImage,
+//     allImages,
+//   };
+//   console.log('productWithImages:', productWithImages);
+//   return productWithImages;
+// }
 
 
 
@@ -101,7 +101,7 @@ export type CategoryWithParent = Category & {
   parent_id: number;
 };
 
-export type Product = {
+export type ProductData = {
   "id": number;// 1
   "product_name": string;// "ქალის მოსაცმელი";
   "created_at": Date;// "2021-09-23T07: 02: 00.000000Z";
@@ -113,6 +113,22 @@ export type Product = {
   "decoded_images": [] | string;
   "lowest_price": string;
   "highest_price": string;
+}
+
+export type Product = {
+  "data": ProductData[];
+  "current_page": number;
+  "first_page_url": string;
+  "from": number;
+  "last_page": number;
+  "last_page_url": string;
+  "next_page_url": string;
+  "path": string;
+  "per_page": number;
+  "prev_page_url": null | string | number;
+  "to": number;
+  "total": number;
+  "links": FilteredProductLinks[];
 }
 export type Discount = {
   "id": number;// 4
@@ -155,7 +171,7 @@ export type ProductVariation = {
  * @param variationId variation ID inside product.variations
  * @returns 
  */
-export const calculateProductPrices = (product: Product | null, variationId = 0) => {
+export const calculateProductPrices = (product: ProductData | null, variationId = 0) => {
   const selectedVariation = product?.variations?.find(v => v.id == variationId);
   const originalPrice = parseFloat(product?.variations?.find(v => v.id == variationId)?.price || '0');
   const finalPrice = product
@@ -189,7 +205,7 @@ export type CartItem = {
   "variation_id": number;// 3,
   "quantity": number;// 1,
   "total": number;// 1,
-  "product": Product;
+  "product": ProductData;
 }
 
 export const calculateCartPrices = (cart: Cart | undefined) => {
@@ -392,3 +408,18 @@ export type FilterWithProps = {
   end_price?: string;
   product_id: number;
 }
+export type Search = {
+  current_page: number;
+  data: ProductData[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: FilteredProductLinks[];
+  next_page_url: string;
+  path: string;
+  per_page: number;
+  prev_page_url: null;
+  to: number;
+  total: number;
+};

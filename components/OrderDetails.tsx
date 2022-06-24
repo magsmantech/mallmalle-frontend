@@ -517,7 +517,7 @@ const OrderDetails: React.FC<{
                     } else {
                         alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
                     }
-                }}>გადახდაზე გადასვალა</Button>
+                }}>გადახდაზე გადასვლა</Button>
             </ContainerStyle>
         )
     }

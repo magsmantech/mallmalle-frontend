@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, ProductData, Search, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -114,7 +114,7 @@ const api = createApi({
     //
     // products<---
     //
-    getProducts: builder.query<Product[], undefined>({
+    getProducts: builder.query<Product, undefined>({
       query: (_args) => ({
         url: `/products`,
         method: 'GET',
@@ -123,7 +123,7 @@ const api = createApi({
     //
     // product <---
     //
-    getProductById: builder.query<Product, number>({
+    getProductById: builder.query<ProductData, number>({
       query: (productId) => ({
         url: `/product/${productId}`,
         method: 'GET',
@@ -264,6 +264,17 @@ const api = createApi({
     getAllAddress: builder.query<Address, undefined>({
       query: (_arg) => ({
         url: `user/addresses`,
+        method: 'GET',
+      })
+    }),
+    // 
+    // 
+    // search
+    // 
+    // 
+    search: builder.query<Search, string>({
+      query: (keyword) => ({
+        url: `search?keyword=${keyword}`,
         method: 'GET',
       })
     }),

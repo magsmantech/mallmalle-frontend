@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
 import styles from "../styles/Home.module.css";
+import Fonts from './../styles/Fonts';
 
 const Clock: NextPage = () => {
   const [partyTime, setPartyTime] = useState(false);
@@ -59,18 +60,20 @@ const Clock: NextPage = () => {
 };
 
 const ClockText = styled.span`
-    font-size: 50px;
-    font-family: "fira-go";
+    font-size: 40px;
+    font-family: ${Fonts.FiraGOSemiBold};
     text-transform: uppercase;
     font-feature-settings: '"case" on';
     font-weight: 600;
+    line-height: 50px;
     
       ${Responsive.tabletMobile}{
         font-size: 22px;
       }
 `;
 const ClockSpan = styled.span`
-  font-size: 2.0rem;
+  font-size: 19px;
+  font-family: ${Fonts.FiraGOSemiBold};
       ${Responsive.tabletMobile}{
         font-size: 22px;
       }

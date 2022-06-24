@@ -13,6 +13,7 @@ import 'swiper/css/pagination';
 import Button from './styled/button';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import Responsive from '../config/Responsive';
+import Fonts from '../styles/Fonts';
 
 
 type Props = {
@@ -85,6 +86,7 @@ const SliderTitle = styled.span`
   font-feature-settings: '"case" on';
   font-weight: 600;
   user-select: none;
+  font-family: ${Fonts.FiraGOSemiBold};
     ${Responsive.tabletMobile}{
       padding-left: 0px;
       font-size: 23px;
