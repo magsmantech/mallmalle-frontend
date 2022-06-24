@@ -795,7 +795,7 @@ const Search: NextPage = () => {
             {/* {currentPage} */}
 
             <Pagination style={{ margin: '70px 0 50px 0' }} gap={'1.4rem'}>
-                {searchResults.links.slice(1, -1).map((n, index) => (
+                {searchResults.links.slice(1, -1).map((n, index) => ( // slice for remove &laquo
                 <Number selected={currentPage === parseInt(n.label) ? true : false} key={index} onClick={() => setCurrentPage(parseInt(n.label))}>{parseInt(n.label)}</Number>
             ))}
             </Pagination>
@@ -803,7 +803,6 @@ const Search: NextPage = () => {
         </>
     )
 }
-
 
 
 export default Search;

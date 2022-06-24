@@ -303,8 +303,8 @@ const api = createApi({
     // 
     // 
     // get filtered category data
-    // 
-    // 
+    // TODO Levan Madurashvili
+    // https://api.mallmalle.com/api/products/15/filters?start_price=100&end_price=900&color_variation=2&size_variation=2
     filter: builder.query<FilteredCategory, number>({
       query: (category_id) => ({
         url: `categories/${category_id}/filters`,
