@@ -8,7 +8,7 @@ import { getDashboardData } from "../services/dashboard-services";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import config from "../config.json";
-import { getProductImages, Product, DashboardData } from '../domain/shop';
+import { Product, DashboardData } from '../domain/shop';
 import styled from 'styled-components';
 import Responsive from "../config/Responsive";
 import RadioButton from "../components/customStyle/RadioButton";
@@ -87,6 +87,7 @@ const Home: NextPage = () => {
         {DashboardData.data.offers.map((o, index) => {
           return (
             <DiscountItem
+              key={index}
               name={o.product_name}
               id={o.id}
               price={o.lowest_price}
@@ -111,6 +112,7 @@ const Home: NextPage = () => {
         {DashboardData.data.newAdded.slice(0, 12).map((n, index) => {
           return (
             <Item
+              key={index}
               name={n.product_name}
               id={n.id}
               price={n.lowest_price}
@@ -123,7 +125,7 @@ const Home: NextPage = () => {
       </ItemsContainerStyle>
       {/* new products */}
 
-      
+
       <div className={styles.scrollToTopButton} onClick={_scrollToTop}>
         <ArrowTop className={styles.scrollButtonIcon} />
       </div>

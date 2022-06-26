@@ -58,8 +58,8 @@ const Carousel = ({ images = [] }: Props) => {
         loop
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+        // onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log('slide change')}
       >
         {images.map((image, index) =>
           <SwiperSlide className={styles.slide} key={index}>

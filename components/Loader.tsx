@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'; //ims
 import { Scrollbar } from './GlobalStyle';
+import Fonts from './../styles/Fonts';
 
 const Loader: React.FC = () => {
     return (
@@ -44,8 +45,9 @@ const LoaderValue = styled.div`
     animation-duration: 1.5s;
     margin: 0px 10px;
     font-size: 20px;
-    font-family: 'BPG WEB 002 Caps';
+    font-family: ${Fonts.FiraGORegular};
     background-color: white;
+    text-transform: capitalize;
     //TODO need ts-styled-plugin
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
