@@ -23,7 +23,7 @@ import { getProductDetailsById } from "../../services/products-service";
 import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
-import { calculateProductPrices, Product, Recommended } from '../../domain/shop';
+import { calculateProductPrices, Product, Recommended, ProductData } from '../../domain/shop';
 import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
@@ -279,7 +279,7 @@ const ProductDetails: NextPage = () => {
   const [selectedColorId, setSelectedColorId] = useState<any>(undefined);
   const [selectedSizeId, setSelectedSizeId] = useState<any>(undefined);
 
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<ProductData | null>(null);
 
   const MainLoading = isDiscountsLoading || isRecommendedLoading;
 
