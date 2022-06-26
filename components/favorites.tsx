@@ -12,7 +12,7 @@ import MoreFilterIcon from '../public/icons/more-filter-icon.svg'
 import api, { uploadUrl } from "../features/api";
 import Loader from "./Loader";
 import { removeFromFavorite } from '../services/checkout-services';
-
+import { useRouter } from 'next/router';
 
 
 
@@ -28,7 +28,7 @@ const Favorites: React.FC<{}> = ({ }) => {
             showFeedback({ show: true }),
         );
     }
-
+    const router = useRouter();
     const [popular, setPopular] = useState();
     const [brand, setBrand] = useState();
     const [price, setPrice] = useState();
@@ -98,7 +98,7 @@ const Favorites: React.FC<{}> = ({ }) => {
 
 
 
-                    <FavoriteCount>სულ მოიძებნა: <span>{favorite.length} შენახული</span></FavoriteCount>
+                    <FavoriteCount>სულ მოიძებნა: <span>{favorite.length} რჩეული</span></FavoriteCount>
                 </TopSideWrapper>
 
                 <Grid>
@@ -121,7 +121,7 @@ const Favorites: React.FC<{}> = ({ }) => {
                                 <Item name={f.product.product_name} id={f.product.id} price={f.product.lowest_price} oldPrice='' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>
                                 {/* TODO image from api */}
                                 <CartButton
-                                    onClick={_showFeedback}
+                                    onClick={() => router.push(`/detail/${f.product.id}`)}
                                 >დეტალურად ნახვა</CartButton>
                             </ItemWrapper>
                         )

@@ -320,7 +320,7 @@ export type OrderDetails = {
 export type Favorite = {
   "id": number;// 1
   "created_at": string;// "2021-09-23T07: 02: 00.000000Z";
-  "product": Product;
+  "product": ProductData;
 }
 
 export type UpdatePassword = {

@@ -44,6 +44,15 @@ const api = createApi({
       })
     }),
     //
+    // Products By Category
+    //
+    getProductByCategory: builder.query<Product, string>({
+      query: (category_id) => ({
+        url: `products/${category_id}`,
+        method: 'GET',
+      })
+    }),
+    //
     // Product
     //
     //

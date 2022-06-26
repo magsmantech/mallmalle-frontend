@@ -41,7 +41,7 @@ import { getFilteredItems, getFilters } from "../../services/category-services";
 import config from "../../config.json";
 
 import Respinsive from "../../config/Responsive"
-import { calculateProductPrices, Category, Product, FilteredCategory, FilterWithProps } from '../../domain/shop';
+import { calculateProductPrices, Category, Product, FilteredCategory, FilterWithProps, ProductData } from '../../domain/shop';
 import MoreFilterIcon from '../../public/icons/more-filter-icon.svg'
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
@@ -50,6 +50,7 @@ import RadioButton from "../../components/customStyle/RadioButton";
 import SidebarFilter from "../../components/customStyle/SidebarFilter";
 import Loader from "../../components/Loader";
 import { Scrollbar } from "../../components/GlobalStyle";
+import { uploadUrl } from '../../features/api';
 
 
 const Heading = styled.h1`
@@ -450,7 +451,7 @@ const FilterInnterWrapper = styled.div`
 `;
 
 
-const Item = ({ product }: { product: Product }) => {
+const Item = ({ product }: { product: ProductData }) => {
   const [hovered, setHovered] = useState(false);
 
   const imgSrc = product?.images?.length
@@ -478,7 +479,7 @@ const Item = ({ product }: { product: Product }) => {
           onMouseOver={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
-          <Img backgroundImage={imgSrc} className={styles.child}>
+          <Img backgroundImage={uploadUrl(product.decoded_images[0])} className={styles.child}>
             {/* {hovered && (
               <ItemOverlay>
                 <BookmarkWrapper style={{ zIndex: 20 }}>
@@ -492,7 +493,8 @@ const Item = ({ product }: { product: Product }) => {
             className={styles.child}
           >
             <div style={{ display: "flex", alignItems: "flex-start" }}>
-              <Price>{prices.finalPrice} ₾</Price>
+              {/* <Price>{prices.finalPrice} ₾</Price> */}
+              <Price>{product.lowest_price} ₾</Price>
               {prices.hasDiscount && (
                 <OldPrice>{prices.originalPrice} ₾</OldPrice>
               )}
@@ -909,6 +911,10 @@ const Catalog: NextPage = () => {
 
 
   const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(category_id_parse);
+  const { data: getProductByCategory, isLoading: isGetProductByCategoryLoading, refetch: refetchGetProductByCategory } = api.useGetProductByCategoryQuery(lastId);
+
+  console.log(getProductByCategory)
+
 
   // const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({
   //   size_variation: sizeVariationID, color_variation: colorVariationID, start_price: startPrice, end_price: endPrice, category_id: parseInt(categoryID, 10)
@@ -917,16 +923,16 @@ const Catalog: NextPage = () => {
   // console.log(filtered)
 
 
-  const mainFiltered = products.filter((p: Product) => {
-    return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
-  });
+  // const mainFiltered = products.filter((p: Product) => {
+  //   return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
+  // });
 
   // console.log(products)
 
 
-  const MainLoading = isFilteredLoading
+  const MainLoading = isGetProductByCategoryLoading ;
 
-  return MainLoading ? <Loader /> : !filtered ? (<span>not found filtered data</span>) : (
+  return MainLoading ? <Loader /> : !getProductByCategory ? (<span>not found product by category</span>) : (
     <>
       {openFilters && (
         <div
@@ -943,7 +949,7 @@ const Catalog: NextPage = () => {
       <HeadWrapperStyle>
         <TitileWrapper>
           <Heading>{category?.category_name}</Heading>
-          <Quantity>{products.length} პროდუქტი</Quantity>
+          <Quantity>{getProductByCategory.data.length} პროდუქტი</Quantity>
         </TitileWrapper>
         <FilterWrapper>
 
@@ -1004,7 +1010,7 @@ const Catalog: NextPage = () => {
             <Scrollbar hide={true} />
             <Content>
               <MediumTitle>ფერი</MediumTitle>
-              <FilterInnterWrapper>
+              {/* <FilterInnterWrapper>
                 <RadioButton
                   id="color-id"
                   onChange={(value) => setGetColor(value)}
@@ -1016,11 +1022,11 @@ const Catalog: NextPage = () => {
                   ]}
                   value={getColor}
                 />
-              </FilterInnterWrapper>
+              </FilterInnterWrapper> */}
 
               <MediumTitle>ზომა</MediumTitle>
 
-              <FilterInnterWrapper>
+              {/* <FilterInnterWrapper>
                 <RadioButton
                   id="size-id"
                   onChange={(value) => setGetColor(value)}
@@ -1043,7 +1049,7 @@ const Catalog: NextPage = () => {
                     <div>{category.category_name}</div>
                   )
                 })}
-              </FilterInnterWrapper>
+              </FilterInnterWrapper> */}
 
 
             </Content>
@@ -1055,32 +1061,12 @@ const Catalog: NextPage = () => {
 
 
       <Grid>
-        {mainFiltered?.length ? (
-          mainFiltered.map((item: Product, i: number) => (
-            <Item
-              product={item}
-              key={i}
-            ></Item>
-          ))
-        ) : (
-          <h1>0 შედეგი</h1>
-        )}
-
-        {showHideLoader === true ? <Loader /> : null}
-
-        {/* <Item id={2} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={3} imgSrc={'/assets/6.png'}></Item>
-                <Item id={4} imgSrc={'/assets/3112.png'}></Item>
-
-                <Item id={1} imgSrc={'/assets/6.png'}></Item>
-                <Item id={2} imgSrc={'/assets/2.png'}></Item>
-                <Item id={3} imgSrc={'/assets/2.png'}></Item>
-                <Item id={4} imgSrc={'/assets/3112.png'}></Item>
-
-                <Item id={1} imgSrc={'/assets/6.png'}></Item>
-                <Item id={1} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={1} imgSrc={'/assets/3112.png'}></Item>
-                <Item id={1} imgSrc={'/assets/2.png'}></Item> */}
+        {getProductByCategory.data.map((product, index) => (
+          <Item
+            product={product}
+            key={index}
+          ></Item>
+        ))}
       </Grid>
 
       {/* <Pagination style={{ margin: "3.2rem 0 3.7rem 0" }} gap={"1.4rem"}>
