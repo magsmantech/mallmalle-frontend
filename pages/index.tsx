@@ -77,7 +77,8 @@ const Home: NextPage = () => {
       </SaleItemWrapper>
       <DividerWrapperStyle>
         <div className={styles.divider}></div>
-        <DividerImageStyle src={"/assets/mallmalle.png"} />
+        {/* <DividerImageStyle src={"/assets/mallmalle.png"} /> */}
+        <DividerImageStyle src={"/assets/mallmalle2.png"} />
       </DividerWrapperStyle>
 
       <SectionTitle className={styles.sectionTitle}>შემოთავაზება</SectionTitle>
