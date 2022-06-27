@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, ProductData, Search, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps, DiscountWithPagination } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, ProductData, Search, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps, DiscountWithPagination, Filters } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -278,12 +278,23 @@ const api = createApi({
     }),
     // 
     // 
+    // get filters
+    // 
+    // 
+    getFilters: builder.query<Filters, undefined>({
+      query: (_arg) => ({
+        url: `filters`,
+        method: 'GET',
+      })
+    }),
+    // 
+    // 
     // search
     // 
-    // search?page=2&keyword=a
-    search: builder.query<Search, { keyword: string, page: number | string }>({
-      query: ({ keyword, page }) => ({
-        url: `search?page=${page}&keyword=${keyword}`,
+    // 
+    search: builder.query<Search, { keyword: string, page: number | string, start_price?: string, end_price?: string, color_variation_id?: number, size_variation_id?: number }>({
+      query: ({ keyword, page, start_price, end_price, color_variation_id, size_variation_id }) => ({
+        url: `search?page=${page}&keyword=${keyword}&start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}`,
         method: 'GET',
       })
     }),

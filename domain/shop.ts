@@ -452,3 +452,21 @@ export type Search = {
   to: number;
   total: number;
 };
+export type Filters = {
+  success: boolean;
+  data: {
+    size_variations: [
+      {
+        id: number;
+        size_name: string;
+      }
+    ];
+    color_variations: [
+      {
+        id: number;
+        color_name: string;
+        color: string;
+      }
+    ]
+  }
+}

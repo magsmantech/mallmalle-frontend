@@ -454,7 +454,31 @@ export const CustomPaginationWrapper = styled.div`
     }
 
 `;
-
+const BtnWithBorder = styled.button` //TODO Levan Madurashvili
+    height: 70px;
+    border: 3px solid #22D5AE;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    padding: 0px 30px;
+    font-size: 20px;
+    font-family: 'helvetica';
+    font-weight: 700;
+    color: #22D5AE;
+    cursor: pointer;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #23CFB0 0%, #3882D2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+        ${Responsive.mobile}{
+            font-size: 16px;
+            height: 60px;
+        }
+`;
 
 
 
@@ -672,8 +696,13 @@ const Search: NextPage = () => {
     // console.log("search result " + searchResult);
 
     const [openFilters, setOpenFilters] = useState(false)
-    const [lowestPrice, setLowestPrice] = useState<string>("0");
-    const [highestPrice, setHighestPrice] = useState<string>("9999999999999");
+
+
+
+    const [sizeVariationID, setsizeVariationID] = useState<number>(0);
+    const [colorVariationID, setcolorVariationID] = useState<number>(0);
+    const [startPrice, setStartPrice] = useState<string>("");
+    const [endPrice, setEndPrice] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     // reset current page
@@ -682,8 +711,15 @@ const Search: NextPage = () => {
     }, [searchResult])
 
 
-    const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
-    const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery({ keyword: searchResult, page: currentPage });
+    const { data: getFilters, isLoading: isAGetFiltersLoading, refetch: refetchGetFilters } = api.useGetFiltersQuery(undefined);
+    const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery({
+        keyword: searchResult,
+        page: currentPage,
+        start_price: startPrice,
+        end_price: endPrice,
+        color_variation_id: colorVariationID,
+        size_variation_id: sizeVariationID
+    });
 
 
     const [popular, setPopular] = useState();
@@ -691,13 +727,20 @@ const Search: NextPage = () => {
     const [price, setPrice] = useState();
 
     const [openModal, setOpenModal] = useState(false);
-    const MainLoader = isSearchResultsLoading;
+    const MainLoader = isSearchResultsLoading || isAGetFiltersLoading;
 
     // pagination page changer
     const handlePageClick = (event: any) => {
         setCurrentPage(event.selected + 1)
     };
 
+    // clear filters fields
+    const clearFilterFields = () => {
+        setsizeVariationID(0);
+        setcolorVariationID(0);
+        setStartPrice("");
+        setEndPrice("");
+    }
 
 
     return MainLoader ? <Loader /> : !searchResults ? (<span>მოიძებნა 0 პროდუქტი</span>) : (
@@ -706,39 +749,6 @@ const Search: NextPage = () => {
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
             {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
             <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
-            {/* <div style={{ display: 'flex',
-                    alignItems: 'center',
-                    gap: '2.4rem',
-                    padding: '1.7rem',
-                    height: '8.2rem',
-                    backgroundColor: 'white',
-                    position: 'fixed',
-                    zIndex: 3,
-                    borderRadius: '4.2rem',
-                    top: '21.0rem',
-                    right: '2.4rem',
-                }}>
-                <FilterSelect/>
-                <ChipWrapper>
-                    <ChipTitle>ბრენდი</ChipTitle>
-                    <ChipIconWrapper>
-                        <BsChevronDown size={'2.0rem'}></BsChevronDown>
-                    </ChipIconWrapper>
-                </ChipWrapper>
-
-                <ChipWrapper>
-                    <ChipTitle>ფასი</ChipTitle>
-                    <ChipIconWrapper>
-                        <BsChevronDown size={'2.0rem'}></BsChevronDown>
-                    </ChipIconWrapper>
-                </ChipWrapper>
-                <ChipWrapper onClick={()=> setOpenFilters(true)}>
-                    <ChipTitle>მეტი ფილტრი</ChipTitle>
-                    <ChipIconWrapper>
-                        <FilterIcon width={'2.4rem'} height={'2.4rem'}/>
-                    </ChipIconWrapper>
-                </ChipWrapper>
-            </div> */}
 
             <HeadWrapperStyle>
 
@@ -752,7 +762,7 @@ const Search: NextPage = () => {
                         <DropDown dropdownTitle="მინ. ფასი">
                             <RadioButton
                                 id="low-id"
-                                onChange={(value) => setLowestPrice(value)}
+                                onChange={(value) => setStartPrice(value)}
                                 options={[
                                     { label: "0 ₾", value: "0" },
                                     { label: "100 ₾", value: "100" },
@@ -763,18 +773,18 @@ const Search: NextPage = () => {
                                     { label: "600 ₾", value: "600" },
                                     { label: "700 ₾", value: "700" },
                                 ]}
-                                value={lowestPrice}
+                                value={startPrice}
                             />
                         </DropDown>
                     </FilltersBox>
 
                     <FilltersBox>
-                        <DropDown dropdownTitle="მახ. ფასი">
+                        <DropDown dropdownTitle="მაქ. ფასი">
                             <RadioButton
                                 id="hight-id"
-                                onChange={(value) => setHighestPrice(value)}
+                                onChange={(value) => setEndPrice(value)}
                                 options={[
-                                    { label: "განულება", value: "9999999999999" },
+                                    { label: "განულება", value: "0" },
                                     { label: "100 ₾", value: "100" },
                                     { label: "200 ₾", value: "200" },
                                     { label: "300 ₾", value: "300" },
@@ -783,11 +793,10 @@ const Search: NextPage = () => {
                                     { label: "600 ₾", value: "600" },
                                     { label: "700 ₾", value: "700" },
                                 ]}
-                                value={highestPrice}
+                                value={endPrice}
                             />
                         </DropDown>
                     </FilltersBox>
-
 
 
                     <FilltersBox>
@@ -801,22 +810,45 @@ const Search: NextPage = () => {
                         <Shadow onClick={() => setOpenModal(false)} />
                         <Scrollbar hide={true} />
                         <Content>
-                            <MediumTitle>ფერი</MediumTitle>
-                            <FilterInnterWrapper>
-                                {/* <RadioButton
-                                    id="color-id"
-                                    onChange={(value) => setGetColor(value)}
-                                    options={[
-                                        ...filtered.color_variations.map((c, index) => ({
-                                            label: c.color_name,
-                                            value: c.color
-                                        })),
-                                    ]}
-                                    value={getColor}
-                                /> */}
-                            </FilterInnterWrapper>
 
-                            <MediumTitle>ზომა</MediumTitle>
+                            {getFilters?.data.color_variations ? (
+                                <>
+                                    <MediumTitle>ფერი</MediumTitle>
+                                    <FilterInnterWrapper>
+                                        <RadioButton
+                                            id="color-id"
+                                            onChange={(value) => setcolorVariationID(value)}
+                                            options={[
+                                                ...getFilters.data.color_variations.map((colorV, index) => ({
+                                                    label: colorV.color_name,
+                                                    value: colorV.id
+                                                }))
+                                            ]}
+                                            value={colorVariationID}
+                                        />
+                                    </FilterInnterWrapper>
+                                </>
+                            ) : null}
+
+                            {getFilters?.data.size_variations ? (
+                                <>
+                                    <MediumTitle>ზომა</MediumTitle>
+                                    <FilterInnterWrapper>
+                                        <RadioButton
+                                            id="size-id"
+                                            onChange={(value) => setsizeVariationID(value)}
+                                            options={[
+                                                ...getFilters.data.size_variations.map((sizeV, index) => ({
+                                                    label: sizeV.size_name,
+                                                    value: sizeV.id
+                                                })),
+                                            ]}
+                                            value={sizeVariationID}
+                                        />
+                                    </FilterInnterWrapper>
+                                </>
+                            ) : null}
+                            <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
                         </Content>
                     </MainFilterComponent>}
                 </FilterWrapper>
@@ -832,10 +864,6 @@ const Search: NextPage = () => {
             </Grid>
 
 
-            {/* <button onClick={() => setCurrentPage(currentPage - 1)}>prev</button>
-            <button onClick={() => setCurrentPage(currentPage + 1)}>next</button> */}
-            {/* {currentPage} */}
-
             <CustomPaginationWrapper>
                 <ReactPaginate
                     breakLabel="..."
@@ -847,12 +875,6 @@ const Search: NextPage = () => {
                 // previousLabel="< previous"
                 />
             </CustomPaginationWrapper>
-
-            {/* <Pagination style={{ margin: '70px 0 50px 0' }} gap={'1.4rem'}>
-                {searchResults.links.slice(1, -1).map((n, index) => ( // slice for remove &laquo
-                    <Number selected={currentPage === parseInt(n.label) ? true : false} key={index} onClick={() => setCurrentPage(parseInt(n.label))}>{parseInt(n.label)}</Number>
-                ))}
-            </Pagination> */}
 
         </>
     )
