@@ -449,7 +449,31 @@ const FilterInnterWrapper = styled.div`
   margin-bottom: 50px;
   margin-top: 10px;
 `;
-
+const BtnWithBorder = styled.button` //TODO Levan Madurashvili
+    height: 70px;
+    border: 3px solid #22D5AE;
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    padding: 0px 30px;
+    font-size: 20px;
+    font-family: 'helvetica';
+    font-weight: 700;
+    color: #22D5AE;
+    cursor: pointer;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #23CFB0 0%, #3882D2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+        ${Responsive.mobile}{
+            font-size: 16px;
+            height: 60px;
+        }
+`;
 
 const Item = ({ product }: { product: ProductData }) => {
   const [hovered, setHovered] = useState(false);
@@ -736,11 +760,7 @@ const Catalog: NextPage = () => {
 
   // console.log(asPath)
 
-  const lastId = asPath.substring(asPath.lastIndexOf('/') + 1);
-
-  const category_id_parse = parseFloat(lastId)
-  // console.log(typeof category_id_parse)
-
+  const category_id_str = asPath.substring(asPath.lastIndexOf('/') + 1);
 
   const [showHideLoader, setshowHideLoader] = useState(false);
 
@@ -893,46 +913,47 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
-  const [getColor, setGetColor] = useState();
-  const [getSize, setGetSize] = useState();
 
-
-  const [sizeVariationID, setsizeVariationID] = useState<number>();
-  const [colorVariationID, setcolorVariationID] = useState<number>();
-
-
-  const [lowestPrice, setLowestPrice] = useState<string>("0");
-  const [highestPrice, setHighestPrice] = useState<string>("9999999999999");
-
-
+  const [sizeVariationID, setsizeVariationID] = useState<number>(0);
+  const [colorVariationID, setcolorVariationID] = useState<number>(0);
+  const [startPrice, setStartPrice] = useState<string>("");
+  const [endPrice, setEndPrice] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
+  
+  const clearFilterFields = () => {
+    setsizeVariationID(0);
+    setcolorVariationID(0);
+    setStartPrice("");
+    setEndPrice("");
+  }
+
+
+
+// filter data with category id and other props
+  const { data: productFilter, isLoading: isProductFilteLoading, refetch: refetchProductFilte } = api.useProductFilterQuery({
+    category_id: category_id_str,
+    start_price: startPrice,
+    end_price: endPrice,
+    color_variation_id: colorVariationID,
+    size_variation_id: sizeVariationID
+  });
+  // filter fields with category id
+  const { data: categoryFilter, isLoading: isCategoryFilterLoading, refetch: refetchCategoryFilter } = api.useCategoryFilterQuery(category_id_str);
+
+
+  useEffect(() => {
+    refetchProductFilte();
+  }, [sizeVariationID, colorVariationID, startPrice, endPrice])
+
+
+  // console.log(productFilter)
 
 
 
 
-  const { data: filtered, isLoading: isFilteredLoading, refetch: refetchFiltered } = api.useFilterQuery(category_id_parse);
-  const { data: getProductByCategory, isLoading: isGetProductByCategoryLoading, refetch: refetchGetProductByCategory } = api.useGetProductByCategoryQuery(lastId);
+  const MainLoading = isProductFilteLoading || isCategoryFilterLoading;
 
-  console.log(getProductByCategory)
-
-
-  // const { data: FilteredCategory, isLoading: isFilteredCategoryLoading, refetch: refetchFilteredCategory } = api.useFilteredCategoryQuery({
-  //   size_variation: sizeVariationID, color_variation: colorVariationID, start_price: startPrice, end_price: endPrice, category_id: parseInt(categoryID, 10)
-  // });
-
-  // console.log(filtered)
-
-
-  // const mainFiltered = products.filter((p: Product) => {
-  //   return lowestPrice <= p.lowest_price && highestPrice >= p.highest_price
-  // });
-
-  // console.log(products)
-
-
-  const MainLoading = isGetProductByCategoryLoading ;
-
-  return MainLoading ? <Loader /> : !getProductByCategory ? (<span>not found product by category</span>) : (
+  return MainLoading ? <Loader /> : !productFilter ? (<span>not found product by category</span>) : (
     <>
       {openFilters && (
         <div
@@ -945,21 +966,19 @@ const Catalog: NextPage = () => {
         მთავარი / კატეგორიები / {category?.category_name}
       </Breadcrumbs>
 
-
       <HeadWrapperStyle>
         <TitileWrapper>
           <Heading>{category?.category_name}</Heading>
-          <Quantity>{getProductByCategory.data.length} პროდუქტი</Quantity>
+          <Quantity>{productFilter.data.length} პროდუქტი</Quantity>
         </TitileWrapper>
         <FilterWrapper>
-
 
 
           <FilltersBox>
             <DropDown dropdownTitle="მინ. ფასი">
               <RadioButton
                 id="low-id"
-                onChange={(value) => setLowestPrice(value)}
+                onChange={(value) => setStartPrice(value)}
                 options={[
                   { label: "0 ₾", value: "0" },
                   { label: "100 ₾", value: "100" },
@@ -970,18 +989,18 @@ const Catalog: NextPage = () => {
                   { label: "600 ₾", value: "600" },
                   { label: "700 ₾", value: "700" },
                 ]}
-                value={lowestPrice}
+                value={startPrice}
               />
             </DropDown>
           </FilltersBox>
 
           <FilltersBox>
-            <DropDown dropdownTitle="მახ. ფასი">
+            <DropDown dropdownTitle="მაქ. ფასი">
               <RadioButton
                 id="hight-id"
-                onChange={(value) => setHighestPrice(value)}
+                onChange={(value) => setEndPrice(value)}
                 options={[
-                  { label: "განულება", value: "9999999999999" },
+                  { label: "განულება", value: "0" },
                   { label: "100 ₾", value: "100" },
                   { label: "200 ₾", value: "200" },
                   { label: "300 ₾", value: "300" },
@@ -990,7 +1009,7 @@ const Catalog: NextPage = () => {
                   { label: "600 ₾", value: "600" },
                   { label: "700 ₾", value: "700" },
                 ]}
-                value={highestPrice}
+                value={endPrice}
               />
             </DropDown>
           </FilltersBox>
@@ -1009,49 +1028,57 @@ const Catalog: NextPage = () => {
             <Shadow onClick={() => setOpenModal(false)} />
             <Scrollbar hide={true} />
             <Content>
-              <MediumTitle>ფერი</MediumTitle>
-              {/* <FilterInnterWrapper>
-                <RadioButton
-                  id="color-id"
-                  onChange={(value) => setGetColor(value)}
-                  options={[
-                    ...filtered.color_variations.map((c, index) => ({
-                      label: c.color_name,
-                      value: c.color
-                    })),
-                  ]}
-                  value={getColor}
-                />
-              </FilterInnterWrapper> */}
 
-              <MediumTitle>ზომა</MediumTitle>
+              {categoryFilter?.color_variations ? (
+                <>
+                  <MediumTitle>ფერი</MediumTitle>
+                  <FilterInnterWrapper>
+                    <RadioButton
+                      id="color-id"
+                      onChange={(value) => setcolorVariationID(value)}
+                      options={[
+                        ...categoryFilter.color_variations.map((colorV, index) => ({
+                          label: colorV.color_name,
+                          value: colorV.id
+                        }))
+                      ]}
+                      value={colorVariationID}
+                    />
+                  </FilterInnterWrapper>
+                </>
+              ) : null}
 
-              {/* <FilterInnterWrapper>
-                <RadioButton
-                  id="size-id"
-                  onChange={(value) => setGetColor(value)}
-                  options={[
-                    ...filtered.size_variations.map((s, index) => ({
-                      label: s.size_name,
-                      value: s.id
-                    })),
-                  ]}
-                  value={getColor}
-                />
-              </FilterInnterWrapper>
+              {categoryFilter?.size_variations ? (
+                <>
+                  <MediumTitle>ზომა</MediumTitle>
+                  <FilterInnterWrapper>
+                    <RadioButton
+                      id="size-id"
+                      onChange={(value) => setsizeVariationID(value)}
+                      options={[
+                        ...categoryFilter.size_variations.map((sizeV, index) => ({
+                          label: sizeV.size_name,
+                          value: sizeV.id
+                        })),
+                      ]}
+                      value={sizeVariationID}
+                    />
+                  </FilterInnterWrapper>
+                </>
+              ) : null}
 
-              {filtered.categories.length >= 1 ? (
+              {/* {categoryFilter.categories.length >= 1 ? (
                 <MediumTitle>კატეგორიები</MediumTitle>
               ) : null}
               <FilterInnterWrapper>
-                {filtered.categories.map((category, index) => {
+                {categoryFilter.categories.map((category, index) => {
                   return (
                     <div>{category.category_name}</div>
                   )
                 })}
               </FilterInnterWrapper> */}
 
-
+              <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
             </Content>
           </MainFilterComponent>}
 
@@ -1061,7 +1088,7 @@ const Catalog: NextPage = () => {
 
 
       <Grid>
-        {getProductByCategory.data.map((product, index) => (
+        {productFilter.data.map((product, index) => (
           <Item
             product={product}
             key={index}

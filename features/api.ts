@@ -281,8 +281,8 @@ const api = createApi({
     // search
     // 
     // search?page=2&keyword=a
-    search: builder.query<Search, {keyword: string, page: number | string}>({
-      query: ({keyword, page}) => ({
+    search: builder.query<Search, { keyword: string, page: number | string }>({
+      query: ({ keyword, page }) => ({
         url: `search?page=${page}&keyword=${keyword}`,
         method: 'GET',
       })
@@ -312,9 +312,9 @@ const api = createApi({
     // 
     // 
     // get filtered category from api 
-    // TODO Levan Madurashvili
-    // https://api.mallmalle.com/api/products/15/filters?start_price=100&end_price=900&color_variation=2&size_variation=2
-    filter: builder.query<FilteredCategory, number>({
+    // 
+    // 
+    categoryFilter: builder.query<FilteredCategory, string>({
       query: (category_id) => ({
         url: `categories/${category_id}/filters`,
         method: 'GET',
@@ -322,14 +322,13 @@ const api = createApi({
     }),
     // 
     // 
-    // get filtered product data
+    // product filter 
     // 
-    // NOT WORKING
-    filteredCategory: builder.query<FilteredProduct, { size_variation: number | undefined, color_variation: number | undefined, start_price: string, end_price: string, category_id: number }>({
-      query: ({ size_variation, color_variation, start_price, end_price, category_id }) => ({
-        url: `products/${category_id}/filters`,
+    // 
+    productFilter: builder.query<Product, { category_id: string, start_price?: string, end_price?: string, color_variation_id?: number, size_variation_id?: number }>({
+      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id }) => ({
+        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}`,
         method: 'GET',
-        body: size_variation, color_variation, start_price, end_price
       })
     }),
     // 
