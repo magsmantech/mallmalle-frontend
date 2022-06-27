@@ -67,15 +67,17 @@ const Home: NextPage = () => {
       <Carousel images={images} />
       <SaleItemWrapper className={styles.container}>
         <OneSaleItemWrapper>
-          <SaleItem imageUrl={"/assets/122.png"} big />
+          {DashboardData.data.discounts.slice(0, 1).map((d, index) => (
+            <SaleItem key={index} id={d.id} imageUrl={uploadUrl(d.background_image)} big />
+          ))}
         </OneSaleItemWrapper>
         <FourSaleItemWrapper>
-          <SaleItem imageUrl={"/assets/3.png"} />
-          <SaleItem imageUrl={"/assets/31.png"} />
-          <SaleItem imageUrl={"/assets/311.png"} />
-          <SaleItem imageUrl={"/assets/photo-1.jpg"} />
+          {DashboardData.data.discounts.slice(1, 5).map((d, index) => (
+            <SaleItem id={d.id} key={index} imageUrl={uploadUrl(d.background_image)} />
+          ))}
         </FourSaleItemWrapper>
       </SaleItemWrapper>
+
       <DividerWrapperStyle>
         <div className={styles.divider}></div>
         {/* <DividerImageStyle src={"/assets/mallmalle.png"} /> */}
@@ -103,8 +105,9 @@ const Home: NextPage = () => {
       {/* offers */}
 
       <MiddleContainer className={styles.middleContainer}>
-        <SaleItem big imageUrl={"/assets/122.png"} gradient />
-        <SaleItem big imageUrl={"/assets/122.png"} gradient />
+        {DashboardData.data.discounts.slice(5, 7).map((d, index) => (
+          <SaleItem id={d.id} big key={index} imageUrl={uploadUrl(d.background_image)} gradient />
+        ))}
       </MiddleContainer>
 
       <SectionTitle className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>

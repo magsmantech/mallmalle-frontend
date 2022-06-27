@@ -144,6 +144,35 @@ export type Discount = {
     "discount_id": number// 4
   }
 };
+export type Discoints = {
+  id: number,
+  name: string;
+  value: number;
+  background_image: string;
+  is_active: number;
+  created_at: string;
+  updated_at: string;
+  decoded_image: any;
+  pivot: {
+    product_id: number;
+    discount_id: number;
+  }
+}
+export type DiscountWithPagination = {
+  current_page: number;
+  data: ProductData[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: FilteredProductLinks[];
+  next_page_url: string;
+  path: string;
+  per_page: number;
+  prev_page_url: null;
+  to: number;
+  total: number;
+}
 export type SizeVariation = {
   "id": 1;
   "size_name": string;// "XL"

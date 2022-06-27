@@ -10,9 +10,10 @@ type Props = {
     style?: {[p: string]: string | number},
     big?: boolean,
     gradient?: boolean,
+    id: number
 };
 
-const SaleItem = ({ imageUrl, style, big=false, gradient=false }: Props) => {
+const SaleItem = ({ imageUrl, id, style, big=false, gradient=false }: Props) => {
 
     const router = useRouter();
 
@@ -31,7 +32,7 @@ const SaleItem = ({ imageUrl, style, big=false, gradient=false }: Props) => {
                 ...style,
             }} onClick={() => {
                 // TODO go to specific categories
-                router.push('/catalog/3');
+                router.push(`/discounts/${id}`);
             }}>
             <img src={imageUrl} className={styles.saleItemImg}/>    
             <div className={styles.gradient}></div>

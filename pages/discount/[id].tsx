@@ -263,7 +263,7 @@ const ProductDetails: NextPage = () => {
   const router = useRouter();
   const discountId = parseInt(router.query.id as string);
 
-  const { data: discount, isLoading: isDiscountsLoading, refetch: refetchDiscount } = api.useGetDiscountByIdQuery(discountId);
+  const { data: discount, isLoading: isDiscountsLoading, refetch: refetchDiscount } = api.useGetDiscountByIdQuery({discountId: discountId});
   const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
 
   const [images, setImages] = useState<string[]>([]);

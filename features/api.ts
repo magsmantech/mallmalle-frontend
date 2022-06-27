@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, ProductData, Search, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps } from '../domain/shop'
+import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, ProductData, Search, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps, DiscountWithPagination } from '../domain/shop'
 import { getToken } from '../state/store';
 
 const config = require('../config.json');
@@ -168,9 +168,9 @@ const api = createApi({
     //
     // order details
     //
-    getDiscountById: builder.query<Discount, number>({
-      query: (discountId) => ({
-        url: `discounts/${discountId}`,
+    getDiscountById: builder.query<DiscountWithPagination, { discountId: number | string, page?: number }>({
+      query: ({ discountId, page }) => ({
+        url: `discounts/${discountId}?page=${page}`,
         method: 'GET',
       })
     }),
