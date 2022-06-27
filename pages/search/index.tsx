@@ -26,6 +26,8 @@ import Loader from '../../components/Loader';
 import { Product, ProductData } from '../../domain/shop';
 import { useRouter } from "next/router";
 import { Scrollbar } from '../../components/GlobalStyle';
+import ReactPaginate from 'react-paginate';
+
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -405,6 +407,42 @@ const FilterInnterWrapper = styled.div`
   margin-bottom: 50px;
   margin-top: 10px;
 `;
+export const CustomPaginationWrapper = styled.div`
+    margin: 70px 0 50px 0;
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        li {
+            user-select: none;
+            font-size: 26px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-family: noto-sans;
+            font-weight: 600;
+            background-color: transparent;
+            color: var(--text-color);
+            height: 52px;
+            width: 52px;
+            cursor: pointer;
+            margin: 0 15px;
+            &.selected {
+                background-color: #22D5AE;
+                color: white;
+            }
+            &:first-child {//hide prev button
+                display: none;
+            }
+            &:last-child {//hide next button
+                display: none;
+            }
+        }
+    }
+
+`;
 
 
 
@@ -631,7 +669,7 @@ const Search: NextPage = () => {
     useEffect(() => {
         setCurrentPage(1)
     }, [searchResult])
-    
+
 
     const { data: allProduct, isLoading: isAllProductLoading, refetch: refetchAllProduct } = api.useGetProductsQuery(undefined);
     const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery({ keyword: searchResult, page: currentPage });
@@ -642,25 +680,18 @@ const Search: NextPage = () => {
     const [price, setPrice] = useState();
 
     const [openModal, setOpenModal] = useState(false);
-    const MainLoader = isAllProductLoading || isSearchResultsLoading;
+    const MainLoader = isSearchResultsLoading;
 
-
-    // console.log(searchResults)
-
-
-
-
-    // const serch = (allProduct: ProductData[]) => {
-
-    //     return allProduct.filter(product =>
-    //         product.product_name.toLowerCase().includes(searchResult) 
-    //     )
-    // }
+    // pagination page changer
+    const handlePageClick = (event: any) => {
+        setCurrentPage(event.selected + 1)
+    };
 
 
 
     return MainLoader ? <Loader /> : !searchResults ? (<span>მოიძებნა 0 პროდუქტი</span>) : (
         <>
+
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
             {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
             <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
@@ -794,11 +825,23 @@ const Search: NextPage = () => {
             <button onClick={() => setCurrentPage(currentPage + 1)}>next</button> */}
             {/* {currentPage} */}
 
-            <Pagination style={{ margin: '70px 0 50px 0' }} gap={'1.4rem'}>
+            <CustomPaginationWrapper>
+                <ReactPaginate
+                    breakLabel="..."
+                    // nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={2}
+                    pageCount={searchResults.links.length - 2} // add page count and remove prev & next buttons
+                // previousLabel="< previous"
+                />
+            </CustomPaginationWrapper>
+
+            {/* <Pagination style={{ margin: '70px 0 50px 0' }} gap={'1.4rem'}>
                 {searchResults.links.slice(1, -1).map((n, index) => ( // slice for remove &laquo
-                <Number selected={currentPage === parseInt(n.label) ? true : false} key={index} onClick={() => setCurrentPage(parseInt(n.label))}>{parseInt(n.label)}</Number>
-            ))}
-            </Pagination>
+                    <Number selected={currentPage === parseInt(n.label) ? true : false} key={index} onClick={() => setCurrentPage(parseInt(n.label))}>{parseInt(n.label)}</Number>
+                ))}
+            </Pagination> */}
 
         </>
     )

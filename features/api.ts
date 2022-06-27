@@ -325,9 +325,9 @@ const api = createApi({
     // product filter 
     // 
     // 
-    productFilter: builder.query<Product, { category_id: string, start_price?: string, end_price?: string, color_variation_id?: number, size_variation_id?: number }>({
-      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id }) => ({
-        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}`,
+    productFilter: builder.query<Product, { category_id: string, start_price?: string, end_price?: string, color_variation_id?: number, size_variation_id?: number, page: number }>({
+      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id, page }) => ({
+        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&page=${page}`,
         method: 'GET',
       })
     }),

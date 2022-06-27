@@ -51,7 +51,8 @@ import SidebarFilter from "../../components/customStyle/SidebarFilter";
 import Loader from "../../components/Loader";
 import { Scrollbar } from "../../components/GlobalStyle";
 import { uploadUrl } from '../../features/api';
-
+import ReactPaginate from 'react-paginate';
+import { CustomPaginationWrapper } from "../search";
 
 const Heading = styled.h1`
   color: var(--text-color);
@@ -919,7 +920,10 @@ const Catalog: NextPage = () => {
   const [startPrice, setStartPrice] = useState<string>("");
   const [endPrice, setEndPrice] = useState<string>("");
   const [openModal, setOpenModal] = useState(false);
-  
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+
+  // clear filters fields
   const clearFilterFields = () => {
     setsizeVariationID(0);
     setcolorVariationID(0);
@@ -927,30 +931,30 @@ const Catalog: NextPage = () => {
     setEndPrice("");
   }
 
-
-
-// filter data with category id and other props
+  // filter data with category id and other props
   const { data: productFilter, isLoading: isProductFilteLoading, refetch: refetchProductFilte } = api.useProductFilterQuery({
     category_id: category_id_str,
     start_price: startPrice,
     end_price: endPrice,
     color_variation_id: colorVariationID,
-    size_variation_id: sizeVariationID
+    size_variation_id: sizeVariationID,
+    page: currentPage
   });
+
   // filter fields with category id
   const { data: categoryFilter, isLoading: isCategoryFilterLoading, refetch: refetchCategoryFilter } = api.useCategoryFilterQuery(category_id_str);
 
-
+  // update filters
   useEffect(() => {
     refetchProductFilte();
   }, [sizeVariationID, colorVariationID, startPrice, endPrice])
 
+  // pagination page changer
+  const handlePageClick = (event: any) => {
+    setCurrentPage(event.selected + 1)
+  };
 
-  // console.log(productFilter)
-
-
-
-
+  // all loader one variable
   const MainLoading = isProductFilteLoading || isCategoryFilterLoading;
 
   return MainLoading ? <Loader /> : !productFilter ? (<span>not found product by category</span>) : (
@@ -1095,6 +1099,18 @@ const Catalog: NextPage = () => {
           ></Item>
         ))}
       </Grid>
+
+      <CustomPaginationWrapper>
+        <ReactPaginate
+          breakLabel="..."
+          // nextLabel="next >"
+          onPageChange={handlePageClick}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={2}
+          pageCount={productFilter.links.length - 2}//add page count and remove prev & next buttons
+          // previousLabel="< previous"
+        />
+      </CustomPaginationWrapper>
 
       {/* <Pagination style={{ margin: "3.2rem 0 3.7rem 0" }} gap={"1.4rem"}>
         {[1, 2, 3, 4].map((i, j) => (
