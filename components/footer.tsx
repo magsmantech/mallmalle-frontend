@@ -215,7 +215,7 @@ const FooterIconText = styled.div`
     font-size: 18px;
     margin-bottom: 25px;
     padding-right: 10px;
-    font-family: ${Fonts.FiraGORegular}
+    font-family: ${Fonts.FiraGORegular};
     font-weight: 200;
 `;
 const FooterMainIcon = styled.img`

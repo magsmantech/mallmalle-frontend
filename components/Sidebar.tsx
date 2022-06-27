@@ -104,6 +104,7 @@ const HideInMobileDetailMenu = styled.div`
     height: 100%;
     background-color: white;
     max-width: 390px;
+    overflow-y: scroll;
   
     ${Responsive.tablet}{
         display: none !important;
