@@ -442,6 +442,17 @@ export const CustomPaginationWrapper = styled.div`
         }
     }
 
+    ${Responsive.tabletMobile} {
+        ul {
+            li {
+                margin: 0 5px;
+                font-size: 14px;
+                height: 24px;
+                width: 24px;
+            }
+        }
+    }
+
 `;
 
 
@@ -832,7 +843,7 @@ const Search: NextPage = () => {
                     onPageChange={handlePageClick}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={2}
-                    pageCount={searchResults.links.length - 2} // add page count and remove prev & next buttons
+                    pageCount={searchResults.links.length - 2} // add page count and remove prev & next buttons 
                 // previousLabel="< previous"
                 />
             </CustomPaginationWrapper>
