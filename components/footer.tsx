@@ -12,6 +12,7 @@ import { useState } from 'react';
 import api from '../features/api';
 import Loader from './Loader';
 import { Alert, Snackbar } from '@mui/material';
+import Fonts from '../styles/Fonts';
 
 const Footer = () => {
 
@@ -174,6 +175,7 @@ const FooterListTitle = styled.span`
     font-size: 18px;
     margin-bottom: 20px;
     user-select: none;
+    font-family: ${Fonts.FiraGOSemiBold};
 `;
 const FooterListItem = styled.span`
   a {
@@ -192,7 +194,7 @@ const FooterListItem = styled.span`
 `;
 const FooterLink = styled(Link)`
     font-size: 15px;
-    font-family: 'helvetica';
+    font-family: ${Fonts.FiraGORegular};
     color: #000;
 `;
 
@@ -213,6 +215,8 @@ const FooterIconText = styled.div`
     font-size: 18px;
     margin-bottom: 25px;
     padding-right: 10px;
+    font-family: ${Fonts.FiraGORegular}
+    font-weight: 200;
 `;
 const FooterMainIcon = styled.img`
     height: 40px;

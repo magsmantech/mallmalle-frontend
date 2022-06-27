@@ -18,6 +18,7 @@ import SearchBar from "../components/search-bar";
 import api, { uploadUrl } from "../features/api";
 import Loader from '../components/Loader';
 import DiscountItem from "../components/DiscountItem";
+import Fonts from "../styles/Fonts";
 
 
 const Home: NextPage = () => {
@@ -243,7 +244,7 @@ const SectionTitle = styled.h3`
   font-weight: 600;
   text-transform: uppercase;
   font-feature-settings: "case" on;
-  font-family: fira-go;
+  font-family: ${Fonts.FiraGOSemiBold};
 `;
 const MiddleContainer = styled.div`
   display: grid;

@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import styled from "styled-components";
 import Link from "next/link";
 import Responsive from "../config/Responsive";
+import Fonts from "../styles/Fonts";
 
 type Props = {
   id?: number;
@@ -26,7 +27,7 @@ const Span = styled.span`
 
 const Title = styled(Span)`
   font-size: 18px;
-  font-family: "helvetica";
+  font-family: ${Fonts.FiraGOBold};
   color: var(--text-color);
   opacity: 0.5;
   text-transform: uppercase;
