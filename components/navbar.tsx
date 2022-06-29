@@ -62,7 +62,10 @@ const Navbar: React.FC<{
                             <ItemLabel>ავტორიზაცია</ItemLabel>
                         </ItemWrapper>
                     </Link>}
-                    {loggedIn && <Link href='/profile'>
+                    {loggedIn && <Link href={{
+                        pathname: '/profile',
+                        query: { tab: 'profile' },
+                    }}>
                         <ItemWrapper >
                             <UserIcon />
                             <ItemLabel>პროფილი</ItemLabel>
@@ -79,7 +82,7 @@ const Navbar: React.FC<{
                             <BookmarkIcon />
                             <ItemLabel>რჩეულები</ItemLabel>
                             {loggedIn === false ? null : (
-                                favorite.length <= 0 ? null : favorite.length == undefined ? null :(
+                                favorite.length <= 0 ? null : favorite.length == undefined ? null : (
                                     <FavoriteCount>{favorite.length}</FavoriteCount>
                                 )
                             )}

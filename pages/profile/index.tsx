@@ -827,6 +827,9 @@ const Profile: NextPage = () => {
     if (router?.query?.tab === "orders-history") {
       setTabIndex(1);
     }
+    if (router?.query?.tab === "profile") {
+      setTabIndex(0);
+    }
   }, [router.query.tab]);
 
   useEffect(() => {
