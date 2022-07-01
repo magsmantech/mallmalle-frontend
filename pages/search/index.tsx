@@ -27,7 +27,8 @@ import { Product, ProductData } from '../../domain/shop';
 import { useRouter } from "next/router";
 import { Scrollbar } from '../../components/GlobalStyle';
 import ReactPaginate from 'react-paginate';
-
+import Fonts from '../../styles/Fonts';
+import Raiting from '../../components/customStyle/Raiting';
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -176,13 +177,15 @@ const Price = styled.span`
 
 const OldPrice = styled.span`
     font-size: 18px;
-    
-    font-family: 'helvetica';
+    font-family: ${Fonts.FiraGORegular};
     color: var(--text-color);
     font-weight: 700;
-
+    margin-top: 5px;
     opacity: 0.5;
     text-decoration: line-through;
+    ${Responsive.mobile}{
+        margin-top: 5px;
+    }
 `;
 
 const Title = styled.span`
@@ -200,12 +203,14 @@ const Title = styled.span`
 
 export const Count = styled.span`
     font-size: 16px;
-    font-family: "helvetica";
-    color: var(--text-color);
-    margin-top: -3px;
+  font-family: ${Fonts.FiraGOMedium};
+  color: var(--text-color);
+  /* margin-top: -3px; */
+  margin-top: 2px;
+  margin-left: 10px;
     ${Responsive.mobile}{
-        font-size: 12px;
-        margin-top: -4px;
+      font-size: 13px;
+      /* margin-top: -4px; */
     }
 `;
 
@@ -482,24 +487,19 @@ const BtnWithBorder = styled.button` //TODO Levan Madurashvili
 
 
 
-const Item = ({ imgSrc, id }: any) => {
-    const [productID, setproductID] = useState<number>(id);
+const Item = ({ imgSrc, id, view, raiting, name, price, oldPrice, discountValue }: any) => {
+    // const [productID, setproductID] = useState<number>(id);
 
-    const { data: productById, isLoading: isProductByIdLoading, refetch: refetchProductById } = api.useGetProductByIdQuery(productID);
+    // const { data: productById, isLoading: isProductByIdLoading, refetch: refetchProductById } = api.useGetProductByIdQuery(productID);
     const [hovered, setHovered] = useState(false);
-
-
-
     const dispatch = useDispatch();
-
     const _addToCart = () => {
         dispatch(showFeedback({
             show: true,
         }))
     }
 
-
-    return isProductByIdLoading ? <Loader /> : !productById ? (<span>not found product detail by id</span>) : (
+    return (
 
         <>
             <Link href={"/detail/" + id}><ItemWrapper className={styles.wrapper}
@@ -513,27 +513,23 @@ const Item = ({ imgSrc, id }: any) => {
                     </ItemOverlay>
                     }
                 </Img>
-                {productById.variations.slice(0, 1).map((v, index) => (
-                    <PriceWrapperStyle className={styles.child}>
-                        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                            <Price style={{ marginRight: '1.6rem' }}>{v.price} ₾</Price>
-                            <OldPrice>{''}</OldPrice>
-                        </div>
-                        <Badge>-10%</Badge>
-                    </PriceWrapperStyle>
-                ))}
+                <PriceWrapperStyle className={styles.child}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                        <Price style={{ marginRight: '1.6rem' }}>{price} ₾</Price>
+                        {oldPrice !== null ? (
+                            <OldPrice>{oldPrice} ₾</OldPrice>
+                        ) : null}
+                    </div>
+                    {discountValue ? (
+                        <Badge>- {discountValue}%</Badge>
+                    ) : null}
+                </PriceWrapperStyle>
 
-                <PriceTitleStyle className={styles.child}><Title >{productById.product_name}</Title></PriceTitleStyle>
-                {/* <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
-                    <StartsWrapperStyle>
-                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                        <BsStarFill size={'1.8rem'} color={'#22D5AE'} />
-                    </StartsWrapperStyle>
-                    <Count>402 ნახვა</Count>
-                </div> */}
+                <PriceTitleStyle className={styles.child}><Title >{name}</Title></PriceTitleStyle>
+                <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
+                    <Raiting raitingCount={raiting} />
+                    <Count>{view} ნახვა</Count>
+                </div>
 
                 {hovered && <ItemButton
                     className={styles.child}
@@ -857,9 +853,22 @@ const Search: NextPage = () => {
 
             <Grid style={{ marginBottom: "80px" }}>
                 {searchResults?.data.length < 1 ? (<SearchCount></SearchCount>) : (
-                    searchResults.data.map((p, index) => (
-                        <Item key={index} id={p.id} imgSrc={uploadUrl(p.decoded_images[0])}></Item>
-                    ))
+                    searchResults.data.map((p, index) => {
+
+                        // console.log(p.discount[0]?.value)
+
+                        return (
+                            <Item key={index}
+                                id={p.id}
+                                price={p.discount.length >= 1 ? p.low_price_discounted : p.lowest_price}
+                                oldPrice={p.discount.length >= 1 ? p.lowest_price : null}
+                                view={p.views}
+                                name={p.product_name}
+                                discountValue={p.discount[0]?.value}
+                                raiting={p.rating}
+                                imgSrc={uploadUrl(p.decoded_images[0])}></Item>
+                        )
+                    })
                 )}
             </Grid>
 

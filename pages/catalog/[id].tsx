@@ -53,6 +53,9 @@ import { Scrollbar } from "../../components/GlobalStyle";
 import { uploadUrl } from '../../features/api';
 import ReactPaginate from 'react-paginate';
 import { CustomPaginationWrapper } from "../search";
+import Fonts from './../../styles/Fonts';
+import Raiting from "../../components/customStyle/Raiting";
+
 
 const Heading = styled.h1`
   color: var(--text-color);
@@ -227,14 +230,18 @@ const Price = styled.span`
 `;
 
 const OldPrice = styled.span`
-  font-size: 1.8rem;
+  font-size: 18px;
 
-  font-family: "helvetica";
+  font-family: ${Fonts.FiraGORegular};
   color: var(--text-color);
   font-weight: 700;
-
+  margin-left: 20px;
+  margin-top: 5px;
   opacity: 0.5;
   text-decoration: line-through;
+    ${Responsive.mobile}{
+      margin-top: 2px;
+    }
 `;
 
 const Title = styled.span`
@@ -254,12 +261,14 @@ const Title = styled.span`
 
 export const Count = styled.span`
   font-size: 16px;
-  font-family: "helvetica";
+  font-family: ${Fonts.FiraGOMedium};
   color: var(--text-color);
-  margin-top: -3px;
+  /* margin-top: -3px; */
+  margin-top: 2px;
+  margin-left: 10px;
     ${Responsive.mobile}{
-      font-size: 12px;
-      margin-top: -4px;
+      font-size: 13px;
+      /* margin-top: -4px; */
     }
 `;
 
@@ -302,7 +311,7 @@ const ItemTitleStyle = styled.div`
 const PriceWrapper = styled.span`
   display: flex;
   justify-content: space-between;
-  margin: 20px 0px 16px 0px;
+  margin: 20px 0px 10px 0px;
     ${Responsive.mobile}{
       margin: 14px 0px 10px 0px;
     }
@@ -523,6 +532,9 @@ const Item = ({ product }: { product: ProductData }) => {
               {prices.hasDiscount && (
                 <OldPrice>{prices.originalPrice} ₾</OldPrice>
               )}
+              {product.discount ? (
+                <OldPrice>100 ₾</OldPrice>
+              ) : null}
             </div>
             {/* @ts-ignore */}
             {product.discount?.is_active && <Badge>-{product.discount.value}%</Badge>}
@@ -545,7 +557,8 @@ const Item = ({ product }: { product: ProductData }) => {
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
             </StartsWrapper> */}
-            {/* <Count>402 ნახვა</Count> */}
+            <Raiting raitingCount={product?.rating} />
+            <Count>{product.views} ნახვა</Count>
           </div>
           {hovered && (
             null
@@ -1108,7 +1121,7 @@ const Catalog: NextPage = () => {
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
           pageCount={productFilter.links.length - 2}//add page count and remove prev & next buttons
-          // previousLabel="< previous"
+        // previousLabel="< previous"
         />
       </CustomPaginationWrapper>
 

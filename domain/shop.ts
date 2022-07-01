@@ -113,6 +113,11 @@ export type ProductData = {
   "decoded_images": [] | string;
   "lowest_price": string;
   "highest_price": string;
+  "views": number;
+  "brand_id": null | string | number; //TODO
+  "rating": number;
+  "max_price_discounted": number;
+  "low_price_discounted": number;
 }
 
 export type Product = {
@@ -328,7 +333,11 @@ export type OrderProduct = {
   variation_id: number;
   quantity: number;
   product: OrderProduct;
+  max_price_discounted: number;
+  low_price_discounted: number;
   "decoded_images": [] | string;
+  rating: number;
+  views: number;
 }
 export type Order = {
   id: number;
@@ -367,6 +376,8 @@ export type NewAdded = {
   discount: Discount[] | [];
   lowest_price: string;
   highest_price: string;
+  max_price_discounted: number;
+  low_price_discounted: number;
 }
 
 export type Offers = {
@@ -379,6 +390,8 @@ export type Offers = {
   discount: Discount[];
   lowest_price: string;
   highest_price: string;
+  max_price_discounted: number;
+  low_price_discounted: number;
 }
 
 export type DashboardData = {

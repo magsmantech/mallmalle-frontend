@@ -7,8 +7,8 @@ import Responsive from "../config/Responsive";
 type Props = {
   id?: number;
   imageUrl: string;
-  price: string;
-  oldPrice?: string;
+  price: string | number;
+  oldPrice?: string | number | null;
   name: string;
   currency?: string;
   style?: { [p: string]: string | number };

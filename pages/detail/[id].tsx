@@ -29,6 +29,9 @@ import api, { uploadUrl } from "../../features/api";
 import Responsive from "../../config/Responsive";
 import { Alert, Snackbar } from "@mui/material";
 import Loader from "../../components/Loader";
+import Fonts from "../../styles/Fonts";
+import Raiting from '../../components/customStyle/Raiting';
+
 
 type ButtonProps = {
   secondary?: boolean;
@@ -218,6 +221,9 @@ const RevieStartWrapper = styled.div`
 const DetailCount = styled(Count)`
   font-size: 16px;
   margin-left: 15px;
+  line-height: 15px;
+  margin-top: 2px;
+  font-family: ${Fonts.FiraGORegular};
     ${Responsive.mobile}{
       margin-left: 10px;
     }
@@ -416,6 +422,9 @@ const ProductDetails: NextPage = () => {
 
   // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
 
+
+
+
   return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
       <Section>
@@ -439,17 +448,14 @@ const ProductDetails: NextPage = () => {
             </Breadcrumbs>
             <Title>{product?.product_name}</Title>
             <RevieStartWrapper>
-              {/* <div
-                style={{ display: "flex", gap: ".4rem", marginRight: ".8rem" }}
-              >
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              </div> */}
+              {product?.rating ? (
+                <Raiting raitingCount={product?.rating} />
+              ) : (
+                null
+              )}
+
               <DetailCount>
-                {/* 402 ნახვა */}
+                {product?.views} ნახვა
               </DetailCount>
             </RevieStartWrapper>
             <PriceWrapperStyle>

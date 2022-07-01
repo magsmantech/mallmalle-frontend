@@ -15,6 +15,8 @@ import api from "../../features/api";
 import Loader from '../../components/Loader';
 import { uploadUrl } from './../../features/api';
 import ReactHtmlParser from 'react-html-parser';
+import Raiting from "../../components/customStyle/Raiting";
+import Fonts from "../../styles/Fonts";
 
 const Item = () => {
     return (
@@ -29,8 +31,8 @@ const History: NextPage = () => {
 
     const router = useRouter();
     const orderID = parseInt(router.query.id as string);
-    const itemID =  parseInt(router.query.itemID as string);
- 
+    const itemID = parseInt(router.query.itemID as string);
+
 
     const { data: orderDetail, isLoading: isOrderDetailLoading, refetch: refetchOrderDetail, isSuccess: isOrderDetailSucces } = api.useGetOrderDetailsQuery(orderID);
 
@@ -67,14 +69,10 @@ const History: NextPage = () => {
                                     <div className={styles.itemTextContainer}>
                                         <ItemName>{selectedItem?.product.product_name} {selectedItem?.quantity}x</ItemName>
                                         <StarsWrapper>
-                                            <Stars >
-                                                <StartIcon color={'#22D5AE'} />
-                                                <StartIcon color={'#22D5AE'} />
-                                                <StartIcon color={'#22D5AE'} />
-                                                <StartIcon color={'#22D5AE'} />
-                                                <StartIcon color={'#22D5AE'} />
-                                            </Stars>
-                                            {/* <ViewCount>402 ნახვა</ViewCount> */}
+                                            {selectedItem?.product.rating ? (
+                                                <Raiting raitingCount={selectedItem?.product.rating} />
+                                            ) : null}
+                                            <ViewCount>{selectedItem?.product.views} ნახვა</ViewCount>
                                         </StarsWrapper>
                                         <ItemListWrapper>
                                             <ItemLabel>ზომა: </ItemLabel> <ItemValue>{selectedItem?.variation.size_variation.size_name}</ItemValue>
@@ -319,6 +317,8 @@ const ViewCount = styled(Count)`
     font-size: 16px;
     margin-left: 15px;
     white-space: nowrap;
+    font-family: ${Fonts.FiraGOMedium};
+    margin-top: 2px;
 `;
 const ItemListWrapper = styled.div`
     /* background-color: green; */

@@ -94,8 +94,8 @@ const Home: NextPage = () => {
               key={index}
               name={o.product_name}
               id={o.id}
-              price={o.lowest_price}
-              oldPrice={''}
+              price={o.discount.length >= 1 ? o.low_price_discounted : o.lowest_price}
+              oldPrice={o.discount.length >= 1 ? o.lowest_price : null}
               currency="gel"
               imageUrl={uploadUrl(o.decoded_images[0])}
             />
@@ -120,8 +120,8 @@ const Home: NextPage = () => {
               key={index}
               name={n.product_name}
               id={n.id}
-              price={n.lowest_price}
-              oldPrice={``}
+              price={n.discount.length >= 1 ? n.low_price_discounted : n.lowest_price}
+              oldPrice={n.discount.length >= 1 ? n.lowest_price : null}
               currency="gel"
               imageUrl={uploadUrl(n.decoded_images[0])}
             />

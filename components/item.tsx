@@ -8,8 +8,8 @@ import Fonts from "../styles/Fonts";
 type Props = {
   id?: number;
   imageUrl: string;
-  price: string;
-  oldPrice?: string;
+  price: string | number;
+  oldPrice?: string | number | null;
   name: string;
   currency?: string;
   style?: { [p: string]: string | number };
@@ -112,12 +112,11 @@ const SaleItem = ({
               {price} {CurrencyMap[currency]}
             </Price>
             <Price old currency={currency}>
-              {oldPrice === '' ? null : (
+              {oldPrice == null ? null : (
                 <>
                   {oldPrice} {CurrencyMap[currency]}
                 </>
               )}
-
             </Price>
           </ProductTextWrapper>
           <Title>{name}</Title>
