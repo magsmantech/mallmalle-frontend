@@ -30,7 +30,8 @@ import BlurPopup from "../../components/BlurPopup";
 import api from "../../features/api";
 import { Alert, Snackbar } from "@mui/material";
 import Fonts from "../../styles/Fonts";
-
+import dayjs from "dayjs";
+require('dayjs/locale/ka');
 
 
 
@@ -337,7 +338,7 @@ const MailItem = () => {
         }}
       >
         <UserEmailStyle>gagi.murjikneli@gmail.com</UserEmailStyle>
-        <DateStyle>05.04.2021</DateStyle>
+        <DateStyle>23/23/23</DateStyle>
       </div>
     </div>
   );
@@ -390,6 +391,10 @@ const Auth: NextPage = () => {
 
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
+
+  const [recoverPasswordEmailRequist, setrecoverPasswordEmailRequist] = useState<string>('');
+
+  var passwordRecoverRequistDate = dayjs(new Date()).locale('ka').format('DD.MM.YYYY');
 
 
   if (typeof window !== 'undefined') {
@@ -542,10 +547,11 @@ const Auth: NextPage = () => {
 
     const onRecoverSubmit = (values: FormikValues) => {
       const { email } = values;
-
+      setrecoverPasswordEmailRequist(email);
       setLoading(true);
       AuthService.forgotPassword(email)
         .then((res) => {
+          
           setLoading(false);
           setAuthStep("success");
           console.log(res);
@@ -585,31 +591,47 @@ const Auth: NextPage = () => {
     if (typeof window !== 'undefined') {
       var urlToken = window.location.search;
     }
+    const [recoverPassword, { isLoading: isRecoverPasswordLoading }] = api.useRecoverPasswordMutation();
 
-    const onNewPasswordSubmit = (values: ResetPasswordParams) => {
+    const onNewPasswordSubmit = async (values: ResetPasswordParams) => {
       const { password } = values;
-      setLoading(true);
-      let test_token = sessionStorage.getItem("test_token");
-      let token = urlToken.split('=')[1]
-      // console.log(test_token);
-      if (!test_token) return;
-      AuthService.resetPassword({ password, token: token })
-        .then((res) => {
-          setLoading(false);
-          console.log(res);
-          router.push("/auth");
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
+      let token = urlToken.split('=')[1];
 
-          // dispatch(
-          //   showFeedback({
-          //     show: true,
-          //     type: "error",
-          //   })
-          // );
-        });
+      // setLoading(true);
+      // let test_token = sessionStorage.getItem("test_token");
+      // let token = urlToken.split('=')[1]
+      // // console.log(test_token);
+      // if (!token) return;
+      // AuthService.resetPassword({ password, token: token })
+      //   .then((res) => {
+      //     setLoading(false);
+      //     console.log(res);
+      //     router.push("/auth");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     setLoading(false);
+
+      //     dispatch(
+      //       showFeedback({
+      //         show: true,
+      //         type: "error",
+      //       })
+      //     );
+      //   });
+
+      try {
+        const result = await recoverPassword({
+          token,
+          new_password: password
+        }).unwrap()
+        if (result.success) {
+          alert("yes");
+          router.push("/auth");
+        }
+      } catch (error) {
+        alert("no " + error)
+      }
     };
 
     const newPasswordFormik = useFormik({
@@ -991,7 +1013,20 @@ const Auth: NextPage = () => {
           მეშვეობითაც აღადგენთ პაროლს
         </Text>
         <SendedEmailDiv>
-          <MailItem />
+          <div style={{ display: "flex" }}>
+            <EmailIconStyle src="/assets/mail.png" />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: "1.6rem",
+                color: "var(--text-color)",
+              }}
+            >
+              <UserEmailStyle>{recoverPasswordEmailRequist}</UserEmailStyle>
+              <DateStyle>{passwordRecoverRequistDate}</DateStyle>
+            </div>
+          </div>
           <Link href="/">
             <BackToMainPageStyle>
               მთავარზე დაბრუნება

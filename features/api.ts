@@ -373,6 +373,21 @@ const api = createApi({
     }),
     // 
     // 
+    // recover password
+    // 
+    // 
+    recoverPassword: builder.mutation({ //work
+      query: ({ token, new_password }) => ({
+        url: `https://api.mallmalle.com/api/user/forgot/change-password`,
+        method: "POST",
+        body: {
+          token,
+          new_password,
+        },
+      }),
+    }),
+    // 
+    // 
     // change password
     // 
     // 

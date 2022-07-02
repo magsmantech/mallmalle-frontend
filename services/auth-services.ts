@@ -42,7 +42,7 @@ export const forgotPassword = (email: string) => {
 export const resetPassword = (data: ResetPasswordParams) => {
     const params = {
         token: data.token,
-        new_password: data.password,
+        new_password: data.password
     }
 
     return apiCall('user/forgot/change-password', 'POST', params);
