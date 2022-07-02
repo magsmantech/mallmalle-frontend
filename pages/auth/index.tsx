@@ -29,6 +29,7 @@ import Responsive from "../../config/Responsive";
 import BlurPopup from "../../components/BlurPopup";
 import api from "../../features/api";
 import { Alert, Snackbar } from "@mui/material";
+import Fonts from "../../styles/Fonts";
 
 
 
@@ -285,11 +286,48 @@ const IconWrapper = styled.div`
     opacity: 0.5;
   }
 `;
+const EmailIconStyle = styled.img`
+  margin-right: 30px;
+  width: 100px;
+    ${Responsive.mobile}{
+      width: 70px;
+    }
+`;
+const UserEmailStyle = styled.span`
+    font-size: 16px;
+    font-family: ${Fonts.FiraGOMedium};
+`;
+const DateStyle = styled.span`
+    font-size: 16px;
+    font-family: ${Fonts.FiraGORegular};
+    opacity: 0.5;
+    margin-top: 12px;
+`;
+const BackToMainPageStyle = styled.span`
+    cursor: pointer;
+    font-size: 16px;
+    font-family: ${Fonts.FiraGORegular};
+    color: var(--text-color);
+    text-decoration: underline;
+      ${Responsive.mobile}{
+        margin-top: 30px;
+      }
+`;
+const SendedEmailDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+    ${Responsive.mobile}{
+      flex-direction: column;
+      margin-top: 40px;
+    }
+`;
+
 
 const MailItem = () => {
   return (
     <div style={{ display: "flex" }}>
-      <img src="/assets/mail.png" style={{ marginRight: "3.2rem" }} />
+      <EmailIconStyle src="/assets/mail.png" />
       <div
         style={{
           display: "flex",
@@ -298,8 +336,8 @@ const MailItem = () => {
           color: "var(--text-color)",
         }}
       >
-        <span>gagi.murjikneli@gmail.com</span>
-        <span style={{ opacity: 0.5 }}>05.04.2021</span>
+        <UserEmailStyle>gagi.murjikneli@gmail.com</UserEmailStyle>
+        <DateStyle>05.04.2021</DateStyle>
       </div>
     </div>
   );
@@ -349,8 +387,15 @@ const Auth: NextPage = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState<string>("");
   const [authStep, setAuthStep] = useState("email");
+
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
+
+
+  if (typeof window !== 'undefined') {
+    var hostname = window.location.search;
+  }
+
   useEffect(() => {
     if (router?.query && router?.query["change-password"]) {
       // setStep('change-password');
@@ -361,6 +406,11 @@ const Auth: NextPage = () => {
       } else {
         setToken(router?.query["change-password"][0]);
       }
+      setRecover(true);
+      setAuthStep("change-password");
+    }
+    // console.log(hostname.split('=')[0])
+    if (hostname.split('=')[0] === '?token') {
       setRecover(true);
       setAuthStep("change-password");
     }
@@ -497,18 +547,13 @@ const Auth: NextPage = () => {
       AuthService.forgotPassword(email)
         .then((res) => {
           setLoading(false);
-          setAuthStep("change-password");
+          setAuthStep("success");
           console.log(res);
           sessionStorage.setItem("test_token", res.data?.test_token);
         })
         .catch((err) => {
           console.log(err);
-          dispatch(
-            showFeedback({
-              show: true,
-              type: "error",
-            })
-          );
+          alert("incorrect email")
 
           setLoading(false);
         });
@@ -537,13 +582,18 @@ const Auth: NextPage = () => {
       confirm: "",
     };
 
+    if (typeof window !== 'undefined') {
+      var urlToken = window.location.search;
+    }
+
     const onNewPasswordSubmit = (values: ResetPasswordParams) => {
       const { password } = values;
       setLoading(true);
       let test_token = sessionStorage.getItem("test_token");
-      console.log(test_token);
+      let token = urlToken.split('=')[1]
+      // console.log(test_token);
       if (!test_token) return;
-      AuthService.resetPassword({ password, token: test_token })
+      AuthService.resetPassword({ password, token: token })
         .then((res) => {
           setLoading(false);
           console.log(res);
@@ -597,32 +647,13 @@ const Auth: NextPage = () => {
           </>
         ) : authStep === "success" ? (
           <Success />
-        ) : authStep === "change-password" ? (
+        ) : null}
+
+        {authStep === "change-password" ? (
           <>
             <form onSubmit={newPasswordFormik.handleSubmit}>
               <FormLayout>
-                {/* <PasswordInputWrapper>
-                  <Input 
-                    placeholder="ახალი პაროლი"
-                    id="password"
-                    name="password"
-                    value={newPasswordFormik.values.password}
-                    onChange={newPasswordFormik.handleChange}
-                    invalid={newPasswordFormik.touched.password && newPasswordFormik.errors.password}
-                  />
-                  <IconWrapper><EyeIcon width={'2.62rem'} /></IconWrapper>
-                </PasswordInputWrapper>
-                <PasswordInputWrapper>
-                  <Input 
-                    placeholder="გაიმეორე პაროლი"
-                    id="confirm"
-                    name="confirm"
-                    value={newPasswordFormik.values.confirm}
-                    onChange={newPasswordFormik.handleChange}
-                    invalid={newPasswordFormik.touched.confirm && newPasswordFormik.errors.confirm}
-                  />
-                  <IconWrapper><EyeIcon width={'2.62rem'} /></IconWrapper>
-                </PasswordInputWrapper> */}
+                <Title>შეიყვანეთ ახალი პაროლი</Title>
                 <PasswordInputWrapperTest
                   placeholder="ახალი პაროლი"
                   id="password"
@@ -651,9 +682,7 @@ const Auth: NextPage = () => {
               </FormLayout>
             </form>
           </>
-        ) : (
-          <h1>Error</h1>
-        )}
+        ) : null}
       </>
     );
   };
@@ -961,27 +990,14 @@ const Auth: NextPage = () => {
           გთხოვთ შეამოწმოთ ელ-ფოსტა, სადაც გამოგზავნილია ერთჯერადი ლინკი, რის
           მეშვეობითაც აღადგენთ პაროლს
         </Text>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <SendedEmailDiv>
           <MailItem />
           <Link href="/">
-            <span
-              style={{
-                cursor: "pointer",
-                fontSize: "1.6rem",
-                color: "var(--text-color)",
-                textDecoration: "underline",
-              }}
-            >
+            <BackToMainPageStyle>
               მთავარზე დაბრუნება
-            </span>
+            </BackToMainPageStyle>
           </Link>
-        </div>
+        </SendedEmailDiv>
       </>
     );
   };
