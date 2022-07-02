@@ -292,9 +292,18 @@ const api = createApi({
     // search
     // 
     // 
-    search: builder.query<Search, { keyword: string, page: number | string, start_price?: string, end_price?: string, color_variation_id?: number, size_variation_id?: number }>({
-      query: ({ keyword, page, start_price, end_price, color_variation_id, size_variation_id }) => ({
-        url: `search?page=${page}&keyword=${keyword}&start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}`,
+    search: builder.query<Search, {
+      keyword: string,
+      page: number | string,
+      start_price?: string,
+      end_price?: string,
+      color_variation_id?: number,
+      size_variation_id?: number,
+      sort_by?: string,
+      brand_id?: number
+    }>({
+      query: ({ keyword, page, start_price, end_price, color_variation_id, size_variation_id, sort_by, brand_id }) => ({
+        url: `search?page=${page}&keyword=${keyword}&start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&sortBy=${sort_by}&brand_id=${brand_id}`,
         method: 'GET',
       })
     }),
@@ -336,9 +345,18 @@ const api = createApi({
     // product filter 
     // 
     // 
-    productFilter: builder.query<Product, { category_id: string, start_price?: string, end_price?: string, color_variation_id?: number, size_variation_id?: number, page: number }>({
-      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id, page }) => ({
-        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&page=${page}`,
+    productFilter: builder.query<Product, {
+      category_id: string,
+      start_price?: string,
+      end_price?: string,
+      color_variation_id?: number,
+      size_variation_id?: number,
+      sort_by?: string,
+      brand_id?: number,
+      page: number
+    }>({
+      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id, sort_by, brand_id, page }) => ({
+        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&sortBy=${sort_by}&brand_id=${brand_id}&page=${page}`,
         method: 'GET',
       })
     }),

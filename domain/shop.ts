@@ -72,10 +72,15 @@ export type Category = {
   icon: string | null;// null
   childrens?: Category[] | null;
 }
+export type Brands = {
+  brand_name: string;
+  id: number;
+}
 export type FilteredCategory = {
   categories: FilteredCategories[];
   size_variations: FilteredSizeVariations[];
   color_variations: FilteredColorVariations[];
+  brands: Brands[];
 }
 export type FilteredCategories = {
   id: number;
@@ -479,6 +484,12 @@ export type Filters = {
         id: number;
         color_name: string;
         color: string;
+      }
+    ];
+    brands: [
+      {
+        id: number;
+        brand_name: string;
       }
     ]
   }

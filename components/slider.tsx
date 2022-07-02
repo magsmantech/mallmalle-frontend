@@ -1,6 +1,7 @@
 import ReactSlider from "react-slider";
 import { useEffect, useRef, useState } from "react";
-
+import styled from 'styled-components';
+import Fonts from './../styles/Fonts';
 
 type Props =any;
 const Slider = ({onChange}: Props) => {
@@ -10,11 +11,11 @@ const Slider = ({onChange}: Props) => {
     const [value, setValue] = useState([0, 10]);
     const [amount1, setAmount1] = useState(0);
 
-    const [amount2, setAmount2] = useState(500);
+    const [amount2, setAmount2] = useState(1000);
 
     const _onValueChange = (e: number[]) => {
         setValue(e);
-        console.log(e);
+        // console.log(e);
         if(!sliderRef?.current) return;
 
         const current = sliderRef?.current;
@@ -22,18 +23,18 @@ const Slider = ({onChange}: Props) => {
         const length = current?.state?.sliderLength;
         const newPos1 = length * e[0] / 11;
         setPosition1(newPos1);    
-        setAmount1(e[0]* 50);
+        setAmount1(e[0]* 100);
         const newPos2 = length * e[1] / 11;
         setPosition2(newPos2);    
-        setAmount2(e[1]* 50);
+        setAmount2(e[1]* 100);
 
         if (onChange) {
             onChange({
                 startIndex: e[0],
-                startValue: e[0]* 50,
+                startValue: e[0]* 100,
                 
                 endIndex: e[1],
-                endValue: e[1]* 50,
+                endValue: e[1]* 100,
             })
         }
 
@@ -41,17 +42,17 @@ const Slider = ({onChange}: Props) => {
 
     const _setDefaultPosition2 = () => {
         setTimeout(() => {
-            console.log(sliderRef)
+            // console.log(sliderRef)
       
             const current = sliderRef?.current;
       
             const length = current?.state?.sliderLength;
       
-            console.log(length);
+            // console.log(length);
             
             const newPos2 = length * 10 / 11;
             setPosition2(newPos2);    
-            setAmount2(10* 50);
+            setAmount2(10* 100);
     
         }, 0);
     }
@@ -63,7 +64,7 @@ const Slider = ({onChange}: Props) => {
 
     return (
         <>
-            <div className="slider-wrapper">
+            <ReactSliderStyle className="slider-wrapper">
                 <ReactSlider
                     value={value}
                     ref={sliderRef}
@@ -75,19 +76,42 @@ const Slider = ({onChange}: Props) => {
                     max={10}
                     marks
                 />
-                <div className="slider-label"
+                <SliderLabel className="slider-label"
                     style={{
                         transform: `translateX(${position1}px)`
                     }}
-                >{amount1} $</div>
-                <div className="slider-label"
+                >{amount1} ₾</SliderLabel>
+                <SliderLabel className="slider-label"
                     style={{
                         transform: `translateX(${position2}px)`
                     }}
-                >{amount2} $</div>
+                >{amount2} ₾</SliderLabel>
 
-            </div>
+            </ReactSliderStyle>
         </>
     );
 };
+
+const ReactSliderStyle = styled.div`
+ 
+    .example-thumb {
+        width: 30px;
+        height: 30px;
+        border-width: 4px;
+    }
+    .horizontal-slider .example-track {
+        height: 2px;
+        top: 26px;
+    }
+    .mark {
+        display: none;
+    }
+`;
+
+const SliderLabel = styled.div`
+    font-size: 18px;
+    font-family: ${Fonts.FiraGOMedium};
+    top: -1rem;
+`;
+
 export default Slider;

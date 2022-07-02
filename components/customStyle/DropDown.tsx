@@ -80,6 +80,7 @@ const DropDownBtn = styled(DropdownButton)`
       padding: 15px 10px;
       box-shadow: 0 0 0.4rem 0.4rem rgb(0 0 0 / 8%);
       margin-top: 5px;
+      width: fit-content;
         ${Responsive.mobile} {
           position: fixed !important;
           left: 0 !important;

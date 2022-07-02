@@ -29,6 +29,7 @@ import { Scrollbar } from '../../components/GlobalStyle';
 import ReactPaginate from 'react-paginate';
 import Fonts from '../../styles/Fonts';
 import Raiting from '../../components/customStyle/Raiting';
+import Slider from '../../components/slider';
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -694,18 +695,26 @@ const Search: NextPage = () => {
     const [openFilters, setOpenFilters] = useState(false)
 
 
-
+    const [selectedPrices, setSelectedPrices] = useState<any>("");
     const [sizeVariationID, setsizeVariationID] = useState<number>(0);
     const [colorVariationID, setcolorVariationID] = useState<number>(0);
-    const [startPrice, setStartPrice] = useState<string>("");
-    const [endPrice, setEndPrice] = useState<string>("");
+    const [startPrice, setStartPrice] = useState<string>(selectedPrices?.startValue ? selectedPrices?.startValue : "");
+    const [endPrice, setEndPrice] = useState<string>(selectedPrices?.endValue ? selectedPrices?.endValue : "");
+    const [sortBy, setsortBy] = useState<string>("");
+    const [brandId, setbrandId] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [otherFilterName, setotherFilterName] = useState<string>();
 
     // reset current page
     useEffect(() => {
         setCurrentPage(1)
     }, [searchResult])
 
+    // update selected price
+    useEffect(() => {
+        setStartPrice(selectedPrices?.startValue ? selectedPrices?.startValue : "");
+        setEndPrice(selectedPrices?.endValue ? selectedPrices?.endValue : "");
+    }, [selectedPrices])
 
     const { data: getFilters, isLoading: isAGetFiltersLoading, refetch: refetchGetFilters } = api.useGetFiltersQuery(undefined);
     const { data: searchResults, isLoading: isSearchResultsLoading, refetch: refetchSearchResults } = api.useSearchQuery({
@@ -714,7 +723,9 @@ const Search: NextPage = () => {
         start_price: startPrice,
         end_price: endPrice,
         color_variation_id: colorVariationID,
-        size_variation_id: sizeVariationID
+        size_variation_id: sizeVariationID,
+        sort_by: sortBy, //rating, time, discount, popularity
+        brand_id: brandId,
     });
 
 
@@ -738,6 +749,36 @@ const Search: NextPage = () => {
         setEndPrice("");
     }
 
+    // sortBy array 
+    const sortByArray = [
+        {
+            value: 'popularity',
+            label: 'პოპულარობა'
+        },
+        {
+            value: 'rating',
+            label: 'რეიტინგი'
+        },
+        {
+            value: 'time',
+            label: 'ახალი'
+        },
+        {
+            value: 'discount',
+            label: 'ფასდაკლება'
+        },
+        {
+            value: '',
+            label: 'ყველა'
+        },
+    ];
+
+    // update sortByTitle
+    useEffect(() => {
+        // sortBy title
+        const sortByTitle = sortByArray.find(x => x.value === sortBy);
+        setotherFilterName(sortByTitle?.label);
+    }, [sortBy])
 
     return MainLoader ? <Loader /> : !searchResults ? (<span>მოიძებნა 0 პროდუქტი</span>) : (
         <>
@@ -754,7 +795,7 @@ const Search: NextPage = () => {
                 </TopSideWrapper>
                 <FilterWrapper>
 
-                    <FilltersBox>
+                    {/* <FilltersBox>
                         <DropDown dropdownTitle="მინ. ფასი">
                             <RadioButton
                                 id="low-id"
@@ -772,9 +813,9 @@ const Search: NextPage = () => {
                                 value={startPrice}
                             />
                         </DropDown>
-                    </FilltersBox>
+                    </FilltersBox> */}
 
-                    <FilltersBox>
+                    {/* <FilltersBox>
                         <DropDown dropdownTitle="მაქ. ფასი">
                             <RadioButton
                                 id="hight-id"
@@ -792,7 +833,40 @@ const Search: NextPage = () => {
                                 value={endPrice}
                             />
                         </DropDown>
+                    </FilltersBox> */}
+                    <FilltersBox>
+                        <DropDown dropdownTitle={`${otherFilterName}`}>
+                            <RadioButton
+                                id="low-id"
+                                onChange={(value) => [setsortBy(value)]}
+                                options={[
+                                    ...sortByArray.map((s, index) => ({
+                                        label: s.label,
+                                        value: s.value
+                                    }))
+                                ]}
+                                value={sortBy}
+                            />
+                        </DropDown>
                     </FilltersBox>
+
+                    {getFilters?.data.brands ? (
+                        <FilltersBox>
+                            <DropDown dropdownTitle="ბრენდი">
+                                <RadioButton
+                                    id=""
+                                    onChange={(value) => setbrandId(value)}
+                                    options={[
+                                        ...getFilters?.data.brands.map((brandV, index) => ({
+                                            label: brandV.brand_name,
+                                            value: brandV.id
+                                        }))
+                                    ]}
+                                    value={brandId}
+                                />
+                            </DropDown>
+                        </FilltersBox>
+                    ) : null}
 
 
                     <FilltersBox>
@@ -844,6 +918,12 @@ const Search: NextPage = () => {
                                     </FilterInnterWrapper>
                                 </>
                             ) : null}
+
+                            <div style={{ marginTop: 'auto' }}>
+                                <MediumTitle style={{ marginBottom: '25px' }}>ფასი</MediumTitle>
+                                <Slider onChange={(e: any) => setSelectedPrices(e)} />
+                            </div>
+
                             <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
                         </Content>
                     </MainFilterComponent>}

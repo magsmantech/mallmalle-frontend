@@ -927,14 +927,16 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
-
+  const [selectedPrices, setSelectedPrices] = useState<any>("");
   const [sizeVariationID, setsizeVariationID] = useState<number>(0);
   const [colorVariationID, setcolorVariationID] = useState<number>(0);
-  const [startPrice, setStartPrice] = useState<string>("");
-  const [endPrice, setEndPrice] = useState<string>("");
+  const [startPrice, setStartPrice] = useState<string>(selectedPrices?.startValue ? selectedPrices?.startValue : "");
+  const [endPrice, setEndPrice] = useState<string>(selectedPrices?.endValue ? selectedPrices?.endValue : "");
+  const [sortBy, setsortBy] = useState<string>("");
+  const [brandId, setbrandId] = useState<number>(0);
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
-
+  const [otherFilterName, setotherFilterName] = useState<string>();
 
   // clear filters fields
   const clearFilterFields = () => {
@@ -942,7 +944,18 @@ const Catalog: NextPage = () => {
     setcolorVariationID(0);
     setStartPrice("");
     setEndPrice("");
+    setbrandId(0);
+    setsortBy("");
   }
+  console.log(startPrice)
+  console.log(endPrice)
+
+  // update selected price
+  useEffect(() => {
+    setStartPrice(selectedPrices?.startValue ? selectedPrices?.startValue : "");
+    setEndPrice(selectedPrices?.endValue ? selectedPrices?.endValue : "");
+  }, [selectedPrices])
+
 
   // filter data with category id and other props
   const { data: productFilter, isLoading: isProductFilteLoading, refetch: refetchProductFilte } = api.useProductFilterQuery({
@@ -951,6 +964,8 @@ const Catalog: NextPage = () => {
     end_price: endPrice,
     color_variation_id: colorVariationID,
     size_variation_id: sizeVariationID,
+    sort_by: sortBy, //rating, time, discount, popularity
+    brand_id: brandId,
     page: currentPage
   });
 
@@ -966,6 +981,39 @@ const Catalog: NextPage = () => {
   const handlePageClick = (event: any) => {
     setCurrentPage(event.selected + 1)
   };
+
+  // sortBy array 
+  const sortByArray = [
+    {
+      value: 'popularity',
+      label: 'პოპულარობა'
+    },
+    {
+      value: 'rating',
+      label: 'რეიტინგი'
+    },
+    {
+      value: 'time',
+      label: 'ახალი'
+    },
+    {
+      value: 'discount',
+      label: 'ფასდაკლება'
+    },
+    {
+      value: '',
+      label: 'ყველა'
+    },
+  ];
+
+  // update sortByTitle
+  useEffect(() => {
+    // sortBy title
+    const sortByTitle = sortByArray.find(x => x.value === sortBy);
+    setotherFilterName(sortByTitle?.label);
+  }, [sortBy])
+
+ 
 
   // all loader one variable
   const MainLoading = isProductFilteLoading || isCategoryFilterLoading;
@@ -989,9 +1037,23 @@ const Catalog: NextPage = () => {
           <Quantity>{productFilter.data.length} პროდუქტი</Quantity>
         </TitileWrapper>
         <FilterWrapper>
-
-
           <FilltersBox>
+            <DropDown dropdownTitle={`${otherFilterName}`}>
+              <RadioButton
+                id="low-id"
+                onChange={(value) => [setsortBy(value)]}
+                options={[
+                  ...sortByArray.map((s, index) => ({
+                    label: s.label,
+                    value: s.value
+                  }))
+                ]}
+                value={sortBy}
+              />
+            </DropDown>
+          </FilltersBox>
+
+          {/* <FilltersBox>
             <DropDown dropdownTitle="მინ. ფასი">
               <RadioButton
                 id="low-id"
@@ -1009,9 +1071,9 @@ const Catalog: NextPage = () => {
                 value={startPrice}
               />
             </DropDown>
-          </FilltersBox>
+          </FilltersBox> */}
 
-          <FilltersBox>
+          {/* <FilltersBox>
             <DropDown dropdownTitle="მაქ. ფასი">
               <RadioButton
                 id="hight-id"
@@ -1029,7 +1091,25 @@ const Catalog: NextPage = () => {
                 value={endPrice}
               />
             </DropDown>
-          </FilltersBox>
+          </FilltersBox> */}
+
+          {categoryFilter?.brands ? (
+            <FilltersBox>
+              <DropDown dropdownTitle="ბრენდი">
+                <RadioButton
+                  id=""
+                  onChange={(value) => setbrandId(value)}
+                  options={[
+                    ...categoryFilter?.brands.map((brandV, index) => ({
+                      label: brandV.brand_name,
+                      value: brandV.id
+                    }))
+                  ]}
+                  value={brandId}
+                />
+              </DropDown>
+            </FilltersBox>
+          ) : null}
 
           <FilltersBox>
             <MoreFilterBtn onClick={() => setOpenModal(true)}>
@@ -1045,6 +1125,7 @@ const Catalog: NextPage = () => {
             <Shadow onClick={() => setOpenModal(false)} />
             <Scrollbar hide={true} />
             <Content>
+
 
               {categoryFilter?.color_variations ? (
                 <>
@@ -1083,6 +1164,11 @@ const Catalog: NextPage = () => {
                   </FilterInnterWrapper>
                 </>
               ) : null}
+
+              <div style={{marginTop: 'auto'}}>
+                <MediumTitle style={{marginBottom: '25px'}}>ფასი</MediumTitle>
+                <Slider onChange={(e: any) => setSelectedPrices(e)} />
+              </div>
 
               {/* {categoryFilter.categories.length >= 1 ? (
                 <MediumTitle>კატეგორიები</MediumTitle>
