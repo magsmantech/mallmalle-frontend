@@ -85,7 +85,7 @@ const Price = styled(Title)`
   font-size: 44px;
   margin-right: 15px;
   &::before {
-    content: "$";
+    content: "";
   }
   ${Responsive.mobile}{
     font-size: 32px;
@@ -467,7 +467,7 @@ const ProductDetails: NextPage = () => {
 
             {product ? (
               <PriceWrapperStyle>
-                <Price>{product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
+                <Price>₾{product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
                 {product?.discount?.length >= 1 ? (
                   <OldPrice>{product?.discount?.length >= 1 ? product?.lowest_price : null}</OldPrice>
                 ) : null}
