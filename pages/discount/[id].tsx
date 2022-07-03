@@ -454,12 +454,20 @@ const ProductDetails: NextPage = () => {
                 {product?.views} ნახვა
               </DetailCount>
             </RevieStartWrapper>
-            <PriceWrapperStyle>
+            {/* <PriceWrapperStyle>
               <Price>{finalPrice}</Price>
               {hasDiscount ? (
                 <OldPrice>{originalPrice}</OldPrice>
               ) : null}
-            </PriceWrapperStyle>
+            </PriceWrapperStyle> */}
+            {product ? (
+              <PriceWrapperStyle>
+                <Price>{product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
+                {product?.discount?.length >= 1 ? (
+                  <OldPrice>{product?.discount?.length >= 1 ? product?.lowest_price : null}</OldPrice>
+                ) : null}
+              </PriceWrapperStyle>
+            ) : null}
 
             {colors && !!colors.length && (
               <>
