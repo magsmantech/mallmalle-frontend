@@ -413,8 +413,10 @@ const Shadow = styled.div`
     z-index: 20;
     height: 100%;
     width: 100%;
+    border-radius: 37px 37px 0 0;
         ${Responsive.tabletMobile}{
-            top: 120px;
+            top: 100px;
+            border-radius: 23px 23px 0 0;
         }
 `;
 const MainFilterComponent = styled.div`
@@ -426,14 +428,15 @@ const Content = styled.div`
     top: 125px;
     background-color: #fff;
     z-index: 22;
-    height: calc(100% - 125px);
+    height: calc(100% - 100px);
     width: 490px;
-    padding: 50px 30px 0px 30px;
+    padding: 50px 30px 30px 30px;
     display: flex;
     flex-direction: column;
+    overflow-x: scroll;
     /* justify-content: space-between; */
         ${Responsive.tabletMobile}{
-            top: 120px;
+            top: 100px;
         }
         ${Responsive.mobile}{
             width: 100%;
@@ -442,6 +445,7 @@ const Content = styled.div`
             left: 0;
             top: unset;
             right: unset;
+            padding-bottom: 20px;
             border-radius: 20px 20px 0px 0px;
             overflow-x: scroll;
         }

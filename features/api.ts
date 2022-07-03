@@ -301,10 +301,10 @@ const api = createApi({
       size_variation_id?: number,
       sort_by?: string,
       brand_id?: number,
-      categories?: []
+      categories?: number
     }>({
       query: ({ keyword, page, start_price, end_price, color_variation_id, size_variation_id, sort_by, brand_id, categories }) => ({
-        url: `search?page=${page}&keyword=${keyword}&start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&sortBy=${sort_by}&brand_id=${brand_id}&categories:[${categories}]`,
+        url: `search?page=${page}&keyword=${keyword}&start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&sortBy=${sort_by}&brand_id=${brand_id}&categories=${categories}`,
         method: 'GET',
       })
     }),
