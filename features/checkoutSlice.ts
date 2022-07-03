@@ -7,7 +7,7 @@ interface LoggedInProps {
 }
 
 const initialState: LoggedInProps = {
-    cart: { summary: 0, items: [], },
+    cart: { summary: 0, items: [], discount: '', withoutDiscount: 0 },
     isCartLoading: true,
 };
 
