@@ -388,6 +388,11 @@ const Auth: NextPage = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState<string>("");
   const [authStep, setAuthStep] = useState("email");
+  const [passwordSuccessfullyChanged, setpasswordSuccessfullyChanged] = useState(false);
+
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState('');
+  const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
 
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
@@ -395,7 +400,6 @@ const Auth: NextPage = () => {
   const [recoverPasswordEmailRequist, setrecoverPasswordEmailRequist] = useState<string>('');
 
   var passwordRecoverRequistDate = dayjs(new Date()).locale('ka').format('DD.MM.YYYY');
-
 
   if (typeof window !== 'undefined') {
     var hostname = window.location.search;
@@ -423,9 +427,8 @@ const Auth: NextPage = () => {
 
   const AuthForm = () => {
     const [loading, setLoading] = useState(false);
-    const [openSnack, setOpenSnack] = useState(false);
-    const [snackMessage, setSnackMessage] = useState('');
-    const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+
+
 
 
     const validationSchema = yup.object({
@@ -551,7 +554,7 @@ const Auth: NextPage = () => {
       setLoading(true);
       AuthService.forgotPassword(email)
         .then((res) => {
-          
+
           setLoading(false);
           setAuthStep("success");
           console.log(res);
@@ -559,7 +562,7 @@ const Auth: NextPage = () => {
         })
         .catch((err) => {
           console.log(err);
-          alert("incorrect email")
+          alert("Invalid email")
 
           setLoading(false);
         });
@@ -619,18 +622,27 @@ const Auth: NextPage = () => {
       //       })
       //     );
       //   });
-
+      setLoading(true);
       try {
         const result = await recoverPassword({
           token,
           new_password: password
         }).unwrap()
         if (result.success) {
-          alert("yes");
-          router.push("/auth");
+          setpasswordSuccessfullyChanged(true);
+          setSnackMessage("პაროლი წარმატებით განახლდა");
+          setOpenSnack(true);
+          setsnackMsgStatus('success');
+          setLoading(false);
         }
       } catch (error) {
-        alert("no " + error)
+        setLoading(false);
+        setpasswordSuccessfullyChanged(false);
+        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
+        console.log(error)
+        
       }
     };
 
@@ -673,38 +685,52 @@ const Auth: NextPage = () => {
 
         {authStep === "change-password" ? (
           <>
-            <form onSubmit={newPasswordFormik.handleSubmit}>
-              <FormLayout>
-                <Title>შეიყვანეთ ახალი პაროლი</Title>
-                <PasswordInputWrapperTest
-                  placeholder="ახალი პაროლი"
-                  id="password"
-                  name="password"
-                  value={newPasswordFormik.values.password}
-                  onChange={newPasswordFormik.handleChange}
-                  invalid={
-                    newPasswordFormik.touched.password &&
-                    newPasswordFormik.errors.password
-                  }
-                />
-                <PasswordInputWrapperTest
-                  placeholder="გაიმეორე პაროლი"
-                  id="confirm"
-                  name="confirm"
-                  value={newPasswordFormik.values.confirm}
-                  onChange={newPasswordFormik.handleChange}
-                  invalid={
-                    newPasswordFormik.touched.confirm &&
-                    newPasswordFormik.errors.confirm
-                  }
-                />
-                <Button type="submit" disabled={loading}>
-                  პაროლის შეცვლა
-                </Button>
-              </FormLayout>
-            </form>
+            {passwordSuccessfullyChanged === true ? (
+              <>
+                <Title>პაროლი წარმატებით შეიცვალაა</Title>
+                <br />
+                <Link href="/auth">
+                  <BackToMainPageStyle onClick={() => setRecover(false)}>
+                    სისტემაში შესვლა
+                  </BackToMainPageStyle>
+                </Link>
+             
+              </>
+            ) :
+              <form onSubmit={newPasswordFormik.handleSubmit}>
+                <FormLayout>
+                  <Title>შეიყვანეთ ახალი პაროლი</Title>
+                  <PasswordInputWrapperTest
+                    placeholder="ახალი პაროლი"
+                    id="password"
+                    name="password"
+                    value={newPasswordFormik.values.password}
+                    onChange={newPasswordFormik.handleChange}
+                    invalid={
+                      newPasswordFormik.touched.password &&
+                      newPasswordFormik.errors.password
+                    }
+                  />
+                  <PasswordInputWrapperTest
+                    placeholder="გაიმეორე პაროლი"
+                    id="confirm"
+                    name="confirm"
+                    value={newPasswordFormik.values.confirm}
+                    onChange={newPasswordFormik.handleChange}
+                    invalid={
+                      newPasswordFormik.touched.confirm &&
+                      newPasswordFormik.errors.confirm
+                    }
+                  />
+                  <Button type="submit" disabled={loading}>
+                    პაროლის შეცვლა
+                  </Button>
+                </FormLayout>
+              </form>
+            }
           </>
         ) : null}
+
       </>
     );
   };
@@ -1048,7 +1074,7 @@ const Auth: NextPage = () => {
           >
             <TabList className={styles.tabList}>
               <Tab>
-                <TabItem selected={tabIndex === 0}>შესვლა</TabItem>
+                <TabItem selected={tabIndex === 0} onClick={() => setRecover(false)}>შესვლა</TabItem>
               </Tab>
               <Tab>
                 <TabItem selected={tabIndex === 1}>ანგარიშის შექმნა</TabItem>
