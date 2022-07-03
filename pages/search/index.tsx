@@ -892,6 +892,26 @@ const Search: NextPage = () => {
                         <Shadow onClick={() => setOpenModal(false)} />
                         <Content>
                             <Scrollbar hide={true} />
+
+                            {getFilters?.data.categories ? (
+                                <>
+                                    <MediumTitle>კატეგორიები</MediumTitle>
+                                    <FilterInnterWrapper>
+                                        <RadioButton
+                                            id={`category_id_${getFilters?.data.categories.map(c => c.id)}`}
+                                            onChange={(value) => setcategory_id(value)}
+                                            options={[
+                                                ...getFilters.data.categories.map((c, index) => ({
+                                                    label: c.category_name,
+                                                    value: c.id
+                                                })),
+                                            ]}
+                                            value={category_id}
+                                        />
+                                    </FilterInnterWrapper>
+                                </>
+                            ) : null}
+
                             {getFilters?.data.color_variations ? (
                                 <>
                                     <MediumTitle>ფერი</MediumTitle>
@@ -930,24 +950,7 @@ const Search: NextPage = () => {
                                 </>
                             ) : null}
 
-                            {getFilters?.data.categories ? (
-                                <>
-                                    <MediumTitle>კატეგორიები</MediumTitle>
-                                    <FilterInnterWrapper>
-                                        <RadioButton
-                                            id={`category_id_${getFilters?.data.categories.map(c => c.id)}`}
-                                            onChange={(value) => setcategory_id(value)}
-                                            options={[
-                                                ...getFilters.data.categories.map((c, index) => ({
-                                                    label: c.category_name,
-                                                    value: c.id
-                                                })),
-                                            ]}
-                                            value={category_id}
-                                        />
-                                    </FilterInnterWrapper>
-                                </>
-                            ) : null}
+
 
 
                             <SliderWrapperStyle>

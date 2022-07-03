@@ -354,10 +354,11 @@ const api = createApi({
       size_variation_id?: number,
       sort_by?: string,
       brand_id?: number,
+      categories?: number,
       page: number
     }>({
-      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id, sort_by, brand_id, page }) => ({
-        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&sortBy=${sort_by}&brand_id=${brand_id}&page=${page}`,
+      query: ({ category_id, start_price, end_price, color_variation_id, size_variation_id, sort_by, brand_id, categories, page }) => ({
+        url: `products/${category_id}/filters?start_price=${start_price}&end_price=${end_price}&color_variation=${color_variation_id}&size_variation=${size_variation_id}&sortBy=${sort_by}&brand_id=${brand_id}&page=${page}&categories=${categories}`,
         method: 'GET',
       })
     }),

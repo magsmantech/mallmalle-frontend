@@ -948,6 +948,7 @@ const Catalog: NextPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [otherFilterName, setotherFilterName] = useState<string>();
+  const [category_id, setcategory_id] = useState<number>(0);
 
   // clear filters fields
   const clearFilterFields = () => {
@@ -957,9 +958,10 @@ const Catalog: NextPage = () => {
     setEndPrice("");
     setbrandId(0);
     setsortBy("");
+    setcategory_id(0);
   }
-  console.log(startPrice)
-  console.log(endPrice)
+  // console.log(startPrice)
+  // console.log(endPrice)
 
   // update selected price
   useEffect(() => {
@@ -977,6 +979,7 @@ const Catalog: NextPage = () => {
     size_variation_id: sizeVariationID,
     sort_by: sortBy, //rating, time, discount, popularity
     brand_id: brandId,
+    categories: category_id,
     page: currentPage
   });
 
@@ -986,7 +989,7 @@ const Catalog: NextPage = () => {
   // update filters
   useEffect(() => {
     refetchProductFilte();
-  }, [sizeVariationID, colorVariationID, startPrice, endPrice])
+  }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
 
   // pagination page changer
   const handlePageClick = (event: any) => {
@@ -1136,6 +1139,25 @@ const Catalog: NextPage = () => {
             <Shadow onClick={() => setOpenModal(false)} />
             <Content>
               <Scrollbar hide={openModal === true ? true : false} />
+
+              {categoryFilter?.categories ? (
+                <>
+                  <MediumTitle>კატეგორიები</MediumTitle>
+                  <FilterInnterWrapper>
+                    <RadioButton
+                      id={`category_id`}
+                      onChange={(value) => setcategory_id(value)}
+                      options={[
+                        ...categoryFilter.categories.map((c, index) => ({
+                          label: c.category_name,
+                          value: c.id
+                        })),
+                      ]}
+                      value={category_id}
+                    />
+                  </FilterInnterWrapper>
+                </>
+              ) : null}
 
               {categoryFilter?.color_variations ? (
                 <>

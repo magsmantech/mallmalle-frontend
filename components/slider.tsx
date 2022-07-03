@@ -2,6 +2,7 @@ import ReactSlider from "react-slider";
 import { useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import Fonts from './../styles/Fonts';
+import Responsive from "../config/Responsive";
 
 type Props =any;
 const Slider = ({onChange}: Props) => {
@@ -112,6 +113,11 @@ const SliderLabel = styled.div`
     font-size: 18px;
     font-family: ${Fonts.FiraGOMedium};
     top: -1rem;
+        ${Responsive.mobile}{
+            &:last-child {
+                margin-left: -34px;
+            }
+        }
 `;
 
 export default Slider;
