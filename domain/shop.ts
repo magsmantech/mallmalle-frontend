@@ -234,6 +234,8 @@ export const calculateProductPrices = (product: ProductData | null, variationId 
 
 export type Cart = {
   // res.summary = 37 (total price)
+  withoutDiscount: number;
+  discount: string;
   summary: number;
   items: CartItem[];
 }

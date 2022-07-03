@@ -30,6 +30,8 @@ import Responsive from "../../config/Responsive";
 import { Alert, Snackbar } from "@mui/material";
 import Loader from "../../components/Loader";
 import { uploadUrl } from '../../features/api';
+import Raiting from '../../components/customStyle/Raiting';
+
 
 type ButtonProps = {
   secondary?: boolean;
@@ -263,7 +265,7 @@ const ProductDetails: NextPage = () => {
   const router = useRouter();
   const discountId = parseInt(router.query.id as string);
 
-  const { data: discount, isLoading: isDiscountsLoading, refetch: refetchDiscount } = api.useGetDiscountByIdQuery({discountId: discountId});
+  const { data: discount, isLoading: isDiscountsLoading, refetch: refetchDiscount } = api.useGetDiscountByIdQuery({ discountId: discountId });
   const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
 
   const [images, setImages] = useState<string[]>([]);
@@ -443,17 +445,13 @@ const ProductDetails: NextPage = () => {
             </Breadcrumbs>
             <Title>{product?.product_name}</Title>
             <RevieStartWrapper>
-              {/* <div
-                style={{ display: "flex", gap: ".4rem", marginRight: ".8rem" }}
-              >
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-                <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
-              </div> */}
+              {product?.rating ? (
+                <Raiting raitingCount={product?.rating} />
+              ) : (
+                null
+              )}
               <DetailCount>
-                {/* 402 ნახვა */}
+                {product?.views} ნახვა
               </DetailCount>
             </RevieStartWrapper>
             <PriceWrapperStyle>

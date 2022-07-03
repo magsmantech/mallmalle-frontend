@@ -288,9 +288,9 @@ const CartScreen: NextPage = () => {
                 </QuantityWrapper>
                 <PriceHorizontalWrapper>
                   <PriceWrapperStyle>
-                    <Price>{'$' + finalPrice}</Price>
+                    <Price>{'₾ ' + finalPrice}</Price>
                     {hasDiscount && (
-                      <OldPrice>${originalPrice}</OldPrice>
+                      <OldPrice>₾ {originalPrice}</OldPrice>
                     )}
                   </PriceWrapperStyle>
                   <CloseIconStyle onClick={async () => {

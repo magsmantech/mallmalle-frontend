@@ -481,21 +481,21 @@ const OrderDetails: React.FC<{
 
                     <PaymentItemStyle >
                         <span>სრული თანხა</span>
-                        <span>$ {cartTotal}</span>
+                        <span>₾ {cart?.summary}</span>
                     </PaymentItemStyle>
                     {cartPrices.hasDiscount ? (
                         <PaymentItemStyle>
                             <span>ფასდაკლება</span>
-                            <span >-$ {itemsSubtotal}</span>
+                            <span >-₾ {cart?.discount}</span>
                         </PaymentItemStyle>
                     ) : null}
                     <PaymentItemStyle>
                         <span>{cart?.items?.length} ნივთი</span>
-                        <span>$ {itemsSubtotalOriginalPrice}</span>
+                        <span>₾ {cart?.withoutDiscount}</span>
                     </PaymentItemStyle>
                     <PaymentItemStyle>
                         <span>მიტანა</span>
-                        <span>$ {shippingCost}</span>
+                        <span>₾ {shippingCost}</span>
                     </PaymentItemStyle>
                 </div>
 
