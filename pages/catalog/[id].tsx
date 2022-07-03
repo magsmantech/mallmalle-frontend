@@ -461,6 +461,7 @@ const FilterInnterWrapper = styled.div`
 `;
 const BtnWithBorder = styled.button` //TODO Levan Madurashvili
     height: 70px;
+    min-height: 70px;
     border: 3px solid #22D5AE;
     border-radius: 14px;
     display: flex;
@@ -481,9 +482,15 @@ const BtnWithBorder = styled.button` //TODO Levan Madurashvili
     -webkit-text-fill-color: transparent;
         ${Responsive.mobile}{
             font-size: 16px;
-            height: 60px;
+            height: 70px;
         }
 `;
+const SliderWrapperStyle = styled.div`
+    margin-top: auto;
+    min-height: 130px;
+`;
+
+
 
 const Item = ({ product }: { product: ProductData }) => {
   const [hovered, setHovered] = useState(false);
@@ -1013,7 +1020,7 @@ const Catalog: NextPage = () => {
     setotherFilterName(sortByTitle?.label);
   }, [sortBy])
 
- 
+
 
   // all loader one variable
   const MainLoading = isProductFilteLoading || isCategoryFilterLoading;
@@ -1123,9 +1130,8 @@ const Catalog: NextPage = () => {
 
           {openModal && <MainFilterComponent>
             <Shadow onClick={() => setOpenModal(false)} />
-            <Scrollbar hide={true} />
             <Content>
-
+              <Scrollbar hide={openModal === true ? true : false} />
 
               {categoryFilter?.color_variations ? (
                 <>
@@ -1165,10 +1171,10 @@ const Catalog: NextPage = () => {
                 </>
               ) : null}
 
-              <div style={{marginTop: 'auto'}}>
-                <MediumTitle style={{marginBottom: '25px'}}>ფასი</MediumTitle>
+              <SliderWrapperStyle>
+                <MediumTitle style={{ marginBottom: '25px' }}>ფასი</MediumTitle>
                 <Slider onChange={(e: any) => setSelectedPrices(e)} />
-              </div>
+              </SliderWrapperStyle>
 
               {/* {categoryFilter.categories.length >= 1 ? (
                 <MediumTitle>კატეგორიები</MediumTitle>
