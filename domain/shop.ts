@@ -475,6 +475,13 @@ export type Search = {
 export type Filters = {
   success: boolean;
   data: {
+    categories: [
+      {
+        id: number;
+        category_name: string;
+        icon: string;
+      }
+    ];
     size_variations: [
       {
         id: number;

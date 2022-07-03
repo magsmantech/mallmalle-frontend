@@ -385,6 +385,7 @@ const Content = styled.div`
     padding: 50px 30px 0px 30px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
     /* justify-content: space-between; */
         ${Responsive.tabletMobile}{
             top: 120px;
@@ -462,6 +463,7 @@ export const CustomPaginationWrapper = styled.div`
 `;
 const BtnWithBorder = styled.button` //TODO Levan Madurashvili
     height: 70px;
+    min-height: 70px;
     border: 3px solid #22D5AE;
     border-radius: 14px;
     display: flex;
@@ -484,6 +486,10 @@ const BtnWithBorder = styled.button` //TODO Levan Madurashvili
             font-size: 16px;
             height: 60px;
         }
+`;
+const SliderWrapperStyle = styled.div`
+    margin-top: auto;
+    min-height: 130px;
 `;
 
 
@@ -704,6 +710,7 @@ const Search: NextPage = () => {
     const [brandId, setbrandId] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [otherFilterName, setotherFilterName] = useState<string>();
+    const [category_id, setcategory_id] = useState<any>([]);
 
     // reset current page
     useEffect(() => {
@@ -726,6 +733,7 @@ const Search: NextPage = () => {
         size_variation_id: sizeVariationID,
         sort_by: sortBy, //rating, time, discount, popularity
         brand_id: brandId,
+        categories: category_id
     });
 
 
@@ -878,9 +886,8 @@ const Search: NextPage = () => {
 
                     {openModal && <MainFilterComponent>
                         <Shadow onClick={() => setOpenModal(false)} />
-                        <Scrollbar hide={true} />
                         <Content>
-
+                            <Scrollbar hide={true} />
                             {getFilters?.data.color_variations ? (
                                 <>
                                     <MediumTitle>ფერი</MediumTitle>
@@ -919,10 +926,30 @@ const Search: NextPage = () => {
                                 </>
                             ) : null}
 
-                            <div style={{ marginTop: 'auto' }}>
+                            {getFilters?.data.categories ? (
+                                <>
+                                    <MediumTitle>კატეგორიები</MediumTitle>
+                                    <FilterInnterWrapper>
+                                        <RadioButton
+                                            id={`category_id_${getFilters?.data.categories.map(c => c.id)}`}
+                                            onChange={(value) => setcategory_id(value)}
+                                            options={[
+                                                ...getFilters.data.categories.map((c, index) => ({
+                                                    label: c.category_name,
+                                                    value: c.id
+                                                })),
+                                            ]}
+                                            value={category_id}
+                                        />
+                                    </FilterInnterWrapper>
+                                </>
+                            ) : null}
+
+
+                            <SliderWrapperStyle>
                                 <MediumTitle style={{ marginBottom: '25px' }}>ფასი</MediumTitle>
                                 <Slider onChange={(e: any) => setSelectedPrices(e)} />
-                            </div>
+                            </SliderWrapperStyle>
 
                             <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
                         </Content>
