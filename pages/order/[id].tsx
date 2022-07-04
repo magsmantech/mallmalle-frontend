@@ -20,7 +20,7 @@ import { uploadUrl } from '../../features/api';
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
     const router = useRouter();
     const orderID = parseInt(router.query.id as string);
-    console.log("order id --> " + orderID)
+    // console.log("order id --> " + orderID)
 
 
     const { data: orderDetail, isLoading: isOrderDetailLoading, refetch: refetchOrderDetail, isSuccess: isOrderDetailSucces } = api.useGetOrderDetailsQuery(orderID);
@@ -85,7 +85,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
                     <SectionTitle>ყიდვის ისტორია</SectionTitle>
-                   
+
                     {/* <OrderListTopSideInsideWrapper>
                         <ChipWrapper>
                             <ChipTitle>დადასტურებული</ChipTitle>
@@ -100,16 +100,16 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items?.length} შეკვეთა</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
                 <Link href={{
-                       pathname: '/profile',
-                       query: { tab: 'orders-history' },
-                    }} >
-                        <BackBtnStyle >
-                            <IconWrapper>
-                                <BsArrowLeft color={'#3A7BD5'} />
-                            </IconWrapper>
-                            <span>უკან დაბრუნება</span>
-                        </BackBtnStyle>
-                    </Link>
+                    pathname: '/profile',
+                    query: { tab: 'orders-history' },
+                }} >
+                    <BackBtnStyle >
+                        <IconWrapper>
+                            <BsArrowLeft color={'#3A7BD5'} />
+                        </IconWrapper>
+                        <span>უკან დაბრუნება</span>
+                    </BackBtnStyle>
+                </Link>
                 <Headers>
                     <HeaderItem>პროდუქტი</HeaderItem>
                     <HeaderItem>რაოდენობა</HeaderItem>
@@ -119,11 +119,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
 
                 {orderDetail.order_items.map((o, index) => {
-
-                    // const ImgScr = o.product.decoded_images[0] ? config.imagesEndpoint + JSON.parse(o.product.decoded_images[0])[0] : "../../asdas";
-
-                    var imgUrl = o.product.decoded_images
-                    // console.log("first " + imgUrl);
+                    var imgUrl = o.product.decoded_images;
 
                     return (
                         <ItemFlexWrapper key={index}>
@@ -143,7 +139,9 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             </NumberWrapperStyle>
                             <PriceWrapperStyle>
                                 <Price>{o.discounted_price} ₾</Price>
-                                <OldPrice>{o.price} ₾</OldPrice>
+                                {o.discounted_price === parseFloat(o.price) ? null : (
+                                    <OldPrice>{o.price} ₾</OldPrice>
+                                )}
                             </PriceWrapperStyle>
                             <BadgeWrapperStyle>
                                 <BadgeWrapperStyle>

@@ -84,7 +84,14 @@ const History: NextPage = () => {
                                             <ItemLabel>რაოდენობა: </ItemLabel> <ItemValue>{selectedItem?.quantity}x</ItemValue>
                                         </ItemListWrapper>
                                         <Price>₾ {selectedItem?.discounted_price}</Price>
-                                        <OldPrice>₾ {selectedItem?.price}</OldPrice>
+                                        {selectedItem?.discounted_price ? (
+                                            <>
+                                                {parseFloat(selectedItem?.price) === selectedItem?.discounted_price ? null : (
+                                                    <OldPrice>₾ {selectedItem?.price}</OldPrice>
+                                                )}
+                                            </>
+                                        ) : null}
+
                                     </div>
                                 </ItemWrapperStyle>
 
