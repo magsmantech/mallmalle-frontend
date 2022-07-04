@@ -429,7 +429,7 @@ const OrderDetails: React.FC<{
                     </IconWrapperStyle>
                     <div className={styles.headerText}>
                         <NameStyle>{profile.profile?.user.first_name} {profile.profile?.user.last_name}</NameStyle>
-                        <OrderNoStyle>ორდერის ID: 124532</OrderNoStyle>
+                        <OrderNoStyle></OrderNoStyle>
                     </div>
                 </HeaderStyle>
                 <div>
@@ -467,13 +467,13 @@ const OrderDetails: React.FC<{
                         </AddressItemTextStyle>
                     </AddressItemStyle>
 
-                    <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle>
+                    {/* <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle> */}
                 </div>
 
-                <InputWrapperStyle>
+                {/* <InputWrapperStyle>
                     <InputStyle placeholder="PROMO CODE"></InputStyle>
                     <CustomButton>შემოწმება</CustomButton>
-                </InputWrapperStyle>
+                </InputWrapperStyle> */}
 
                 <DividerStyle></DividerStyle>
 
