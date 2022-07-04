@@ -10,7 +10,7 @@ import { Breadcrumbs } from "../../components/styled/breadcrumbs";
 import CloseIcon from "../../public/icons/react-icons/close";
 import { getBag } from "../../services/checkout-services";
 import { useEffect, useState } from "react";
-import { calculateProductPrices, Cart, CartItem } from "../../domain/shop";
+import { Cart, CartItem } from "../../domain/shop";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
 import Loader from '../../components/Loader';
@@ -245,6 +245,7 @@ const CartScreen: NextPage = () => {
   }, [addresses]);
 
 
+
   return (
     <>
       <MainTitle>
@@ -267,8 +268,15 @@ const CartScreen: NextPage = () => {
           <Divider />
           {cart?.items?.map((item, i) => {
             const { product } = item;
-            const { hasDiscount, originalPrice, finalPrice, selectedVariation } = calculateProductPrices(item.product, item.variation_id);
-            console.log('cart item prices:', { hasDiscount, originalPrice, finalPrice, item });
+            const variantID = item.variation_id;
+            const filterWithVariant = item.product.variations.filter(x => x.id === variantID);
+            const price = parseFloat(filterWithVariant[0].price);
+            const discount = product.discount.length >= 1 ? price * product.discount[0]?.value / 100 : null;
+            const productDiscount = discount ? price - discount : price;
+
+            // mainPrice * product.discount[0]?.value / 100
+            console.log(productDiscount)
+
             return (
               <FlexRowWrapper key={i}>
                 <DetailLink href={`detail/${item.product_id}`}>
@@ -282,16 +290,23 @@ const CartScreen: NextPage = () => {
                       cartItemId: item.id,
                       quantity: newQuantity,
                     });
-                    console.log('updateQuantity result:', result);
+                    // console.log('updateQuantity result:', result);
                     await refetchCart();
                   }} />
                 </QuantityWrapper>
                 <PriceHorizontalWrapper>
                   <PriceWrapperStyle>
-                    <Price>{'₾ ' + finalPrice}</Price>
-                    {hasDiscount && (
-                      <OldPrice>₾ {originalPrice}</OldPrice>
+
+                    {product.discount.length >= 1 ? (
+                      <Price>{'₾ ' + productDiscount}</Price>
+                    ) : (
+                      <Price>{'₾ ' + price}</Price>
                     )}
+
+                    {product.discount.length >= 1 ? (
+                      <OldPrice>₾ {price}</OldPrice>
+                    ) : null}
+
                   </PriceWrapperStyle>
                   <CloseIconStyle onClick={async () => {
                     const result = await removeFromCart({
@@ -302,7 +317,7 @@ const CartScreen: NextPage = () => {
                     setSnackMessage("პროდუქტი წარმატებით წაიშალა კალათიდან");
                     setOpenSnack(true);
                     setsnackMsgStatus('success');
-                    console.log('removeFromCart result:', result);
+                    // console.log('removeFromCart result:', result);
                   }}
                   />
                 </PriceHorizontalWrapper>

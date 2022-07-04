@@ -8,7 +8,7 @@ import Button from './styled/button';
 
 import ProfileIcon from '../public/icons/react-icons/profile';
 import EditIcon from '../public/icons/react-icons/edit';
-import { Address, calculateCartPrices, Cart } from '../domain/shop';
+import { Address, Cart } from '../domain/shop';
 import api from '../features/api';
 import Responsive from '../config/Responsive';
 import Loader from './Loader';
@@ -303,14 +303,14 @@ const OrderDetails: React.FC<{
         const { data: addresses, isLoading: isAddressesLoading, refetch: refetchAddresses } = api.useGetAddressesQuery(undefined);
         const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
         
-        const cartPrices = calculateCartPrices(cart);
-        const {
-            itemsSubtotalOriginalPrice,
-            itemsSubtotal,
-            hasDiscount,
-            shippingCost,
-            cartTotal,
-        } = cartPrices;
+        // const cartPrices = calculateCartPrices(cart);
+        // const {
+        //     itemsSubtotalOriginalPrice,
+        //     itemsSubtotal,
+        //     hasDiscount,
+        //     shippingCost,
+        //     cartTotal,
+        // } = cartPrices;
 
         const [createOrder, { isLoading: isCreateOrderLoading }] = api.useCreateOrderMutation();
         const [initiatePayment, { isLoading: isInitiatePaymentLoading }] = api.useInitiatePaymentMutation();
@@ -483,19 +483,19 @@ const OrderDetails: React.FC<{
                         <span>სრული თანხა</span>
                         <span>₾ {cart?.summary}</span>
                     </PaymentItemStyle>
-                    {cartPrices.hasDiscount ? (
+                    {/* {cartPrices.hasDiscount ? (
                         <PaymentItemStyle>
                             <span>ფასდაკლება</span>
                             <span >-₾ {cart?.discount}</span>
                         </PaymentItemStyle>
-                    ) : null}
+                    ) : null} */}
                     <PaymentItemStyle>
                         <span>{cart?.items?.length} ნივთი</span>
                         <span>₾ {cart?.withoutDiscount}</span>
                     </PaymentItemStyle>
                     <PaymentItemStyle>
                         <span>მიტანა</span>
-                        <span>₾ {shippingCost}</span>
+                        {/* <span>₾ {shippingCost}</span> */}
                     </PaymentItemStyle>
                 </div>
 

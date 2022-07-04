@@ -41,7 +41,7 @@ import { getFilteredItems, getFilters } from "../../services/category-services";
 import config from "../../config.json";
 
 import Respinsive from "../../config/Responsive"
-import { calculateProductPrices, Category, Product, FilteredCategory, FilterWithProps, ProductData } from '../../domain/shop';
+import { Category, Product, FilteredCategory, FilterWithProps, ProductData } from '../../domain/shop';
 import MoreFilterIcon from '../../public/icons/more-filter-icon.svg'
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
@@ -505,7 +505,7 @@ const Item = ({ product }: { product: ProductData }) => {
 
   const dispatch = useDispatch();
 
-  const prices = calculateProductPrices(product);
+  // const prices = calculateProductPrices(product);
 
   const _addToCart = () => {
     dispatch(
@@ -539,12 +539,13 @@ const Item = ({ product }: { product: ProductData }) => {
           >
             <div style={{ display: "flex", alignItems: "flex-start" }}>
               {/* <Price>{prices.finalPrice} ₾</Price> */}
-              <Price>{product.lowest_price} ₾</Price>
-              {prices.hasDiscount && (
-                <OldPrice>{prices.originalPrice} ₾</OldPrice>
-              )}
-              {product.discount ? (
-                <OldPrice>100 ₾</OldPrice>
+              {product ? (
+                <>
+                  <Price>₾{product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
+                  {product?.discount?.length >= 1 ? (
+                    <OldPrice>{product?.discount?.length >= 1 ? product?.lowest_price : null} ₾</OldPrice>
+                  ) : null}
+                </>
               ) : null}
             </div>
             {/* @ts-ignore */}
@@ -597,184 +598,6 @@ type FilterSideBarProps = {
   onEnter: Function;
 };
 
-// const FilterSideBar = ({
-//   onClose,
-//   onEnter,
-//   filters,
-//   selectedFilter,
-//   colorFilters,
-// }: FilterSideBarProps) => {
-//   const [selectedCategory, setSelectedCategory] = useState(selectedFilter);
-//   const [selectedColor, setSelectedColor] = useState<any>(null);
-//   const [selectedPrices, setSelectedPrices] = useState<any>(null);
-
-//   const handleSelectChange = (event: any) => {
-//     const value = event.target.value;
-//     setSelectedCategory(+value);
-//     console.log(value);
-//   };
-
-//   const array1 = [
-//     {
-//       label: "ყველა",
-//       value: "all",
-//     },
-//     {
-//       label: "ახალდამატებული",
-//       value: "new",
-//     },
-//     {
-//       label: "ზედები",
-//       value: "tops",
-//     },
-//     {
-//       label: "შარვლები",
-//       value: "pants",
-//     },
-//     {
-//       label: "კაბები",
-//       value: "dresses",
-//     },
-//     {
-//       label: "კორსეტები და პიჯაკები",
-//       value: "coreset",
-//     },
-//     {
-//       label: "ფეხსაცმელები",
-//       value: "shoes",
-//     },
-
-//     {
-//       label: "დიდი ზომები",
-//       value: "big",
-//     },
-//     {
-//       label: "აქსესუარები",
-//       value: "accessories",
-//     },
-//   ];
-
-//   const array2 = [
-//     {
-//       label: "ფასდაკლებები",
-//       value: "sale",
-//     },
-//     {
-//       label: "პოპულარულები",
-//       value: "popular",
-//     },
-//     {
-//       label: "ექსკლუზიურები",
-//       value: "exclusive",
-//     },
-//     {
-//       label: "დაბალ ბიუჯეტურები",
-//       value: "low-budget",
-//     },
-//     {
-//       label: "შეთავაზებები",
-//       value: "offers",
-//     },
-//   ];
-
-//   const [colors, setColors] = useState([
-//     "#000000",
-//     "#794428",
-//     "#f6881b",
-//     "#fee41f",
-//     "#2bb430",
-//     "#345fec",
-//     "#a527f3",
-//     "#fea6fb",
-//   ]);
-//   const [arr1, setArr1] = useState(array1);
-//   const [arr2, setArr2] = useState(array2);
-
-//   const _colorChanged = (e: any) => {
-//     console.log(e);
-//     setSelectedColor(e);
-//   };
-
-//   const _onEnter = () => {
-//     const selectedFilters: any = {
-//       color: selectedColor,
-//       category: selectedCategory,
-//       prices: selectedPrices,
-//     };
-//     console.log(selectedFilters);
-//     onEnter(selectedFilters);
-//   };
-
-//   return (
-//     <>
-//       <div className={styles.filterSideBar}>
-//         <div className={styles.filterTitle}>კატეგორიები</div>
-//         <Wrapper>
-//           {filters.map((item: any, i: number) => (
-//             <RadioItem key={i}>
-//               <RadioButton
-//                 type="radio"
-//                 name="radio"
-//                 value={item.id}
-//                 checked={selectedCategory === item.id}
-//                 onChange={(event) => handleSelectChange(event)}
-//               />
-//               <RadioButtonLabel />
-//               <div className={styles.radioButtonLabel}>
-//                 {item.category_name}
-//               </div>
-//             </RadioItem>
-//           ))}
-//         </Wrapper>
-//         <div className={styles.divider}></div>
-//         <div className={styles.filterTitle}>ფასი</div>
-//         <Slider onChange={(e: any) => setSelectedPrices(e)}></Slider>
-//         <Wrapper style={{ marginTop: "5.0rem" }}>
-//           {arr2.map((item, i) => (
-//             <RadioItem key={i}>
-//               <RadioButton
-//                 type="radio"
-//                 name="radio"
-//                 value={item.value}
-//                 checked={"test" === item.value}
-//                 onChange={(event) => handleSelectChange(event)}
-//               />
-//               <RadioButtonLabel />
-//               <div>{item.label}</div>
-//             </RadioItem>
-//           ))}
-//         </Wrapper>
-//         <div className={styles.filterTitle} style={{ marginTop: "4.2rem" }}>
-//           ფერები
-//         </div>
-//         <div>
-//           <ColorSelector
-//             colors={colorFilters}
-//             small
-//             style={{ justifyContent: "space-between" }}
-//             onColorSelected={(event: any) => _colorChanged(event)}
-//           />
-//         </div>
-//         <div className={styles.filterFooter}>
-//           <HoverButton
-//             style={{ fontWeight: 500, height: "7.1rem" }}
-//             lowercase
-//             onClick={() => onClose()}
-//           >
-//             გაუქმება
-//           </HoverButton>
-//           <Button
-//             style={{ fontWeight: 500, height: "7.1rem" }}
-//             lowercase
-//             onClick={() => _onEnter()}
-//           >
-//             აჩვენე 124
-//           </Button>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
 
 const Catalog: NextPage = () => {
 
@@ -1032,6 +855,9 @@ const Catalog: NextPage = () => {
   // all loader one variable
   const MainLoading = isProductFilteLoading || isCategoryFilterLoading;
 
+
+
+
   return MainLoading ? <Loader /> : !productFilter ? (<span>not found product by category</span>) : (
     <>
       {openFilters && (
@@ -1067,45 +893,6 @@ const Catalog: NextPage = () => {
             </DropDown>
           </FilltersBox>
 
-          {/* <FilltersBox>
-            <DropDown dropdownTitle="მინ. ფასი">
-              <RadioButton
-                id="low-id"
-                onChange={(value) => setStartPrice(value)}
-                options={[
-                  { label: "0 ₾", value: "0" },
-                  { label: "100 ₾", value: "100" },
-                  { label: "200 ₾", value: "200" },
-                  { label: "300 ₾", value: "300" },
-                  { label: "400 ₾", value: "400" },
-                  { label: "500 ₾", value: "500" },
-                  { label: "600 ₾", value: "600" },
-                  { label: "700 ₾", value: "700" },
-                ]}
-                value={startPrice}
-              />
-            </DropDown>
-          </FilltersBox> */}
-
-          {/* <FilltersBox>
-            <DropDown dropdownTitle="მაქ. ფასი">
-              <RadioButton
-                id="hight-id"
-                onChange={(value) => setEndPrice(value)}
-                options={[
-                  { label: "განულება", value: "0" },
-                  { label: "100 ₾", value: "100" },
-                  { label: "200 ₾", value: "200" },
-                  { label: "300 ₾", value: "300" },
-                  { label: "400 ₾", value: "400" },
-                  { label: "500 ₾", value: "500" },
-                  { label: "600 ₾", value: "600" },
-                  { label: "700 ₾", value: "700" },
-                ]}
-                value={endPrice}
-              />
-            </DropDown>
-          </FilltersBox> */}
 
           {categoryFilter?.brands ? (
             <FilltersBox>
@@ -1131,8 +918,6 @@ const Catalog: NextPage = () => {
               <MoreFilterIconStyle />
             </MoreFilterBtn>
           </FilltersBox>
-
-          {/* {openModal && <SidebarFilter product={products} openModal={setOpenModal} />} */}
 
 
           {openModal && <MainFilterComponent>

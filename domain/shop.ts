@@ -113,6 +113,7 @@ export type ProductData = {
   "description": string | null;
   "images": string | null;// JSON string: '["1.jpg","2.jpg"]'
   "variations": ProductVariation[];
+  "variants": ProductVariationDetail[];
   "discount": Discount[];
   "categories": Category[];
   "decoded_images": [] | string;
@@ -210,26 +211,26 @@ export type ProductVariation = {
  * @param variationId variation ID inside product.variations
  * @returns 
  */
-export const calculateProductPrices = (product: ProductData | null, variationId = 0) => {
-  const selectedVariation = product?.variations?.find(v => v.id == variationId);
-  const originalPrice = parseFloat(product?.variations?.find(v => v.id == variationId)?.price || '0');
-  const finalPrice = product
-    ? (
-      product?.discount?.length > 0
-        ? product?.discount?.reduce((carryPrice, newDiscount) => carryPrice * (100 - newDiscount.value) / 100, originalPrice)
-        : originalPrice
-    )
-    : null;
-  // console.log('calculateProductPrices', { product, variationId, originalPrice, finalPrice });
-  return {
-    selectedVariation,
-    selectedSize: selectedVariation?.size_variation,
-    selectedColor: selectedVariation?.color_variation,
-    hasDiscount: finalPrice != originalPrice,
-    originalPrice,
-    finalPrice,
-  };
-}
+// export const calculateProductPrices = (product: ProductData | null, variationId = 0) => {
+//   const selectedVariation = product?.variations?.find(v => v.id == variationId);
+//   const originalPrice = parseFloat(product?.variations?.find(v => v.id == variationId)?.price || '0');
+//   const finalPrice = product
+//     ? (
+//       product?.discount?.length > 0
+//         ? product?.discount?.reduce((carryPrice, newDiscount) => carryPrice * (100 - newDiscount.value) / 100, originalPrice)
+//         : originalPrice
+//     )
+//     : null;
+//   console.log('calculateProductPrices', { product, variationId, originalPrice, finalPrice });
+//   return {
+//     selectedVariation,
+//     selectedSize: selectedVariation?.size_variation,
+//     selectedColor: selectedVariation?.color_variation,
+//     hasDiscount: finalPrice != originalPrice,
+//     originalPrice,
+//     finalPrice,
+//   };
+// }
 
 
 export type Cart = {
@@ -249,22 +250,22 @@ export type CartItem = {
   "product": ProductData;
 }
 
-export const calculateCartPrices = (cart: Cart | undefined) => {
-  const processedCartItems = cart?.items?.map(item => calculateProductPrices(item.product, item.variation_id));
-  const itemsSubtotalOriginalPrice = roundToCents(processedCartItems?.reduce((carry, productPrices) => carry + productPrices?.originalPrice, 0));
-  const itemsSubtotal = roundToCents(processedCartItems?.reduce((carry, productPrices) => carry + (productPrices?.finalPrice || 0), 0) || 0);
-  const hasDiscount = processedCartItems?.some(ci => ci.hasDiscount);
-  // TODO is it always 5?
-  const shippingCost = roundToCents(5);
-  const cartTotal = itemsSubtotal + shippingCost;
-  return {
-    itemsSubtotalOriginalPrice,
-    itemsSubtotal,
-    hasDiscount,
-    shippingCost,
-    cartTotal,
-  };
-}
+// export const calculateCartPrices = (cart: Cart | undefined) => {
+//   const processedCartItems = cart?.items?.map(item => calculateProductPrices(item.product, item.variation_id));
+//   const itemsSubtotalOriginalPrice = roundToCents(processedCartItems?.reduce((carry, productPrices) => carry + productPrices?.originalPrice, 0));
+//   const itemsSubtotal = roundToCents(processedCartItems?.reduce((carry, productPrices) => carry + (productPrices?.finalPrice || 0), 0) || 0);
+//   const hasDiscount = processedCartItems?.some(ci => ci.hasDiscount);
+//   // TODO is it always 5?
+//   const shippingCost = roundToCents(5);
+//   const cartTotal = itemsSubtotal + shippingCost;
+//   return {
+//     itemsSubtotalOriginalPrice,
+//     itemsSubtotal,
+//     hasDiscount,
+//     shippingCost,
+//     cartTotal,
+//   };
+// }
 
 export type Address = {
   "id": number;// 154,
@@ -503,3 +504,27 @@ export type Filters = {
     ]
   }
 }
+
+export type ProductVariationDetail = {
+  id: number;
+  color_name: string;
+  color: string;
+  sizes: VariationSize[];
+}
+
+export type VariationSize = {
+  id: number;
+  product_id: number;
+  title: string;
+  price: string;
+  image: string;
+  quantity: number;
+  product_sku: string;
+  views: number;
+  size_variation: SizeV;
+}
+export type SizeV = {
+  id: number;
+  size_name: string;
+}
+

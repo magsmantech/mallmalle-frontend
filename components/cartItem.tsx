@@ -1,28 +1,34 @@
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
-import { calculateProductPrices, CartItem } from "../domain/shop";
+import { CartItem } from "../domain/shop";
 import { uploadUrl } from "../features/api";
 
 
 
 const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
   const { product, product_id, variation_id, quantity, total } = item;
-  const {
-    selectedVariation,
-    selectedSize,
-    selectedColor,
-  } = calculateProductPrices(item.product, variation_id);
+  // const {
+  //   selectedVariation,
+  //   selectedSize,
+  //   selectedColor,
+  // } = calculateProductPrices(item.product, variation_id);
 
   var imgUrl = item.product.decoded_images;
   // console.log("first " + imgUrl);
+
+  // console.log(variation_id)
+
+  const productItem = product?.variations.filter(x => x.id === variation_id)
+
+  // console.log(productItem)
 
   return (
     <ItemWrapper style={{ ...style }}>
       <ItemImg src={uploadUrl(imgUrl[0])} />
       <ItemTextWrapper>
-        <ItemName>{product.product_name}</ItemName>
-        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{selectedSize?.size_name}</ItemValue></div>
-        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{selectedColor?.color_name}</ItemValue></div>
+        <ItemName>{product.product_name} {productItem[0].id}</ItemName>
+        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{productItem[0].size_variation.size_name}</ItemValue></div>
+        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name}</ItemValue></div>
       </ItemTextWrapper>
     </ItemWrapper>
   )

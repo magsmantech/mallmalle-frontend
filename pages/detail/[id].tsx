@@ -23,7 +23,7 @@ import { getProductDetailsById } from "../../services/products-service";
 import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
-import { calculateProductPrices, Product, ProductData } from "../../domain/shop";
+import { Product, ProductData, ProductVariationDetail, VariationSize } from "../../domain/shop";
 import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api, { uploadUrl } from "../../features/api";
 import Responsive from "../../config/Responsive";
@@ -270,8 +270,8 @@ const ProductDetails: NextPage = () => {
   const router = useRouter();
   const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
   const [images, setImages] = useState<string[]>([]);
-  const [sizes, setSizes] = useState<SizeType[]>([]);
-  const [colors, setColors] = useState<ColorType[]>([]);
+  const [sizes, setSizes] = useState<ProductVariationDetail[]>([]);
+  const [colors, setColors] = useState<ProductVariationDetail[]>([]);
 
   const [disableFavoriteBtn, setdisableFavoriteBtn] = useState(false);
 
@@ -281,12 +281,14 @@ const ProductDetails: NextPage = () => {
   const [product, setProduct] = useState<ProductData | null>(null);
 
   const { id } = router.query;
-  console.log(id);
+  // console.log(id);
 
-  const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
-  console.log(product, product?.variations);
+  // const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
+  // console.log(product, product?.variations);
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
+
+  const [addToCart, { isLoading: isAddToCartLoading }] = api.useAddToCartMutation();
 
   const { data: authData, isLoading: isUserLoading } = api.useProfileQuery(undefined);
 
@@ -294,13 +296,15 @@ const ProductDetails: NextPage = () => {
   const [snackMessage, setSnackMessage] = useState('');
   const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
   const MainLoading = isRecommendedLoading || isFavoritesLoading || isCartLoading;
+
+
   useEffect(() => {
-    console.log(id, router);
+    // console.log(id, router);
     if (!id) return;
 
     getProductDetailsById(+id)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const { data } = res;
         setProduct(data);
         //
@@ -317,13 +321,13 @@ const ProductDetails: NextPage = () => {
           setImages([...images, ...imagesArray]);
           // auto-select first color
           _colorSelected(colorsArray[0]?.id);
-          console.log('colorsArray', colorsArray);
+          // console.log('colorsArray', colorsArray);
 
           return;
         }
         if (data.images) {
           const parsedImages = JSON.parse(data.images);
-          console.log(parsedImages);
+          // console.log(parsedImages);
           const imagesArray = parsedImages.map(
             (image: string) => config.imagesEndpoint + image
           );
@@ -332,42 +336,70 @@ const ProductDetails: NextPage = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, [id]);
 
-  const _showFeedback = () => {
+  const _addToCart = async () => {
     if (!authData?.profile?.user) {
-      // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setOpenSnack(true);
       setsnackMsgStatus('info');
       return;
     }
-    console.log("test", product);
-    // dispatch(
-    //   showFeedback({ show: true }),
-    // );
-    if (product?.variations) {
-      console.log(selectedColorId, selectedSizeId);
-      const variation = product?.variations?.find(
-        (item: any) =>
-        (item.color_variation.id =
-          selectedColorId && item.size_variation.id === selectedSizeId)
-      );
-      console.log('var', variation);
-      if (product && variation) {
-        // TODO use api.getAddToCartMutation()
-        addToCart(product.id, variation.id, 1).then(({ data }) => {
-          // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
-          refetchCart();
-          setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
-          setOpenSnack(true);
-          setsnackMsgStatus(data.success ? 'success' : data.error ? "error" : "info");
+    if (product && product.variants) {
+      try {
+        await addToCart({
+          productId: product.id,
+          variationId: selectedSizeId,
+          quantity: 1
         });
+        refetchCart();
+        setSnackMessage("პროდუქტი დაემატა კალათში!");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
+
+      } catch (error) {
+        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
       }
     }
   };
+
+
+  // const _showFeedback = () => {
+  //   if (!authData?.profile?.user) {
+  //     // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+  //     setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+  //     setOpenSnack(true);
+  //     setsnackMsgStatus('info');
+  //     return;
+  //   }
+  //   // console.log("test", product);
+  //   // dispatch(
+  //   //   showFeedback({ show: true }),
+  //   // );
+  //   if (product?.variants) {
+  //     console.log(selectedColorId, selectedSizeId);
+  //     const variation = product?.variants?.find(
+  //       (item: any) =>
+  //       (item.color_variation.id =
+  //         selectedColorId && item.size_variation.id === selectedSizeId)
+  //     );
+  //     console.log('var', variation);
+  //     if (product && variation) {
+  //       // TODO use api.getAddToCartMutation()
+  //       addToCart(product.id, variation.id, 1).then(({ data }) => {
+  //         // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+  //         refetchCart();
+  //         setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+  //         setOpenSnack(true);
+  //         setsnackMsgStatus(data.success ? 'success' : data.error ? "error" : "info");
+  //       });
+  //     }
+  //   }
+  // };
 
 
   const _showFavoriteFeedback = () => {
@@ -394,23 +426,16 @@ const ProductDetails: NextPage = () => {
 
 
   const _colorSelected = (e: any) => {
-    console.log('color selected:', e);
+    // console.log('color selected:', e);
     setSelectedColorId(e);
+    setSelectedSizeId(undefined);
   };
 
   const _sizeSelected = (e: any) => {
-    console.log('size selected:', e);
+    // console.log('size selected:', e);
     setSelectedSizeId(e);
   };
 
-  const imagesTemp = [
-    "/assets/1.png",
-    "/assets/13_024_540x.png",
-    "/assets/13_034_540x.png",
-    "/assets/13_053_540x.png",
-  ];
-
-  const sizesTemp = ["34", "36", "38", "40", "42"];
 
   const colorsTemp = ["#E536BD", "#536DDB", "#EDC6A7", "#8D5843", "#D53232"];
 
@@ -422,6 +447,15 @@ const ProductDetails: NextPage = () => {
 
   // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
 
+
+
+  const sizeVariantResult = product?.variants.filter(x => x.id === selectedColorId);
+
+  const sizeV = sizeVariantResult ? sizeVariantResult[0] : null;
+
+  const forPrice = sizeV?.sizes?.filter(x => x.id === selectedSizeId);
+
+  const mainPrice = forPrice ? forPrice[0]?.price : null;
 
 
 
@@ -467,18 +501,22 @@ const ProductDetails: NextPage = () => {
 
             {product ? (
               <PriceWrapperStyle>
-                <Price>₾{product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
+                <Price>₾{mainPrice ? mainPrice : product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
                 {product?.discount?.length >= 1 ? (
                   <OldPrice>{product?.discount?.length >= 1 ? product?.lowest_price : null}</OldPrice>
                 ) : null}
               </PriceWrapperStyle>
             ) : null}
 
-            {colors && !!colors.length && (
+
+
+            {/* <h1>{selectedColorId}</h1> */}
+
+            {colors && !!colors.length && product?.variants && (
               <>
                 <Label>აირჩიე ფერი: </Label>
                 <ColorSelector
-                  colors={colors}
+                  colors={product?.variants}
                   defaultSelected={colors[0]?.id}
                   gap={"20px"}
                   onColorSelected={(event: any) => _colorSelected(event)}
@@ -486,19 +524,24 @@ const ProductDetails: NextPage = () => {
 
               </>
             )}
+            {/* <h1>{selectedSizeId}</h1> */}
+
+
+
             <SelectSizeWrapper>
-              {sizes && !!sizes.length && (
+              {sizes && !!sizes.length && sizeV && sizeVariantResult && (
                 <>
                   <SelectSizeLabel>აირჩიე ზომა: </SelectSizeLabel>
                   <SizeSelector
-                    sizes={sizes}
+                    sizes={sizeV.sizes}
                     onSelectedChange={(event: any) => _sizeSelected(event)}
                   />
                 </>
               )}
             </SelectSizeWrapper>
             <ButtonWrapper>
-              <Button onClick={_showFeedback} style={{
+              {/* onClick={_showFeedback} */}
+              <Button onClick={_addToCart} style={{
                 ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
               }} disabled={!canAddToCart}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
@@ -549,5 +592,4 @@ const ProductDetails: NextPage = () => {
     </>
   );
 };
-
 export default ProductDetails;

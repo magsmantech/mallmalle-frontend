@@ -8,7 +8,7 @@ const Raiting: React.FC<{ raitingCount: number }> = ({ raitingCount }) => {
     for (let i = 0; i < raitingCount; i++) {
         startsToRender.push(<BsStarFill size={"20px"} color={"#22D5AE"} />);
     }
-    console.log(startsToRender);
+    // console.log(startsToRender);
 
     return (
         <Wrapper>{startsToRender}</Wrapper>

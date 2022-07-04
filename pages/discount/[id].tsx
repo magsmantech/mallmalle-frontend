@@ -23,7 +23,7 @@ import { getProductDetailsById } from "../../services/products-service";
 import config from "../../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../../interfaces/products";
-import { calculateProductPrices, Product, Recommended, ProductData } from '../../domain/shop';
+import { Product, Recommended, ProductData } from '../../domain/shop';
 import { addToCart, addToFavorite } from "../../services/checkout-services";
 import api from "../../features/api";
 import Responsive from "../../config/Responsive";
@@ -288,11 +288,11 @@ const ProductDetails: NextPage = () => {
   const { id } = router.query;
   console.log(id);
 
-  const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
-  console.log(product, product?.variations);
+  // const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
+  // console.log(product, product?.variations);
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
-
+  const [addToCart, { isLoading: isAddToCartLoading }] = api.useAddToCartMutation();
   const { data: authData, isLoading: isUserLoading } = api.useProfileQuery(undefined);
 
   useEffect(() => {
@@ -337,38 +337,68 @@ const ProductDetails: NextPage = () => {
       });
   }, [id]);
 
-  const _showFeedback = () => {
+  // const _showFeedback = () => {
+  //   if (!authData?.profile?.user) {
+  //     // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+  //     setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+  //     setOpenSnack(true);
+  //     setsnackMsgStatus('info');
+  //     return;
+  //   }
+  //   console.log("test", product);
+  //   // dispatch(
+  //   //   showFeedback({ show: true }),
+  //   // );
+  //   if (product?.variations) {
+  //     console.log(selectedColorId, selectedSizeId);
+  //     const variation = product?.variations?.find(
+  //       (item: any) =>
+  //       (item.color_variation.id =
+  //         selectedColorId && item.size_variation.id === selectedSizeId)
+  //     );
+  //     console.log('var', variation);
+  //     if (product && variation) {
+  //       // TODO use api.getAddToCartMutation()
+  //       addToCart(product.id, variation.id, 1).then(({ data }) => {
+  //         // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+  //         refetchCart();
+  //         setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
+  //         setOpenSnack(true);
+  //         setsnackMsgStatus(data.success ? 'success' : 'error');
+  //       });
+  //     }
+  //   }
+  // };
+
+  const _addToCart = async () => {
     if (!authData?.profile?.user) {
-      // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setOpenSnack(true);
       setsnackMsgStatus('info');
       return;
     }
-    console.log("test", product);
-    // dispatch(
-    //   showFeedback({ show: true }),
-    // );
-    if (product?.variations) {
-      console.log(selectedColorId, selectedSizeId);
-      const variation = product?.variations?.find(
-        (item: any) =>
-        (item.color_variation.id =
-          selectedColorId && item.size_variation.id === selectedSizeId)
-      );
-      console.log('var', variation);
-      if (product && variation) {
-        // TODO use api.getAddToCartMutation()
-        addToCart(product.id, variation.id, 1).then(({ data }) => {
-          // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
-          refetchCart();
-          setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
-          setOpenSnack(true);
-          setsnackMsgStatus(data.success ? 'success' : 'error');
+    if (product && product.variants) {
+      try {
+        await addToCart({
+          productId: product.id,
+          variationId: selectedSizeId,
+          quantity: 1
         });
+        refetchCart();
+        setSnackMessage("პროდუქტი დაემატა კალათში!");
+        setOpenSnack(true);
+        setsnackMsgStatus('success');
+
+      } catch (error) {
+        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
       }
     }
   };
+
+
+
 
 
   const _showFavoriteFeedback = () => {
@@ -396,6 +426,7 @@ const ProductDetails: NextPage = () => {
   const _colorSelected = (e: any) => {
     console.log('color selected:', e);
     setSelectedColorId(e);
+    setSelectedSizeId(undefined);
   };
 
   const _sizeSelected = (e: any) => {
@@ -421,6 +452,24 @@ const ProductDetails: NextPage = () => {
   // const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
 
   // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
+
+
+
+
+
+
+  const sizeVariantResult = product?.variants.filter(x => x.id === selectedColorId);
+
+  const sizeV = sizeVariantResult ? sizeVariantResult[0] : null;
+
+  const forPrice = sizeV?.sizes?.filter(x => x.id === selectedSizeId);
+
+  const mainPrice = forPrice ? forPrice[0]?.price : null;
+
+
+
+
+
 
   return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
@@ -462,18 +511,18 @@ const ProductDetails: NextPage = () => {
             </PriceWrapperStyle> */}
             {product ? (
               <PriceWrapperStyle>
-                <Price>₾{product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
+                <Price>₾{mainPrice ? mainPrice : product?.discount?.length >= 1 ? product?.low_price_discounted : product?.lowest_price}</Price>
                 {product?.discount?.length >= 1 ? (
                   <OldPrice>{product?.discount?.length >= 1 ? product?.lowest_price : null}</OldPrice>
                 ) : null}
               </PriceWrapperStyle>
             ) : null}
 
-            {colors && !!colors.length && (
+            {colors && !!colors.length && product?.variants && (
               <>
                 <Label>აირჩიე ფერი: </Label>
                 <ColorSelector
-                  colors={colors}
+                  colors={product?.variants}
                   defaultSelected={colors[0]?.id}
                   gap={"20px"}
                   onColorSelected={(event: any) => _colorSelected(event)}
@@ -482,18 +531,19 @@ const ProductDetails: NextPage = () => {
               </>
             )}
             <SelectSizeWrapper>
-              {sizes && !!sizes.length && (
+              {sizes && !!sizes.length && sizeV && sizeVariantResult && (
                 <>
                   <SelectSizeLabel>აირჩიე ზომა: </SelectSizeLabel>
                   <SizeSelector
-                    sizes={sizes}
+                    sizes={sizeV.sizes}
                     onSelectedChange={(event: any) => _sizeSelected(event)}
                   />
                 </>
               )}
             </SelectSizeWrapper>
             <ButtonWrapper>
-              <Button onClick={_showFeedback} style={{
+              {/* onClick={_showFeedback} */}
+              <Button onClick={_addToCart} style={{
                 ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
               }} disabled={!canAddToCart}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}

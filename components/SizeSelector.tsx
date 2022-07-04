@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import Responsive from '../config/Responsive';
+import { VariationSize } from '../domain/shop';
 
 export type SizeType = {
     id: number,
@@ -8,7 +9,7 @@ export type SizeType = {
 }
 
 type Props = {
-    sizes: SizeType[],
+    sizes: VariationSize[],
     style?: {[s: string]: any}
     defaultSelected?: string | number;
     onSelectedChange?: Function,
@@ -22,6 +23,7 @@ const Wrapper = styled.div`
     display: flex;
     gap: 10px;
 `;
+
 
 const Item = styled.div`
     height: 88px;
@@ -55,14 +57,16 @@ const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: 
             onSelectedChange(index);
         }
     }
+
+
     return (
         <>
             <Wrapper style={{...style}}>
-                {sizes.map((size, i)=>
+                {sizes?.map((s, i)=>
                     <Item key={i}
-                        selected={selected===size.id}
-                        onClick={()=>_sizeSelected(size.id)}>
-                        {size.size_name}
+                        selected={selected===s.id}
+                        onClick={()=>_sizeSelected(s.id)}>
+                        {s.size_variation.size_name}
                     </Item>
                 )}
             </Wrapper>
