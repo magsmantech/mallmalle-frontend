@@ -152,6 +152,9 @@ const HoriontalFixedLine = styled.div`
         top: 100px; //TODO Levan Madurashvili
         height: 24px;
     }
+    ${Responsive.laptop}{
+        margin-top: -25px;
+    }
 `;
 const SearchWrapper = styled.div`
     ${Responsive.tabletMobile}{
@@ -172,6 +175,9 @@ const Nav = styled.nav`
         ${Responsive.tabletMobile} {
             padding: 20px 24px 0px 24px;
             height: 120px;
+        }
+        ${Responsive.laptop} {
+            height: 130px;
         }
 `;
 const UserIcon = styled(HdUser)`

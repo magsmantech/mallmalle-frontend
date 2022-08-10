@@ -191,6 +191,10 @@ const ItemsContainerStyle = styled.div`
       grid-template-columns: repeat(2, 1fr);
       grid-row-gap: 30px;
     }
+    ${Responsive.laptop}{
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      grid-row-gap: 30px;
+    }
 `;
 
 const DiscountItemContainerStyle = styled(ItemsContainerStyle)`
@@ -218,6 +222,11 @@ const SaleItemWrapper = styled.div`
       max-height: unset;
       height: fit-content;
       margin-bottom: 50px;
+    }
+    ${Responsive.laptop}{
+      max-height: 450px;
+      margin-bottom: 80px;
+      height: 40vh;
     }
 `;
 const FourSaleItemWrapper = styled.div`

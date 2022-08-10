@@ -134,6 +134,12 @@ const SwiperWrapper = styled(Swiper)`
             display: none !important;
         }
     }
+    ${Responsive.laptop} {
+      margin-top: -15px;
+      margin-bottom: 10px;
+      .swiper-pagination-horizontal {
+        bottom: 20px !important;
+      }
 `;
 
 const Background = styled.div`
@@ -152,6 +158,10 @@ const Background = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  ${Responsive.laptop} {
+    margin-top: -90px;
+    height: 70%;
+  }
 `;
 
 const SlideText = styled.div`
