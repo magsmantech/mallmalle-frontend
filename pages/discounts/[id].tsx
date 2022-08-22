@@ -68,6 +68,11 @@ const Grid = styled.div`
         grid-template-columns: 1fr;
         grid-row-gap: 50px;
     }
+    ${Responsive.laptop} {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); /* see notes below */
+        grid-column-gap: 35px;
+        margin-top: 0px;
+      }
 `;
 
 
@@ -114,7 +119,8 @@ const Img = styled.div`
     background-position: center center;
     background-size: cover;
     ${Responsive.laptop} {
-    height: 450px;
+        height: 350px;
+        width: 230px;
     }
     ${Responsive.tablet} {
     height: 420px;
@@ -347,6 +353,9 @@ const HeadWrapperStyle = styled.div`
         ${Responsive.mobile} {
             margin: 10px 0px 30px 0px;
         }
+        ${Responsive.laptop} {
+            margin-bottom: 0px;
+          }
 `;
 const SearchCount = styled.div`
     font-size: 16px;

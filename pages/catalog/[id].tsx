@@ -104,9 +104,9 @@ const Grid = styled.div`
   grid-row-gap: 35px;
   grid-column-gap: 35px;
     ${Respinsive.laptop} {
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* see notes below */
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); /* see notes below */
       grid-row-gap: 35px;
-      grid-column-gap: 35px;
+      margin-top: 0px;
     }
     ${Respinsive.tablet} {
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* see notes below */
@@ -167,7 +167,8 @@ const Img = styled.div`
   background-position: center center;
   background-size: cover;
   ${Respinsive.laptop} {
-    height: 450px;
+    height: 300px;
+    width: 250px;
   }
   ${Respinsive.tablet} {
     height: 420px;

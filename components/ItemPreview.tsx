@@ -59,6 +59,9 @@ const SelectedImage = styled.img`
             margin-right: 0px;
         }
     }
+    ${Responsive.laptop} {
+        max-height:530px;
+    }
 `;
 const ImageWrapperDiv = styled.div`
     width: 100%;
