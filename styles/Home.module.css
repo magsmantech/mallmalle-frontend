@@ -118,6 +118,24 @@
   font-family: fira-go;
 }
 
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+  .big .label {
+    /* padding: 3.4rem 4.4rem; */
+    width: 29.8rem;
+    height: 9.0rem;
+    transform: scale(0.48);
+    position: absolute;
+    right: -90px;
+    bottom: -12px;
+  }
+  .big .labelText {
+    font-size: 2.2rem;
+    font-family: fira-go;
+    letter-spacing: 1.3px;
+    font-weight: 200;
+  }
+}
+
 .iconBackgroundSecond {
   height: 4.5rem;
   width: 4.5rem;

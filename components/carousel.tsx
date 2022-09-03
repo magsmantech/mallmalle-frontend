@@ -91,6 +91,10 @@ const SliderTitle = styled.span`
       padding-left: 0px;
       font-size: 23px;
     }
+    ${Responsive.laptop}{
+      font-size: 29px;
+      letter-spacing: 1px;
+    }
 `;
 const SwiperLeftBtn = styled.div`
   top: calc(100% - 230px);
@@ -105,6 +109,12 @@ const SwiperLeftBtn = styled.div`
       top: calc(100% - 190px);
       left: 5px;
     }
+    ${Responsive.laptop} {
+      height: 40px!important;
+      width: 40px!important;
+      margin-top: -40px;
+      margin-left: -8px;
+    }
 `;
 const SwiperRightBtn = styled.div`
   top: calc(100% - 230px);
@@ -118,6 +128,12 @@ const SwiperRightBtn = styled.div`
     ${Responsive.tabletMobile} {
       top: calc(100% - 190px);
       right: 5px;
+    }
+    ${Responsive.laptop} {
+      height: 40px!important;
+      width: 40px!important;
+      margin-top: -40px;
+      margin-left: 8px;
     }
 `;
 const SwiperWrapper = styled(Swiper)`

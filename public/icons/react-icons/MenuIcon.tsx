@@ -27,6 +27,33 @@ const Wrapper = styled.div`
         width: 40px;
         margin-left: -6px;
     }
+    ${Responsive.laptop} {
+        height: 30px;
+        .one {
+            width: 35px;
+        }
+    
+        .two {
+            width: 20px;
+        }
+    
+        .three {
+            width: 37px;
+        }
+
+        &:hover .one {
+            width: 37px;
+        }
+    
+        &:hover .two {
+            width: 25px;
+        }
+    
+        &:hover .three {
+            width: 33px;
+        }
+        margin-left: -20px;
+    }
 
 `;
 

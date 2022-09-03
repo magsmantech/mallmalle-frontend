@@ -36,6 +36,9 @@ const Title = styled(Span)`
     ${Responsive.mobile}{
       font-size: 11px;
     }
+    ${Responsive.laptop}{
+      font-size: 14px;
+    }
 `;
 
 const Price = styled(Span)`
@@ -53,6 +56,11 @@ const Price = styled(Span)`
       margin-right: ${(props: PriceProps) => (props.old ? "0" : "15px")};
       margin-top: ${(props: PriceProps) => (props.old ? "2px" : "0px")};
     }
+    ${Responsive.laptop} {
+      font-size: ${(props: PriceProps) => (props.old ? "18px" : "22px")};
+      margin-right: ${(props: PriceProps) => (props.old ? "0" : "15px")};
+      margin-top: ${(props: PriceProps) => (props.old ? "-2px" : "0px")};
+    }
 `;
 
 const Wrapper = styled.div`
@@ -67,6 +75,10 @@ const ProductItemImgWrapper = styled.div`
     ${Responsive.mobile}{
       height: 185px;
     }
+    ${Responsive.laptop}{
+      height: 220px;
+      width: 200px;
+    }
 `;
 const ProductTextWrapper = styled.div`
   display: flex;
@@ -74,6 +86,9 @@ const ProductTextWrapper = styled.div`
   margin: 20px 0px;
     ${Responsive.mobile} {
       margin: 14px 0px;
+    }
+    ${Responsive.laptop} {
+      margin: 5px 0px;
     }
 `;
 

@@ -145,6 +145,9 @@ const DividerImageStyle = styled.img`
     ${Responsive.mobile} {
       width: 158px;
     }
+    ${Responsive.laptop} {
+      width: 200px;
+    }
 `;
 const DividerWrapperStyle = styled.div`
   display: flex;
@@ -192,8 +195,8 @@ const ItemsContainerStyle = styled.div`
       grid-row-gap: 30px;
     }
     ${Responsive.laptop}{
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-      grid-row-gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-row-gap: 10px;
     }
 `;
 
@@ -224,9 +227,8 @@ const SaleItemWrapper = styled.div`
       margin-bottom: 50px;
     }
     ${Responsive.laptop}{
-      max-height: 450px;
       margin-bottom: 80px;
-      height: 40vh;
+      height: 60vh;
     }
 `;
 const FourSaleItemWrapper = styled.div`
@@ -241,12 +243,19 @@ const FourSaleItemWrapper = styled.div`
       grid-column-gap: 20px;
       grid-row-gap: 20px;
     }
+    ${Responsive.laptop}{
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+    }
 `;
 const OneSaleItemWrapper = styled.div`
   width: calc(50% - 15px);
     ${Responsive.tabletMobile}{
       width: 100%;
       margin-top: 20px;
+    }
+    ${Responsive.laptop}{
+     width: calc(50% - 10px);
     }
 `;
 const SectionTitle = styled.h3`
@@ -257,6 +266,9 @@ const SectionTitle = styled.h3`
   text-transform: uppercase;
   font-feature-settings: "case" on;
   font-family: ${Fonts.FiraGOSemiBold};
+  ${Responsive.laptop}{
+    font-size: 24px;
+  }
 `;
 const MiddleContainer = styled.div`
   display: grid;
@@ -287,6 +299,9 @@ const MiddleContainer = styled.div`
               bottom: unset !important;
             }
           }
+    }
+    ${Responsive.laptop}{
+      height: 220px;
     }
 `;
 

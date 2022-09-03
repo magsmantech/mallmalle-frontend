@@ -178,6 +178,7 @@ const Nav = styled.nav`
         }
         ${Responsive.laptop} {
             height: 130px;
+            margin-top: -7px;
         }
 `;
 const UserIcon = styled(HdUser)`
@@ -230,6 +231,11 @@ const HeaderLogoTag = styled.img`
         ${Responsive.tabletMobile}{
             width: 150px;
             margin-right: auto;
+        }
+        ${Responsive.laptop}{
+            width: 200px;
+            margin-right: 10px;
+            margin-left: -35px;
         }
 `;
 

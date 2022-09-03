@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { FiPercent } from 'react-icons/fi';
 import styles from '../styles/Home.module.css';
+import Responsive from "../config/Responsive";
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -21,6 +22,7 @@ const SaleItem = ({ imageUrl, id, style, big=false, gradient=false }: Props) => 
         [styles.saleItemWrapper]: true,
         [styles.big]: big,
         [styles.gradientOverlay]: gradient,
+        
     });
 
     return (

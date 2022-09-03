@@ -48,11 +48,14 @@ const Clock: NextPage = () => {
       <div>
         {/* <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}>{days} </span>
         <span style={{fontSize: '2.0rem'}}>დღე</span> */}
-        <ClockText> {hours} </ClockText>
+        { hours < 10 ? (
+        <ClockText> 0{hours} </ClockText>): <ClockText> {hours} </ClockText>}
         {/* <span style={{fontSize: '2.0rem'}}>საათი</span> */}
-        <ClockText> : {minutes} </ClockText>
+        { minutes < 10 ? (
+        <ClockText> : 0{minutes} </ClockText>): <ClockText> : {minutes} </ClockText>}
         {/* <span style={{fontSize: '2.0rem'}}>წუთი</span> */}
-        <ClockText> : {seconds} </ClockText>
+        { seconds < 10 ? (
+        <ClockText> : 0{seconds} </ClockText>): <ClockText> : {seconds} </ClockText>}
         <ClockSpan >საათი</ClockSpan>
       </div>
     </Wrapper>
@@ -70,12 +73,19 @@ const ClockText = styled.span`
       ${Responsive.tabletMobile}{
         font-size: 22px;
       }
+      ${Responsive.laptop}{
+        font-size: 35px;
+      }
 `;
 const ClockSpan = styled.span`
   font-size: 19px;
   font-family: ${Fonts.FiraGOSemiBold};
       ${Responsive.tabletMobile}{
         font-size: 22px;
+      }
+      ${Responsive.laptop}{
+        font-size: 13px;
+        letter-spacing: 1px;
       }
 `;
 

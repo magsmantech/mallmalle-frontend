@@ -104,7 +104,7 @@ const Grid = styled.div`
   grid-row-gap: 35px;
   grid-column-gap: 35px;
     ${Respinsive.laptop} {
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); /* see notes below */
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* see notes below */
       grid-row-gap: 35px;
       margin-top: 0px;
     }

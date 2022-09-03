@@ -146,13 +146,16 @@ const FooterColumn = styled.div`
             ${Responsive.tablet} {
                 min-width: 235px;
             }
+            ${Responsive.laptop} {
+                min-width: 480px;
+            }
          
     }
     &:nth-child(2){
         /* background-color: yellow; */
         min-width: 275px;
-            ${Responsive.tablet} {
-                min-width: 230px;
+            ${Responsive.laptop} {
+                width: 270px;
             }
     }
     &:nth-child(3){
@@ -162,6 +165,9 @@ const FooterColumn = styled.div`
     &:nth-child(4){
         /* background-color: #171163; */
         margin-right: 0px;
+        ${Responsive.laptop} {
+            width: 500px;
+        }
     }
 `;
 const RightsReserved = styled.div`
@@ -172,7 +178,7 @@ const RightsReserved = styled.div`
         }
 `;
 const FooterListTitle = styled.span`
-    font-size: 18px;
+    font-size: 14px;
     margin-bottom: 20px;
     user-select: none;
     font-family: ${Fonts.FiraGOSemiBold};
@@ -180,6 +186,7 @@ const FooterListTitle = styled.span`
 const FooterListItem = styled.span`
   a {
     font-size: 15px;
+    font-weight: 600;
     margin: 2px 0px;
     padding: 5px 0px;
     font-family: 'helvetica';
@@ -190,6 +197,9 @@ const FooterListItem = styled.span`
         &:hover {
             opacity: 0.8;
         }
+    ${Responsive.laptop} {
+        font-size: 12px;
+    }
   }
 `;
 const FooterLink = styled(Link)`
@@ -202,17 +212,31 @@ const FooterLink = styled(Link)`
 const FbIcon = styled(FacebookIcon)`
     width: 24px;
     height: 27px;
+    ${Responsive.laptop} {
+        width: 18px;
+        height: 18px;
+    }
 `;
 const InstIcon = styled(InstagramIcon)`
     width: 25px;
     height: 27px;
+    ${Responsive.laptop} {
+        width: 18px;
+        height: 18px;
+        margin-left: -24px;
+    }
 `;
 const YouTICon = styled(YoutubeIcon)`
     width: 32px;
     height: 27px;
+    ${Responsive.laptop} {
+        width: 22px;
+        height: 18px;
+        margin-left: -28px;
+    }
 `;
 const FooterIconText = styled.div`
-    font-size: 18px;
+    font-size: 12px;
     margin-bottom: 25px;
     padding-right: 10px;
     font-family: ${Fonts.FiraGORegular};
@@ -221,6 +245,9 @@ const FooterIconText = styled.div`
 const FooterMainIcon = styled.img`
     height: 40px;
     margin-bottom: 20px;
+    ${Responsive.laptop} {
+        height: 30px;
+    }
 `;
 const FooterWrapper = styled.div`
     /* background-color: red; */
@@ -230,7 +257,7 @@ const FooterWrapper = styled.div`
     grid-gap: 0px;
     gap: 0px;
         ${Responsive.laptop} {
-            padding: 40px 40px;
+            margin-top: 70px;
         }
         ${Responsive.tablet} {
             padding: 40px 40px;
@@ -257,6 +284,11 @@ const InputWrapper = styled(IWBWrapper)`
                 ${Responsive.mobile}{
                     width: 178px;
                 }
+                ${Responsive.laptop}{
+                    height: 20px;
+                    width: 140px;
+                    font-size: 12px;
+                }
         }
         button {
             height: 60px;
@@ -271,6 +303,11 @@ const InputWrapper = styled(IWBWrapper)`
                 ${Responsive.tablet} {
                     font-size: 18px;
                     padding: 0px 18px;
+                }
+                ${Responsive.laptop}{
+                    width: 100px;
+                    height: 45px;
+                    font-size: 12px;
                 }
         }
 `;
