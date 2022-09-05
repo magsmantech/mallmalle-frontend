@@ -14,13 +14,7 @@ export const PageWrapper = styled.div`
     padding: 40px;
     margin-top: 125px;
     min-height: calc(100vh - 430px);
-    @media(min-width: 1200px) {
-        
-        & {
-            margin-top: 50px;
-        }
-    }
-    @media(max-width: 1200px) {
+    @media(max-width: 1366px) {
         
         & {
             margin-top: 100px;

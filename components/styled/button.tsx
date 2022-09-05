@@ -37,6 +37,11 @@ const Button = styled.button`
       height: 64px;
       font-size: 16px;
     }
+    ${Responsive.laptop} {
+      height: 60px;
+      width: 470px;
+      font-size: 14px;
+    }
 `;
 
 export default Button;

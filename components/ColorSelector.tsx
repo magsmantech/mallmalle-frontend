@@ -53,6 +53,12 @@ const Item = styled.div`
             width: ${(props: ItemProps) => props.small && !props.selected ? '37px' : '37px'};
             margin: ${(props: ItemProps) => props.small && !props.selected ? '15px' : '0'};
         }
+        ${Responsive.laptop} {
+            height: ${(props: ItemProps) => props.small && !props.selected ? '24px' : '24px'};
+            width: ${(props: ItemProps) => props.small && !props.selected ? '24px' : '24px'};
+            border: ${(props: ItemProps) => props.selected ? 'solid 4px #22D5AE' : props.small ? 'none' : 'solid 4px white'};
+            border-radius: ${(props: ItemProps) => props.small && !props.selected ? '1.2rem' : props.small && props.selected ? '4px' : '4px'};
+        }
 `;
 
 const ColorSelector = ({ colors, style = {}, small, gap, onColorSelected, defaultSelected = 0 }: Props) => {

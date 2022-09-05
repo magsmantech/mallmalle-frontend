@@ -79,6 +79,10 @@ const Title = styled.h1`
     ${Responsive.mobile}{
       font-size: 32px;
     }
+    ${Responsive.laptop}{
+      font-size: 30px;
+      margin-top: -5px;
+    }
 `;
 
 const Price = styled(Title)`
@@ -89,6 +93,10 @@ const Price = styled(Title)`
   }
   ${Responsive.mobile}{
     font-size: 32px;
+  }
+  ${Responsive.laptop}{
+    font-size: 34px;
+    margin-bottom: -10px;
   }
 `;
 
@@ -101,6 +109,9 @@ const OldPrice = styled(Price)`
       font-size: 18px;
       margin-top: 5px;
     }
+    ${Responsive.laptop}{
+      margin-top: -10px;
+    }
 `;
 
 const Label = styled.span`
@@ -112,6 +123,11 @@ const Label = styled.span`
     ${Responsive.mobile}{
       font-size: 14px;
       margin-bottom: 17px;
+    }
+    ${Responsive.laptop}{
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 10px;
     }
 `;
 const SelectSizeLabel = styled.div`
@@ -128,7 +144,7 @@ const SelectSizeLabel = styled.div`
 
 const ButtonWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 8rem;
+  grid-template-columns: 1fr 4rem;
   grid-gap: 10px;
   width: 100%;
   margin-bottom: 40px;
@@ -140,6 +156,10 @@ const ButtonWrapper = styled.div`
               width: 100%;
             }
           }
+      }
+      ${Responsive.laptop}{
+        margin-top: -20px;
+        margin-bottom: 25px;
       }
 `;
 
@@ -164,6 +184,11 @@ const Subtitle = styled.span`
   font-size: 18px;
   font-family: "helvetica";
   margin-bottom: 20px;
+  ${Responsive.laptop}{
+    font-size: 13px;
+    margin-bottom: 5px;
+    font-weight: bolder;
+  }
 `;
 
 const Text = styled.span`
@@ -171,6 +196,10 @@ const Text = styled.span`
   font-size: 18px;
   margin-bottom: 15px;
   font-family: "helvetica";
+  ${Responsive.laptop} {
+    font-size: 13px;
+    font-weight: 500;
+  }
 `;
 
 const SectionTitle = styled.div`
@@ -182,6 +211,10 @@ const SectionTitle = styled.div`
   margin-top: 140px;
       ${Responsive.mobile}{
         margin-top: 50px;
+      }
+      ${Responsive.laptop}{
+        font-size: 18px;
+        margin-top: 30px;
       }
 `;
 
@@ -210,6 +243,9 @@ const GridChild = styled.div`
       min-width: 170px;
       margin: 0px 10px;
     }
+    ${Responsive.laptop} {
+      min-width: 155px;
+    }
 `;
 
 const RevieStartWrapper = styled.div`
@@ -217,6 +253,9 @@ const RevieStartWrapper = styled.div`
   align-items: center;
   margin-top: 20px;
   margin-bottom: 30px;
+  ${Responsive.laptop} {
+    margin-top: 0px;
+  }
 `;
 const DetailCount = styled(Count)`
   font-size: 16px;
@@ -226,6 +265,10 @@ const DetailCount = styled(Count)`
   font-family: ${Fonts.FiraGORegular};
     ${Responsive.mobile}{
       margin-left: 10px;
+    }
+    ${Responsive.laptop}{
+      font-size: 12px;
+      font-weight: bold;
     }
 `;
 const PriceWrapperStyle = styled.div`
@@ -258,6 +301,10 @@ const AddCartButton = styled(Button)`
     ${Responsive.mobile}{
       min-width: 64px;
       height: 64px;
+    }
+    ${Responsive.laptop}{
+      width: 60px;
+      height: 60px;
     }
 `;
 
@@ -514,7 +561,7 @@ const ProductDetails: NextPage = () => {
 
             {colors && !!colors.length && product?.variants && (
               <>
-                <Label>აირჩიე ფერი: </Label>
+                {/* <Label>აირჩიე ფერი: </Label> */}
                 <ColorSelector
                   colors={product?.variants}
                   defaultSelected={colors[0]?.id}

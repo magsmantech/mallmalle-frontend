@@ -29,6 +29,10 @@ const TabImage = styled.img`
   cursor: pointer;
   border: ${(props: TabImageProps) => props.selected ? 'solid 3px #22d2af' : 'none'};
   box-sizing: border-box;
+  ${Responsive.laptop} {
+    width: 100px;
+    height: 100px;
+}
 `;
 const TabsWrapper = styled.div`
     display: flex;
@@ -60,7 +64,7 @@ const SelectedImage = styled.img`
         }
     }
     ${Responsive.laptop} {
-        max-height:530px;
+        max-height: 530px;
     }
 `;
 const ImageWrapperDiv = styled.div`

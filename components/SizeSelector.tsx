@@ -45,6 +45,11 @@ const Item = styled.div`
             height: 63px;
             width: 63px;
         }
+        ${Responsive.laptop}{
+            height: 68px;
+            width: 68px;
+            margin-top: -10px;
+        }
 `;
 
 const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: Props) => {
