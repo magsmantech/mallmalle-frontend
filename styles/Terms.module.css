@@ -14,3 +14,10 @@
     cursor: pointer;
     font-weight: 500;
 }
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+    .item {
+        font-size: 1.4rem;
+        font-family: 'helvetica';
+        margin-bottom: 2.0rem;
+    }
+  }

@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
 import styles from '../../styles/Terms.module.css';
+import Responsive from '../../config/Responsive';
 
 import { Breadcrumbs } from "../../components/styled/breadcrumbs";
 
@@ -28,6 +29,9 @@ export const SectionTitle = styled.div`
   font-feature-settings: "case" on; */
 
   font-size: 4.4rem;
+    ${Responsive.laptop} {
+      font-size: 2rem!important;
+    }
 `;
 
 
