@@ -153,7 +153,9 @@ const HoriontalFixedLine = styled.div`
         height: 24px;
     }
     ${Responsive.laptop}{
-        margin-top: -25px;
+        margin-top: -21px;
+        margin-right: -1px;
+        margin-left: -1px;
     }
 `;
 const SearchWrapper = styled.div`

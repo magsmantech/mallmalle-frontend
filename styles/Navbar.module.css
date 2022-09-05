@@ -140,4 +140,7 @@
     .searchInput {
         margin-left: 0.5rem;
     }
+    .curve {
+        height: 25px;
+    }
 }
