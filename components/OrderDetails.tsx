@@ -55,6 +55,9 @@ const ContainerStyle = styled.div`
         ${Responsive.mobile}{
             padding: 15px;
         }
+        ${Responsive.laptop}{
+            margin-top: -50px;
+        }
 `;
 const IconWrapperStyle = styled.div`
     display: flex;

@@ -153,7 +153,7 @@ const HoriontalFixedLine = styled.div`
         height: 24px;
     }
     ${Responsive.laptop}{
-        margin-top: -21px;
+        margin-top: -20px;
         margin-right: -1px;
         margin-left: -1px;
     }
@@ -180,7 +180,6 @@ const Nav = styled.nav`
         }
         ${Responsive.laptop} {
             height: 130px;
-            margin-top: -7px;
         }
 `;
 const UserIcon = styled(HdUser)`
@@ -235,7 +234,7 @@ const HeaderLogoTag = styled.img`
             margin-right: auto;
         }
         ${Responsive.laptop}{
-            width: 200px;
+            width: 220px;
             margin-right: 10px;
             margin-left: -35px;
         }

@@ -98,6 +98,9 @@ const AddressButton = styled(Button)`
     /* color: white; */
     background-image: var(--header-gradient);
   }
+  ${Responsive.laptop} {
+    height: 60px;
+  }
 `;
 
 const InputModified = styled(Input)`

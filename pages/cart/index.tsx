@@ -61,7 +61,9 @@ const HeaderItem = styled.div`
           display: none;
         }
     }
- 
+    ${Responsive.laptop}{
+      font-size: 13px;
+    }
 `;
 const FlexRowWrapper = styled.div`
   display: flex;
@@ -127,6 +129,10 @@ export const MainTitle = styled.div`
 
   font-size: 32px;
   margin-bottom: 20px;
+  ${Responsive.laptop}{
+    font-size: 24px;
+    margin-bottom: 10px;
+}
 `;
 
 const Divider = styled.div`

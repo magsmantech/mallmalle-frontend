@@ -50,7 +50,8 @@
   } */
   .swiper-horizontal>.swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal, .swiper-pagination-custom, .swiper-pagination-fraction {
     bottom: -5.0rem!important;
-    /* height: 4px;
-    margin-right: 1px;
-    width: 20px; */
+    height: 4px;
+    margin-right: 5px;
+    width: 20px;
+    margin-top: -50px;
   }
