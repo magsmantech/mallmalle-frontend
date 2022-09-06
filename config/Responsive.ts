@@ -7,7 +7,9 @@ const media = {
     fullHD: "@media (min-width: 1920px)",  //last breakpoint
     sideBar: {
         mobile: "@media (max-width: 1199px)",
-    }
+    },
+    laptopSpecial: "@media (min-width: 1200px) and (max-width: 1500px)"
+
 };
 
 export default media;

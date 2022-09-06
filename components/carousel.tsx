@@ -63,7 +63,7 @@ const Carousel = ({ images = [] }: Props) => {
       >
         {images.map((image, index) =>
           <SwiperSlide className={styles.slide} key={index}>
-            <Background backgroundImage={image}>
+            <Background className="background" backgroundImage={image}>
               <SlideText >
                 <SliderTitle>ფასდაკლება</SliderTitle>
                 <Clock />
@@ -175,8 +175,15 @@ const Background = styled.div`
   right: 0;
   bottom: 0;
   ${Responsive.laptop} {
-    margin-top: -90px;
-    height: 70%;
+    margin-top: -55px;
+    height: 340px;
+  }
+  ${Responsive.laptopSpecial} {
+    margin-top: -40px;
+    height: 320px;
+  }
+  ${Responsive.desktop} {
+    height: 90%;
   }
 `;
 
