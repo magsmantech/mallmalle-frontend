@@ -258,4 +258,8 @@
            width: 270px!important;
            border-radius: 0.6rem!important;
         }
+        .promoItemTextSale, .promoItemTextTime {
+            font-size: 13px!important;
+            margin-bottom: -10px!important;
+        }
 }
