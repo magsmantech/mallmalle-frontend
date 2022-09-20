@@ -67,6 +67,11 @@ const TabItem = styled.div`
       font-size: 13px;
       padding: 14px 5px;
     }
+    ${Responsive.laptop} {
+      font-size: 13px;
+      padding: 14px 5px;
+      font-weight: 500;
+    }
 `;
 
 const Title = styled.span`
@@ -78,6 +83,10 @@ const Title = styled.span`
   font-feature-settings: "case" on; */
     ${Responsive.mobile} {
       margin-bottom: 18px;
+    }
+    ${Responsive.laptop} {
+      font-size: 26px;
+      margin-top: -20px;
     }
 `;
 const ImageWithTextWrapper = styled.div`
@@ -93,6 +102,11 @@ const Text = styled.span`
     ${Responsive.mobile} {
       margin-bottom: 25px;
       font-size: 14px;
+    }
+    ${Responsive.laptop} {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: -5px;
     }
 `;
 
@@ -112,6 +126,12 @@ const SectionWrapper = styled.div`
         ${Responsive.mobile} {
           flex-basis: 100%;
           margin-bottom: 60px;
+        }
+        ${Responsive.laptop} {
+          width: 1230px;
+          margin-left: 50px;
+          margin-top: -25px;
+          height: 200px;
         }
     }
     ${ImageWithTextWrapper} {
@@ -179,6 +199,11 @@ const FormLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 1.6rem;
+  ${Responsive.laptop} {
+    font-size: 14px;
+    width: 80%;
+    height: 50px!important;
+  }
 `;
 
 const TextButton = styled.button`
@@ -217,6 +242,9 @@ const Img = styled.img`
     ${Responsive.tabletMobile} {
       margin-top: 70px;
     }
+    ${Responsive.laptop} {
+      height: 360px;
+    }
 `;
 
 const ImgTitle = styled.span`
@@ -230,6 +258,13 @@ const ImgTitle = styled.span`
       font-size: 18px;
       margin-bottom: 18px;
   }
+  ${Responsive.laptop} {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    margin-top: -5px;
+    margin-bottom: 14px;
+}
 `;
 
 const ImgText = styled.span`
@@ -241,6 +276,9 @@ const ImgText = styled.span`
   ${Responsive.mobile} {
       font-size: 16px;
   }
+  ${Responsive.laptop} {
+    font-size: 14px;
+}
 `;
 
 const DoubleInputWrapper = styled.div`

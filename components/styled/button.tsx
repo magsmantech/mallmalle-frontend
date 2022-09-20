@@ -39,7 +39,7 @@ const Button = styled.button`
     }
     ${Responsive.laptop} {
       height: 60px;
-      width: 470px;
+      width: 140px;
       font-size: 14px;
     }
 `;
