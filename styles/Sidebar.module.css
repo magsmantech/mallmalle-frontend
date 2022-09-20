@@ -233,3 +233,29 @@
     text-transform: uppercase;
     font-feature-settings: "case" on;
 }
+
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+        .iconImgWrapper {
+            margin-top: 6px;
+            width: 36px;
+            height: 36px;
+        }
+        .detailMenuTitle {
+            font-size:  1.3rem!important;
+            margin-top: -20px!important;
+        }
+        .detailMenuitem {
+            font-size: 1.0rem!important;
+            margin-top: -6px!important;
+        }
+        .promoItemBackground {
+            height: 180px!important;
+            width: 270px!important;
+            border-radius: 0.6rem!important;
+         }
+        .promoItemOverlay {
+           height: 180px!important;
+           width: 270px!important;
+           border-radius: 0.6rem!important;
+        }
+}

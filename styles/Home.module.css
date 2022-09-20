@@ -298,3 +298,15 @@
     bottom: -23px;
   }
 }
+
+@media only screen and (min-width: 1200px) and (max-width: 1600px) {
+  .label {
+    height: 5.7rem;
+    width: 17.0rem;
+  }
+  .labelText{
+    font-size: 1.2rem;
+    letter-spacing: 1.8px;
+    font-weight: 900;
+  }
+}

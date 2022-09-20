@@ -38,6 +38,9 @@ const Divider = styled.div`
     border-bottom: .1rem solid rgba(122, 112, 112, .2);
     margin: 28px 0;
     display: flex;
+    ${Responsive.laptop} {
+        margin-top: -30px;
+    }
 `;
 
 const Button = styled.div`
@@ -115,6 +118,9 @@ const HideInMobileDetailMenu = styled.div`
 `;
 const DetailMenuStyle = styled.div`
   padding: 45px 40px;
+    ${Responsive.laptop}{
+        width: 330px;
+    }
 `;
 const HideInDesktop = styled.div`
     height: 100%;
@@ -220,7 +226,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         >
                             <SidebarItemIconWrapper className={styles.iconWrapper}>
                                 {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
-                                <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
+                                <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                             </SidebarItemIconWrapper>
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
                         </SidebarItem>
@@ -243,7 +249,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                             onMouseEnter={() => mouseEnterSubItem(index)}>
                             <SidebarItemIconWrapper className={styles.iconWrapper}>
                                 {/* <FaTshirt size={'2.5rem'} className={item.color} /> */}
-                                <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
+                                <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                             </SidebarItemIconWrapper>
 
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
@@ -307,7 +313,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                             onMouseLeave={mouseLeaveItem}
                                         >
                                             <SidebarItemIconWrapper className={styles.iconWrapper}>
-                                                <img src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
+                                                <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                                             </SidebarItemIconWrapper>
                                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
                                         </SidebarItem>
@@ -363,7 +369,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                             onMouseLeave={() => setShowDetailMenu(false)}
                                             onMouseEnter={() => mouseEnterSubItem(index)}>
                                             <SidebarItemIconWrapper className={styles.iconWrapper}>
-                                                <img src={uploadUrl + `${item.icon ? item.icon : "not found icon"}`} alt="item icon" />
+                                                <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not found icon"}`} alt="item icon" />
                                             </SidebarItemIconWrapper>
 
                                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
@@ -390,15 +396,23 @@ const MainTittleStyle = styled.div`
     margin: 5px 0px;
 `;
 const SubmenuTitle = styled.div`
-    margin-top: 14px !important;
+    margin-top: 14px;
     font-size: 32px;
     line-height: 33px;
     margin-bottom: 48px;
+    ${Responsive.laptop} {
+        font-size: 25px;
+        line-height: 20px;
+    }
 `;
 const SideBarSubMenuTitle = styled.div`
     font-size: 24px;
     /* margin-top: 38px; */
     width: fit-content;
+    ${Responsive.laptop} {
+        font-size: 12px;
+        margin-top: -34px;
+    }
 `;
 const SideBarWrapper = styled.div`
     display: flex;
@@ -414,6 +428,11 @@ const SideBarWrapper = styled.div`
         }
         ${Responsive.mobile} {
             padding: 45px 24px;
+        }
+        ${Responsive.laptop} {
+            width: 70vw;
+            max-width: 280px;
+            padding: 30px 30px;
         }
 
 `;
@@ -431,11 +450,19 @@ const SideBarMainIcon = styled.img`
     height: 36px;
     user-select: none;
     pointer-events: none;
+    ${Responsive.laptop} {
+        height: 26px;
+    }
 `;
 const CloseBtnWrapper = styled.div`
     width: 56px;
     height: 56px;
     border-radius: 8px;
+    ${Responsive.laptop} {
+        width: 42px;
+        height: 42px;
+        margin-right: -10px;
+    }
 `;
 const SideBarTopSideWrapper = styled.div`
     margin-bottom: 40px;
@@ -443,6 +470,10 @@ const SideBarTopSideWrapper = styled.div`
 const SideBarTitle = styled.span`
     font-size: 24px;
     width: fit-content;
+    ${Responsive.laptop} {
+        font-size: 18px;
+        margin-top: -10px;
+    }
 `;
 const SidebarItemWrapper = styled.div`
     margin-top: 37px;
@@ -450,7 +481,9 @@ const SidebarItemWrapper = styled.div`
     width: 100%;
     grid-template-columns: 1fr;
     grid-gap: 28px;
-    
+    ${Responsive.laptop} {
+        grid-gap: 18px;
+    }
 `;
 const SidebarItem = styled.div`
 `;
@@ -459,9 +492,17 @@ const SidebarItemIconWrapper = styled.div`
     width: 52px;
     border-radius: 8px;
     margin-right: 20px  !important;
+    ${Responsive.laptop} {
+        height: 38px;
+        width: 38px;
+        margin-right: 10px  !important;
+    }
 `;
 const SideBarItemTitle = styled.div`
     font-size: 20px;
+    ${Responsive.laptop} {
+        font-size: 15px;
+    }
 `;
 const SecondSideBarWrapper = styled.div`
 `;
