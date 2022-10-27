@@ -5,7 +5,7 @@ import SaleItem from "../components/saleItem";
 import Item from "../components/item";
 import ArrowTop from "../public/icons/react-icons/arrow-top";
 import { getDashboardData } from "../services/dashboard-services";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import config from "../config.json";
 import { Product, DashboardData } from '../domain/shop';
@@ -84,7 +84,8 @@ const Home: NextPage = () => {
         <DividerImageStyle src={"/assets/mallmalle2.png"} />
       </DividerWrapperStyle>
 
-      <SectionTitle className={styles.sectionTitle}>შემოთავაზება</SectionTitle>
+      <SectionTitle onClick={() => {router.push(`/discounts`);}} className={styles.sectionTitle}>
+        შემოთავაზება</SectionTitle>
 
       {/* offers */}
       <DiscountItemContainerStyle>
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
         ))}
       </MiddleContainer>
 
-      <SectionTitle className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
+      <SectionTitle onClick={() => {router.push(`/new`);}} className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
 
       {/* new products */}
       <ItemsContainerStyle>
@@ -266,6 +267,7 @@ const SectionTitle = styled.h3`
   text-transform: uppercase;
   font-feature-settings: "case" on;
   font-family: ${Fonts.FiraGOSemiBold};
+  cursor: pointer;
   ${Responsive.laptop}{
     font-size: 24px;
   }
