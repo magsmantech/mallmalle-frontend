@@ -1,4 +1,4 @@
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation, Pagination, Autoplay, Scrollbar, A11y } from 'swiper';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from '../styles/Carousel.module.css';
@@ -10,10 +10,12 @@ import Clock from './clock';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 import Button from './styled/button';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import Responsive from '../config/Responsive';
 import Fonts from '../styles/Fonts';
+import api, { uploadUrl } from '../features/api';
 
 
 type Props = {
@@ -40,6 +42,11 @@ const Carousel = ({ images = [] }: Props) => {
     // renderNextButton: () => <Button className="swiper-button-next">Next</Button>,
   }
 
+  const { data: DashboardData, isLoading: isDashboardDataLoading, refetch: refetchDashboardData } = api.useGetDashboardDataQuery(undefined);
+
+  const allDiscounts = DashboardData?.data.discounts;
+  const activeSliders = allDiscounts?.filter(o => o.on_slider == 1);
+  
 
   return (
     <div style={{ overflow: 'hidden' }}>
@@ -48,7 +55,7 @@ const Carousel = ({ images = [] }: Props) => {
         // {...params}
         className={styles.slider}
         // install Swiper modules
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
         navigation={{
@@ -58,12 +65,13 @@ const Carousel = ({ images = [] }: Props) => {
         loop
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
+        autoplay={{ delay: 3000 }}
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}
       >
-        {images.map((image, index) =>
-          <SwiperSlide className={styles.slide} key={index}>
-            <Background className="background" backgroundImage={image}>
+        {activeSliders?.map((o,index) =>
+        <SwiperSlide className={styles.slide} key={index}>
+            <Background className="background" backgroundImage={uploadUrl(o.background_image)}>
               <SlideText >
                 <SliderTitle>ფასდაკლება</SliderTitle>
                 <Clock />

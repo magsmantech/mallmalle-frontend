@@ -147,6 +147,7 @@ export type Discount = {
   "name": string;// "ფასდაკლება 20%";
   "value": number;// 10
   "background_image": string;// "discounts\/March2022\/9wS4Qsr9kTWivOi0OZjs.png";
+  "on_slider": 1 | 0;
   "decoded_images": [] | string;
   "created_at": Date;// "2022-03-08T15: 54: 26.000000Z";
   "updated_at": Date;// "2022-03-08T15: 54: 26.000000Z";
