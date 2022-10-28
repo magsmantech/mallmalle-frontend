@@ -229,7 +229,7 @@ const SaleItemWrapper = styled.div`
     }
     ${Responsive.laptop}{
       margin-bottom: 80px;
-      height: 60vh;
+      height: 50vh;
     }
 `;
 const FourSaleItemWrapper = styled.div`
