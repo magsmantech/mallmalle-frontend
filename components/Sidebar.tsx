@@ -23,6 +23,7 @@ import ShoeIcon from '../public/icons/react-icons/sidebar-icons/shoe';
 import WatchIcon from '../public/icons/react-icons/sidebar-icons/watch';
 import ToyIcon from '../public/icons/react-icons/sidebar-icons/toy';
 import Responsive from '../config/Responsive';
+import router from 'next/router';
 
 
 
@@ -77,6 +78,9 @@ const PromoItemBackground = styled.div`
     background-repeat: no-repeat;
     padding: 18px;
     position: relative;
+    :hover{
+        cursor: pointer;
+    }
 `;
 const PromoItemTextSale = styled.div`
     font-size: 16px;
@@ -150,18 +154,6 @@ const DetailMenuTittle = styled.div`
 `;
 
 
-const PromoItem = ({ imageUrl = '/assets/testt.png' }: PromoItemProps) => {
-    return (<>
-        <PromoItemBackground className={styles.promoItemBackground} style={{ backgroundImage: `url(${imageUrl})` }}>
-            <div className={styles.promoItemText}>
-                <PromoItemTextSale className={styles.promoItemTextSale}>ფასდაკლება</PromoItemTextSale>
-                <PromoItemTextTime className={styles.promoItemTextTime}>03:12:34 საათი</PromoItemTextTime>
-            </div>
-            <div className={styles.promoItemOverlay}></div>
-        </PromoItemBackground>
-    </>)
-}
-
 const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const [showSubMenu, setShowSubMenu] = useState(false);
     const [showDetailMenu, setShowDetailMenu] = useState(false);
@@ -190,6 +182,21 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
         setSubMenuItems(items);
         setShowSubMenu(true);
     };
+
+
+    const PromoItem = ({ imageUrl = '/assets/testt.png' }: PromoItemProps) => {
+        return (<>
+            <Link href={'/discounts'}>
+                <PromoItemBackground onClick={() => onSidebarClose()} className={styles.promoItemBackground} style={{ backgroundImage: `url(${imageUrl})` }}>
+                    <div className={styles.promoItemText}>
+                        <PromoItemTextSale className={styles.promoItemTextSale}>ფასდაკლება</PromoItemTextSale>
+                        <PromoItemTextTime className={styles.promoItemTextTime}>03:12:34 საათი</PromoItemTextTime>
+                    </div>
+                    <div className={styles.promoItemOverlay}></div>
+                </PromoItemBackground>
+            </Link>
+        </>)
+    }
 
     const mouseLeaveItem = () => {
         if (inSubMenu) {
