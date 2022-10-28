@@ -209,6 +209,9 @@ const SectionTitle = styled.div`
   font-feature-settings: "case" on; */
   font-size: 24px;
   margin-top: 140px;
+  :hover{
+    cursor: pointer;
+  }
       ${Responsive.mobile}{
         margin-top: 50px;
       }
@@ -619,7 +622,7 @@ const ProductDetails: NextPage = () => {
       </Snackbar>
 
 
-      <SectionTitle>
+      <SectionTitle onClick={() => {router.push(`/discounts`);}}>
         რეკომენდირებული
       </SectionTitle>
       <Grid>
