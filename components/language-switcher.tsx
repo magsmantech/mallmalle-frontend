@@ -30,11 +30,11 @@ const LanguageSwitcher = ({languages}: Props) => {
     return(
         <div onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
-            style={{marginLeft: '5.3rem', width: '6.0rem'}}>  
+            style={{marginLeft: '0.5rem', width: '6.0rem'}}>  
             <div style={{position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0, fontSize: '1.8rem', fontFamily: 'noto-sans'}}>
                 {selected}
                 <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem'}}/>
-                {showItems && <ul style={{position: 'absolute', top: '100%', paddingTop: '.4rem'}}>
+                {showItems && <ul style={{position: 'absolute', top: '100%', marginLeft: '-1.5rem', marginTop: '-10px'}}>
                     {items.map((item, i)=>
                     <li key={i} style={{cursor: 'pointer'}}
                         onClick={()=>setSelected(item)}>{item}</li>

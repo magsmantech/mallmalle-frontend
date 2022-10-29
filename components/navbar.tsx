@@ -51,7 +51,9 @@ const Navbar: React.FC<{
                     {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
                     <SearchWrapper className={styles.ItemWrappers}><SearchBar /></SearchWrapper>
-                    {/* <div className={styles.ItemWrappers}><LanguageSwitcher languages={[ 'EN', 'GEO']} /></div> */}
+                    <LanguageSwitcherWrapper>
+                    <LanguageSwitcher languages={[ 'EN', 'GEO']} />
+                    </LanguageSwitcherWrapper>
                     {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
                     {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
                     {/* <Link href='/profile'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
@@ -239,6 +241,11 @@ const HeaderLogoTag = styled.img`
             margin-left: -35px;
         }
 `;
-
+const LanguageSwitcherWrapper = styled.div`
+    width: 70px;
+    ${Responsive.mobile}{
+        display: none;
+    }
+`;
 
 export default Navbar
