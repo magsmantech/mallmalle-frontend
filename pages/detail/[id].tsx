@@ -379,10 +379,18 @@ const ProductDetails: NextPage = () => {
           const parsedImages = JSON.parse(data.images);
           // console.log(parsedImages);
           const imagesArray = parsedImages.map(
+            (image: string) => image
+          );
+
+          const singleImageArray = parsedImages.map(
             (image: string) => config.imagesEndpoint + image
           );
 
+          {imagesArray.length == 1 ? (
+          setImages([...images, ...singleImageArray])
+          ) : 
           setImages([...images, ...imagesArray]);
+          }
         }
       })
       .catch((err) => {
