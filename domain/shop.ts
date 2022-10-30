@@ -151,6 +151,7 @@ export type Discount = {
   "decoded_images": [] | string;
   "created_at": Date;// "2022-03-08T15: 54: 26.000000Z";
   "updated_at": Date;// "2022-03-08T15: 54: 26.000000Z";
+  "expire_date": Date;
   "pivot": {
     "product_id": number;// 1
     "discount_id": number// 4

@@ -7,15 +7,18 @@ import Responsive from "../config/Responsive";
 import styles from "../styles/Home.module.css";
 import Fonts from './../styles/Fonts';
 
-const Clock: NextPage = () => {
-  const [partyTime, setPartyTime] = useState(false);
+const Clock: NextPage<{
+  itemDate: Date;
+}> = ({
+  itemDate
+}) => {
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    const target = new Date("12/31/2022 23:59:59");
+    const target = new Date(itemDate);
 
     const interval = setInterval(() => {
       const now = new Date();
@@ -33,11 +36,8 @@ const Clock: NextPage = () => {
       setMinutes(m);
 
       const s = Math.floor((difference % (1000 * 60)) / 1000);
-      setSeconds(s);
-
-      if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-        setPartyTime(true);
-      }
+      setSeconds(s);      
+      
     }, 1000);
 
     return () => clearInterval(interval);
@@ -46,8 +46,11 @@ const Clock: NextPage = () => {
   return (
     <Wrapper>
       <div>
-        {/* <span style={{fontSize: '5.0rem', fontFamily: 'fira-go', textTransform: 'uppercase', fontFeatureSettings: '"case" on', fontWeight: 600}}>{days} </span>
-        <span style={{fontSize: '2.0rem'}}>დღე</span> */}
+        { days > 0 ?
+        (<>
+        <ClockText>{days} </ClockText>
+        <ClockSpan>დღე</ClockSpan>
+        </>):null}
         { hours < 10 ? (
         <ClockText> 0{hours} </ClockText>): <ClockText> {hours} </ClockText>}
         {/* <span style={{fontSize: '2.0rem'}}>საათი</span> */}

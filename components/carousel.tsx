@@ -16,6 +16,8 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
 import Responsive from '../config/Responsive';
 import Fonts from '../styles/Fonts';
 import api, { uploadUrl } from '../features/api';
+import { useState } from 'react';
+import router from 'next/router';
 
 
 type Props = {
@@ -45,12 +47,10 @@ const Carousel = ({ images = [] }: Props) => {
   const { data: DashboardData, isLoading: isDashboardDataLoading, refetch: refetchDashboardData } = api.useGetDashboardDataQuery(undefined);
 
   const allDiscounts = DashboardData?.data.discounts;
-  const activeSliders = allDiscounts?.filter(o => o.on_slider == 1);
-  
-
+  const dateNow = new Date();
+  const activeSliders = allDiscounts?.filter(o => o.on_slider == 1 && !(o.expire_date < dateNow));
   return (
     <div style={{ overflow: 'hidden' }}>
-
       <SwiperWrapper
         // {...params}
         className={styles.slider}
@@ -74,12 +74,21 @@ const Carousel = ({ images = [] }: Props) => {
             <Background className="background" backgroundImage={uploadUrl(o.background_image)}>
               <SlideText >
                 <SliderTitle>ფასდაკლება</SliderTitle>
-                <Clock />
+                <Clock itemDate={o.expire_date} />
 
               </SlideText>
             </Background>
           </SwiperSlide>
         )}
+          <SwiperSlide className={styles.slide} onClick={() => {
+                router.push(`/discounts/`);}}>
+            <Background className="background" backgroundImage={images[0]}>
+              <SlideText >
+                <SliderTitle>ფასდაკლებები</SliderTitle>
+              </SlideText>
+            </Background>
+          </SwiperSlide>
+
         <SwiperLeftBtn className='swiper-button-prev'><HiOutlineChevronLeft size={'22px'} /></SwiperLeftBtn>
         <SwiperRightBtn className='swiper-button-next'><HiOutlineChevronRight size={'22px'} /></SwiperRightBtn>
       </SwiperWrapper>
