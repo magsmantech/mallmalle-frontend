@@ -69,6 +69,9 @@ const Carousel = ({ images = [] }: Props) => {
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}
       >
+        {!activeSliders?.length ?
+        (
+        <>
         {activeSliders?.map((o,index) =>
         <SwiperSlide className={styles.slide} key={index}>
             <Background className="background" backgroundImage={uploadUrl(o.background_image)}>
@@ -80,14 +83,17 @@ const Carousel = ({ images = [] }: Props) => {
             </Background>
           </SwiperSlide>
         )}
-          <SwiperSlide className={styles.slide} onClick={() => {
-                router.push(`/discounts/`);}}>
+        </>)
+        : 
+          <SwiperSlide className={styles.slide}
+          // onClick={() => {router.push(`/discounts/`);}}
+                >
             <Background className="background" backgroundImage={images[0]}>
               <SlideText >
-                <SliderTitle>ფასდაკლებები</SliderTitle>
+                {/* <SliderTitle>ფასდაკლებები</SliderTitle> */}
               </SlideText>
             </Background>
-          </SwiperSlide>
+          </SwiperSlide>}
 
         <SwiperLeftBtn className='swiper-button-prev'><HiOutlineChevronLeft size={'22px'} /></SwiperLeftBtn>
         <SwiperRightBtn className='swiper-button-next'><HiOutlineChevronRight size={'22px'} /></SwiperRightBtn>
