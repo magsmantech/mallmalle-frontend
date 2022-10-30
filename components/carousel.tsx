@@ -69,7 +69,7 @@ const Carousel = ({ images = [] }: Props) => {
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}
       >
-        {!activeSliders?.length ?
+        {activeSliders?.length ?
         (
         <>
         {activeSliders?.map((o,index) =>
