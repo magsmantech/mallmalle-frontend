@@ -46,10 +46,10 @@ const Clock: NextPage<{
   return (
     <Wrapper>
       <div>
-        {/* { days > 0 ? (<>
+        { days > 0 ? (<>
         <ClockText>{days} </ClockText>
-        <ClockSpan>დღე</ClockSpan>
-        </>):null} */}
+        <ClockSpan>დღე :</ClockSpan>
+        </>):null}
         { hours < 10 ? (
         <ClockText> 0{hours} </ClockText>): <ClockText> {hours} </ClockText>}
         {/* <span style={{fontSize: '2.0rem'}}>საათი</span> */}
