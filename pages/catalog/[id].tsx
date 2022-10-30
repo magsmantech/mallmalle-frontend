@@ -104,7 +104,7 @@ const Grid = styled.div`
   grid-row-gap: 35px;
   grid-column-gap: 35px;
     ${Respinsive.laptop} {
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* see notes below */
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* see notes below */
       grid-row-gap: 35px;
       margin-top: 0px;
     }
@@ -394,7 +394,6 @@ const MoreFilterIconStyle = styled(MoreFilterIcon)`
     transform: scale(0.75);
     
 `;
-
 const HeadWrapperStyle = styled.div`
     display: flex;
     justify-content: space-between;
@@ -494,7 +493,6 @@ const SliderWrapperStyle = styled.div`
     margin-top: auto;
     min-height: 130px;
 `;
-
 
 
 const Item = ({ product }: { product: ProductData }) => {

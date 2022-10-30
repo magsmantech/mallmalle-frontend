@@ -69,8 +69,8 @@ const Grid = styled.div`
         grid-row-gap: 50px;
     }
     ${Responsive.laptop} {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* see notes below */
-        grid-column-gap: 35px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* see notes below */
+        grid-raw-gap: 35px;
         margin-top: 0px;
       }
 `;
@@ -561,12 +561,12 @@ const Discounts: NextPage = () => {
         <>
 
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
-            <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / ფასდაკლებები</Breadcrumbs>
+            <Breadcrumbs style={{ marginBottom: '1.0rem' }}>მთავარი / ახალდამატებული</Breadcrumbs>
 
             <HeadWrapperStyle>
 
                 <TopSideWrapper>
-                    <Heading>ფასდაკლებები</Heading>
+                    <Heading>ახალდამატებული</Heading>
                 </TopSideWrapper>
 
             </HeadWrapperStyle>

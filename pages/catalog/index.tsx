@@ -19,6 +19,7 @@ import FilterIcon from '../../public/icons/react-icons/filter';
 import { useDispatch } from 'react-redux';
 import { showFeedback } from '../../features/feedbackSlice';
 import { getProducts, getProductsById } from '../../services/products-service';
+import Responsive from '../../config/Responsive';
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -46,6 +47,11 @@ const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 3.2rem;
+    ${Responsive.laptop} {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* see notes below */
+        grid-row-gap: 35px;
+        margin-top: 0px;
+    }
 `;
 
 

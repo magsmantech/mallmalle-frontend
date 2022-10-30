@@ -71,10 +71,10 @@ const Grid = styled.div`
         grid-row-gap: 50px;
     }
     ${Responsive.laptop} {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* see notes below */
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* see notes below */
         grid-row-gap: 35px;
         margin-top: 0px;
-      }
+    }
 `;
 
 
