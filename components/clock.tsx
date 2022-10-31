@@ -28,7 +28,7 @@ const Clock: NextPage<{
       setDays(d);
 
       const h = Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + (24 * days)
       );
       setHours(h);
 
