@@ -44,7 +44,7 @@ const LanguageSwitcher = ({languages}: Props) => {
                 <EarthLogoStyle/>
                 {selected}
                 <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem'}}/>
-                {showItems && <ul style={{position: 'absolute', top: '100%', marginLeft: '1.4rem'}}>
+                {showItems && <ul style={{position: 'absolute', top: '100%', marginLeft: '1.5rem'}}>
                     {items.map((item, i)=>
                     <li key={i} style={{cursor: 'pointer'}}
                         onClick={()=>setSelected(item)}>{item}</li>
