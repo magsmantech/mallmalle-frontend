@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import styled from 'styled-components';
-import EarthLogo from '../public/icons/react-icons/earthLogo';
+import EarthLogo from '../public/icons/planet-earth.svg';
 
 
 const EarthLogoStyle = styled(EarthLogo)`
