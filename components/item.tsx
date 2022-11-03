@@ -113,11 +113,12 @@ const SaleItem = ({
   const wrapperClasses = classNames({
     [styles.itemImage]: true,
   });
-
+  const changeLocation = ()=>{
+    window.location.replace(`/detail/${id}`);
+ }
   return (
     <>
-      <Link href={`/detail/${id}`}>
-        <Wrapper>
+        <Wrapper onClick={changeLocation}>
           {/* <ItemImage backgroundImage={imageUrl}></ItemImage> */}
           <ProductItemImgWrapper className={styles.productItemImgWrapper}>
             <img src={imageUrl} className={styles.productItemImg} />
@@ -136,7 +137,6 @@ const SaleItem = ({
           </ProductTextWrapper>
           <Title>{name}</Title>
         </Wrapper>
-      </Link>
     </>
   );
 };
