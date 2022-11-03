@@ -773,7 +773,7 @@ const PersonalInfo = () => {
 
               <LocationIconStyle color={"var(--text-color)"} />
               {/* {`${a.is_primary}`} */}
-              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
+              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 1 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
 
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
