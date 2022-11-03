@@ -28,9 +28,13 @@ const Clock: NextPage<{
       setDays(d);
 
       const h = Math.floor(
-        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + (24 * days)
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
       setHours(h);
+
+      const x = Math.floor(
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + (24 * days)
+      );
 
       const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       setMinutes(m);
@@ -46,20 +50,22 @@ const Clock: NextPage<{
   return (
     <Wrapper>
       <div>
-        {/* { days > 0 ? (<>
-        <ClockText>{days} </ClockText>
-        <ClockSpan>დღე</ClockSpan>
-        <ClockText> :</ClockText>
-        </>):null} */}
+        {days<=0 && hours<=0 && minutes<=0 && seconds<=0 ? (
+        <>
+        <ClockText> 00 </ClockText>
+        <ClockText> : 00 </ClockText>
+        <ClockText> : 00 </ClockText>
+        <ClockSpan >საათი</ClockSpan>
+        </>):
+        <>
         { hours < 10 ? (
         <ClockText> 0{hours} </ClockText>): <ClockText> {hours} </ClockText>}
-        {/* <span style={{fontSize: '2.0rem'}}>საათი</span> */}
         { minutes < 10 ? (
         <ClockText> : 0{minutes} </ClockText>): <ClockText> : {minutes} </ClockText>}
-        {/* <span style={{fontSize: '2.0rem'}}>წუთი</span> */}
         { seconds < 10 ? (
         <ClockText> : 0{seconds} </ClockText>): <ClockText> : {seconds} </ClockText>}
         <ClockSpan >საათი</ClockSpan>
+        </>}
       </div>
     </Wrapper>
   );
