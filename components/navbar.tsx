@@ -243,6 +243,7 @@ const HeaderLogoTag = styled.img`
 `;
 const LanguageSwitcherWrapper = styled.div`
     width: 70px;
+    margin-left:10px;
     ${Responsive.mobile}{
         display: none;
     }
