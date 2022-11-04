@@ -81,6 +81,12 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                         <ChipWrapper color={statusID === 2 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(2)}>
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
+                        <ChipWrapper color={statusID === 4 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(4)}>
+                            <ChipTitle>გამოგზავნილი</ChipTitle>
+                        </ChipWrapper>
+                        <ChipWrapper color={statusID === 5 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(5)}>
+                            <ChipTitle>მიღებული</ChipTitle>
+                        </ChipWrapper>
                         <ChipWrapper color={statusID === 999 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(999)}>
                             <ChipTitle>ყველა</ChipTitle>
                         </ChipWrapper>
@@ -100,10 +106,10 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
                     <Link href={`/order/${filteredStatus.id}`}>
                         <OrderWrapper style={{
-                            background: filteredStatus.status === 1 ? "rgba(34, 213, 174, .21)" : filteredStatus.status === 2 ? "rgba(213, 34, 34, .21)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, .21)" : "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)",
-                            color: filteredStatus.status === 1 ? "#22D5AE" : filteredStatus.status === 2 ? "rgba(213, 34, 34, 1)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, 1)" : "white"
+                            background: filteredStatus.status === 1 ? "rgba(34, 213, 174, .21)" : filteredStatus.status === 2 ? "rgba(213, 34, 34, .21)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, .21)" : filteredStatus.status === 4 ? "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)" : filteredStatus.status === 5 ? "rgba(34,139,34,0.63)" : "rgba(0,139,139,0.6)",
+                            color: filteredStatus.status === 1 ? "#22D5AE" : filteredStatus.status === 2 ? "rgba(213, 34, 34, 1)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, 1)" : filteredStatus.status === 4 ? "22D5AE" : filteredStatus.status === 5 ? "22D5AE" : "white"
                         }}>
-                            <StatusDiv>{filteredStatus.status === 1 ? "დადასტურებული" : filteredStatus.status === 2 ? "გაუქმებული" : filteredStatus.status === 3 ? "პროცესში" : "დაუსრულებელი"}</StatusDiv>
+                            <StatusDiv>{filteredStatus.status === 1 ? "დადასტურებული" : filteredStatus.status === 2 ? "გაუქმებული" : filteredStatus.status === 3 ? "პროცესში" : filteredStatus.status === 4 ? "გამოგზავნილი" : filteredStatus.status === 5 ? "მიღებული" : "დაუსრულებელი"}</StatusDiv>
                             <Money>თანხა: </Money>
                             <MoneyCount>{filteredStatus.discounted_sub_total} ₾</MoneyCount>
                         </OrderWrapper>
@@ -115,10 +121,10 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                     myOrders.map((o, index) => (
                         <Link href={`/order/${o.id}`}>
                             <OrderWrapper key={index} style={{
-                                background: o.status === 1 ? "rgba(34, 213, 174, .21)" : o.status === 2 ? "rgba(213, 34, 34, .21)" : o.status === 3 ? "rgba(213, 213, 34, .21)" : "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)",
-                                color: o.status === 1 ? "#22D5AE" : o.status === 2 ? "rgba(213, 34, 34, 1)" : o.status === 3 ? "rgba(213, 213, 34, 1)" : "white"
+                                background: o.status === 1 ? "rgba(34, 213, 174, .21)" : o.status === 2 ? "rgba(213, 34, 34, .21)" : o.status === 3 ? "rgba(213, 213, 34, .21)" : o.status === 4 ? "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)" : o.status === 5 ? "rgba(34,139,34,0.63)" : "rgba(0,139,139,0.6)",
+                                color: o.status === 1 ? "#22D5AE" : o.status === 2 ? "rgba(213, 34, 34, 1)" : o.status === 3 ? "rgba(213, 213, 34, 1)" : o.status === 4 ? "22D5AE" : o.status === 5 ? "22D5AE" : "white"
                             }}>
-                                <StatusDiv>{o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : "დაუსრულებელი"}</StatusDiv>
+                                <StatusDiv>{o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : o.status === 4 ? "გამოგზავნილი" : o.status === 5 ? "მიღებული" : "დაუსრულებელი"}</StatusDiv>
                                 <Money>თანხა: </Money>
                                 <MoneyCount>{o.discounted_sub_total} ₾</MoneyCount>
                             </OrderWrapper>
