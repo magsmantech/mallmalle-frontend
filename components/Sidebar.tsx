@@ -180,7 +180,9 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
             return;
         }
         setSubMenuItems(items);
-        setShowSubMenu(true);
+        setShowSubMenu(false);
+        setTimeout(() =>setShowSubMenu(true), 100);
+        
     };
 
 
@@ -233,7 +235,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         >
                             <SidebarItemIconWrapper className={styles.iconWrapper}>
                                 {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
-                                <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
+                                <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not found icon"}`} alt="item icon" />
                             </SidebarItemIconWrapper>
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
                         </SidebarItem>
