@@ -149,7 +149,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                     <Badge
                                         color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
                                         backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
-                                        {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : "დასასრულები"}
+                                        {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : orderDetail.status === 4 ? "გამოგზავნილი" : orderDetail.status === 5 ? "მიღებული" : "დასასრულები"}
                                     </Badge>
                                 </BadgeWrapperStyle>
                             </BadgeWrapperStyle>
