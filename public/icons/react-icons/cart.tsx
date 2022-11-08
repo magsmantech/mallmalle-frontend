@@ -1,6 +1,8 @@
 import * as React from "react"
 import { SVGProps } from "react"
 import styled from "styled-components";
+import Responsive from "../../../config/Responsive";
+
 
 const SvgWrapper = styled.svg`
     & #filled {
@@ -11,6 +13,9 @@ const SvgWrapper = styled.svg`
     }
     &:hover #filled {
         opacity: 1;
+    }
+    ${Responsive.laptop} {
+      height: 25px;
     }
 `
 const FillingPath = styled.path`

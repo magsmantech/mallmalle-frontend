@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import styled from 'styled-components';
+import Responsive from '../config/Responsive';
 import EarthLogo from '../public/icons/planet-earth.svg';
 
 
@@ -8,7 +9,12 @@ const EarthLogoStyle = styled(EarthLogo)`
     height: 25px;
     width: 20px;
     margin-right: 5px;
+    ${Responsive.laptop} {
+        height: 20px;
+        width: 15px;
+    }
 `;
+
 
 type Props = {
     languages: string[],
@@ -40,7 +46,7 @@ const LanguageSwitcher = ({languages}: Props) => {
         <div onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
             style={{marginLeft: '0.5rem', width: '6.0rem'}}>
-            <div style={{position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0, fontSize: '1.2rem', fontFamily: 'noto-sans'}}>
+            <div style={{position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0, fontSize: '1.1rem', fontFamily: 'noto-sans'}}>
                 <EarthLogoStyle/>
                 {selected}
                 <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem'}}/>

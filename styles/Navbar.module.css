@@ -130,10 +130,10 @@
         border-radius: 2.0rem;
         border: .15rem solid rgba(255, 255, 255, 0.2);
         color: white;
-        height: 46px;
+        height: 42px;
         align-items: center;
         padding: 10px;
-        width: 690px;
+        /* width: 690px; */
         flex-shrink: 1;
         margin-top: 5px;
     }

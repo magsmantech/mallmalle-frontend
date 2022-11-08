@@ -50,9 +50,9 @@ const Navbar: React.FC<{
                     <MenuIcon onClick={() => onSidebarOpen()} />
                     {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
-                    <SearchWrapper className={styles.ItemWrappers}><SearchBar /></SearchWrapper>
+                    <SearchWrapper className={styles.ItemWrappers}><SearchBarStyle /></SearchWrapper>
                     <LanguageSwitcherWrapper>
-                    <LanguageSwitcher languages={[ 'EN', 'GEO']} />
+                    <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
                     </LanguageSwitcherWrapper>
                     {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
                     {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
@@ -202,7 +202,7 @@ const CartIconStyle = styled(CartIcon)`
 const ItemWrapper = styled.div`
     position: relative;
     cursor: pointer;
-    padding: 0px 15px;
+    padding: 0px 5px;
     margin: 0px 4px;
 
     &:last-child {
@@ -229,6 +229,9 @@ const ItemLabel = styled.span`
     font-size: 16px;
     font-family: 'helvetica';
     font-weight: 600;
+    ${Responsive.laptop} {
+        font-size: 12px;
+    }
 `;
 const HeaderLogoTag = styled.img`
     width: 250px;
@@ -244,10 +247,20 @@ const HeaderLogoTag = styled.img`
         }
 `;
 const LanguageSwitcherWrapper = styled.div`
-    width: 70px;
-    margin-left: 10px;
+    width: 50px;
+    margin-left: 20px;
     ${Responsive.mobile}{
         display: none;
+    }
+`;
+const SearchBarStyle = styled(SearchBar)`
+    ${Responsive.laptop}{
+        width:100%;
+    }
+`;
+const LanguageSwitcherStyle = styled(LanguageSwitcher)`
+    ${Responsive.laptop}{
+        font-size: 12px;
     }
 `;
 

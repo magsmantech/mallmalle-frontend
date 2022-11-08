@@ -1,9 +1,11 @@
 import React from "react";
 import { SVGProps } from "react";
+import styled from "styled-components";
+import Responsive from "../../../config/Responsive";
 
 const HdUser = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg
+    <Svg
       xmlns="http://www.w3.org/2000/svg"
       width="36"
       height="36"
@@ -46,8 +48,14 @@ const HdUser = (props: SVGProps<SVGSVGElement>) => {
         data-name="Ellipse 50"
         transform="translate(11 15)"
       ></circle>
-    </svg>
+    </Svg>
   );
 }
+
+const Svg = styled.svg`
+    ${Responsive.laptop} {
+      height: 25px;
+    }
+`;
 
 export default HdUser;
