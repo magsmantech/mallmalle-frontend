@@ -219,6 +219,9 @@ const ItemWrapper = styled.div`
             margin-right: 0px;
         }
     }
+    ${Responsive.laptop} {
+        width: 35px;
+    }
 `;
 const ItemLabel = styled.span`
     position: absolute;
