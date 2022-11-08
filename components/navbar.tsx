@@ -234,6 +234,7 @@ const ItemLabel = styled.span`
     font-weight: 600;
     ${Responsive.laptop} {
         font-size: 12px;
+        margin-left: 5px;
     }
 `;
 const HeaderLogoTag = styled.img`
