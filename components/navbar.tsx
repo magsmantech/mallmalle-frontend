@@ -155,7 +155,7 @@ const HoriontalFixedLine = styled.div`
         height: 24px;
     }
     ${Responsive.laptop}{
-        margin-top: -20px;
+        margin-top: -40px;
         margin-right: -1px;
         margin-left: -1px;
     }
@@ -181,7 +181,9 @@ const Nav = styled.nav`
             height: 120px;
         }
         ${Responsive.laptop} {
-            height: 130px;
+            padding: 20px 44px 0px 44px;
+            height: 110px;
+            margin-top: -10px;
         }
 `;
 const UserIcon = styled(HdUser)`
@@ -236,14 +238,14 @@ const HeaderLogoTag = styled.img`
             margin-right: auto;
         }
         ${Responsive.laptop}{
-            width: 220px;
+            width: 170px;
             margin-right: 10px;
             margin-left: -35px;
         }
 `;
 const LanguageSwitcherWrapper = styled.div`
     width: 70px;
-    margin-left:10px;
+    margin-left: 10px;
     ${Responsive.mobile}{
         display: none;
     }
