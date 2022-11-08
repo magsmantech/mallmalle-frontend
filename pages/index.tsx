@@ -269,7 +269,7 @@ const SectionTitle = styled.h3`
   font-family: ${Fonts.FiraGOSemiBold};
   cursor: pointer;
   ${Responsive.laptop}{
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 const MiddleContainer = styled.div`
