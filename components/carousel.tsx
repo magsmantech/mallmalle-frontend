@@ -135,7 +135,7 @@ const SwiperLeftBtn = styled.div`
     ${Responsive.laptop} {
       height: 40px!important;
       width: 40px!important;
-      margin-top: -40px;
+      margin-top: 60px;
       margin-left: -8px;
     }
 `;
@@ -155,7 +155,7 @@ const SwiperRightBtn = styled.div`
     ${Responsive.laptop} {
       height: 40px!important;
       width: 40px!important;
-      margin-top: -40px;
+      margin-top: 60px;
       margin-left: 8px;
     }
 `;
@@ -174,11 +174,13 @@ const SwiperWrapper = styled(Swiper)`
         }
     }
     ${Responsive.laptop} {
-      margin-top: -15px;
-      margin-bottom: 10px;
+      margin-top: 45px;
+      margin-bottom: 60px;
+      height: 250px;
       .swiper-pagination-horizontal {
-        bottom: 20px !important;
+        bottom: -30px !important;
       }
+    }
 `;
 
 const Background = styled.div`
