@@ -174,9 +174,9 @@ const SwiperWrapper = styled(Swiper)`
         }
     }
     ${Responsive.laptop} {
-      margin-top: 45px;
+      margin-top: 60px;
       margin-bottom: 60px;
-      height: 250px;
+      height: 240px;
       .swiper-pagination-horizontal {
         bottom: -30px !important;
       }
@@ -202,10 +202,6 @@ const Background = styled.div`
   ${Responsive.laptop} {
     margin-top: -55px;
     height: 340px;
-  }
-  ${Responsive.laptopSpecial} {
-    margin-top: -40px;
-    height: 320px;
   }
   ${Responsive.desktop} {
     height: 90%;

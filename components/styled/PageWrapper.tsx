@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Responsive from "../../config/Responsive";
 
 export const PageWrapper = styled.div`
     border-radius: 2.0rem;
@@ -14,12 +15,11 @@ export const PageWrapper = styled.div`
     padding: 40px;
     margin-top: 125px;
     min-height: calc(100vh - 430px);
-    @media(max-width: 1366px) {
-        
+    ${Responsive.laptop} {
         & {
             margin-top: 66px;
         }
-    }
+      }
     @media(max-width: 600px) {
         
         & {
