@@ -68,9 +68,10 @@ const TabItem = styled.div`
       padding: 14px 5px;
     }
     ${Responsive.laptop} {
-      font-size: 13px;
+      font-size: 11px;
       padding: 14px 5px;
       font-weight: 500;
+      margin-top: 20px;
     }
 `;
 
@@ -85,7 +86,7 @@ const Title = styled.span`
       margin-bottom: 18px;
     }
     ${Responsive.laptop} {
-      font-size: 26px;
+      font-size: 22px;
       margin-top: -20px;
     }
 `;
@@ -104,7 +105,7 @@ const Text = styled.span`
       font-size: 14px;
     }
     ${Responsive.laptop} {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       margin-top: -5px;
     }
@@ -112,7 +113,6 @@ const Text = styled.span`
 
 //--------------//
 const TabsWrapper = styled.div`
-
 `;
 const SectionWrapper = styled.div`
   /* background-color: red; */
@@ -129,9 +129,7 @@ const SectionWrapper = styled.div`
         }
         ${Responsive.laptop} {
           width: 1230px;
-          margin-left: 50px;
           margin-top: -25px;
-          height: 200px;
         }
     }
     ${ImageWithTextWrapper} {
@@ -148,6 +146,18 @@ const SectionWrapper = styled.div`
 `;
 const TabPanelsWrapper = styled.div`
   padding-top: 50px;
+`;
+
+const LabelTextStyle = styled(LabelText)`
+  ${Responsive.laptop} {
+    font-size: 12px;
+  }
+`;
+
+const CheckStyle = styled(Check)`
+  ${Responsive.laptop} {
+    height: 15px;
+  }
 `;
 
 
@@ -201,8 +211,8 @@ const FormLayout = styled.div`
   grid-gap: 1.6rem;
   ${Responsive.laptop} {
     font-size: 14px;
-    width: 80%;
-    height: 50px!important;
+    width: 100%;
+    grid-gap: 1.0rem;
   }
 `;
 
@@ -223,6 +233,9 @@ const TextButton = styled.button`
   }
     ${Responsive.mobile} {
       text-decoration-line: underline;
+    }
+    ${Responsive.laptop} {
+      font-size: 10px;
     }
 `;
 
@@ -286,9 +299,21 @@ const DoubleInputWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-gap: 1.6rem;
 `;
+const InputStyle = styled(Input)`
+  ${Responsive.laptop} {
+    height: 40px;
+    width: 100%;
+    font-size: 12px;
+  }
+`;
 
 export const IWBInput = styled(Input)`
   border-radius: 14px 0 0 14px;
+  ${Responsive.laptop} {
+    height: 40px;
+    width: 100%;
+    font-size: 12px;
+  }
 `;
 
 export const IWBButton = styled(Button)`
@@ -299,6 +324,11 @@ export const IWBButton = styled(Button)`
       height: 48px;
       padding: 0px 30px;
       font-size: 14px;
+    }
+    ${Responsive.laptop} {
+      height: 47px;
+      font-size: 12px;
+      width: 140px;
     }
 `;
 
@@ -311,6 +341,13 @@ const PasswordInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+`;
+
+const EyeIconStyle = styled(EyeIcon)`
+${Responsive.laptop}{
+  height: 15px;
+  width: 20px;
+}
 `;
 
 const IconWrapper = styled.div`
@@ -398,7 +435,7 @@ const PasswordInputWrapperTest = ({
 
   return (
     <PasswordInputWrapper>
-      <Input
+      <InputStyle
         placeholder={placeholder}
         type={type}
         id={id}
@@ -408,7 +445,7 @@ const PasswordInputWrapperTest = ({
         invalid={invalid}
       />
       <IconWrapper>
-        <EyeIcon width={"2.62rem"} onClick={_eyeClick} />
+        <EyeIconStyle width={"2.62rem"} onClick={_eyeClick} />
       </IconWrapper>
     </PasswordInputWrapper>
   );
@@ -532,7 +569,7 @@ const Auth: NextPage = () => {
         </Text>
         <form onSubmit={formik.handleSubmit}>
           <FormLayout>
-            <Input
+            <InputStyle
               placeholder="ელ-ფოსტა"
               id="email"
               name="email"
@@ -700,7 +737,7 @@ const Auth: NextPage = () => {
             </Text>
             <form onSubmit={recoverFormik.handleSubmit}>
               <FormLayout>
-                <Input
+                <InputStyle
                   placeholder="ელ-ფოსტა"
                   id="email"
                   name="email"
@@ -910,7 +947,7 @@ const Auth: NextPage = () => {
             </Text>
             <form onSubmit={formik.handleSubmit}>
               <FormLayout>
-                <Input
+                <InputStyle
                   placeholder="სახელი"
                   id="firstName"
                   name="firstName"
@@ -918,7 +955,7 @@ const Auth: NextPage = () => {
                   onChange={formik.handleChange}
                   invalid={formik.touched.firstName && formik.errors.firstName}
                 />
-                <Input
+                <InputStyle
                   placeholder="გვარი"
                   id="lastName"
                   name="lastName"
@@ -926,7 +963,7 @@ const Auth: NextPage = () => {
                   onChange={formik.handleChange}
                   invalid={formik.touched.lastName && formik.errors.lastName}
                 />
-                <Input
+                <InputStyle
                   placeholder="ელ-ფოსტა"
                   id="email"
                   name="email"
@@ -934,7 +971,7 @@ const Auth: NextPage = () => {
                   onChange={formik.handleChange}
                   invalid={formik.touched.email && formik.errors.email}
                 />
-                <Input
+                <InputStyle
                   placeholder="მობ.ნომერი(+995)"
                   id="phone"
                   name="phone"
@@ -979,13 +1016,13 @@ const Auth: NextPage = () => {
                   invalid={formik.touched.confirm && formik.errors.confirm}
                 />
                 <Label>
-                  <Check
+                  <CheckStyle
                     id="agreed"
                     name="agreed"
                     checked={formik.values.agreed}
                     onChange={formik.handleChange}
                   />
-                  <LabelText>ვეთანხმები წესებს და პირობებს</LabelText>
+                  <LabelTextStyle>ვეთანხმები წესებს და პირობებს</LabelTextStyle>
                 </Label>
                 <Button disabled={loading} type="submit">
                   რეგისტრაცია
@@ -1005,7 +1042,7 @@ const Auth: NextPage = () => {
             </Text>
             <form onSubmit={addressFormik.handleSubmit}>
               <FormLayout>
-                <Input
+                <InputStyle
                   placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა"
                   name="address"
                   value={addressFormik.values.address}
@@ -1016,7 +1053,7 @@ const Auth: NextPage = () => {
                   }
                 />
                 <DoubleInputWrapper>
-                  <Input
+                  <InputStyle
                     placeholder="ქალაქი"
                     name="city"
                     value={addressFormik.values.city}
@@ -1025,7 +1062,7 @@ const Auth: NextPage = () => {
                       addressFormik.touched.city && addressFormik.errors.city
                     }
                   />
-                  <Input
+                  <InputStyle
                     placeholder="ქვეყანა"
                     name="country"
                     value={addressFormik.values.country}
@@ -1036,7 +1073,7 @@ const Auth: NextPage = () => {
                     }
                   />
                 </DoubleInputWrapper>
-                <Input
+                <InputStyle
                   placeholder="რეგიონი / რაიონი"
                   name="state"
                   value={addressFormik.values.state}
@@ -1045,7 +1082,7 @@ const Auth: NextPage = () => {
                     addressFormik.touched.state && addressFormik.errors.state
                   }
                 />
-                <Input
+                <InputStyle
                   placeholder="Zip კოდი"
                   name="zip"
                   value={addressFormik.values.zip}

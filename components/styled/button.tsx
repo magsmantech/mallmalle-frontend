@@ -38,9 +38,9 @@ const Button = styled.button`
       font-size: 16px;
     }
     ${Responsive.laptop} {
-      height: 60px;
-      width: 140px;
-      font-size: 14px;
+      height: 50px;
+      width: 540px;
+      font-size: 13px;
     }
 `;
 
