@@ -307,6 +307,10 @@ const AddressButton = styled(Button)`
     /* color: white; */
     background-image: var(--header-gradient);
   }
+  ${Responsive.laptop} {
+    height: 60px;
+    width: 100%;
+  }
 `;
 
 const TwoInputWrapper = styled.div`
