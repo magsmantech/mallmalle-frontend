@@ -59,6 +59,9 @@ const DetailMainWrapper = styled.div`
       margin-left: 0px;
       margin-top: 25px;
     }
+    ${Responsive.laptop}{
+      margin-left: 30px;
+    }
 `;
 const DetailsWrapper = styled.div`
   display: flex;
@@ -70,6 +73,9 @@ const ItemPreviewWrapper = styled.div`
   ${Responsive.tablet} {
     flex-basis: 100%;
   }
+  ${Responsive.laptop} {
+    margin-top: 5px;
+  }
 `;
 
 const Title = styled.h1`
@@ -80,8 +86,8 @@ const Title = styled.h1`
       font-size: 32px;
     }
     ${Responsive.laptop} {
-      font-size: 34px;
-      margin-bottom: -10px;
+      font-size: 29px;
+      margin-top: -4px;
     }
 `;
 
@@ -93,6 +99,10 @@ const Price = styled(Title)`
   }
   ${Responsive.mobile}{
     font-size: 32px;
+  }
+  ${Responsive.laptop}{
+    font-size: 28px;
+    margin-top: -8px;
   }
 `;
 
@@ -107,6 +117,7 @@ const OldPrice = styled(Price)`
     }
     ${Responsive.laptop}{
       margin-top: -10px;
+      font-size: 16px;
     }
 `;
 
@@ -131,6 +142,9 @@ const SelectSizeLabel = styled.div`
         font-size: 14px;
         margin-bottom: 17px;
       }
+      ${Responsive.laptop}{
+        font-size: 11px;
+      }
 `;
 
 const ButtonWrapper = styled.div`
@@ -148,8 +162,30 @@ const ButtonWrapper = styled.div`
             }
           }
       }
+      ${Responsive.laptop}{
+        height: 35px;
+          button {
+            &:first-child {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        margin-top: -15px;
+      }
 `;
 
+const BreadcrumbsStyle = styled(Breadcrumbs)`
+    ${Responsive.laptop}{
+        margin-top: 4px;
+        font-size: 11px;
+      }
+`;
+const ButtonStyle = styled(Button)`
+    ${Responsive.laptop}{
+        height: 50px!important;
+        border-radius: 10px;
+      }
+`;
 // const Button = styled.button`
 //   display: inline-flex;
 //   height: 8.0rem;
@@ -172,7 +208,7 @@ const Subtitle = styled.span`
   font-family: "helvetica";
   margin-bottom: 20px;
   ${Responsive.laptop}{
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 5px;
     font-weight: bolder;
   }
@@ -183,10 +219,10 @@ const Text = styled.span`
   font-size: 18px;
   margin-bottom: 15px;
   font-family: "helvetica";
-  ${Responsive.laptop} {
-    font-size: 13px;
-    font-weight: 500;
-  }
+    ${Responsive.laptop} {
+      font-size: 12px;
+      font-weight: 400;
+    }
 `;
 
 const SectionTitle = styled.div`
@@ -234,12 +270,21 @@ const RevieStartWrapper = styled.div`
   align-items: center;
   margin-top: 20px;
   margin-bottom: 30px;
+  ${Responsive.laptop} {
+    margin-top: 12px;
+  }
 `;
 const DetailCount = styled(Count)`
   font-size: 16px;
   margin-left: 15px;
     ${Responsive.mobile}{
       margin-left: 10px;
+    }
+    ${Responsive.laptop}{
+      margin-left: 8px;
+      font-size: 10px;
+      margin-top: -2px;
+      font-weight: 400;
     }
 `;
 const PriceWrapperStyle = styled.div`
@@ -253,6 +298,9 @@ const SelectSizeWrapper = styled.div`
       margin-bottom: 25px;
       margin-top: 25px;
     }
+    ${Responsive.laptop}{
+      margin-top: 20px;
+    }
 `;
 const BagIconStyle = styled(BagIcon)`
   width: 30px;
@@ -261,10 +309,17 @@ const BagIconStyle = styled(BagIcon)`
       width: 25px;
       margin-right: 10px;
     }
+    ${Responsive.laptop}{
+      width: 20px;
+    }
 `;
 const BsBookmarkPlusFillStyle = styled(BsBookmarkPlusFill)`
   width: 26px;
   height: 25px;
+  ${Responsive.laptop}{
+    width: 18px;
+    height: 18px;
+  }
 `;
 const AddCartButton = styled(Button)`
   width: 77px;
@@ -274,11 +329,11 @@ const AddCartButton = styled(Button)`
       height: 64px;
     }
     ${Responsive.laptop}{
-      width: 60px;
-      height: 60px;
+      width: 52px;
+      height: 52px;
+      border-radius: 9px;
     }
 `;
-
 
 
 
@@ -510,7 +565,7 @@ const ProductDetails: NextPage = () => {
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>
-            <Breadcrumbs
+            <BreadcrumbsStyle
               style={{
                 opacity: 0.5,
                 fontWeight: 700,
@@ -522,7 +577,7 @@ const ProductDetails: NextPage = () => {
               {/* {'ფეხსაცმელი'} /
             <span style={{ fontWeight: 500 }}> {'მწვანე ფეხსაცმელი'}</span> */}
               <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
-            </Breadcrumbs>
+            </BreadcrumbsStyle>
             <Title>{product?.product_name}</Title>
             <RevieStartWrapper>
               {product?.rating ? (
@@ -574,13 +629,13 @@ const ProductDetails: NextPage = () => {
             </SelectSizeWrapper>
             <ButtonWrapper>
               {/* onClick={_showFeedback} */}
-              <Button onClick={_addToCart} style={{
+              <ButtonStyle onClick={_addToCart} style={{
                 ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
               }} disabled={!canAddToCart}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
                 <BagIconStyle />
                 კალათაში დამატება
-              </Button>
+              </ButtonStyle>
 
               <AddCartButton secondary onClick={_showFavoriteFeedback} disabled={disableFavoriteBtn}>
                 <BsBookmarkPlusFillStyle />

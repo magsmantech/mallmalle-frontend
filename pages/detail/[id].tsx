@@ -59,6 +59,9 @@ const DetailMainWrapper = styled.div`
       margin-left: 0px;
       margin-top: 25px;
     }
+    ${Responsive.laptop}{
+      margin-left: 30px;
+    }
 `;
 const DetailsWrapper = styled.div`
   display: flex;
@@ -70,6 +73,9 @@ const ItemPreviewWrapper = styled.div`
   ${Responsive.tablet} {
     flex-basis: 100%;
   }
+  ${Responsive.laptop} {
+    margin-top: 5px;
+  }
 `;
 
 const Title = styled.h1`
@@ -79,9 +85,9 @@ const Title = styled.h1`
     ${Responsive.mobile}{
       font-size: 32px;
     }
-    ${Responsive.laptop}{
-      font-size: 30px;
-      margin-top: -5px;
+    ${Responsive.laptop} {
+      font-size: 29px;
+      margin-top: -4px;
     }
 `;
 
@@ -95,8 +101,8 @@ const Price = styled(Title)`
     font-size: 32px;
   }
   ${Responsive.laptop}{
-    font-size: 34px;
-    margin-bottom: -10px;
+    font-size: 28px;
+    margin-top: -8px;
   }
 `;
 
@@ -111,6 +117,7 @@ const OldPrice = styled(Price)`
     }
     ${Responsive.laptop}{
       margin-top: -10px;
+      font-size: 16px;
     }
 `;
 
@@ -124,11 +131,6 @@ const Label = styled.span`
       font-size: 14px;
       margin-bottom: 17px;
     }
-    ${Responsive.laptop}{
-      font-size: 12px;
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
 `;
 const SelectSizeLabel = styled.div`
   color: var(--text-color);
@@ -139,6 +141,9 @@ const SelectSizeLabel = styled.div`
     ${Responsive.mobile}{
         font-size: 14px;
         margin-bottom: 17px;
+      }
+      ${Responsive.laptop}{
+        font-size: 11px;
       }
 `;
 
@@ -158,11 +163,29 @@ const ButtonWrapper = styled.div`
           }
       }
       ${Responsive.laptop}{
-        margin-top: -20px;
-        margin-bottom: 25px;
+        height: 35px;
+          button {
+            &:first-child {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        margin-top: -15px;
       }
 `;
 
+const BreadcrumbsStyle = styled(Breadcrumbs)`
+    ${Responsive.laptop}{
+        margin-top: 4px;
+        font-size: 11px;
+      }
+`;
+const ButtonStyle = styled(Button)`
+    ${Responsive.laptop}{
+        height: 50px!important;
+        border-radius: 10px;
+      }
+`;
 // const Button = styled.button`
 //   display: inline-flex;
 //   height: 8.0rem;
@@ -185,7 +208,7 @@ const Subtitle = styled.span`
   font-family: "helvetica";
   margin-bottom: 20px;
   ${Responsive.laptop}{
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 5px;
     font-weight: bolder;
   }
@@ -197,8 +220,8 @@ const Text = styled.span`
   margin-bottom: 15px;
   font-family: "helvetica";
   ${Responsive.laptop} {
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 400;
   }
 `;
 
@@ -215,12 +238,7 @@ const SectionTitle = styled.div`
       ${Responsive.mobile}{
         margin-top: 50px;
       }
-      ${Responsive.laptop}{
-        font-size: 18px;
-        margin-top: 30px;
-      }
 `;
-
 
 const Grid = styled.section`
   margin-top: 50px;
@@ -257,7 +275,7 @@ const RevieStartWrapper = styled.div`
   margin-top: 20px;
   margin-bottom: 30px;
   ${Responsive.laptop} {
-    margin-top: 0px;
+    margin-top: 12px;
   }
 `;
 const DetailCount = styled(Count)`
@@ -270,8 +288,10 @@ const DetailCount = styled(Count)`
       margin-left: 10px;
     }
     ${Responsive.laptop}{
-      font-size: 12px;
-      font-weight: bold;
+      margin-left: 8px;
+      font-size: 10px;
+      margin-top: -2px;
+      font-weight: 400;
     }
 `;
 const PriceWrapperStyle = styled.div`
@@ -285,6 +305,9 @@ const SelectSizeWrapper = styled.div`
       margin-bottom: 25px;
       margin-top: 25px;
     }
+    ${Responsive.laptop}{
+      margin-top: 20px;
+    }
 `;
 const BagIconStyle = styled(BagIcon)`
   width: 30px;
@@ -293,10 +316,17 @@ const BagIconStyle = styled(BagIcon)`
       width: 25px;
       margin-right: 10px;
     }
+    ${Responsive.laptop}{
+      width: 20px;
+    }
 `;
 const BsBookmarkPlusFillStyle = styled(BsBookmarkPlusFill)`
   width: 26px;
   height: 25px;
+  ${Responsive.laptop}{
+    width: 18px;
+    height: 18px;
+  }
 `;
 const AddCartButton = styled(Button)`
   width: 77px;
@@ -306,8 +336,9 @@ const AddCartButton = styled(Button)`
       height: 64px;
     }
     ${Responsive.laptop}{
-      width: 60px;
-      height: 60px;
+      width: 52px;
+      height: 52px;
+      border-radius: 9px;
     }
 `;
 

@@ -46,9 +46,12 @@ const Item = styled.div`
             width: 63px;
         }
         ${Responsive.laptop}{
-            height: 68px;
-            width: 68px;
+            height: 60px;
+            width: 60px;
+            border-radius: 8px;
+            border: ${(props: ItemProps)=> !props.selected? 'solid .16rem rgba(28, 28, 28, 0.08)': 'none'};
             margin-top: -10px;
+            font-size: 18px;
         }
 `;
 

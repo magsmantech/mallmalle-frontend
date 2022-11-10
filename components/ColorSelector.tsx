@@ -32,6 +32,12 @@ const Wrapper = styled.div`
     & > div:last-child {
         margin-right: 0;
     }
+    ${Responsive.laptop}{
+        margin-top: -15px;
+        & > div {
+            margin-right: 0.8rem};
+        }
+    }
 `;
 
 const Item = styled.div`
@@ -54,10 +60,10 @@ const Item = styled.div`
             margin: ${(props: ItemProps) => props.small && !props.selected ? '15px' : '0'};
         }
         ${Responsive.laptop} {
-            height: ${(props: ItemProps) => props.small && !props.selected ? '24px' : '24px'};
-            width: ${(props: ItemProps) => props.small && !props.selected ? '24px' : '24px'};
-            border: ${(props: ItemProps) => props.selected ? 'solid 4px #22D5AE' : props.small ? 'none' : 'solid 4px white'};
-            border-radius: ${(props: ItemProps) => props.small && !props.selected ? '1.2rem' : props.small && props.selected ? '4px' : '4px'};
+            height: ${(props: ItemProps) => props.small && !props.selected ? '30px' : '30px'};
+            width: ${(props: ItemProps) => props.small && !props.selected ? '30px' : '30px'};
+            border: ${(props: ItemProps) => props.selected ? 'solid 5px #22D5AE' : props.small ? 'none' : 'solid 4px white'};
+            border-radius: ${(props: ItemProps) => props.small && !props.selected ? '1.2rem' : props.small && props.selected ? '8px' : '8px'};
         }
 `;
 

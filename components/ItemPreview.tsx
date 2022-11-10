@@ -30,8 +30,10 @@ const TabImage = styled.img`
   border: ${(props: TabImageProps) => props.selected ? 'solid 3px #22d2af' : 'none'};
   box-sizing: border-box;
   ${Responsive.laptop} {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    border: ${(props: TabImageProps) => props.selected ? 'solid 2px #22d2af' : 'none'};
 }
 `;
 const TabsWrapper = styled.div`
@@ -45,6 +47,9 @@ const TabsWrapper = styled.div`
             padding-bottom: 7px;
             margin-right: 0px;
             margin-top: 12px;
+        }
+        ${Responsive.laptop} {
+            margin-right: 15px;
         }
       
 `;
@@ -64,7 +69,9 @@ const SelectedImage = styled.img`
         }
     }
     ${Responsive.laptop} {
-        max-height: 530px;
+        max-height: 485px;
+        width: 660px;
+        border-radius: 10px;
     }
 `;
 const ImageWrapperDiv = styled.div`

@@ -17,8 +17,9 @@ export const PageWrapper = styled.div`
     min-height: calc(100vh - 430px);
     ${Responsive.laptop} {
         & {
-            margin-top: 66px;
+            margin-top: 77px!important;
         }
+        padding: 30px;
       }
     @media(max-width: 600px) {
         
