@@ -222,6 +222,10 @@ const FavoriteCount = styled.div`
         ${Responsive.mobile}{
             display: none;
         }
+        ${Responsive.laptop}{
+            font-size: 12px;
+            margin-top: -20px;
+        }
 `;
 
 const Grid = styled.section`
