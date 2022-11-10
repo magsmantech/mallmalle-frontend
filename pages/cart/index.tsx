@@ -22,7 +22,9 @@ const FlexRow = styled.div`
   display: flex;
   justify-content: space-between;
     ${Responsive.mobile}{
-
+}
+${Responsive.laptop}{
+  height: 10px;
 }
 `;
 
@@ -76,11 +78,16 @@ const FlexRowWrapper = styled.div`
       position: relative;
       margin-bottom: 35px;
     }
+    ${Responsive.laptop}{
+      margin-top: -15px;
+    }
 `;
 const ItemWrapper = styled.div`
   /* background-color: gray; */
   flex-basis: 55%;
-   
+  ${Responsive.laptop}{
+    height: 40px;
+  }
 `;
 const QuantityWrapper = styled.div`
   display: flex;
@@ -90,6 +97,9 @@ const QuantityWrapper = styled.div`
     ${Responsive.mobile}{
       margin-left: 88px;
       margin-bottom: 15px;
+    }
+    ${Responsive.laptop}{
+      flex-basis: 10%;
     }
 `;
 const PriceHorizontalWrapper = styled.div`
@@ -151,6 +161,9 @@ const Price = styled.span`
   font-size: 24px;
   font-family: fira-go;
   font-weight: 600;
+  ${Responsive.laptop}{
+    font-size: 17px;
+}
 `;
 
 const OldPrice = styled(Price)`
@@ -176,7 +189,7 @@ const Grid = styled.div`
   height: min-content;
   display: flex;
   flex-direction: column;
-  flex-basis: 65%;
+  flex-basis: 64%;
 `;
 const OrderDetailsWrapper = styled.div`
   flex-basis: 34%;
@@ -187,6 +200,11 @@ const OrderDetailsWrapper = styled.div`
     ${Responsive.mobile}{
       flex-basis: 100%;
       width: 100%;
+    }
+    ${Responsive.laptop}{
+      flex-basis: 34%;
+      width: 34%;
+      margin-top: 45px;
     }
 `;
 
@@ -202,6 +220,10 @@ const CloseIconStyle = styled(CloseIcon)`
       top: 0px;
       right: 0px;
     }
+    ${Responsive.laptop}{
+      height: 20px;
+      width: 20px;
+  }
 `;
 
 const DetailLink = styled.a`

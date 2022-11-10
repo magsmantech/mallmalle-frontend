@@ -16,12 +16,24 @@ const IconWrapper = styled.div`
             width: 30px;
             height: 30px;
         }
+        ${Responsive.laptop}{
+            width: 22px;
+            height: 22px;
+        }
 `;
 const MinusIcon = styled(HiMinus)`
     font-size: 18px;
+    ${Responsive.laptop}{
+        width: 10px;
+        height: 10px;
+    }
 `;
 const PlusIcon = styled(HiPlus)`
     font-size: 18px;
+    ${Responsive.laptop}{
+        width: 10px;
+        height: 10px;
+    }
 `;
 
 const Number = styled.span`
@@ -30,6 +42,9 @@ const Number = styled.span`
     font-size: fira-go;
         ${Responsive.mobile}{
             font-size: 17px;
+        }
+        ${Responsive.laptop}{
+            font-size: 15px;
         }
 `;
 

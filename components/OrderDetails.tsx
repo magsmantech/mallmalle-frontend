@@ -73,6 +73,11 @@ const IconWrapperStyle = styled.div`
             width: 44px;
             margin-right: 12px;
         }
+        ${Responsive.laptop}{
+            height: 44px;
+            width: 44px;
+            border-radius: 6px;
+        }
 `;
 const ProfileIconStyle = styled(ProfileIcon)`
     width: 26px;
@@ -80,6 +85,10 @@ const ProfileIconStyle = styled(ProfileIcon)`
         ${Responsive.mobile}{
             width: 18px;
             height: 18px;
+        }
+        ${Responsive.laptop}{
+            width: 20px;
+            height: 20px;
         }
 `;
 const NameStyle = styled.div`
@@ -91,6 +100,9 @@ const NameStyle = styled.div`
         ${Responsive.mobile}{
             font-size: 20px;
             margin-bottom: 0px;
+        }
+        ${Responsive.laptop}{
+            font-size: 17px;
         }
 `;
 const OrderNoStyle = styled.div`
@@ -106,6 +118,9 @@ const HeaderStyle = styled.div`
         ${Responsive.mobile}{
             margin-bottom: 38px;
         }
+        ${Responsive.laptop}{
+            margin-top: -10px;
+        }
 `;
 const AddressTitleStyle = styled.div`
     color: var(--text-color);
@@ -117,6 +132,10 @@ const AddressTitleStyle = styled.div`
             font-size: 12px;
             margin-bottom: 15px;
         }
+        ${Responsive.laptop}{
+            font-size: 14px;
+            margin-top: -10px;
+        }
 `;
 const AddressItemStyle = styled.div`
     display: flex;
@@ -126,6 +145,9 @@ const AddressItemStyle = styled.div`
         ${Responsive.mobile}{
             gap: 10px;
             margin-bottom: 15px;
+        }
+        ${Responsive.laptop}{
+            margin-top: -10px;
         }
 `;
 const EditIconStyle = styled(EditIcon)`
@@ -140,6 +162,10 @@ const EditIconStyle = styled(EditIcon)`
             height: 19px;
             margin-top: -2px;
         }
+        ${Responsive.laptop}{
+            width: 19px;
+            height: 19px;
+        }
 `;
 const IoLocationSharpStyle = styled(IoLocationSharp)`
     height: 32px;
@@ -152,6 +178,10 @@ const IoLocationSharpStyle = styled(IoLocationSharp)`
             width: 18px;
             min-width: 18px;
             margin-top: 0px;
+        }
+        ${Responsive.laptop}{
+            height: 18px;
+            width: 18px;
         }
 `;
 const BsFillTelephoneFillStyle = styled(BsFillTelephoneFill)`
@@ -166,6 +196,10 @@ const BsFillTelephoneFillStyle = styled(BsFillTelephoneFill)`
             min-width: 16px;
             margin-top: -1px;
         }
+        ${Responsive.laptop}{
+            height: 18px;
+            width: 18px;
+        }
 `;
 const AddressItemTextStyle = styled.div`
     color: var(--text-color);
@@ -175,6 +209,9 @@ const AddressItemTextStyle = styled.div`
     font-family: fira-go;
     padding-right: 20px;
         ${Responsive.mobile}{
+            font-size: 14px;
+        }
+        ${Responsive.laptop}{
             font-size: 14px;
         }
 `;
@@ -189,6 +226,13 @@ const InputStyle = styled(Input)`
     font-weight: 500;
         ${Responsive.mobile}{
             font-size: 13px;
+        }
+`;
+const ButtonStyle = styled(Button)`
+        ${Responsive.laptop}{
+            width: 100%;
+            border-radius: 8px;
+            margin-top: -40px;
         }
 `;
 const UpdateInputStyle = styled.input`
@@ -212,6 +256,9 @@ const DividerStyle = styled.div`
         ${Responsive.mobile}{
             margin: 40px 0px 20px 0px;
         }
+        ${Responsive.laptop}{
+            margin-top: 10px;
+        }
 `;
 const PaymentItemStyle = styled.div`
     display: flex;
@@ -232,6 +279,12 @@ const PaymentItemStyle = styled.div`
                 ${Responsive.mobile}{
                     font-size: 15px;
                 }
+        }
+        ${Responsive.laptop}{
+            margin-top: -5px;
+            span{
+            font-size: 12px;
+            }
         }
 `;
 const BootstrapModalWrapper = styled(Modal)`
@@ -502,7 +555,7 @@ const OrderDetails: React.FC<{
                     </PaymentItemStyle>
                 </div>
 
-                <Button onClick={async () => {
+                <ButtonStyle onClick={async () => {
                     if (!selectedAddressId) {
                         alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
                         return;
@@ -520,7 +573,7 @@ const OrderDetails: React.FC<{
                     } else {
                         alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
                     }
-                }}>გადახდაზე გადასვლა</Button>
+                }}>გადახდაზე გადასვლა</ButtonStyle>
             </ContainerStyle>
         )
     }

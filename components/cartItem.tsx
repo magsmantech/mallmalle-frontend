@@ -51,6 +51,10 @@ margin-bottom: 15px;
     margin-bottom: 10px;
     padding-right: 30px;
   }
+  ${Responsive.laptop}{
+    font-size: 16px;
+    margin-bottom: -3px;
+  }
 `;
 
 const ItemLabel = styled.span`
@@ -62,6 +66,9 @@ font-weight: 500;
   ${Responsive.mobile}{
     font-size: 14px;
   }
+  ${Responsive.laptop}{
+    font-size: 13px;
+  }
 `;
 
 const ItemValue = styled.span`
@@ -71,6 +78,9 @@ font-weight: 500;
 font-family: fira-go ;
   ${Responsive.mobile}{
     font-size: 14px;
+  }
+  ${Responsive.laptop}{
+    font-size: 13px;
   }
 `;
 
@@ -88,6 +98,12 @@ min-width: 130px;
     min-width: 78px;
     margin-right: 10px;
   }
+  ${Responsive.laptop}{
+    height: 78px;
+    width: 78px;
+    min-width: 78px;
+    margin-right: 15px;
+  }
 `;
 
 const ItemTextWrapper = styled.div`
@@ -102,7 +118,6 @@ margin-top: 5px;
 const ItemWrapper = styled.div`
 display: flex;
 width: 100%;
-
 `;
 
 export default Item;
