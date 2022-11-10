@@ -236,11 +236,19 @@ const Grid = styled.section`
         grid-gap: 10px;
         grid-row-gap: 25px;
     }
+    ${Responsive.laptop} {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-row-gap: 20px;
+    }
 `;
 
 const ItemWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    ${Responsive.laptop}{
+        height: 350px;
+        width: 200px;
+   }
 `;
 
 type Props = {
@@ -271,6 +279,14 @@ const CartButton = styled(Button)`
     ${Responsive.mobile} {
         font-size: 12px;
         letter-spacing: 0px;
+    }
+    ${Responsive.laptop} {
+        width: 100%;
+        height: 40px;
+        font-size: 12px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: .15rem solid #2EA4CA;
     }
 `;
 

@@ -27,6 +27,11 @@ export const ChipWrapper = styled.div`
             margin-bottom: 14px;
             margin-right: 14px;
         }
+        ${Responsive.laptop}{
+            max-height: 36px;
+            padding: 8px 8px;
+            margin-right: 14px;
+        }
 `;
 
 export const ChipTitle = styled.span`
@@ -36,6 +41,9 @@ export const ChipTitle = styled.span`
     color: var(--text-color);
     font-weight: 600;
     letter-spacing: .5px;
+    ${Responsive.laptop}{
+        font-size: 12px;
+    }
 `;
 
 export const ChipIconWrapper = styled.div`

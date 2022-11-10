@@ -47,6 +47,9 @@ const TabStyle = styled(Tab)`
     ${Responsive.tabletMobile}{
       width: 100%;
     }
+    ${Responsive.laptop}{
+      width: 180px;
+    }
 `;
 const TabItem = styled.div`
   color: ${({ selected }: TabItemProps) =>
@@ -79,6 +82,11 @@ const TabItem = styled.div`
       font-size: 14px;
       border-bottom: 1px solid rgba(34, 34, 34, 0.2);
     }
+    ${Responsive.laptop} {
+      height: 70px;
+      border-radius: 1.1rem 1.1rem 0 0;
+      font-size: 12px;
+    }
 `;
 
 const AddressButton = styled(Button)`
@@ -100,6 +108,7 @@ const AddressButton = styled(Button)`
   }
   ${Responsive.laptop} {
     height: 60px;
+    width: 100%;
   }
 `;
 
@@ -112,8 +121,25 @@ const InputModified = styled(Input)`
       font-size: 18px;
       height: 70px;
     }
+    ${Responsive.laptop}{
+      height: 50px;
+      border-radius: 8px;
+      margin-top: -5px;
+      font-size: 13px;
+    }
 `;
-
+const EmailIconStyle = styled(EmailIcon)`
+${Responsive.laptop}{
+  height: 15px;
+  margin-top: -8px;
+}
+`;
+const PhoneIconStyle = styled(PhoneIcon)`
+${Responsive.laptop}{
+  height: 15px;
+  margin-top: -8px;
+}
+`;
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -153,6 +179,24 @@ const PersonalInfoWrapper = styled.div`
       align-items: center;
     }
 `;
+const SectionTitleStyle = styled(SectionTitle)`
+    ${Responsive.laptop} {
+      font-size: 30px;
+      margin-top: -10px;
+    }
+`;
+const BreadcrumbsStyle = styled(Breadcrumbs)`
+    ${Responsive.laptop} {
+      margin-top: -10px;
+      font-size: 12px;
+    }
+`;
+const TabsWrapperStyle = styled(Tabs)`
+    ${Responsive.laptop} {
+      width: 100%;
+      margin-top: -10px;
+    }
+`;
 const GridItem = styled.div`
   padding: 65px 70px 0px 70px;
     &:first-child {
@@ -162,7 +206,8 @@ const GridItem = styled.div`
       padding-right: 0px;
     }
     ${Responsive.laptop} {
-      padding: 65px 20px 0px 20px;
+    padding: 45px 40px 45px 40px;
+      width: 400px;
     }
     ${Responsive.tablet}{
       padding: 40px 15px 0px 15px;
@@ -195,9 +240,29 @@ const IconWrapper = styled.div`
       height: 78px;
       margin-right: 10px;
     }
+    ${Responsive.laptop}{
+      width: 80px;
+      height: 80px;
+      border-radius: 6px;
+    }
 `;
 const ProfileIconStyle = styled(ProfileIcon)`
   width: 35px;
+  ${Responsive.laptop} {
+    width: 25px;
+  }
+`;
+const UnlockIconStyle = styled(UnlockIcon)`
+  width: 35px;
+  ${Responsive.laptop} {
+    width: 25px;
+    margin-top: -5px;
+  }
+`;
+const ButtonStyle = styled(Button)`
+  ${Responsive.laptop} {
+    width: 100%;
+  }
 `;
 const UserName = styled.div`
   font-size: 32px;
@@ -211,6 +276,9 @@ const UserName = styled.div`
       margin-top: 0px;
       margin-bottom: 0px;
     }
+    ${Responsive.laptop} {
+      font-size: 20px;
+    }
 `;
 const OrderNo = styled.div`
   font-size: 18px;
@@ -220,9 +288,15 @@ const OrderNo = styled.div`
     ${Responsive.tabletMobile} {
       font-size: 14px;
     }
+    ${Responsive.laptop} {
+      font-size: 12px;
+    }
 `;
 const HeaderStyle = styled.div`
   margin-bottom: 40px;
+`;
+const IoLogOutStyle = styled(IoLogOut)`
+  height: 30px;
 `;
 const LogOutStyle = styled.div`
     svg {
@@ -244,6 +318,12 @@ const LogOutStyle = styled.div`
         margin-left: 10px;
       }
     }
+    ${Responsive.laptop} {
+      span {
+        font-size: 13px;
+        margin-left: 10px;
+      }
+    }
 `;
 const AddressTitle = styled.div`
   font-size: 24px;
@@ -257,17 +337,27 @@ const AddressTitle = styled.div`
         font-size: 18px;
         margin-bottom: 30px;
     }
+    ${Responsive.laptop} {
+      font-size: 18px;
+    }
 `;
 const ChangePassTitle = styled.div`
   font-size: 24px;
   margin-bottom: 30px;
   margin-top: 100px;
+  ${Responsive.laptop} {
+    font-size: 18px;
+  }
 `;
 const LabelText = styled.span`
   font-size: 18px;
   margin-bottom: 16px;
     ${Responsive.tabletMobile} {
 
+    }
+    ${Responsive.laptop} {
+      font-size: 12px;
+      margin-top: -10px;
     }
 `;
 const AddressItem = styled.div`
@@ -287,20 +377,32 @@ const LocationIconStyle = styled(IoLocationSharp)`
     ${Responsive.tabletMobile}{
       width: 35px;
     }
+    ${Responsive.laptop}{
+      width: 15px;
+    }
   /* margin-top: 4px; */
 `;
 const CityStyle = styled.div`
   font-size: 20px;
   margin-bottom: 5px;
+  ${Responsive.laptop} {
+    font-size: 14px;
+  }
 `;
 const AddressStyle = styled.div`
   font-size: 20px;
   margin-bottom: 5px;
     ${Responsive.tabletMobile} {
     }
+    ${Responsive.laptop} {
+      font-size: 14px;
+    }
 `;
 const ZipCodeStyle = styled.div`
   font-size: 20px;
+  ${Responsive.laptop} {
+    font-size: 14px;
+  }
 `;
 const EditIconStyle = styled(EditIcon)`
   font-size: 20px;
@@ -308,6 +410,9 @@ const EditIconStyle = styled(EditIcon)`
   right: 0;
   top: 0;
   cursor: pointer;
+  ${Responsive.laptop} {
+    width: 15px;
+  }
 `;
 const DividerStyle = styled.div`
     border-bottom: .1rem solid rgba(34, 34, 34, 0.2);
@@ -681,7 +786,7 @@ const PersonalInfo = () => {
             </div>
           </HeaderStyle>
           <LogOutStyle onClick={_logOut} className={styles.logout}>
-            <IoLogOut />
+            <IoLogOutStyle />
             <span>გასვლა</span>
           </LogOutStyle>
         </GridItem>
@@ -717,7 +822,7 @@ const PersonalInfo = () => {
               defaultValue={profile.profile?.user.email}
             />
             <InputIconWrapper>
-              <EmailIcon />
+              <EmailIconStyle />
             </InputIconWrapper>
           </InputWrapper>
           <LabelText className={styles.labels}>
@@ -729,9 +834,9 @@ const PersonalInfo = () => {
               defaultValue={"+995 " + profile.profile?.user.mobile}
             />
             <InputIconWrapper>
-              <PhoneIcon />
+              <PhoneIconStyle />
             </InputIconWrapper>
-            <InputIconWrapper style={{ left: "auto", right: "2.4rem" }}>
+            <InputIconWrapper style={{ left: "auto", right: "1.4rem", marginTop: "-3px" }}>
               <EditIcon />
             </InputIconWrapper>
           </InputWrapper>
@@ -745,13 +850,13 @@ const PersonalInfo = () => {
           <InputWrapper >
             <InputModified placeholder="ძველი პაროლი" value={currentPassword} onChange={(e: any) => setcurrentPassword(e.target.value)}  />
             <InputIconWrapper>
-              <UnlockIcon />
+              <UnlockIconStyle />
             </InputIconWrapper>
           </InputWrapper>
           <InputWrapper>
             <InputModified placeholder="ახალი პაროლი" value={newPassword} onChange={(e: any) => setnewPassword(e.target.value)} />
             <InputIconWrapper> 
-              <UnlockIcon />
+              <UnlockIconStyle />
             </InputIconWrapper>
           </InputWrapper>
           {/* <InputWrapper>
@@ -761,7 +866,7 @@ const PersonalInfo = () => {
             </InputIconWrapper>
           </InputWrapper> */}
 
-          <Button onClick={changePasswordPost} disabled={currentPassword.trim().length <= 0 || newPassword.trim().length <= 0 ? true : false} >შეცვლა</Button>
+          <ButtonStyle onClick={changePasswordPost} disabled={currentPassword.trim().length <= 0 || newPassword.trim().length <= 0 ? true : false} >შეცვლა</ButtonStyle>
         </GridItem>
         <GridItem className={styles.gridItem}>
           <AddressTitle className={styles.addressTitle}>მისამართი:</AddressTitle>
@@ -871,15 +976,15 @@ const Profile: NextPage = () => {
 
   return (
     <>
-      <SectionTitle>
+      <SectionTitleStyle>
         {sectionTitles[tabIndex]}
-      </SectionTitle>
-      <Breadcrumbs>
+      </SectionTitleStyle>
+      <BreadcrumbsStyle>
         მთავარი / ჩემი პროფილი{tabIndicators[tabIndex]}
-      </Breadcrumbs>
+      </BreadcrumbsStyle>
       {loadPage ? (
         <div className={styles.tabsWrapper}>
-          <Tabs
+          <TabsWrapperStyle
             selectedIndex={tabIndex}
             onSelect={(index) => setTabIndex(index)}
             style={{ width: "100%" }}
@@ -907,7 +1012,7 @@ const Profile: NextPage = () => {
                 <MyPayments />
               </TabPanel>
             </div>
-          </Tabs>
+          </TabsWrapperStyle>
         </div>
       ) : (
         // <h1 style={{ margin: "2rem 0 50rem 0" }}>Loading...</h1>

@@ -158,6 +158,11 @@ const OrderWrapper = styled.div`
             transition: all .2s;
             opacity: 0.7;
         }
+        ${Responsive.laptop} {
+            height: 40px;
+            font-size: 12px;
+            margin: 5px 0px;
+        }
 `;
 const StatusDiv = styled.div`
     padding-top: 3px;
@@ -183,6 +188,9 @@ const MoneyCount = styled.div`
     font-size: 18px;
         ${Responsive.mobile} {
             font-size: 14px;
+        }
+        ${Responsive.laptop} {
+            font-size: 12px;
         }
 `;
 
@@ -387,6 +395,9 @@ const OrderListWrapper = styled.div`
     display: flex;
     flex-direction: column;
     padding-top: 65px;
+    ${Responsive.laptop}{
+        margin-top: -20px;
+    }
 `;
 const OrderListTopSideWrapper = styled.div`
     display: flex;
@@ -409,6 +420,9 @@ const SearchCount = styled.span`
         ${Responsive.tabletMobile}{
             display: none;
         }
+        ${Responsive.laptop}{
+            font-size: 12px;
+        }
 `;
 const SearchCountText = styled.span`
     font-size: 16px;
@@ -416,6 +430,9 @@ const SearchCountText = styled.span`
     opacity: 0.8;
     font-weight: 700;
     font-family: 'fira-go';
+    ${Responsive.laptop}{
+        font-size: 12px;
+    }
 `;
 
 const RightArrowStyle = styled(BsArrowRight)`
