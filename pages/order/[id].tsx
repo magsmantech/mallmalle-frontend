@@ -84,7 +84,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
         <>
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
-                    <SectionTitle>ყიდვის ისტორია</SectionTitle>
+                    <SectionTitleStyle>ყიდვის ისტორია</SectionTitleStyle>
 
                     {/* <OrderListTopSideInsideWrapper>
                         <ChipWrapper>
@@ -105,7 +105,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                 }} >
                     <BackBtnStyle >
                         <IconWrapper>
-                            <BsArrowLeft color={'#3A7BD5'} />
+                            <BsArrowLeftStyle color={'#3A7BD5'} />
                         </IconWrapper>
                         <span>უკან დაბრუნება</span>
                     </BackBtnStyle>
@@ -185,6 +185,12 @@ const BackBtnStyle = styled.div`
         span {
             padding-left: 20px;
         }
+        ${Responsive.laptop}{
+            margin-top: -25px;
+            span{
+                font-size: 12px;
+            }
+        }
 `;
 const Grid = styled.div`
     display: grid;
@@ -201,6 +207,9 @@ const Headers = styled.div`
     margin-bottom: 15px;
         ${Responsive.tabletMobile} {
             display: none;
+        }
+        ${Responsive.laptop} {
+            margin-top: -15px;
         }
 `;
 
@@ -228,6 +237,9 @@ const HeaderItem = styled.div`
             /* background-color: brown; */
             width: 25%;
             text-align: right;
+        }
+        ${Responsive.laptop}{
+            font-size: 12px;
         }
 `;
 
@@ -311,6 +323,10 @@ const IconWrapper = styled.div`
     &:hover {
         background-color: rgba(224, 224, 224, 1);
     }
+    ${Responsive.laptop}{
+        height: 30px;
+        width: 30px;
+    }
 `;
 
 const Price = styled.span`
@@ -318,6 +334,9 @@ const Price = styled.span`
     font-size: 24px;
     font-family: fira-go;
     font-weight: 600;
+    ${Responsive.laptop}{
+        font-size: 17px;
+    }
 `;
 
 const OldPrice = styled(Price)`
@@ -337,6 +356,9 @@ const Number = styled.span`
     font-size: 24px;
     color: var(--text-color);
     font-family: fira-go;
+    ${Responsive.laptop}{
+        font-size: 15px;
+    }
 `;
 
 type BgProps = {
@@ -380,6 +402,11 @@ export const Badge = styled.div`
     font-weight: 700;
     flex-shrink: 0;
     user-select: none;
+    ${Responsive.laptop}{
+        height: 27px;
+        width: 130px;
+        font-size: 12px;
+    }
 `;
 
 
@@ -409,6 +436,9 @@ const SearchCount = styled.span`
         ${Responsive.tabletMobile}{
             display: none;
         }
+        ${Responsive.laptop}{
+            font-size: 13px;
+        }
 `;
 const SearchCountText = styled.span`
     font-size: 16px;
@@ -416,10 +446,19 @@ const SearchCountText = styled.span`
     opacity: 0.8;
     font-weight: 700;
     font-family: 'fira-go';
+    ${Responsive.laptop}{
+        font-size: 13px;
+    }
 `;
 
 const RightArrowStyle = styled(BsArrowRight)`
     font-size: 22px;
+    ${Responsive.laptop}{
+        font-size: 16px;
+    }
+`;
+const BsArrowLeftStyle = styled(BsArrowLeft)`
+    font-size: 14px;
 `;
 const ItemName = styled.span`
 color: var(--text-color);
@@ -434,6 +473,9 @@ margin-bottom: 15px;
     margin-bottom: 10px;
     padding-right: 30px;
   }
+  ${Responsive.laptop}{
+    font-size: 17px;
+}
 `;
 
 const ItemLabel = styled.span`
@@ -445,6 +487,9 @@ font-weight: 500;
   ${Responsive.mobile}{
     font-size: 14px;
   }
+  ${Responsive.laptop}{
+    font-size: 13px;
+  }
 `;
 
 const ItemValue = styled.span`
@@ -454,6 +499,9 @@ font-weight: 500;
 font-family: fira-go ;
   ${Responsive.mobile}{
     font-size: 14px;
+  }
+  ${Responsive.laptop}{
+    font-size: 13px;
   }
 `;
 
@@ -471,6 +519,12 @@ min-width: 130px;
     min-width: 78px;
     margin-right: 10px;
   }
+  ${Responsive.laptop}{
+    height: 78px;
+    width: 78px;
+    min-width: 78px;
+    margin-right: 15px;
+  }
 `;
 
 const ItemTextWrapper = styled.div`
@@ -486,6 +540,11 @@ const ItemWrapper = styled.div`
 display: flex;
 width: 100%;
 
+`;
+
+const SectionTitleStyle = styled(SectionTitle)`
+font-size: 30px;
+margin-top: -10px;
 `;
 
 export default OrdersList;
