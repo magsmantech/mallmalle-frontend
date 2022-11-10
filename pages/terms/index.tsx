@@ -31,6 +31,7 @@ export const SectionTitle = styled.div`
   font-size: 4.4rem;
     ${Responsive.laptop} {
       font-size: 2rem!important;
+      margin-top: 10px;
     }
 `;
 

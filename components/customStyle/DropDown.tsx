@@ -38,6 +38,12 @@ const Arrow = styled(BsChevronDown)`
     top: 18px;
     user-select: none;
     pointer-events: none;
+    ${Responsive.laptop} {
+      right: 14px;
+      top: 15px;
+      width: 12px;
+      height: 12px;
+    }
 `;
 const DropDownBtn = styled(DropdownButton)`
   width: fit-content;
@@ -102,6 +108,14 @@ const DropDownBtn = styled(DropdownButton)`
     &.btn-check:focus+.btn-primary, .btn-primary:focus {
       background-color: #F2F2F2;
       color: #424F60;
+    }
+    ${Responsive.laptop} {
+      button {
+        font-size: 12px;
+        &::after {
+          width: 20px;
+          height: 20px;
+        }
     }
 `;
 

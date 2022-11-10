@@ -8,6 +8,7 @@ import styles from '../../styles/Terms.module.css';
 
 import { Breadcrumbs } from "../../components/styled/breadcrumbs";
 import ReactHtmlParser from "html-react-parser";
+import Responsive from "../../config/Responsive";
 
 const Grid = styled.div`
   /* display: grid; */
@@ -32,6 +33,10 @@ export const SectionTitle = styled.div`
   font-feature-settings: "case" on; */
 
   font-size: 4.4rem;
+      ${Responsive.laptop} {
+        margin-top: 10px;
+        font-size: 2.0rem!important;
+      }
 `;
 
 
@@ -52,6 +57,15 @@ const Text = styled.span`
   color: var(--text-color);
   font-size: 1.8rem;
   font-family: "helvetica";
+    ${Responsive.laptop}{
+      font-size: 20px;
+    }
+`;
+const BreadcrumbsStyle = styled(Breadcrumbs)`
+        ${Responsive.laptop}{
+            font-size: 12px;
+            margin-top: -10px;
+        }
 `;
 
 const TextPage: NextPage = () => {
@@ -70,9 +84,9 @@ const TextPage: NextPage = () => {
         წესები და პირობები
       </SectionTitle>
 
-      <Breadcrumbs style={{ marginBottom: "3.2rem" }}>
+      <BreadcrumbsStyle style={{ marginBottom: "3.2rem" }}>
         მთავარი / {page.title}
-      </Breadcrumbs>
+      </BreadcrumbsStyle>
 
       {/* <Title style={{ marginBottom: "1.6rem" }}>{page.title}</Title> */}
 

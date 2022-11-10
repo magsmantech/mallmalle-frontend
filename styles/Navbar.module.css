@@ -148,4 +148,12 @@
         border-right: .1rem solid rgba(255, 255, 255, 0.2);
         margin: 0px 12px 0px 40px;
     }
+    .searchInput{
+        margin-left: 15px;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+    .searchInput::placeholder {
+        font-size: 12px;
+    }
 }

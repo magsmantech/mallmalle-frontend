@@ -40,7 +40,17 @@ const Heading = styled.h1`
         ${Responsive.mobile} {
             font-size: 28px;
         }
+        ${Responsive.laptop}{
+            font-size: 30px;
+            margin-top: -10px;
+        }
+`;
 
+const BsBookmarkPlusFillStyle = styled(BsBookmarkPlusFill)`
+        ${Responsive.laptop}{
+            width: 20px;
+            height: 20px;
+        }
 `;
 
 const Quantity = styled.span`
@@ -56,6 +66,10 @@ const Quantity = styled.span`
             margin-top: 20px;
             margin-right: auto;
         }
+        ${Responsive.laptop}{
+            font-size: 12px;
+            margin-left: 35px;
+        }
 `;
 
 const Grid = styled.div`
@@ -70,9 +84,9 @@ const Grid = styled.div`
     }
     ${Responsive.laptop} {
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* see notes below */
-        grid-raw-gap: 35px;
+        grid-row-gap: 35px;
         margin-top: 0px;
-      }
+    }
 `;
 
 
@@ -156,6 +170,12 @@ const BookmarkWrapper = styled.div`
     backdrop-filter: blur(10px);
     /* -webkit-backdrop-filter: blur(10px); */
     background-color: rgba(0, 0, 0, 0.7);
+    ${Responsive.laptop}{
+        width: 50px;
+        height: 50px;
+        margin-right: -10px;
+        margin-bottom: -10px;
+    }
 `;
 
 const ItemButton = styled(Button)`
@@ -178,6 +198,9 @@ const Price = styled.span`
     color: var(--text-color);
     font-weight: 700;
     font-family: fira-go;
+    ${Responsive.laptop}{
+        font-size: 18px;
+    }
 `;
 
 const OldPrice = styled.span`
@@ -189,6 +212,9 @@ const OldPrice = styled.span`
 
     opacity: 0.5;
     text-decoration: line-through;
+    ${Responsive.laptop}{
+        font-size: 14px;
+    }
 `;
 
 const Title = styled.span`
@@ -201,6 +227,9 @@ const Title = styled.span`
     font-size: 18px;
     
     font-family: 'helvetica';
+    ${Responsive.laptop}{
+        font-size: 12px;
+    }
 `;
 
 
@@ -225,6 +254,9 @@ const Badge = styled.span`
     display: flex;
     font-weight: bold;
     align-items: center;
+    ${Responsive.laptop}{
+        font-size: 10px;
+    }
 `;
 const HoverButton = styled(Button)`
     background-image: none;
@@ -257,6 +289,9 @@ const PriceTitleStyle = styled.span`
     font-size: 18px;
     text-transform: uppercase;
     font-feature-settings: 'case' on;
+    ${Responsive.laptop} {
+        margin-top: -13px;
+    }
 `;
 const StartsWrapperStyle = styled.div`
     display: flex;
@@ -416,6 +451,13 @@ const FilterInnterWrapper = styled.div`
   margin-bottom: 50px;
   margin-top: 10px;
 `;
+const BreadcrumbsStyle = styled(Breadcrumbs)`
+        ${Responsive.laptop}{
+            font-size: 12px;
+            margin-top: 10px;
+        }
+`;
+
 export const CustomPaginationWrapper = styled.div`
     margin: 70px 0 50px 0;
     ul {
@@ -461,6 +503,15 @@ export const CustomPaginationWrapper = styled.div`
             }
         }
     }
+    ${Responsive.laptop} {
+        ul {
+            li {
+                height: 34px;
+                width: 34px;
+                font-size: 18px;
+            }
+        }
+    }
 
 `;
 
@@ -486,7 +537,7 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
                 <Img backgroundImage={imgSrc} className={styles.child}>
                     {(hovered) && <ItemOverlay>
                         <BookmarkWrapper style={{ zIndex: 20 }}>
-                            <BsBookmarkPlusFill size={'30px'} color={'#ffffff'} />
+                            <BsBookmarkPlusFillStyle size={'30px'} color={'#ffffff'} />
                         </BookmarkWrapper>
                     </ItemOverlay>
                     }
@@ -561,7 +612,7 @@ const Discounts: NextPage = () => {
         <>
 
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
-            <Breadcrumbs style={{ marginBottom: '1.0rem' }}>მთავარი / ახალდამატებული</Breadcrumbs>
+            <BreadcrumbsStyle style={{ marginBottom: '1.0rem' }}>მთავარი / ახალდამატებული</BreadcrumbsStyle>
 
             <HeadWrapperStyle>
 

@@ -247,7 +247,8 @@ const HeaderLogoTag = styled.img`
         ${Responsive.laptop}{
             width: 170px;
             margin-right: 10px;
-            margin-left: -35px;
+            margin-left: -30px;
+            margin-top: 5px;
         }
 `;
 const LanguageSwitcherWrapper = styled.div`

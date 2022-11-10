@@ -28,9 +28,10 @@ const Wrapper = styled.div`
         margin-left: -6px;
     }
     ${Responsive.laptop} {
-        height: 30px;
+        height: 28px;
+        margin-top: 5px;
         .one {
-            width: 35px;
+            width: 33px;
         }
     
         .two {
@@ -63,6 +64,10 @@ const Item = styled.div`
     border: 3px solid white;
     border-radius: 1.4rem;
     transition: width 150ms ease-in-out;
+    ${Responsive.laptop} {
+        border: 2px solid white;
+        height: 6px;
+    }
 `;
 
 const Item1 = styled(Item)`
