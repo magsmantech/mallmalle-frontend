@@ -72,6 +72,10 @@ const Heading = styled.h1`
         margin-bottom: 28px;
         font-size: 28px;
       }
+      ${Responsive.laptop}{
+        font-size: 30px;
+        margin-top: -15px;
+    }
 `;
 
 const Quantity = styled.span`
@@ -89,6 +93,10 @@ const Quantity = styled.span`
       ${Responsive.mobile} {
         margin-bottom: 20px;
       }
+      ${Responsive.laptop}{
+        font-size: 12px;
+        margin-left: 35px;
+    }
 `;
 
 const Grid = styled.div`
@@ -218,6 +226,9 @@ const ItemButton = styled(Button)`
   background-image: var(--button-gradient);
   /* margin-top: 2.0rem; */
   /* display: none; */
+  ${Responsive.laptop}{
+    font-size: 18px;
+}
 `;
 
 const Price = styled.span`
@@ -227,6 +238,10 @@ const Price = styled.span`
   font-family: "fira-go";
     ${Responsive.mobile} {
       font-size: 21px;
+    }
+    ${Responsive.laptop} {
+      font-size: 18px;
+      margin-bottom: -10px;
     }
 `;
 
@@ -243,6 +258,10 @@ const OldPrice = styled.span`
     ${Responsive.mobile}{
       margin-top: 2px;
     }
+    ${Responsive.laptop}{
+      font-size: 14px;
+      margin-top: -2px;
+  }
 `;
 
 const Title = styled.span`
@@ -258,6 +277,9 @@ const Title = styled.span`
     ${Responsive.mobile} {
       font-size: 13px;
     }
+    ${Responsive.laptop}{
+      font-size: 12px;
+  }
 `;
 
 export const Count = styled.span`
@@ -271,6 +293,10 @@ export const Count = styled.span`
       font-size: 13px;
       /* margin-top: -4px; */
     }
+    ${Responsive.laptop}{
+      font-size: 12px;
+      margin-top: -4px;
+    }
 `;
 
 const Badge = styled.span`
@@ -283,6 +309,9 @@ const Badge = styled.span`
   display: flex;
   font-weight: bold;
   align-items: center;
+  ${Responsive.laptop}{
+    font-size: 10px;
+}
 `;
 const HoverButton = styled(Button)`
   background-image: none;
@@ -387,6 +416,10 @@ const MoreFilterBtn = styled.button`
         margin-left: 20px;
         cursor: pointer;
     }
+    ${Responsive.laptop} {
+      font-size: 12px;
+      padding: 3px 8px 3px 8px;
+  }
 `;
 const MoreFilterIconStyle = styled(MoreFilterIcon)`
     position: absolute;
