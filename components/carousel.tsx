@@ -76,7 +76,7 @@ const Carousel = ({ images = [] }: Props) => {
         <SwiperSlide className={styles.slide} key={index}>
             <Background className="background" backgroundImage={uploadUrl(o.background_image)}>
               <SlideText >
-                <SliderTitle>ფასდაკლება.</SliderTitle>
+                <SliderTitle>ფასდაკლება</SliderTitle>
                 <Clock itemDate={o.expire_date} />
 
               </SlideText>
