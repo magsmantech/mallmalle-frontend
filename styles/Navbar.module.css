@@ -51,7 +51,7 @@
     background-color: transparent;
     color: white;
     outline: 0;
-    /* -webkit-appearance: none; */
+    -webkit-appearance: none;
     box-shadow: none;
     border: 0;
     height: 100%;
