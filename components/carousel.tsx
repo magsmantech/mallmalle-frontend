@@ -48,7 +48,7 @@ const Carousel = ({ images = [] }: Props) => {
 
   const allDiscounts = DashboardData?.data.discounts;
   const dateNow = new Date();
-  const activeSliders = allDiscounts?.filter(o => o.on_slider == 1 && !(o.expire_date < dateNow));
+  const activeSliders = allDiscounts?.filter(o => o.on_slider == 1);
   return (
     <div style={{ overflow: 'hidden' }}>
       <SwiperWrapper
