@@ -434,6 +434,8 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
+    overflow: scroll;
+
         ${Responsive.tabletMobile}{
             top: 100px;
         }
@@ -1020,6 +1022,7 @@ const Search: NextPage = () => {
                             </SliderWrapperStyle>
 
                             <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
+                            <BtnWithBorder onClick={() => setOpenModal(false)}>არჩევა</BtnWithBorder>
                         </Content>
                     </MainFilterComponent>}
                 </FilterWrapper>

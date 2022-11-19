@@ -1031,6 +1031,7 @@ const Catalog: NextPage = () => {
               </FilterInnterWrapper> */}
 
               <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
+              <BtnWithBorder onClick={() => setOpenModal(false)}>არჩევა</BtnWithBorder>
             </Content>
           </MainFilterComponent>}
 
