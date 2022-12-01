@@ -121,6 +121,7 @@ const PriceHorizontalWrapper = styled.div`
 
 const BreadcrumbsStyle = styled(Breadcrumbs)`
   margin-bottom: 40px;
+  display: flex;
 `;
 export const SectionTitle = styled.div`
   color: var(--text-color);
@@ -230,6 +231,16 @@ const DetailLink = styled.a`
   cursor: pointer;
   text-decoration: none;
 `;
+const BreadcrumbLink = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-color);
+  &:hover{
+    color: var(--text-color);
+  }
+  margin-right: 5px;
+  margin-left: 5px;
+`;
 
 
 const CartScreen: NextPage = () => {
@@ -280,7 +291,7 @@ const CartScreen: NextPage = () => {
         კალათა
       </MainTitle>
       <BreadcrumbsStyle >
-        მთავარი / ჩემი პროფილი / ჩემი კალათა
+        <BreadcrumbLink href={`/`}>მთავარი</BreadcrumbLink> / <BreadcrumbLink href={`/profile`}>ჩემი პროფილი </BreadcrumbLink> / <BreadcrumbLink href={`/cart`}>ჩემი კალათა</BreadcrumbLink>
       </BreadcrumbsStyle>
       <Container>
         <Grid>
