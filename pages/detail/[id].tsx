@@ -456,6 +456,14 @@ const ProductDetails: NextPage = () => {
     }
   };
 
+  const _chooseSizeMessage = async () => {
+    if(!canAddToCart){
+    setSnackMessage("გთხოვთ, აირჩიეთ ზომა და ფერი!");
+    setOpenSnack(true);
+    setsnackMsgStatus('info');
+    }
+};
+
 
   // const _showFeedback = () => {
   //   if (!authData?.profile?.user) {
@@ -628,7 +636,7 @@ const ProductDetails: NextPage = () => {
                 </>
               )}
             </SelectSizeWrapper>
-            <ButtonWrapper>
+            <ButtonWrapper onClick={_chooseSizeMessage}>
               {/* onClick={_showFeedback} */}
               <Button onClick={_addToCart} style={{
                 ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),

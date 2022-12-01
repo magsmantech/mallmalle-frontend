@@ -483,6 +483,14 @@ const ProductDetails: NextPage = () => {
     }
   };
 
+  const _chooseSizeMessage = async () => {
+        if(!canAddToCart){
+        setSnackMessage("გთხოვთ, აირჩიეთ ზომა და ფერი!");
+        setOpenSnack(true);
+        setsnackMsgStatus('info');
+        }
+  };
+
 
 
 
@@ -627,7 +635,7 @@ const ProductDetails: NextPage = () => {
                 </>
               )}
             </SelectSizeWrapper>
-            <ButtonWrapper>
+            <ButtonWrapper onClick={_chooseSizeMessage}>
               {/* onClick={_showFeedback} */}
               <ButtonStyle onClick={_addToCart} style={{
                 ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
