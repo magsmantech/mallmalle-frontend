@@ -324,6 +324,9 @@ const LogOutStyle = styled.div`
         margin-left: 10px;
       }
     }
+    ${Responsive.mobile} {
+      margin-top: -55px;
+    }
 `;
 const AddressTitle = styled.div`
   font-size: 24px;
