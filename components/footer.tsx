@@ -49,7 +49,7 @@ const Footer = () => {
 
     };
 
-    return isSubscribeLoading ? <Loader /> : (
+    return (
         <>
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
