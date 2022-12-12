@@ -462,6 +462,9 @@ const InputStyle = styled.input`
     &:focus {
       border-color: #94EBD8;
     }
+    ::placeholder{
+      opacity: 0.4;
+    }
 `;
 
 const DeleteAddressBtn = styled(AddressButton)`
