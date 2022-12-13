@@ -1036,7 +1036,7 @@ const Auth: NextPage = () => {
             <Title>
               დაამატეთ თქვენი მისამართი
             </Title>
-            <BlurPopup boldMessage={"თქვენ წარმატებით დარეგისტრირდით"} normalMessage={"პროფილზე გადასვლა"} routeText={"პროფილი"} routeLink={"/profile"} onClose={false} />
+            <BlurPopup boldMessage={"თქვენ წარმატებით დარეგისტრირდით"} normalMessage={"დაამატეთ თქვენი მისამართი: "} routeText={"პროფილი"} routeLink={"/profile"} onClose={false} />
             <Text>
               შეიყვანეთ თქვენი მონაცემები
             </Text>

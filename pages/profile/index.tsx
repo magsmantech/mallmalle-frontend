@@ -885,7 +885,7 @@ const PersonalInfo = () => {
               <LocationIconStyle color={"var(--text-color)"} />
               {/* {`${a.is_primary}`} */}
               {addresses?.length==1?(
-              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 1 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
+              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 1 ? { backgroundColor: "transparent", borderColor: "#22D5AE" } : { backgroundColor: "#EDEDED", borderColor: "#EDEDED" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
               ):
               <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
               }
