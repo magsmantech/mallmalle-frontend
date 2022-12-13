@@ -52,7 +52,7 @@ const Navbar: React.FC<{
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
                     <SearchWrapper className={styles.ItemWrappers}><SearchBarStyle /></SearchWrapper>
                     <LanguageSwitcherWrapper>
-                    <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
+                        <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
                     </LanguageSwitcherWrapper>
                     {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
                     {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}

@@ -24,6 +24,7 @@ import WatchIcon from '../public/icons/react-icons/sidebar-icons/watch';
 import ToyIcon from '../public/icons/react-icons/sidebar-icons/toy';
 import Responsive from '../config/Responsive';
 import router from 'next/router';
+import LanguageSwitcher from './language-switcher';
 
 
 
@@ -303,6 +304,9 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 <SideBarWrapper className={styles.container}>
                     <SideBarTopSideWrapper className={styles.header}>
                         <SideBarMainIcon src={'/assets/mallmalle.png'} />
+                        <LanguageSwitcherWrapper>
+                                <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
+                        </LanguageSwitcherWrapper>
                         <CloseBtnWrapper className={styles.iconWrapper} onClick={() => onSidebarClose()}>
                             <CloseIcon color='#424F60' />
                         </CloseBtnWrapper>
@@ -328,7 +332,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                         </SidebarItem>
                                     </div>
                                 )}
-                            </SidebarItemWrapper>
+                        </SidebarItemWrapper>
                         </HideInDesktop>
 
                     </div>
@@ -462,6 +466,10 @@ const SideBarMainIcon = styled.img`
     ${Responsive.laptop} {
         height: 26px;
     }
+    ${Responsive.mobile} {
+        height: 30px;
+        width: 140px;
+    }
 `;
 const CloseBtnWrapper = styled.div`
     width: 56px;
@@ -530,7 +538,23 @@ const BackgroundShadow = styled.div`
             /* background-color: red; */
         }
 `;
+const LanguageSwitcherWrapper = styled.div`
+    display: none;
+    ${Responsive.mobile}{
+        display: block;
+        width: 10px;
+        margin-top: 5px;
+        margin-left: -80px;
+        z-index: 10;
+    }
+`;
+const LanguageSwitcherStyle = styled(LanguageSwitcher)`
+    z-index: 10;
 
+    ${Responsive.laptop}{
+        font-size: 12px;
+    }
+`;
 
 
 export default Sidebar;

@@ -45,6 +45,7 @@ const LanguageSwitcher = ({languages}: Props) => {
     return(
         <div onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
+            onClick={mouseEnter}
             style={{marginLeft: '0.5rem', width: '6.0rem'}}>
             <div style={{position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0, fontSize: '1.1rem', fontFamily: 'noto-sans'}}>
                 <EarthLogoStyle/>
