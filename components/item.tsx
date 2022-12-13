@@ -78,6 +78,9 @@ const ProductItemImgWrapper = styled.div`
     ${Responsive.laptop}{
       height: 220px;
       width: 200px;
+      :hover{
+        border: 1px solid rgba(0, 139, 139, 0.6);
+      }
     }
 `;
 const ProductTextWrapper = styled.div`
