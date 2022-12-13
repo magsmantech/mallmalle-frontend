@@ -376,6 +376,9 @@ const ProductDetails: NextPage = () => {
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMessage, setSnackMessage] = useState('');
   const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+  
+  const [clicked, setClicked] = useState<any>(undefined);
+  
   const MainLoading = isRecommendedLoading || isFavoritesLoading || isCartLoading;
 
 
@@ -447,6 +450,8 @@ const ProductDetails: NextPage = () => {
         setSnackMessage("პროდუქტი დაემატა კალათში!");
         setOpenSnack(true);
         setsnackMsgStatus('success');
+        setClicked(true);
+        setTimeout(() =>setClicked(false), 1000);
 
       } catch (error) {
         setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!");
@@ -639,7 +644,7 @@ const ProductDetails: NextPage = () => {
             <ButtonWrapper onClick={_chooseSizeMessage}>
               {/* onClick={_showFeedback} */}
               <Button onClick={_addToCart} style={{
-                ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}),
+                ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}), ...(clicked ? { filter: 'grayscale(1)' } : {}),
               }} disabled={!canAddToCart}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
                 <BagIconStyle />
