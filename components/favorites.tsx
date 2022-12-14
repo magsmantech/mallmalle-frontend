@@ -13,11 +13,17 @@ import api, { uploadUrl } from "../features/api";
 import Loader from "./Loader";
 import { removeFromFavorite } from '../services/checkout-services';
 import { useRouter } from 'next/router';
+import { Alert, Snackbar } from "@mui/material";
 
 
 
 
 const Favorites: React.FC<{}> = ({ }) => {
+
+    const [openSnack, setOpenSnack] = useState(false);
+    const [snackMessage, setSnackMessage] = useState('');
+    const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
+
 
     const { data: favorite, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
     const [removeFromFavorite, { isLoading: isRemoveFromFavoriteLoading }] = api.useRemoveFromFavoriteMutation();
@@ -123,10 +129,30 @@ const Favorites: React.FC<{}> = ({ }) => {
                                 <CartButton
                                     onClick={() => router.push(`/detail/${f.product.id}`)}
                                 >დეტალურად ნახვა</CartButton>
+                                <CartButtonDelete onClick={async () => {
+                                        const result = await removeFromFavorite({
+                                            productId: f.product.id,
+                                        // variationId: item.variation_id,
+                                        });
+                                        await refetchFavorites();
+                                        setSnackMessage("პროდუქტი წარმატებით წაიშალა ფავორიტებიდან");
+                                        setOpenSnack(true);
+                                        setsnackMsgStatus('success');
+                                        // console.log('removeFromCart result:', result);
+                                    }}
+                                >ფავორიტებიდან წაშლა</CartButtonDelete>
                             </ItemWrapper>
                         )
                     })}
                 </Grid>
+                <Snackbar
+                    open={openSnack}
+                    autoHideDuration={5000}
+                    onClose={() => setOpenSnack(false)}>
+                    <Alert severity={snackMsgStatus}>
+                        {snackMessage}
+                    </Alert>
+                </Snackbar>
             </Wrapper>
         </>)
 };
@@ -291,6 +317,17 @@ const CartButton = styled(Button)`
         margin-top: 10px;
         border-radius: 5px;
         border: .15rem solid #2EA4CA;
+    }
+`;
+
+const CartButtonDelete = styled(CartButton)`
+    border: .2rem solid #FF4A4A;
+    color: #FF4A4A;
+    &:hover {
+        /* background-color: #2EA4CA; */
+        border: none;
+        color: white;
+        background-image: linear-gradient(to right,#FF4A4A,#FF4A4A);
     }
 `;
 
