@@ -15,6 +15,7 @@ import Loader from './Loader';
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Alert, Snackbar } from "@mui/material";
 
 const CustomButton = styled.button`
     
@@ -295,7 +296,7 @@ const AddressButton = styled(Button)`
   height: 77px;
   /* color: #22D5AE; */
   border: 0.2rem solid #22d5ae;
-  margin-top: 55px;
+  /* margin-top: 55px; */
   background: -webkit-linear-gradient(to right, #22d2af 0%, #3885d1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -341,6 +342,97 @@ const DeleteAddressBtn = styled(AddressButton)`
   background-image: linear-gradient(to right,#FF4A4A,#FF4A4A) !important;
 `;
 
+const AddressItem = styled.div`
+`;
+const AddressItemText = styled.div`
+  ${Responsive.tabletMobile}{
+    padding-right: 25px;
+  }
+`;
+const LocationIconStyle = styled(IoLocationSharp)`
+  font-size: 22px;
+  margin-right: 10px;
+  margin-top: 4px;
+    ${Responsive.tablet}{
+      width: 35px;
+    }
+    ${Responsive.tabletMobile}{
+      width: 35px;
+    }
+    ${Responsive.laptop}{
+      width: 15px;
+    }
+  /* margin-top: 4px; */
+`;
+const CityStyle = styled.div`
+  font-size: 20px;
+  margin-bottom: 5px;
+  ${Responsive.laptop} {
+    font-size: 14px;
+  }
+`;
+const AddressStyle = styled.div`
+  font-size: 20px;
+  margin-bottom: 5px;
+    ${Responsive.tabletMobile} {
+    }
+    ${Responsive.laptop} {
+      font-size: 14px;
+    }
+`;
+const ZipCodeStyle = styled.div`
+  font-size: 20px;
+  ${Responsive.laptop} {
+    font-size: 14px;
+  }
+`;
+const AddressPrimaryButton = styled.button`
+  position: absolute;
+  right: 0;
+  top: 38px;
+  transform: rotate(180deg);
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  border: 6px solid #22D5AE;
+  background-color: transparent;
+`;
+const GridItem = styled.div`
+  padding: 65px 70px 0px 70px;
+    &:first-child {
+      padding-left: 0px;
+    }
+    &:last-child {
+      padding-right: 0px;
+    }
+    ${Responsive.laptop} {
+    padding: 45px 40px 45px 40px;
+      width: 400px;
+    }
+    ${Responsive.tablet}{
+      padding: 40px 15px 0px 15px;
+    }
+    ${Responsive.tabletMobile}{
+      padding: 60px 0px 0px 0px;
+      width: 100%;
+    }
+`;
+const AddressTitle = styled.div`
+  font-size: 24px;
+  margin-bottom: 30px;
+    ${Responsive.tablet} {
+      font-size: 20px;
+      margin-top: 10px;
+    }
+    ${Responsive.tabletMobile}{
+        margin-top: 10px;
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+    ${Responsive.laptop} {
+      font-size: 18px;
+    }
+`;
 
 
 
@@ -351,7 +443,10 @@ type Props = {
     onHide: () => void;
 }
 
-
+type AddAddressProps = {
+    show: boolean;
+    onHide: () => void;
+  }
 
 const OrderDetails: React.FC<{
     cart?: Cart;
@@ -377,16 +472,40 @@ const OrderDetails: React.FC<{
 
         const [Address, {isLoading: isUpdateAddressLoading}] = api.useUpdateAddressMutation();
         const [deleteAddress, { isLoading: isDeleteAddressLoading }] = api.useDeleteAddressMutation();
+        const [addAddress, { isLoading: isAddAddressLoading }] = api.useAddAddressMutation();
+        const [addPrimaryAddress, { isLoading: isAddPrimaryAddressLoading }] = api.useAddPrimaryAddressMutation();
 
 
         const [updateAddresId, setupdateAddresId] = useState<number>(0);
         const [modalShow, setModalShow] = useState(false);
+        const [addAddressModalShow, setAddAddressModalShow] = useState(false);
 
         const primaryAddress = profile?.profile?.addresses.find(x => x.is_primary == 1);
 
         const isMainLoader = isProfileLoading || isDeleteAddressLoading || isUpdateAddressLoading;
         
+        const [openSnack, setOpenSnack] = useState(false);
+        const [snackMessage, setSnackMessage] = useState('');
+        const [snackMsgStatus, setsnackMsgStatus] = useState<any>('' || 'warning'); // error | warning | info | success
 
+
+        const makeAddressPrimary = (event: { currentTarget: { id: any; }; }) => {
+            console.log(event.currentTarget.id);
+        
+            const addPrimaryAddressPost = async () => {
+              if (event.currentTarget.id) {
+                try {
+                  await addPrimaryAddress(event.currentTarget.id);
+                  refetchProfile();
+                } catch (error) {
+                }
+              }
+              else {
+                alert("address primary error")
+              }
+            };
+            addPrimaryAddressPost();
+          };
 
         function UpdateProfileItem(props: Props) { //onClick={props.onHide}
             const [newAddress, setnewAddress] = useState();
@@ -475,9 +594,78 @@ const OrderDetails: React.FC<{
             );
         }
 
+        function AddAddress(props: AddAddressProps) {
 
 
-
+            const [addAddressStreet, setAddAddressStreet] = useState<string>('');
+            const [addAddressCity, setAddAddressCity] = useState<string>('');
+            const [addAddressCountry, setAddAddressCountry] = useState<string>('');
+            const [addAddressState, setAddAddressState] = useState<string>('');
+            const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
+        
+        
+        
+        
+            const addNewAddress = async () => {
+              setAddAddressModalShow(false);
+        
+              try {
+                await addAddress({
+                  address_1: addAddressStreet,
+                  country: addAddressCity,
+                  state: addAddressCountry,
+                  city: addAddressState,
+                  zip: addAddressZipCode
+                });
+        
+                // alert("form submited");
+                setSnackMessage("მისამართი წარმატებით დაემატა");
+                setOpenSnack(true);
+                setsnackMsgStatus('success');
+        
+                console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
+              } catch (error) {
+        
+                // alert("form not submited")
+                setSnackMessage("ვერ მოხერხდა მისამართის დამატება!");
+                setOpenSnack(true);
+                setsnackMsgStatus('error');
+              }
+              refetchProfile();
+            };
+        
+            return (
+              <BootstrapModalWrapper
+                {...props}
+                size="lg"
+                aria-labelledby="add-address"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title id="add-address">
+                    ახალი მისამართის დამატება
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <ModalContent>
+                    <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
+                    <TwoInputWrapper>
+                      <InputStyle type="text" placeholder="ქალაქი" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
+                      <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry} onChange={(e: any) => setAddAddressCountry(e.target.value)} />
+                    </TwoInputWrapper>
+                    <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
+                    <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
+        
+                    <AddressButton onClick={addNewAddress}>
+                      დამატება
+                    </AddressButton>
+        
+                  </ModalContent>
+                </Modal.Body>
+              </BootstrapModalWrapper>
+            );
+          }
+        
 
 
         return isMainLoader ? <Loader /> : !profile ? (<span>not found profile</span>) : (
@@ -493,39 +681,45 @@ const OrderDetails: React.FC<{
                     </div>
                 </HeaderStyle>
                 <div>
-                    <AddressTitleStyle>მისამართი:</AddressTitleStyle>
+        <AddressTitleStyle>მისამართი:</AddressTitleStyle>
                    
+          {profile.profile?.addresses.map((a, index) => (
                             
                         <AddressItemStyle>
-                            <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(primaryAddress?.id ? primaryAddress?.id : 0 )]} />
+                            <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
                             <IoLocationSharpStyle />
                            
+                            <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
                             <AddressItemTextStyle >
-                                <div className={styles.city}>{primaryAddress?.city}</div>
-                                <div className={styles.address}>{primaryAddress?.address_1}</div>
-                                <div className={styles.zip}>ZIP კოდი: {primaryAddress?.zip}</div>
+                                <div className={styles.city}>{a.city}</div>
+                                <div className={styles.address}>{a.address_1}</div>
+                                <div className={styles.zip}>ZIP კოდი: {a.zip}</div>
                             </AddressItemTextStyle>
 
-                        </AddressItemStyle>
 
-                 
+                        </AddressItemStyle>))
+}
+          <UpdateProfileItem
+            show={modalShow}
+            address={profile.profile?.addresses}
+            onHide={() => setModalShow(false)}
+          />
 
-                    <UpdateProfileItem
-                        show={modalShow}
-                        address={profile.profile?.addresses}
-                        onHide={() => setModalShow(false)}
-                    />
-
-
-
-
-                    <AddressItemStyle>
-                        {/* <div>Icon</div> */}
-                        <BsFillTelephoneFillStyle color={'var(--text-color)'} />
-                        <AddressItemTextStyle>
-                            (+995) {profile.profile?.user.mobile}
-                        </AddressItemTextStyle>
-                    </AddressItemStyle>
+          <AddressButton onClick={() => setAddAddressModalShow(true)}>
+            მისამართის დამატება
+          </AddressButton>
+          <AddAddress
+            show={addAddressModalShow}
+            onHide={() => setAddAddressModalShow(false)}
+          />
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={5000}
+          onClose={() => setOpenSnack(false)}>
+          <Alert severity={snackMsgStatus}>
+            {snackMessage}
+          </Alert>
+        </Snackbar>
 
                     {/* <AddressTitleStyle>პრომო კოდი:</AddressTitleStyle> */}
                 </div>
