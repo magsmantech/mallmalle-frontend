@@ -2,16 +2,19 @@ import { useState, useEffect } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import styled from 'styled-components';
 import Responsive from '../config/Responsive';
-import EarthLogo from '../public/icons/planet-earth.svg';
+import UsFlag from '../public/icons/react-icons/UsFlag';
+import GeoFlag from '../public/icons/react-icons/geoFlag';
 
 
-const EarthLogoStyle = styled(EarthLogo)`
-    height: 25px;
-    width: 20px;
-    margin-right: 5px;
+
+const UsFlagStyle = styled(UsFlag)`
     ${Responsive.laptop} {
-        height: 20px;
-        width: 15px;
+        margin-left: -10px;
+    }
+`;
+const GeoFlagStyle = styled(GeoFlag)`
+    ${Responsive.laptop} {
+        margin-left: -10px;
     }
 `;
 
@@ -48,13 +51,25 @@ const LanguageSwitcher = ({languages}: Props) => {
             onClick={mouseEnter}
             style={{marginLeft: '0.5rem', width: '6.0rem'}}>
             <div style={{position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0, fontSize: '1.1rem', fontFamily: 'noto-sans'}}>
-                <EarthLogoStyle/>
-                {selected}
+                {selected == "EN" &&
+                <UsFlagStyle/>
+                }
+                {selected == "GEO" &&
+                <GeoFlagStyle />
+                }
+                {/* {selected} */}
                 <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem'}}/>
-                {showItems && <ul style={{position: 'absolute', top: '100%', marginLeft: '1.5rem'}}>
+                {showItems && <ul style={{position: 'absolute', top: '100%', marginTop: '-0.7rem'}}>
                     {items.map((item, i)=>
                     <li key={i} style={{cursor: 'pointer'}}
-                        onClick={()=>setSelected(item)}>{item}</li>
+                        onClick={()=>setSelected(item)}>
+                            {selected == "EN" &&
+                            <GeoFlagStyle />
+                            }
+                            {selected == "GEO" &&
+                            <UsFlagStyle/>
+                            }
+                        </li>
                     )}
                 </ul>}
             </div>

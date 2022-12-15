@@ -296,6 +296,7 @@ const BootstrapModalWrapper = styled(Modal)`
 const AddressButton = styled(Button)`
   /* background-image: none; */
   height: 77px;
+  width: 100%;
   /* color: #22D5AE; */
   border: 0.2rem solid #22d5ae;
   /* margin-top: 55px; */
