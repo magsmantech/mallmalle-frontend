@@ -609,6 +609,7 @@ const PersonalInfo = () => {
     const [updateCountry, setupdateCountry] = useState<string>(findAddress?.country || "");
     const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
     const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
+    const [updateFullName, setupdateFullName] = useState<string>(findAddress?.full_name || "");
 
     const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
 
@@ -625,7 +626,8 @@ const PersonalInfo = () => {
           state: updateState,
           city: updateCity,
           zip: updateZipCode,
-          id: updateAddresId
+          id: updateAddresId,
+          full_name: updateFullName
         });
         setaddressSubmitBtn(true);
         // alert("form submited");
@@ -677,6 +679,7 @@ const PersonalInfo = () => {
             </TwoInputWrapper>
             <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+            <InputStyle type="text" placeholder="სრული სახელი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
 
             <AddressButton onClick={updateAddressPut}>
               ჩასწორება
@@ -702,6 +705,7 @@ const PersonalInfo = () => {
     const [addAddressCountry, setAddAddressCountry] = useState<string>('');
     const [addAddressState, setAddAddressState] = useState<string>('');
     const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
+    const [addFullName, setAddFullName] = useState<string>('');
 
 
 
@@ -715,7 +719,8 @@ const PersonalInfo = () => {
           country: addAddressCity,
           state: addAddressCountry,
           city: addAddressState,
-          zip: addAddressZipCode
+          zip: addAddressZipCode,
+          full_name: addFullName
         });
 
         // alert("form submited");
@@ -755,6 +760,7 @@ const PersonalInfo = () => {
             </TwoInputWrapper>
             <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
+            <InputStyle type="text" placeholder="სრული სახელი" value={addFullName} onChange={(e: any) => setAddFullName(e.target.value)} />
 
             <AddressButton onClick={addNewAddress}>
               დამატება

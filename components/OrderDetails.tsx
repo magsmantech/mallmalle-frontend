@@ -225,6 +225,8 @@ const InputStyle = styled(Input)`
     font-size: 20px;
     font-family: fira-go;
     font-weight: 500;
+    margin-top: 5px;
+    margin-bottom: 5px;
         ${Responsive.mobile}{
             font-size: 13px;
         }
@@ -517,6 +519,7 @@ const OrderDetails: React.FC<{
             const [updateCountry, setupdateCountry] = useState<string>(findAddress?.country || "");
             const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
             const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
+            const [updateFullName, setupdateFullName] = useState<string>(findAddress?.full_name || "");
 
             const [addressUpdatedMsg, setaddressUpdatedMsg] = useState<string>();
             const [addressSubmitBtn, setaddressSubmitBtn] = useState<boolean>();
@@ -532,15 +535,17 @@ const OrderDetails: React.FC<{
                         state: updateState,
                         city: updateCity,
                         zip: updateZipCode,
-                        id: updateAddresId
+                        id: updateAddresId,
+                        full_name: updateFullName
                     });
                     setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
                     console.log("contact form submit");
                     setaddressSubmitBtn(true);
                     alert("form submited");
                     console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
-                    console.log(Address)
-                } catch (error) {
+                    console.log(Address);
+                    window.location.reload();
+                  } catch (error) {
                     setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
                     setaddressSubmitBtn(false);
                     console.log("login error", error);
@@ -578,6 +583,8 @@ const OrderDetails: React.FC<{
                             </TwoInputWrapper>
                             <UpdateInputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
                             <UpdateInputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder="სრული სახელი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+
 
                             <AddressButton onClick={updateAddressPut}>
                                 ჩასწორება
@@ -602,6 +609,7 @@ const OrderDetails: React.FC<{
             const [addAddressCountry, setAddAddressCountry] = useState<string>('');
             const [addAddressState, setAddAddressState] = useState<string>('');
             const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
+            const [addAddressFullName, setAddAddressFullName] = useState<string>('');
         
         
         
@@ -615,13 +623,15 @@ const OrderDetails: React.FC<{
                   country: addAddressCity,
                   state: addAddressCountry,
                   city: addAddressState,
-                  zip: addAddressZipCode
+                  zip: addAddressZipCode,
+                  full_name: addAddressFullName
                 });
         
                 // alert("form submited");
                 setSnackMessage("მისამართი წარმატებით დაემატა");
                 setOpenSnack(true);
                 setsnackMsgStatus('success');
+                window.location.reload();
         
                 console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
               } catch (error) {
@@ -655,6 +665,7 @@ const OrderDetails: React.FC<{
                     </TwoInputWrapper>
                     <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
                     <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
+                    <InputStyle type="text" placeholder="სრული სახელი" value={addAddressFullName} onChange={(e: any) => setAddAddressFullName(e.target.value)} />
         
                     <AddressButton onClick={addNewAddress}>
                       დამატება
@@ -755,9 +766,13 @@ const OrderDetails: React.FC<{
 
                 <ButtonStyle onClick={async () => {
                     if (!selectedAddressId) {
-                        alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
+                        alert('გთხოვთ, დაამატოთ მისამართი');
                         return;
                     }
+                    if (!primaryAddress) {
+                      alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
+                      return;
+                  }
                     // @ts-ignore
                     const { data: response } = await createOrder({ addressId: selectedAddressId });
                     if ('success' in response && response.success) {
