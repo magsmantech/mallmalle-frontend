@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import styled from 'styled-components';
 import Responsive from '../config/Responsive';
-import UsFlag from '../public/icons/react-icons/UsFlag';
+import UsFlag from '../public/icons/react-icons/usFlag';
 import GeoFlag from '../public/icons/react-icons/geoFlag';
 
 
