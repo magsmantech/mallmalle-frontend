@@ -667,6 +667,10 @@ const ProductDetails: NextPage = () => {
       <Snackbar
         open={openSnack}
         autoHideDuration={5000}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
         onClose={() => setOpenSnack(false)}>
         <Alert severity={snackMsgStatus}>
           {snackMessage}
