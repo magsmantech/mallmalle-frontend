@@ -13,6 +13,7 @@ import api from '../features/api';
 import Loader from './Loader';
 import { Alert, Snackbar } from '@mui/material';
 import Fonts from '../styles/Fonts';
+import LanguageSwitcher from './language-switcher';
 
 const Footer = () => {
 
@@ -53,7 +54,12 @@ const Footer = () => {
         <>
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
+                    <FirstColumn>
                     <FooterMainIcon src={'/assets/mallmalle.png'} className={styles.logo} />
+                    <LanguageSwitcherWrapper>
+                                <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
+                    </LanguageSwitcherWrapper>
+                    </FirstColumn>
                     <FooterIconText className={styles.motto}>ამერიკული პროდუქტის ხელმისაწვდომობა საქართველოში</FooterIconText>
                     <SocialIconsWrapper className={styles.socials}>
                         <a href='https://facebook.com' target={"_blank"}>
@@ -314,6 +320,26 @@ const InputWrapper = styled(IWBWrapper)`
                     font-size: 12px;
                 }
         }
+`;
+const LanguageSwitcherWrapper = styled.div`
+    display: none;
+    ${Responsive.mobile}{
+        display: block;
+        width: 10px;
+        margin-top: 5px;
+        margin-left: 80px;
+        z-index: 10;
+    }
+`;
+const LanguageSwitcherStyle = styled(LanguageSwitcher)`
+    z-index: 10;
+
+    ${Responsive.laptop}{
+        font-size: 12px;
+    }
+`;
+const FirstColumn = styled.div`
+        display: flex;
 `;
 
 
