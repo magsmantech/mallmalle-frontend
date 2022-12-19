@@ -773,6 +773,7 @@ const OrderDetails: React.FC<{
                     <PaymentItemStyle>
                         <span>ტრანსპორტირება</span>
                         {/* <span>₾ {shippingCost}</span> */}
+                        <span>₾ 0</span>
                     </PaymentItemStyle>
 
                     <DividerStyle></DividerStyle>

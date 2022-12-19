@@ -990,12 +990,16 @@ const Profile: NextPage = () => {
     }
   }, []);
 
+  const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
+
+  const displayName = profile?.profile?.user.first_name;
+
   const tabTitles = ["პროფილი", "ყიდვის ისტორია", "რჩეულები",];
 
   const tabIndicators = ["", " / ყიდვის ისტორია", " / რჩეულები", ""];
 
   const sectionTitles = [
-    "პროფილი",
+    displayName,
     "ყიდვის ისტორია",
     "რჩეულები",
   ];
