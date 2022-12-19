@@ -46,7 +46,8 @@ const LanguageSwitcher = ({languages}: Props) => {
     };
     
     return(
-        <div onMouseEnter={mouseEnter}
+        <div 
+            // onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
             onClick={mouseEnter}
             style={{marginLeft: '0.5rem', width: '6.0rem'}}>
@@ -58,7 +59,7 @@ const LanguageSwitcher = ({languages}: Props) => {
                 <GeoFlagStyle />
                 }
                 {/* {selected} */}
-                <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem'}}/>
+                <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem', cursor: "pointer"}}/>
                 {showItems && <ul style={{position: 'absolute', top: '100%', marginTop: '-0.7rem'}}>
                     {items.map((item, i)=>
                     <li key={i} style={{cursor: 'pointer'}}
