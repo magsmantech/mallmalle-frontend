@@ -72,6 +72,9 @@ const Wrapper = styled.div`
 const ProductItemImgWrapper = styled.div`
   border-radius: 14px;
   height: 330px;
+  :hover{
+        border: 1px solid rgba(0, 139, 139, 0.6);
+      }
     ${Responsive.mobile}{
       height: 185px;
     }

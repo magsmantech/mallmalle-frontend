@@ -3,7 +3,8 @@ import { HiMinus, HiPlus } from "react-icons/hi";
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.button`
+    background: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,13 +97,13 @@ const Quantity: React.FC<{
 
     return (<>
         <ItemWrapper>
-            <IconWrapper onClick={()=>setNewQuantityValue(quantity-1)}>
+            <IconWrapper disabled={!allowLess} onClick={()=>setNewQuantityValue(quantity-1)} >
                 <MinusIcon color={iconColor(allowLess)}/>
             </IconWrapper>
             <Number>
                 {quantity}
             </Number>
-            <IconWrapper onClick={()=>setNewQuantityValue(quantity+1)}>
+            <IconWrapper disabled={!allowMore} onClick={()=>setNewQuantityValue(quantity+1)} >
                 <PlusIcon color={iconColor(allowMore)}/>
             </IconWrapper>
         </ItemWrapper>

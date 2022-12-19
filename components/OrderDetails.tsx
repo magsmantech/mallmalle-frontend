@@ -275,7 +275,7 @@ const PaymentItemStyle = styled.div`
         ${Responsive.mobile}{
             font-size: 14px;
         }
-        &:first-of-type {
+        &:last-of-type {
             opacity: 1;
             font-size: 20px;
             font-family: 'BPG WEB 002 CAPS';
@@ -763,22 +763,23 @@ const OrderDetails: React.FC<{
                 <div className={styles.paymentWrapper}>
 
                     <PaymentItemStyle >
-                        <span>სრული თანხა</span>
-                        <span>₾ {cart?.summary}</span>
-                    </PaymentItemStyle>
-                    {/* {cartPrices.hasDiscount ? (
-                        <PaymentItemStyle>
-                            <span>ფასდაკლება</span>
-                            <span >-₾ {cart?.discount}</span>
-                        </PaymentItemStyle>
-                    ) : null} */}
-                    <PaymentItemStyle>
-                        <span>{cart?.items?.length} ნივთი</span>
+                        <span>სრული ღირებულება</span>
                         <span>₾ {cart?.withoutDiscount}</span>
                     </PaymentItemStyle>
+                        <PaymentItemStyle>
+                            <span>ფასდაკლება</span>
+                            <span >-₾ {Number(cart?.discount)}</span>
+                        </PaymentItemStyle>
                     <PaymentItemStyle>
-                        <span>მიტანა</span>
+                        <span>ტრანსპორტირება</span>
                         {/* <span>₾ {shippingCost}</span> */}
+                    </PaymentItemStyle>
+
+                    <DividerStyle></DividerStyle>
+
+                    <PaymentItemStyle >
+                        <span>ჯამი</span>
+                        <span>₾ {cart?.summary}</span>
                     </PaymentItemStyle>
                 </div>
 
