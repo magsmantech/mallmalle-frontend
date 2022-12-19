@@ -55,7 +55,7 @@ const LanguageSwitcher = ({languages}: Props) => {
                 {selected == "GEO" &&
                 <GeoFlagStyle />
                 }
-                {selected}
+                {/* {selected} */}
                 <AiOutlineDown
                     size={'1.4rem'}
                     style={{marginLeft: '.4rem', cursor: "pointer"}} 
