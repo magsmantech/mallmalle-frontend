@@ -535,7 +535,7 @@ const Auth: NextPage = () => {
           setLoading(false);
 
           AuthService.setAccessToken(res.data, dispatch);
-          router.push("/profile");
+          window.location.replace("/profile");
           refetchCart();
           refetchFavorites();
         })
@@ -914,7 +914,7 @@ const Auth: NextPage = () => {
           const { data } = res;
           console.log(data);
           setLoading(false);
-          router.push("/profile");
+          window.location.replace("/profile");
         })
         .catch((err) => {
           console.log(err);
