@@ -34,10 +34,8 @@ const LanguageSwitcher = ({languages}: Props) => {
         setItems(arr);
     }, [selected]);
 
-    const mouseEnter = () => {
-        if (!showItems) {
-            setShowItems(true);
-        }
+    const showFlags = () => {
+        setShowItems(!showItems);
     };
     const mouseLeave = () => {
         if (showItems) {
@@ -49,7 +47,6 @@ const LanguageSwitcher = ({languages}: Props) => {
         <div 
             // onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
-            onClick={mouseEnter}
             style={{marginLeft: '0.5rem', width: '6.0rem'}}>
             <div style={{position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0, fontSize: '1.1rem', fontFamily: 'noto-sans'}}>
                 {selected == "EN" &&
@@ -58,8 +55,12 @@ const LanguageSwitcher = ({languages}: Props) => {
                 {selected == "GEO" &&
                 <GeoFlagStyle />
                 }
-                {/* {selected} */}
-                <AiOutlineDown size={'1.4rem'} style={{marginLeft: '.4rem', cursor: "pointer"}}/>
+                {selected}
+                <AiOutlineDown
+                    size={'1.4rem'}
+                    style={{marginLeft: '.4rem', cursor: "pointer"}} 
+                    onClick={showFlags}
+            />
                 {showItems && <ul style={{position: 'absolute', top: '100%', marginTop: '-0.7rem'}}>
                     {items.map((item, i)=>
                     <li key={i} style={{cursor: 'pointer'}}
