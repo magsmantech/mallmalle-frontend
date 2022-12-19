@@ -542,7 +542,7 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
                     </ItemOverlay>
                     }
                 </Img>
-                {productById.variations.slice(0, 1).map((v, index) => (
+                {/* {productById.variations.slice(0, 1).map((v, index) => (
                     <PriceWrapperStyle className={styles.child}>
                         <div style={{ display: 'flex', alignItems: 'flex-start' }}>
                             <Price style={{ marginRight: '1.6rem' }}>{v.price} ₾</Price>
@@ -550,7 +550,7 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
                         </div>
                         <Badge>- {productById.discount[0].value}%</Badge>
                     </PriceWrapperStyle>
-                ))}
+                ))} */}
 
                 <PriceTitleStyle className={styles.child}><Title >{productById.product_name}</Title></PriceTitleStyle>
 
