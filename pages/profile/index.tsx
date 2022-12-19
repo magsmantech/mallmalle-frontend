@@ -31,6 +31,7 @@ import { Modal } from "react-bootstrap";
 import { Address } from '../../domain/shop';
 import { Alert, Snackbar } from "@mui/material";
 import dayjs from "dayjs";
+import { WindowSharp } from "@mui/icons-material";
 require('dayjs/locale/ka');
 
 
@@ -201,9 +202,6 @@ const GridItem = styled.div`
   padding: 65px 70px 0px 70px;
     &:first-child {
       padding-left: 0px;
-    }
-    &:last-child {
-      padding-right: 0px;
     }
     ${Responsive.laptop} {
     padding: 45px 40px 45px 40px;
@@ -653,6 +651,7 @@ const PersonalInfo = () => {
       deleteAddress(updateAddresId);
       setModalShow(false);
       refetchProfile();
+      window.location.reload();
       setSnackMessage("მისამართი წარმატებით წაიშალა");
       setOpenSnack(true);
       setsnackMsgStatus('success');
@@ -724,6 +723,7 @@ const PersonalInfo = () => {
           full_name: addFullName
         });
 
+        window.location.reload();
         // alert("form submited");
         setSnackMessage("მისამართი წარმატებით დაემატა");
         setOpenSnack(true);
@@ -773,6 +773,11 @@ const PersonalInfo = () => {
     );
   }
 
+  const warningMessage = async () => {
+        setSnackMessage("სამზე მეტი მისამართის დამატება არ არის შესაძლებელი !");
+        setOpenSnack(true);
+        setsnackMsgStatus('error');
+  };
 
   const addresses=profile?.profile?.addresses;
 
@@ -912,10 +917,14 @@ const PersonalInfo = () => {
             address={profile.profile?.addresses}
             onHide={() => setModalShow(false)}
           />
-
+          {addresses?.length != 3 ? (
           <AddressButton onClick={() => setAddAddressModalShow(true)}>
             მისამართის დამატება
           </AddressButton>
+          ):
+          <AddressButton onClick={ () => warningMessage()}>
+            მისამართის დამატება
+          </AddressButton>}
           <AddAddress
             show={addAddressModalShow}
             onHide={() => setAddAddressModalShow(false)}
@@ -923,6 +932,10 @@ const PersonalInfo = () => {
         </GridItem>
         <Snackbar
           open={openSnack}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right"
+          }}
           autoHideDuration={5000}
           onClose={() => setOpenSnack(false)}>
           <Alert severity={snackMsgStatus}>

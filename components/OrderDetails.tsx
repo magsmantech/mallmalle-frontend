@@ -542,7 +542,7 @@ const OrderDetails: React.FC<{
                     setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
                     console.log("contact form submit");
                     setaddressSubmitBtn(true);
-                    alert("form submited");
+                    // alert("form submited");
                     console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
                     console.log(Address);
                     window.location.reload();
@@ -558,6 +558,7 @@ const OrderDetails: React.FC<{
             const deleteSelectedAddress = async () => {
                 deleteAddress(updateAddresId);
                 setModalShow(false);
+                window.location.reload();
                 refetchProfile();
             }
 
@@ -602,6 +603,12 @@ const OrderDetails: React.FC<{
             );
         }
 
+        const warningMessage = async () => {
+          setSnackMessage("სამზე მეტი მისამართის დამატება არ არის შესაძლებელი !");
+          setOpenSnack(true);
+          setsnackMsgStatus('error');
+        };
+
         function AddAddress(props: AddAddressProps) {
 
 
@@ -644,7 +651,7 @@ const OrderDetails: React.FC<{
               }
               refetchProfile();
             };
-        
+
             return (
               <BootstrapModalWrapper
                 {...props}
@@ -717,15 +724,25 @@ const OrderDetails: React.FC<{
             onHide={() => setModalShow(false)}
           />
 
+          {addresses?.length != 3 ? (
           <AddressButton onClick={() => setAddAddressModalShow(true)}>
             მისამართის დამატება
           </AddressButton>
+          ):
+          <AddressButton onClick={ () => warningMessage()}>
+            მისამართის დამატება
+          </AddressButton>}
+          
           <AddAddress
             show={addAddressModalShow}
             onHide={() => setAddAddressModalShow(false)}
           />
         <Snackbar
           open={openSnack}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right"
+          }}
           autoHideDuration={5000}
           onClose={() => setOpenSnack(false)}>
           <Alert severity={snackMsgStatus}>
@@ -767,11 +784,15 @@ const OrderDetails: React.FC<{
 
                 <ButtonStyle onClick={async () => {
                     if (!selectedAddressId) {
-                        alert('გთხოვთ, დაამატოთ მისამართი');
-                        return;
+                      setSnackMessage("გთხოვთ, მონიშნოთ მიტანის მისამართი !");
+                      setOpenSnack(true);
+                      setsnackMsgStatus('info');
+                      return;
                     }
                     if (!primaryAddress) {
-                      alert('გთხოვთ, მონიშნოთ მიტანის მისამართი');
+                      setSnackMessage("გთხოვთ, მონიშნოთ მიტანის მისამართი !");
+                      setOpenSnack(true);
+                      setsnackMsgStatus('info');
                       return;
                   }
                     // @ts-ignore
