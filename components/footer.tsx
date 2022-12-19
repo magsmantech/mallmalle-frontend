@@ -113,6 +113,10 @@ const Footer = () => {
             </RightsReserved>
             <Snackbar
                 open={openSnack}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right"
+                  }}
                 autoHideDuration={5000}
                 onClose={() => setOpenSnack(false)}>
                 <Alert severity={snackMsgStatus}>

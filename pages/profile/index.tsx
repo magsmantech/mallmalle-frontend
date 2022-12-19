@@ -325,7 +325,8 @@ const LogOutStyle = styled.div`
       }
     }
     ${Responsive.mobile} {
-      margin-top: -55px;
+      margin-top: -25px;
+      margin-left: 0px;
     }
 `;
 const AddressTitle = styled.div`
@@ -679,7 +680,7 @@ const PersonalInfo = () => {
             </TwoInputWrapper>
             <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
-            <InputStyle type="text" placeholder="სრული სახელი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+            <InputStyle type="text" placeholder="მიმღების სახელი და გვარი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
 
             <AddressButton onClick={updateAddressPut}>
               ჩასწორება
@@ -760,7 +761,7 @@ const PersonalInfo = () => {
             </TwoInputWrapper>
             <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
             <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
-            <InputStyle type="text" placeholder="სრული სახელი" value={addFullName} onChange={(e: any) => setAddFullName(e.target.value)} />
+            <InputStyle type="text" placeholder="მიმღების სახელი და გვარი" value={addFullName} onChange={(e: any) => setAddFullName(e.target.value)} />
 
             <AddressButton onClick={addNewAddress}>
               დამატება

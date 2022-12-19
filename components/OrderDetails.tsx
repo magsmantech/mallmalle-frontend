@@ -584,7 +584,7 @@ const OrderDetails: React.FC<{
                             </TwoInputWrapper>
                             <UpdateInputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
                             <UpdateInputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
-                            <UpdateInputStyle type="text" placeholder="სრული სახელი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder="მიმღების სახელი და გვარი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
 
 
                             <AddressButton onClick={updateAddressPut}>
@@ -666,7 +666,7 @@ const OrderDetails: React.FC<{
                     </TwoInputWrapper>
                     <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
                     <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
-                    <InputStyle type="text" placeholder="სრული სახელი" value={addAddressFullName} onChange={(e: any) => setAddAddressFullName(e.target.value)} />
+                    <InputStyle type="text" placeholder="მიმღების სახელი და გვარი" value={addAddressFullName} onChange={(e: any) => setAddAddressFullName(e.target.value)} />
         
                     <AddressButton onClick={addNewAddress}>
                       დამატება
