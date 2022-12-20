@@ -86,7 +86,7 @@ const ItemWrapper = styled.div`
   /* background-color: gray; */
   flex-basis: 55%;
   ${Responsive.laptop}{
-    height: 40px;
+    margin-bottom: -10px;
   }
 `;
 const QuantityWrapper = styled.div`
