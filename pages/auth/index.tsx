@@ -535,7 +535,7 @@ const Auth: NextPage = () => {
           setLoading(false);
 
           AuthService.setAccessToken(res.data, dispatch);
-          window.location.replace("/profile");
+          window.location.replace("/");
           refetchCart();
           refetchFavorites();
         })
