@@ -778,7 +778,11 @@ const OrderDetails: React.FC<{
 
                     <PaymentItemStyle >
                         <span>სრული ღირებულება</span>
+                        {Number(cart?.discount) ?
                         <OldPrice>₾ {cart?.withoutDiscount}</OldPrice>
+                        :
+                        <span>₾ {cart?.withoutDiscount}</span>
+                        }
                     </PaymentItemStyle>
                         <PaymentItemStyle>
                             <span>ფასდაკლება</span>
