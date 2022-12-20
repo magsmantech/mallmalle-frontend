@@ -446,7 +446,10 @@ const Price = styled.span`
   font-weight: 600;
   ${Responsive.laptop}{
     font-size: 17px;
-}
+  }
+  ${Responsive.mobile}{
+    font-size: 12px;
+  }
 `;
 const OldPrice = styled(Price)`
     text-decoration: line-through;
