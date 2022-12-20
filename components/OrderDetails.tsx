@@ -436,6 +436,20 @@ const AddressTitle = styled.div`
       font-size: 18px;
     }
 `;
+const Price = styled.span`
+  color: var(--text-color);
+  font-size: 24px;
+  font-family: fira-go;
+  font-weight: 600;
+  ${Responsive.laptop}{
+    font-size: 17px;
+}
+`;
+const OldPrice = styled(Price)`
+    text-decoration: line-through;
+    opacity: 0.3;
+    margin-top: 5px;
+`;
 
 
 
@@ -764,7 +778,7 @@ const OrderDetails: React.FC<{
 
                     <PaymentItemStyle >
                         <span>სრული ღირებულება</span>
-                        <span>₾ {cart?.withoutDiscount}</span>
+                        <OldPrice>₾ {cart?.withoutDiscount}</OldPrice>
                     </PaymentItemStyle>
                         <PaymentItemStyle>
                             <span>ფასდაკლება</span>
