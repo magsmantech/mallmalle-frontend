@@ -94,24 +94,24 @@ const Feedback = ({ title, text, className }: Props) => {
         <div className={className}>
             {/* <Label> */}
             <label>
-            <Checkbox
+            {/* <Checkbox
                 checked={checked}
                 onChange={() => setChecked(!checked)}
-            />
+            /> */}
             {/* <span>ascasc</span> */}
             </label>
             <div style={{marginLeft: '1.4rem'}}>
                 <Label style={{marginBottom: '.6rem'}}>
-                    პროდუქტი წარმატებით დაემატა კალათაში
+                    რეგისტრაცია ვერ მოხერხდა
                 </Label>
                 <Text >
                     <div>
-                        თქვენს კალათაში დამატებული
+                        შეიყვანეთ სწორი მონაცემები
                     </div>
-                    <div>
+                    {/* <div>
                         პროდუქტების სანახავად 
                         <span style={{textDecoration: 'underline', cursor: 'pointer', fontWeight: 500}}>დააჭირეთ აქ</span>
-                    </div>
+                    </div> */}
                 </Text>
             </div>
                 {/* <span style={{ marginLeft: 8 }}>პროდუქტი წარმატებით დაემატა კალათაში</span>

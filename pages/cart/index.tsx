@@ -313,6 +313,7 @@ const CartScreen: NextPage = () => {
             const discount = product.discount.length >= 1 ? price * product.discount[0]?.value / 100 : null;
             const productDiscount = discount ? price - discount : price;
 
+
             // mainPrice * product.discount[0]?.value / 100
             console.log(productDiscount)
 

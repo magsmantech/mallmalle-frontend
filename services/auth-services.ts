@@ -31,6 +31,7 @@ export const addAddress = (data: AddAddressParams)=> {
         country: data.country,
         state: data.state,
         zip: data.zip,
+        full_name: data.full_name,
     };
     return apiCall('user/address', 'POST', params);
 }

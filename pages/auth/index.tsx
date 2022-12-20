@@ -895,6 +895,7 @@ const Auth: NextPage = () => {
       country: yup.string().required(),
       state: yup.string().required(),
       zip: yup.string().required(),
+      full_name: yup.string().required(),
     });
 
     const initialAddressValues: AddAddressParams = {
@@ -903,6 +904,7 @@ const Auth: NextPage = () => {
       country: "",
       state: "",
       zip: "",
+      full_name: "",
     };
 
 
@@ -918,7 +920,7 @@ const Auth: NextPage = () => {
           const { data } = res;
           console.log(data);
           setLoading(false);
-          window.location.replace("/profile");
+          window.location.replace("/");
         })
         .catch((err) => {
           console.log(err);
@@ -1092,6 +1094,15 @@ const Auth: NextPage = () => {
                   onChange={addressFormik.handleChange}
                   invalid={
                     addressFormik.touched.zip && addressFormik.errors.zip
+                  }
+                />
+                <InputStyle
+                  placeholder="მიმღების სახელი და გვარი"
+                  name="full_name"
+                  value={addressFormik.values.full_name}
+                  onChange={addressFormik.handleChange}
+                  invalid={
+                    addressFormik.touched.full_name && addressFormik.errors.full_name
                   }
                 />
                 <Button type="submit" disabled={loading} >
