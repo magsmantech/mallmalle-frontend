@@ -327,7 +327,7 @@ const TwoInputWrapper = styled.div`
     }
     ${Responsive.mobile} {
       flex-direction: column;
-      flex-basis: 100%;
+      flex-basis: 10%;
     }
 `;
 
@@ -397,8 +397,11 @@ const AddressPrimaryButton = styled.button`
   height: 24px;
   width: 24px;
   border-radius: 50%;
-  border: 6px solid #22D5AE;
-  background-color: transparent;
+  /* border: 6px solid #22D5AE; */
+  /* background-color: transparent; */
+  background-color: #22D5AE!important;
+  border-color: transparent!important;
+
 `;
 const GridItem = styled.div`
   padding: 65px 70px 0px 70px;

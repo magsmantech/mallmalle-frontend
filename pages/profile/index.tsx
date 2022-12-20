@@ -483,8 +483,10 @@ const AddressPrimaryButton = styled.button`
   height: 24px;
   width: 24px;
   border-radius: 50%;
-  border: 6px solid #22D5AE;
-  background-color: transparent;
+  /* border: 6px solid #22D5AE; */
+  /* background-color: transparent; */
+  background-color: #22D5AE!important;
+  border-color: transparent!important;
 `;
 
 
