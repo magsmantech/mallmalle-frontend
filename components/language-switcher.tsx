@@ -56,11 +56,11 @@ const LanguageSwitcher = ({languages}: Props) => {
                 <GeoFlagStyle />
                 }
                 {/* {selected} */}
-                <AiOutlineDown
+                {/* <AiOutlineDown
                     size={'1.4rem'}
                     style={{marginLeft: '.4rem', cursor: "pointer"}} 
                     onClick={showFlags}
-            />
+            /> */}
                 {showItems && <ul style={{position: 'absolute', top: '100%', marginTop: '-0.7rem'}}>
                     {items.map((item, i)=>
                     <li key={i} style={{cursor: 'pointer'}}

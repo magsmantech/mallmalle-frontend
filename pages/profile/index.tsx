@@ -485,7 +485,7 @@ const AddressPrimaryButton = styled.button`
   border-radius: 50%;
   /* border: 6px solid #22D5AE; */
   /* background-color: transparent; */
-  background-color: #22D5AE!important;
+  /* background-color: #22D5AE!important; */
   border-color: transparent!important;
 `;
 
@@ -898,11 +898,7 @@ const PersonalInfo = () => {
 
               <LocationIconStyle color={"var(--text-color)"} />
               {/* {`${a.is_primary}`} */}
-              {addresses?.length==1?(
-              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 1 ? { backgroundColor: "transparent", borderColor: "#22D5AE" } : { backgroundColor: "#EDEDED", borderColor: "#EDEDED" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
-              ):
-              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
-              }
+              <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "rgb(34, 213, 174)" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
               <AddressItemText key={index} className={styles.addressItemText}>
                 <CityStyle className={styles.city}>{a.country}, {a.city}</CityStyle>
                 <AddressStyle className={styles.address}>
