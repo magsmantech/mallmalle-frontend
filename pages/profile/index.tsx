@@ -992,12 +992,12 @@ const Profile: NextPage = () => {
 
   const displayName = profile?.profile?.user.first_name;
 
-  const tabTitles = ["პროფილი", "ყიდვის ისტორია", "რჩეულები",];
+  const tabTitles = [displayName, "ყიდვის ისტორია", "რჩეულები",];
 
   const tabIndicators = ["", " / ყიდვის ისტორია", " / რჩეულები", ""];
 
   const sectionTitles = [
-    displayName,
+    "პროფილი",
     "ყიდვის ისტორია",
     "რჩეულები",
   ];
