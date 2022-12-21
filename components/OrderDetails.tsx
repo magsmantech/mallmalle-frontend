@@ -399,7 +399,7 @@ const AddressPrimaryButton = styled.button`
   border-radius: 50%;
   /* border: 6px solid #22D5AE; */
   /* background-color: transparent; */
-  background-color: #22D5AE!important;
+  background-color: #22D5AE;
   border-color: transparent!important;
 
 `;
@@ -728,7 +728,7 @@ const OrderDetails: React.FC<{
                             <EditIconStyle onClick={() => [setModalShow(true), setupdateAddresId(a.id)]} />
                             <IoLocationSharpStyle />
                            
-                            <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "transparent", borderColor: "#22D5AE" }} onClick={makeAddressPrimary}></AddressPrimaryButton>
+                            <AddressPrimaryButton id={`${a.id}`} style={a.is_primary === 0 ? { backgroundColor: "#EDEDED", borderColor: "#EDEDED" } : { backgroundColor: "rgb(34, 213, 174);"}} onClick={makeAddressPrimary}></AddressPrimaryButton>
                             <AddressItemTextStyle >
                                 <div className={styles.city}>{a.city}</div>
                                 <div className={styles.address}>{a.address_1}</div>
