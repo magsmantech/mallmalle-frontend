@@ -27,6 +27,8 @@ export const PageWrapper = styled.div`
             min-height: 50vh;
             padding: 40px 20px;
             margin-top: 80px;
+            margin-left: 15px;
+            width: 110%;
         }
     }
 `;
