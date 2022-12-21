@@ -14,6 +14,9 @@ import Loader from './Loader';
 import { Alert, Snackbar } from '@mui/material';
 import Fonts from '../styles/Fonts';
 import LanguageSwitcher from './language-switcher';
+import UsFlag from '../public/icons/react-icons/usFlag';
+import GeoFlag from '../public/icons/react-icons/geoFlag';
+
 
 const Footer = () => {
 
@@ -50,15 +53,24 @@ const Footer = () => {
 
     };
 
+    const [languageGeo, setLanguageGeo] = useState(true);
+    
+
     return (
         <>
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
                     <FirstColumn>
                     <FooterMainIcon src={'/assets/mallmalle.png'} className={styles.logo} />
-                    <LanguageSwitcherWrapper>
+                    {/* <LanguageSwitcherWrapper>
                                 <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
-                    </LanguageSwitcherWrapper>
+                    </LanguageSwitcherWrapper> */}
+                    <Language>
+                    {languageGeo ?
+                    <div onClick={()=>setLanguageGeo(false)}><UsFlagStyle /></div>
+                    : <div onClick={()=>setLanguageGeo(true)}><GeoFlagStyle /></div>
+                    }
+                    </Language>
                     </FirstColumn>
                     <FooterIconText className={styles.motto}>ამერიკული პროდუქტის ხელმისაწვდომობა საქართველოში</FooterIconText>
                     <SocialIconsWrapper className={styles.socials}>
@@ -341,6 +353,31 @@ const LanguageSwitcherStyle = styled(LanguageSwitcher)`
 const FirstColumn = styled.div`
         display: flex;
 `;
-
+const UsFlagStyle = styled(UsFlag)`
+    ${Responsive.laptop} {
+        margin-left: -10px;
+    }
+    ${Responsive.mobile} {
+        margin-left: 50px;
+    }
+`;
+const GeoFlagStyle = styled(GeoFlag)`
+    ${Responsive.laptop} {
+        margin-left: -10px;
+    }
+    ${Responsive.mobile} {
+        margin-left: 50px;
+    }
+`;
+const Language = styled.div`
+        display: none;
+       
+    ${Responsive.mobile} {
+        display: block;
+        width: 30px;
+        margin-left: 20px;
+        align-items: center;
+    }
+`;
 
 export default Footer;

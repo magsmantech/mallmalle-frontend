@@ -1,8 +1,24 @@
 import * as React from "react"
+import styled from "styled-components";
+import Responsive from "../../../config/Responsive";
+
+const Svg = styled.svg`
+      width: 36px;
+      height: 48px;
+      margin-left: 0px;
+    ${Responsive.laptop} {
+        margin-left: -10px;
+    }
+    ${Responsive.mobile} {
+        margin-left: 20px;
+        width: 36px;
+        height: 48px;
+    }
+`;
 
 function geoFlag() {
   return (
-    <svg
+    <Svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 300 200"
@@ -27,7 +43,7 @@ function geoFlag() {
       <use xlinkHref="#c" transform="translate(235.55 160.55)" fill="red" />
       <use xlinkHref="#c" transform="translate(235.55 39.45)" fill="red" />
       <use xlinkHref="#c" transform="translate(64.45 160.55)" fill="red" />
-    </svg>
+    </Svg>
   )
 }
 

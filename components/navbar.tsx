@@ -28,6 +28,8 @@ import Responsive from '../config/Responsive';
 import api from '../features/api';
 import Loader from './Loader';
 import { Cart, Favorite } from '../domain/shop';
+import UsFlag from '../public/icons/react-icons/usFlag';
+import GeoFlag from '../public/icons/react-icons/geoFlag';
 
 
 
@@ -43,6 +45,7 @@ const Navbar: React.FC<{
 
         const [checked, setChecked] = useState(false);
         const { loggedIn } = useSelector((state: RootState) => state.auth);
+        const [languageGeo, setLanguageGeo] = useState(true);
 
         return (
             <>
@@ -51,9 +54,15 @@ const Navbar: React.FC<{
                     {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
                     <SearchWrapper className={styles.ItemWrappers}><SearchBarStyle /></SearchWrapper>
-                    <LanguageSwitcherWrapper>
+                    {/* <LanguageSwitcherWrapper>
                         <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
-                    </LanguageSwitcherWrapper>
+                    </LanguageSwitcherWrapper> */}
+                    <Language>
+                    {languageGeo ?
+                    <div onClick={()=>setLanguageGeo(false)}><UsFlagStyle /></div>
+                    : <div onClick={()=>setLanguageGeo(true)}><GeoFlagStyle /></div>
+                    }
+                    </Language>
                     {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
                     {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
                     {/* <Link href='/profile'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
@@ -266,6 +275,31 @@ const SearchBarStyle = styled(SearchBar)`
 const LanguageSwitcherStyle = styled(LanguageSwitcher)`
     ${Responsive.laptop}{
         font-size: 12px;
+    }
+`;
+const UsFlagStyle = styled(UsFlag)`
+    ${Responsive.laptop} {
+        margin-left: -10px;
+    }
+    ${Responsive.mobile} {
+        margin-left: 50px;
+    }
+`;
+const GeoFlagStyle = styled(GeoFlag)`
+    ${Responsive.laptop} {
+        margin-left: -10px;
+    }
+    ${Responsive.mobile} {
+        margin-left: 50px;
+    }
+`;
+const Language = styled.div`
+        display: block;
+        width: 30px;
+        margin-left: 20px;
+        align-items: center;
+    ${Responsive.mobile} {
+        display: none;
     }
 `;
 
