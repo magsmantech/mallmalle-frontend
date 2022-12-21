@@ -565,7 +565,6 @@ const OrderDetails: React.FC<{
                     // alert("form submited");
                     console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
                     console.log(Address);
-                    window.location.reload();
                   } catch (error) {
                     setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
                     setaddressSubmitBtn(false);
@@ -578,8 +577,8 @@ const OrderDetails: React.FC<{
             const deleteSelectedAddress = async () => {
                 deleteAddress(updateAddresId);
                 setModalShow(false);
-                window.location.reload();
                 refetchProfile();
+                // window.location.reload();
             }
 
             return  (
@@ -659,7 +658,7 @@ const OrderDetails: React.FC<{
                 setSnackMessage("მისამართი წარმატებით დაემატა");
                 setOpenSnack(true);
                 setsnackMsgStatus('success');
-                window.location.reload();
+                // window.location.reload();
         
                 console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
               } catch (error) {
@@ -816,7 +815,7 @@ const OrderDetails: React.FC<{
                       return;
                     }
                     if (!primaryAddress) {
-                      setSnackMessage("გთხოვთ, მონიშნოთ მიტანის მისამართი !");
+                      setSnackMessage("გთხოვთ, დაამატოთ მიტანის მისამართი !");
                       setOpenSnack(true);
                       setsnackMsgStatus('info');
                       return;

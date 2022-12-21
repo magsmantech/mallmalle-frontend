@@ -653,10 +653,10 @@ const PersonalInfo = () => {
       deleteAddress(updateAddresId);
       setModalShow(false);
       refetchProfile();
-      window.location.reload();
-      setSnackMessage("მისამართი წარმატებით წაიშალა");
-      setOpenSnack(true);
-      setsnackMsgStatus('success');
+      // setSnackMessage("მისამართი წარმატებით წაიშალა");
+      // setOpenSnack(true);
+      // setsnackMsgStatus('success');
+      // window.location.reload();
     }
 
     return (
@@ -725,7 +725,7 @@ const PersonalInfo = () => {
           full_name: addFullName
         });
 
-        window.location.reload();
+        // window.location.reload();
         // alert("form submited");
         setSnackMessage("მისამართი წარმატებით დაემატა");
         setOpenSnack(true);
