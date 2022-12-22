@@ -37,10 +37,12 @@ const Navbar: React.FC<{
     onSidebarOpen: Function;
     cart: Cart;
     favorite: Favorite[];
+    displayName: any;
 }> = ({
     onSidebarOpen,
     cart,
-    favorite
+    favorite,
+    displayName
 }) => {
 
         const [checked, setChecked] = useState(false);
@@ -79,7 +81,7 @@ const Navbar: React.FC<{
                     }}>
                         <ItemWrapper >
                             <UserIcon />
-                            <ItemLabel>პროფილი</ItemLabel>
+                            <ItemLabel>{displayName}</ItemLabel>
                         </ItemWrapper>
                     </Link>}
 

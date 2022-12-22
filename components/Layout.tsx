@@ -39,6 +39,10 @@ export default function Layout({ children }: any) {
   const showFeedback = useSelector((state: RootState) => state.feedback.show);
   const feedbackType = useSelector((state: RootState) => state.feedback.type!);
 
+  const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
+
+  const displayName = profile?.profile?.user.first_name;
+
   useEffect(() => {
     document.documentElement.style.fontSize = `${ratio}px`;
 
@@ -133,7 +137,7 @@ export default function Layout({ children }: any) {
           cart={cart}
           favorite={favorites}
           onSidebarOpen={_openSidebar}
-          
+          displayName={displayName}
         />)}
 
       <h1>{cart?.items?.length}</h1>
