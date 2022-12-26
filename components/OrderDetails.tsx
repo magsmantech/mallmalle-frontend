@@ -480,7 +480,10 @@ const OrderDetails: React.FC<{
 }) => {
         const { data: addresses, isLoading: isAddressesLoading, refetch: refetchAddresses } = api.useGetAddressesQuery(undefined);
         const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
+        const { data: deliveryPrice, isLoading: isDeliveryPriceLoading, refetch: refetchDeliveryPrice } = api.useGetDeliveryPriceQuery(undefined);
         
+        const shippingCost = deliveryPrice?.data.shipping_price;
+
         // const cartPrices = calculateCartPrices(cart);
         // const {
         //     itemsSubtotalOriginalPrice,
@@ -795,8 +798,7 @@ const OrderDetails: React.FC<{
                         </PaymentItemStyle>
                     <PaymentItemStyle>
                         <span>ტრანსპორტირება</span>
-                        {/* <span>₾ {shippingCost}</span> */}
-                        <span>₾ 0</span>
+                        <span>₾ {shippingCost}</span>
                     </PaymentItemStyle>
 
                     <DividerStyle></DividerStyle>

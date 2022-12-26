@@ -529,4 +529,8 @@ export type SizeV = {
   id: number;
   size_name: string;
 }
-
+export type DeliveryPrice = {
+  data: {
+    shipping_price: string;
+  }
+};
