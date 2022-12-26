@@ -901,7 +901,7 @@ const Auth: NextPage = () => {
     const initialAddressValues: AddAddressParams = {
       address: "",
       city: "",
-      country: "",
+      country: "საქართველო",
       state: "",
       zip: "",
       full_name: "",
@@ -1071,7 +1071,7 @@ const Auth: NextPage = () => {
                     placeholder="ქვეყანა"
                     name="country"
                     value={addressFormik.values.country}
-                    onChange={addressFormik.handleChange}
+                    // onChange={addressFormik.handleChange}
                     invalid={
                       addressFormik.touched.country &&
                       addressFormik.errors.country

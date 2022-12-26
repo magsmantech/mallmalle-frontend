@@ -540,7 +540,7 @@ const OrderDetails: React.FC<{
 
             const [updateStreet, setupdateStreet] = useState<string>(findAddress?.address_1 || "");
             const [updateCity, setupdateCity] = useState<string>(findAddress?.city || "");
-            const [updateCountry, setupdateCountry] = useState<string>(findAddress?.country || "");
+            const [updateCountry, setupdateCountry] = useState<string>("საქართველო");
             const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
             const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
             const [updateFullName, setupdateFullName] = useState<string>(findAddress?.full_name || "");
@@ -603,7 +603,7 @@ const OrderDetails: React.FC<{
                             <UpdateInputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
                             <TwoInputWrapper>
                                 <UpdateInputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
-                                <UpdateInputStyle type="text" placeholder="ქვეყანა" value={updateCountry} onChange={(e: any) => setupdateCountry(e.target.value)} />
+                                <UpdateInputStyle type="text" placeholder="ქვეყანა" value={updateCountry} />
                             </TwoInputWrapper>
                             <UpdateInputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
                             <UpdateInputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
@@ -636,7 +636,7 @@ const OrderDetails: React.FC<{
 
             const [addAddressStreet, setAddAddressStreet] = useState<string>('');
             const [addAddressCity, setAddAddressCity] = useState<string>('');
-            const [addAddressCountry, setAddAddressCountry] = useState<string>('');
+            const [addAddressCountry, setAddAddressCountry] = useState<string>('საქართველო');
             const [addAddressState, setAddAddressState] = useState<string>('');
             const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
             const [addAddressFullName, setAddAddressFullName] = useState<string>('');
@@ -691,7 +691,7 @@ const OrderDetails: React.FC<{
                     <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
                     <TwoInputWrapper>
                       <InputStyle type="text" placeholder="ქალაქი" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
-                      <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry} onChange={(e: any) => setAddAddressCountry(e.target.value)} />
+                      <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry}/>
                     </TwoInputWrapper>
                     <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
                     <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
