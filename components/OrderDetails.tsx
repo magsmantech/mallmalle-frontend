@@ -746,7 +746,7 @@ const OrderDetails: React.FC<{
             onHide={() => setModalShow(false)}
           />
 
-          {addresses?.length != 3 ? (
+          {addresses?.length !=3 ? (
           <AddressButton onClick={() => setAddAddressModalShow(true)}>
             მისამართის დამატება
           </AddressButton>

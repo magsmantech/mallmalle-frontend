@@ -923,6 +923,7 @@ const PersonalInfo = () => {
           <AddressButton onClick={ () => warningMessage()}>
             მისამართის დამატება
           </AddressButton>}
+          
           <AddAddress
             show={addAddressModalShow}
             onHide={() => setAddAddressModalShow(false)}
