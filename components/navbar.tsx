@@ -54,7 +54,12 @@ const Navbar: React.FC<{
                 <Nav className={styles.wrapper}>
                     <MenuIcon onClick={() => onSidebarOpen()} />
                     {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
+                    {/* <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link> */}
+                    {languageGeo ?
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
+                    : 
+                    <Link href='/'><HeaderLogoTag src='/assets/mallmalleGeo.svg' className={styles.logo} /></Link>
+                    }
                     <SearchWrapper className={styles.ItemWrappers}><SearchBarStyle /></SearchWrapper>
                     {/* <LanguageSwitcherWrapper>
                         <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
