@@ -267,16 +267,16 @@ const HeaderLogoTag = styled.img`
         }
 `;
 const HeaderLogoTagGeo = styled(HeaderLogoTag)`
-    width: 240px;
-    margin-right: 45px;
+    width: 220px;
+    margin-right: 65px;
     margin-top: 10px;
         ${Responsive.tabletMobile}{
             width: 150px;
             margin-right: auto;
         }
         ${Responsive.laptop}{
-            width: 165px;
-            margin-right: 15px;
+            width: 145px;
+            margin-right: 35px;
             margin-left: -30px;
             margin-top: 10px;
         }
