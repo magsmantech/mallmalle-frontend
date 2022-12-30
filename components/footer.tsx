@@ -384,24 +384,12 @@ const Language = styled.div`
     }
 `;
 const HeaderLogoTag = styled.img`
-    width: 250px;
-    margin-right: 35px;
-        ${Responsive.tabletMobile}{
-            width: 150px;
-            margin-right: auto;
-        }
         ${Responsive.mobile}{
             width: 220px;
             margin-right: -5px;
             height: 170px;
             margin-top: -60px;
             margin-bottom: -50px;
-        }
-        ${Responsive.laptop}{
-            width: 170px;
-            margin-right: 10px;
-            margin-left: -30px;
-            margin-top: 5px;
         }
 `;
 
