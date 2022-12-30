@@ -61,7 +61,11 @@ const Footer = () => {
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
                     <FirstColumn>
+                    {languageGeo ?
                     <FooterMainIcon src={'/assets/mallmalle.png'} className={styles.logo} />
+                    : 
+                    <HeaderLogoTag src={'/assets/mallmalleGeoBlack.png'} className={styles.logo} />
+                    }
                     {/* <LanguageSwitcherWrapper>
                                 <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
                     </LanguageSwitcherWrapper> */}
@@ -378,6 +382,27 @@ const Language = styled.div`
         margin-left: 20px;
         align-items: center;
     }
+`;
+const HeaderLogoTag = styled.img`
+    width: 250px;
+    margin-right: 35px;
+        ${Responsive.tabletMobile}{
+            width: 150px;
+            margin-right: auto;
+        }
+        ${Responsive.mobile}{
+            width: 220px;
+            margin-right: -5px;
+            height: 170px;
+            margin-top: -60px;
+            margin-bottom: -50px;
+        }
+        ${Responsive.laptop}{
+            width: 170px;
+            margin-right: 10px;
+            margin-left: -30px;
+            margin-top: 5px;
+        }
 `;
 
 export default Footer;

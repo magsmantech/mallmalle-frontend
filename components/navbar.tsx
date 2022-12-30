@@ -57,7 +57,7 @@ const Navbar: React.FC<{
                     {languageGeo ?
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
                     : 
-                    <Link href='/'><HeaderLogoTag src='/assets/mallmalleGeo.png' className={styles.logo} /></Link>
+                    <Link href='/'><HeaderLogoTagGeo src='/assets/mallmalleGeo.png' className={styles.logo} /></Link>
                     }
                     <SearchWrapper className={styles.ItemWrappers}><SearchBarStyle /></SearchWrapper>
                     {/* <LanguageSwitcherWrapper>
@@ -264,6 +264,21 @@ const HeaderLogoTag = styled.img`
             margin-right: 10px;
             margin-left: -30px;
             margin-top: 5px;
+        }
+`;
+const HeaderLogoTagGeo = styled(HeaderLogoTag)`
+    width: 240px;
+    margin-right: 45px;
+    margin-top: 10px;
+        ${Responsive.tabletMobile}{
+            width: 150px;
+            margin-right: auto;
+        }
+        ${Responsive.laptop}{
+            width: 165px;
+            margin-right: 15px;
+            margin-left: -30px;
+            margin-top: 10px;
         }
 `;
 const LanguageSwitcherWrapper = styled.div`
