@@ -661,7 +661,7 @@ const OrderDetails: React.FC<{
                 setSnackMessage("მისამართი წარმატებით დაემატა");
                 setOpenSnack(true);
                 setsnackMsgStatus('success');
-                // window.location.reload();
+                window.location.reload();
         
                 console.log(addAddressStreet + " " + addAddressCountry + " " + addAddressState + " " + addAddressCity + " " + addAddressZipCode);
               } catch (error) {
