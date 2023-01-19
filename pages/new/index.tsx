@@ -117,7 +117,7 @@ const ItemBackground = styled.div`
 
 const Img = styled.div`
     width: 100%;
-    height: 540px;
+    height: 470px;
     background-image: ${(props: { backgroundImage: string }) => `url(${props.backgroundImage})`};
     background-size: 105%;
     background-repeat: no-repeat;
@@ -133,7 +133,7 @@ const Img = styled.div`
     background-position: center center;
     background-size: cover;
     ${Responsive.laptop} {
-        height: 350px;
+        height: 300px;
         width: 230px;
     }
     ${Responsive.tablet} {
@@ -542,6 +542,14 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
                     </ItemOverlay>
                     }
                 </Img>
+                {productById.variations.slice(0, 1).map((v, index) => (
+                    <PriceWrapperStyle className={styles.child}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                            <Price style={{ marginRight: '1.6rem' }}>{v.price} ₾</Price>
+                            <OldPrice>{''}</OldPrice>
+                        </div>
+                    </PriceWrapperStyle>
+                ))}
                 {/* {productById.variations.slice(0, 1).map((v, index) => (
                     <PriceWrapperStyle className={styles.child}>
                         <div style={{ display: 'flex', alignItems: 'flex-start' }}>

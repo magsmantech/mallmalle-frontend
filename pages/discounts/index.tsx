@@ -117,7 +117,8 @@ const ItemBackground = styled.div`
 
 const Img = styled.div`
     width: 100%;
-    height: 540px;
+    /* height: 540px; */
+    height: 470px;
     background-image: ${(props: { backgroundImage: string }) => `url(${props.backgroundImage})`};
     background-size: 105%;
     background-repeat: no-repeat;
@@ -133,7 +134,8 @@ const Img = styled.div`
     background-position: center center;
     background-size: cover;
     ${Responsive.laptop} {
-        height: 350px;
+        /* height: 350px; */
+        height: 300px;
         width: 230px;
     }
     ${Responsive.tablet} {
