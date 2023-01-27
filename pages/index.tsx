@@ -20,6 +20,9 @@ import Loader from '../components/Loader';
 import DiscountItem from "../components/DiscountItem";
 import Fonts from "../styles/Fonts";
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const Home: NextPage = () => {
   const _scrollToTop = () => {
@@ -58,6 +61,8 @@ const Home: NextPage = () => {
     "/assets/cover.png",
   ];
 
+  const {t, i18n} = useTranslation();
+
 
   return isDashboardDataLoading ? <Loader /> : !DashboardData ? (<span>not found dashboard data</span>) : (
     <>
@@ -85,7 +90,7 @@ const Home: NextPage = () => {
       </DividerWrapperStyle>
 
       <SectionTitle onClick={() => {router.push(`/discounts`);}} className={styles.sectionTitle}>
-        შემოთავაზება</SectionTitle>
+      {t('offers')}</SectionTitle>
 
       {/* offers */}
       <DiscountItemContainerStyle>
@@ -111,7 +116,7 @@ const Home: NextPage = () => {
         ))}
       </MiddleContainer>
 
-      <SectionTitle onClick={() => {router.push(`/new`);}} className={styles.sectionTitle}>ახალი დამატებული</SectionTitle>
+      <SectionTitle onClick={() => {router.push(`/new`);}} className={styles.sectionTitle}>{t('newArrivals')}</SectionTitle>
 
       {/* new products */}
       <ItemsContainerStyle>
