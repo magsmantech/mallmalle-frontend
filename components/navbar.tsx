@@ -31,7 +31,7 @@ import { Cart, Favorite } from '../domain/shop';
 import UsFlag from '../public/icons/react-icons/usFlag';
 import GeoFlag from '../public/icons/react-icons/geoFlag';
 import i18next from 'i18next';
-
+import { useTranslation } from 'react-i18next';
 
 
 const Navbar: React.FC<{
@@ -53,6 +53,9 @@ const Navbar: React.FC<{
             {i18next.language == 'en' ? i18next.changeLanguage('ge') : i18next.changeLanguage('en')}
               window.location.reload();
           };
+
+        const {t, i18n} = useTranslation();
+
 
         return (
             <>
@@ -85,7 +88,7 @@ const Navbar: React.FC<{
                     {!loggedIn && <Link href='/auth'>
                         <ItemWrapper style={{ cursor: 'pointer', marginLeft: '2.0rem' }}>
                             <UserIcon />
-                            <ItemLabel>ავტორიზაცია</ItemLabel>
+                            <ItemLabel>{t('authorization')}</ItemLabel>
                         </ItemWrapper>
                     </Link>}
                     {loggedIn && <Link href={{
@@ -106,7 +109,7 @@ const Navbar: React.FC<{
                         <ItemWrapper >
                             {/* <BsBookmark size={"3.2rem"} color={"white"} /> */}
                             <BookmarkIcon />
-                            <ItemLabel>რჩეულები</ItemLabel>
+                            <ItemLabel>{t('favourites')}</ItemLabel>
                             {loggedIn === false ? null : (
                                 favorite.length <= 0 ? null : favorite.length == undefined ? null : (
                                     <FavoriteCount>{favorite.length}</FavoriteCount>
@@ -120,7 +123,7 @@ const Navbar: React.FC<{
                             <ItemWrapper >
                                 {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
                                 <CartIconStyle />
-                                <ItemLabel>კალათა</ItemLabel>
+                                <ItemLabel>{t('cart')}</ItemLabel>
                                 {loggedIn === true ? (
                                     cart.items?.length <= 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
                                 ) : null}
