@@ -17,6 +17,9 @@ import Loader from '../../components/Loader';
 import { Alert, Snackbar } from "@mui/material";
 import Link from "next/link";
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const FlexRow = styled.div`
   display: flex;
@@ -276,6 +279,9 @@ const CartScreen: NextPage = () => {
   const { data: addresses, isLoading: isAddressesLoading, refetch: refetchAddresses } = api.useGetAddressesQuery(undefined);
 
   const [selectedAddressId, setSelectedAddressId] = useState<number | undefined>(undefined);
+
+  const {t, i18n} = useTranslation();
+
   // TODO allow changing selected address on the right side, OrderDetails
   useEffect(() => {
     if (addresses && addresses?.length > 0) {
@@ -288,21 +294,21 @@ const CartScreen: NextPage = () => {
   return (
     <>
       <MainTitle>
-        კალათა
+      {t('cart')}
       </MainTitle>
       <BreadcrumbsStyle >
-        <BreadcrumbLink href={`/`}>მთავარი</BreadcrumbLink> / <BreadcrumbLink href={`/profile`}>ჩემი პროფილი </BreadcrumbLink> / <BreadcrumbLink href={`/cart`}>ჩემი კალათა</BreadcrumbLink>
+        <BreadcrumbLink href={`/`}>{t('main')}</BreadcrumbLink> / <BreadcrumbLink href={`/profile`}>{t('myProfile')} </BreadcrumbLink> / <BreadcrumbLink href={`/cart`}>{t('myCart')}</BreadcrumbLink>
       </BreadcrumbsStyle>
       <Container>
         <Grid>
           <FlexRow>
             <HeaderItem>
-              პროდუქტი
+            {t('product')}
             </HeaderItem>
             <HeaderItem>
-              რაოდენობა
+            {t('quantity')}
             </HeaderItem>
-            <HeaderItem>ფასი</HeaderItem>
+            <HeaderItem>{t('price')}</HeaderItem>
           </FlexRow>
           <Divider />
           {cart?.items?.map((item, i) => {
@@ -354,7 +360,11 @@ const CartScreen: NextPage = () => {
                       // variationId: item.variation_id,
                     });
                     await refetchCart();
-                    setSnackMessage("პროდუქტი წარმატებით წაიშალა კალათიდან");
+                    {i18next.language == 'ge' ?
+                    setSnackMessage("Product successfully removed from the basket")
+                    :
+                    setSnackMessage("პროდუქტი წარმატებით წაიშალა კალათიდან")
+                    }
                     setOpenSnack(true);
                     setsnackMsgStatus('success');
                     // console.log('removeFromCart result:', result);
