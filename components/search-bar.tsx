@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Responsive from "../config/Responsive";
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const SearchBar = () => {
     const router = useRouter();
@@ -16,11 +19,17 @@ const SearchBar = () => {
         }
     };
 
+    const {t, i18n} = useTranslation();
+
 
     return (
         <div className={styles['search-wrapper']}>
             <div style={{ cursor: "pointer" }} onClick={() => router.push(`/search?result=${query}`)} ><SearchIconStyle /></div>
-            <input type="text" placeholder="ძებნა" className={styles.searchInput} onChange={(e) => setQuery(e.target.value)} style={{ textTransform: "lowercase" }} onKeyPress={EnterTrigger} />
+            {i18next.language == "en" ?
+            <input type="text" placeholder='Search' className={styles.searchInput} onChange={(e) => setQuery(e.target.value)} style={{ textTransform: "lowercase" }} onKeyPress={EnterTrigger} />
+            :
+            <input type="text" placeholder='ძებნა' className={styles.searchInput} onChange={(e) => setQuery(e.target.value)} style={{ textTransform: "lowercase" }} onKeyPress={EnterTrigger} />
+            }
         </div>
     )
 }
