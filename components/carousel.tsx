@@ -19,6 +19,9 @@ import api, { uploadUrl } from '../features/api';
 import { useState } from 'react';
 import router from 'next/router';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 type Props = {
   images: string[],
@@ -43,6 +46,8 @@ const Carousel = ({ images = [] }: Props) => {
     // renderPrevButton: () => <Button className="swiper-button-prev">Prev</Button>,
     // renderNextButton: () => <Button className="swiper-button-next">Next</Button>,
   }
+
+  const {t, i18n} = useTranslation();
 
   const { data: DashboardData, isLoading: isDashboardDataLoading, refetch: refetchDashboardData } = api.useGetDashboardDataQuery(undefined);
 
@@ -76,7 +81,7 @@ const Carousel = ({ images = [] }: Props) => {
         <SwiperSlide className={styles.slide} key={index}>
             <Background className="background" backgroundImage={uploadUrl(o.background_image)}>
               <SlideText >
-                <SliderTitle>ფასდაკლება</SliderTitle>
+                <SliderTitle>{t('sale')}</SliderTitle>
                 <Clock itemDate={o.expire_date} />
 
               </SlideText>

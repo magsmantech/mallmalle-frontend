@@ -3,6 +3,8 @@ import Responsive from "../config/Responsive";
 import { CartItem } from "../domain/shop";
 import { uploadUrl } from "../features/api";
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 
 const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
@@ -19,6 +21,9 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
   // console.log(variation_id)
 
   const productItem = product?.variations.filter(x => x.id === variation_id)
+  
+  const {t, i18n} = useTranslation();
+
 
   // console.log(productItem)
 
@@ -27,8 +32,8 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
       <ItemImg src={uploadUrl(imgUrl[0])} />
       <ItemTextWrapper>
         <ItemName>{product.product_name} {productItem[0].id}</ItemName>
-        <div><ItemLabel>ზომა:</ItemLabel> <ItemValue>{productItem[0].size_variation.size_name}</ItemValue></div>
-        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name}</ItemValue></div>
+        <div><ItemLabel>{t('size')}:</ItemLabel> <ItemValue>{productItem[0].size_variation.size_name}</ItemValue></div>
+        <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name}</ItemValue></div>
       </ItemTextWrapper>
     </ItemWrapper>
   )

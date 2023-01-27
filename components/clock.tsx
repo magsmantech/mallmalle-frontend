@@ -6,6 +6,9 @@ import styled from "styled-components";
 import Responsive from "../config/Responsive";
 import styles from "../styles/Home.module.css";
 import Fonts from './../styles/Fonts';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const Clock: NextPage<{
   itemDate: Date;
@@ -46,6 +49,9 @@ const Clock: NextPage<{
 
     return () => clearInterval(interval);
   }, []);
+  
+const {t, i18n} = useTranslation();
+
 
   return (
     <Wrapper>
@@ -55,7 +61,7 @@ const Clock: NextPage<{
         <ClockText> 00 </ClockText>
         <ClockText> : 00 </ClockText>
         <ClockText> : 00 </ClockText>
-        <ClockSpan >საათი</ClockSpan>
+        <ClockSpan >{t('hours')}</ClockSpan>
         </>):
         <>
         { hours < 10 ? (
@@ -64,7 +70,7 @@ const Clock: NextPage<{
         <ClockText> : 0{minutes} </ClockText>): <ClockText> : {minutes} </ClockText>}
         { seconds < 10 ? (
         <ClockText> : 0{seconds} </ClockText>): <ClockText> : {seconds} </ClockText>}
-        <ClockSpan >საათი</ClockSpan>
+        <ClockSpan >{t('hours')}</ClockSpan>
         </>}
       </div>
     </Wrapper>
