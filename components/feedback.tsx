@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 type Props = {
   title?: string,
@@ -89,6 +92,8 @@ const Text = styled.div`
 
 const Feedback = ({ title, text, className }: Props) => {
     const [checked, setChecked] = useState(true);
+    const {t, i18n} = useTranslation();
+
     return (
         <>
         <div className={className}>
@@ -102,11 +107,11 @@ const Feedback = ({ title, text, className }: Props) => {
             </label>
             <div style={{marginLeft: '1.4rem'}}>
                 <Label style={{marginBottom: '.6rem'}}>
-                    რეგისტრაცია ვერ მოხერხდა
+                {t('registrationUnavailable')}
                 </Label>
                 <Text >
                     <div>
-                        შეიყვანეთ სწორი მონაცემები
+                    {t('enterCorrectInfo')}
                     </div>
                     {/* <div>
                         პროდუქტების სანახავად 
