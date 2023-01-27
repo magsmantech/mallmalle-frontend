@@ -32,8 +32,8 @@ import { Alert, Snackbar } from "@mui/material";
 import Fonts from "../../styles/Fonts";
 import dayjs from "dayjs";
 require('dayjs/locale/ka');
-
-
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 
 
@@ -480,6 +480,8 @@ const Auth: NextPage = () => {
     var hostname = window.location.search;
   }
 
+  const {t, i18n} = useTranslation();
+
   useEffect(() => {
     if (router?.query && router?.query["change-password"]) {
       // setStep('change-password');
@@ -548,7 +550,11 @@ const Auth: NextPage = () => {
           //   })
           // );
           // alert(err)
-          setSnackMessage("გადააამოწმეთ თქვენი მონაცემები");
+          {i18next.language == "ge"?
+          setSnackMessage("გადააამოწმეთ თქვენი მონაცემები")
+          :
+          setSnackMessage("Check your information")
+          }
           setOpenSnack(true);
           setsnackMsgStatus('error');
           console.log(err);
@@ -563,14 +569,14 @@ const Auth: NextPage = () => {
 
     return (
       <>
-        <Title>ავტორიზაცია</Title>
+        <Title>{t('authorization')}</Title>
         <Text>
-          შეიყვანეთ თქვენი მონაცემები
+        {t('enterCredentials')}
         </Text>
         <form onSubmit={formik.handleSubmit}>
           <FormLayout>
             <InputStyle
-              placeholder="ელ-ფოსტა"
+              placeholder={t('email')}
               id="email"
               name="email"
               value={formik.values.email}
@@ -578,7 +584,7 @@ const Auth: NextPage = () => {
               invalid={formik.touched.email && formik.errors.email}
             />
             <PasswordInputWrapperTest
-              placeholder="პაროლი"
+              placeholder={t('password')}
               id="password"
               name="password"
               value={formik.values.password}
@@ -587,10 +593,10 @@ const Auth: NextPage = () => {
             />
             <div style={{ display: 'flex', flexDirection: "column-reverse" }}>
               <Button disabled={loading} type="submit">
-                შესვლა
+              {t('authorize')}
               </Button>
               <TextButton onClick={() => setRecover(!recover)}>
-                დაგავიწყდა მონაცემები?
+              {t('forgotPassword')}
               </TextButton>
             </div>
           </FormLayout>
@@ -709,7 +715,11 @@ const Auth: NextPage = () => {
         }).unwrap()
         if (result.success) {
           setpasswordSuccessfullyChanged(true);
-          setSnackMessage("პაროლი წარმატებით განახლდა");
+          {i18next.language == "ge"?
+          setSnackMessage("პაროლი წარმატებით განახლდა")
+          :
+          setSnackMessage("Password successfully updated")
+          }
           setOpenSnack(true);
           setsnackMsgStatus('success');
           setLoading(false);
@@ -717,7 +727,11 @@ const Auth: NextPage = () => {
       } catch (error) {
         setLoading(false);
         setpasswordSuccessfullyChanged(false);
-        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!");
+        {i18next.language == "ge"?
+        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!")
+        :
+        setSnackMessage("Error, please try again later")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('error');
         console.log(error)
@@ -735,14 +749,14 @@ const Auth: NextPage = () => {
       <>
         {authStep === "email" ? (
           <>
-            <Title>პაროლის აღდგენა</Title>
+            <Title>{t('resetPassword')}</Title>
             <Text>
-              პაროლის აღსადგენად შეიყვანეთ თქვენი ელ-ფოსტა
+            {t('enterEmail')}
             </Text>
             <form onSubmit={recoverFormik.handleSubmit}>
               <FormLayout>
                 <InputStyle
-                  placeholder="ელ-ფოსტა"
+                  placeholder={t('email')}
                   id="email"
                   name="email"
                   value={recoverFormik.values.email}
@@ -753,7 +767,7 @@ const Auth: NextPage = () => {
                 />
                 <br />
                 <Button type="submit" disabled={loading}>
-                  გაგზავნა
+                {t('send')}
                 </Button>
               </FormLayout>
             </form>
@@ -766,11 +780,11 @@ const Auth: NextPage = () => {
           <>
             {passwordSuccessfullyChanged === true ? (
               <>
-                <Title>პაროლი წარმატებით შეიცვალაა</Title>
+                <Title>{t('passwordSuccessfullyUpdated')}</Title>
                 <br />
                 <Link href="/auth">
                   <BackToMainPageStyle onClick={() => setRecover(false)}>
-                    სისტემაში შესვლა
+                  {t('authorize')}
                   </BackToMainPageStyle>
                 </Link>
              
@@ -778,9 +792,9 @@ const Auth: NextPage = () => {
             ) :
               <form onSubmit={newPasswordFormik.handleSubmit}>
                 <FormLayout>
-                  <Title>შეიყვანეთ ახალი პაროლი</Title>
+                  <Title>{t('enterNewPassword')}</Title>
                   <PasswordInputWrapperTest
-                    placeholder="ახალი პაროლი"
+                    placeholder={t('newPassword')}
                     id="password"
                     name="password"
                     value={newPasswordFormik.values.password}
@@ -791,7 +805,7 @@ const Auth: NextPage = () => {
                     }
                   />
                   <PasswordInputWrapperTest
-                    placeholder="გაიმეორე პაროლი"
+                    placeholder={t('repeatPassword')}
                     id="confirm"
                     name="confirm"
                     value={newPasswordFormik.values.confirm}
@@ -898,10 +912,12 @@ const Auth: NextPage = () => {
       full_name: yup.string().required(),
     });
 
+    const {t, i18n} = useTranslation();
+
     const initialAddressValues: AddAddressParams = {
       address: "",
       city: "",
-      country: "საქართველო",
+      country: "საქართველო/Georgia",
       state: "",
       zip: "",
       full_name: "",
@@ -947,14 +963,14 @@ const Auth: NextPage = () => {
         {step === "personal-info" && (
           <>
 
-            <Title>რეგისტრაცია</Title>
+            <Title>{t('registration')}</Title>
             <Text>
-              შეიყვანეთ თქვენი მონაცემები
+            {t('offeredCategories')}
             </Text>
             <form onSubmit={formik.handleSubmit}>
               <FormLayout>
                 <InputStyle
-                  placeholder="სახელი"
+                  placeholder={t('name')}
                   id="firstName"
                   name="firstName"
                   value={formik.values.firstName}
@@ -962,7 +978,7 @@ const Auth: NextPage = () => {
                   invalid={formik.touched.firstName && formik.errors.firstName}
                 />
                 <InputStyle
-                  placeholder="გვარი"
+                  placeholder={t('surname')}
                   id="lastName"
                   name="lastName"
                   value={formik.values.lastName}
@@ -970,7 +986,7 @@ const Auth: NextPage = () => {
                   invalid={formik.touched.lastName && formik.errors.lastName}
                 />
                 <InputStyle
-                  placeholder="ელ-ფოსტა"
+                  placeholder={t('email')}
                   id="email"
                   name="email"
                   value={formik.values.email}
@@ -978,7 +994,7 @@ const Auth: NextPage = () => {
                   invalid={formik.touched.email && formik.errors.email}
                 />
                 <InputStyle
-                  placeholder="მობ.ნომერი(+995)"
+                  placeholder={t('mobile')}
                   id="phone"
                   name="phone"
                   value={formik.values.phone}
@@ -1006,7 +1022,7 @@ const Auth: NextPage = () => {
                 <IconWrapper><EyeIcon width={'2.62rem'} /></IconWrapper>
               </PasswordInputWrapper> */}
                 <PasswordInputWrapperTest
-                  placeholder="პაროლი"
+                  placeholder={t('offeredCategories')}
                   id="password"
                   name="password"
                   value={formik.values.password}
@@ -1014,7 +1030,7 @@ const Auth: NextPage = () => {
                   invalid={formik.touched.password && formik.errors.password}
                 />
                 <PasswordInputWrapperTest
-                  placeholder="გაიმეორე პაროლი"
+                  placeholder={t('repeatPassword')}
                   id="confirm"
                   name="confirm"
                   value={formik.values.confirm}
@@ -1028,10 +1044,10 @@ const Auth: NextPage = () => {
                     checked={formik.values.agreed}
                     onChange={formik.handleChange}
                   />
-                  <LabelTextStyle>ვეთანხმები წესებს და პირობებს</LabelTextStyle>
+                  <LabelTextStyle>{t('agree')}</LabelTextStyle>
                 </Label>
                 <Button disabled={loading} type="submit">
-                  რეგისტრაცია
+                {t('registration')}
                 </Button>
               </FormLayout>
             </form>
@@ -1040,15 +1056,15 @@ const Auth: NextPage = () => {
         {step === "add-address" && (
           <>
             <Title>
-              დაამატეთ თქვენი მისამართი
+            {t('addAddress')}
             </Title>
             <Text>
-              შეიყვანეთ თქვენი მონაცემები
+            {t('enterCredentials')}
             </Text>
             <form onSubmit={addressFormik.handleSubmit}>
               <FormLayout>
                 <InputStyle
-                  placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა"
+                  placeholder={t('street')}
                   name="address"
                   value={addressFormik.values.address}
                   onChange={addressFormik.handleChange}
@@ -1059,7 +1075,7 @@ const Auth: NextPage = () => {
                 />
                 <DoubleInputWrapper>
                   <InputStyle
-                    placeholder="ქალაქი"
+                    placeholder={t('city')}
                     name="city"
                     value={addressFormik.values.city}
                     onChange={addressFormik.handleChange}
@@ -1068,7 +1084,7 @@ const Auth: NextPage = () => {
                     }
                   />
                   <InputStyle
-                    placeholder="ქვეყანა"
+                    placeholder={t('country')}
                     name="country"
                     value={addressFormik.values.country}
                     // onChange={addressFormik.handleChange}
@@ -1079,7 +1095,7 @@ const Auth: NextPage = () => {
                   />
                 </DoubleInputWrapper>
                 <InputStyle
-                  placeholder="რეგიონი / რაიონი"
+                  placeholder={t('region')}
                   name="state"
                   value={addressFormik.values.state}
                   onChange={addressFormik.handleChange}
@@ -1088,7 +1104,7 @@ const Auth: NextPage = () => {
                   }
                 />
                 <InputStyle
-                  placeholder="Zip კოდი"
+                  placeholder={t('zipCode')}
                   name="zip"
                   value={addressFormik.values.zip}
                   onChange={addressFormik.handleChange}
@@ -1097,7 +1113,7 @@ const Auth: NextPage = () => {
                   }
                 />
                 <InputStyle
-                  placeholder="მიმღების სახელი და გვარი"
+                  placeholder={t('receiver')}
                   name="full_name"
                   value={addressFormik.values.full_name}
                   onChange={addressFormik.handleChange}
@@ -1106,7 +1122,7 @@ const Auth: NextPage = () => {
                   }
                 />
                 <Button type="submit" disabled={loading} >
-                  მისამართის დამატება
+                {t('addAddress')}
                 </Button>
               </FormLayout>
             </form>
@@ -1121,11 +1137,10 @@ const Auth: NextPage = () => {
     return (
       <>
         <Title>
-          პაროლის აღდგენის ლინკი წარმატებით გაიგზავნა
+        {t('successfullySent')}
         </Title>
         <Text>
-          გთხოვთ შეამოწმოთ ელ-ფოსტა, სადაც გამოგზავნილია ერთჯერადი ლინკი, რის
-          მეშვეობითაც აღადგენთ პაროლს
+        {t('pleaseCheck')}
         </Text>
         <SendedEmailDiv>
           <div style={{ display: "flex" }}>
@@ -1144,7 +1159,7 @@ const Auth: NextPage = () => {
           </div>
           <Link href="/">
             <BackToMainPageStyle>
-              მთავარზე დაბრუნება
+            {t('backMain')}
             </BackToMainPageStyle>
           </Link>
         </SendedEmailDiv>
@@ -1163,10 +1178,10 @@ const Auth: NextPage = () => {
           >
             <TabList className={styles.tabList}>
               <Tab>
-                <TabItem selected={tabIndex === 0} onClick={() => setRecover(false)}>შესვლა</TabItem>
+                <TabItem selected={tabIndex === 0} onClick={() => setRecover(false)}>{t('authorize')}</TabItem>
               </Tab>
               <Tab>
-                <TabItem selected={tabIndex === 1}>ანგარიშის შექმნა</TabItem>
+                <TabItem selected={tabIndex === 1}>{t('createAccount')}</TabItem>
               </Tab>
             </TabList>
             <TabPanelsWrapper className={styles.tabPanelsWrapper}>
@@ -1182,14 +1197,14 @@ const Auth: NextPage = () => {
         <ImageWithTextWrapper>
           <Img src={"/assets/auth.png"} />
           <ImgTitle>
-            გამოიწერე ჩვენი ვებ გვერდი და პირველმა მიიღე სიახლეები
+          {t('subscribeForNews')}
           </ImgTitle>
           <ImgText>
-            მიუთითეთ თქვენი მეილი
+          {t('addMail')}
           </ImgText>
           <IWBWrapper>
-            <IWBInput placeholder="ელ-ფოსტა" />
-            <IWBButton lowercase>გამოწერა</IWBButton>
+            <IWBInput placeholder={t('email')} />
+            <IWBButton lowercase>{t('subscribe')}</IWBButton>
           </IWBWrapper>
         </ImageWithTextWrapper>
       </SectionWrapper>

@@ -161,7 +161,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                     <Badge
                                         color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
                                         backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
-                                        {orderDetail.status === 1 ? "Confirmed" : orderDetail.status === 2 ? "Cancelled}" : orderDetail.status === 3 ? "In process" : orderDetail.status === 4 ? "Sent" : orderDetail.status === 5 ? "Received" : "Unfinished"}
+                                        {orderDetail.status === 1 ? "Confirmed" : orderDetail.status === 2 ? "Cancelled" : orderDetail.status === 3 ? "In process" : orderDetail.status === 4 ? "Sent" : orderDetail.status === 5 ? "Received" : "Unfinished"}
                                     </Badge>
                                     }
                                 </BadgeWrapperStyle>

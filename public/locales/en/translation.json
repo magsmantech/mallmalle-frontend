@@ -52,7 +52,7 @@
     "addCredentials": "Add your credentials",
     "name": "Name",
     "surname": "Surname",
-    "mobile": "Mobile",
+    "mobile": "Mobile(+995)",
     "repeatPassword": "Repeat password",
     "agree": "I agree on terms and conditions",
     "registrationUnavailable": "Registration unavailable. Please, try again.",
@@ -147,5 +147,8 @@
     "newly": "New",
     "searchResults": "Search results",
     "goBack": "Go back",
-    "status": "Status"
+    "status": "Status",
+    "pleaseCheck": "Please check your e-mail, we've sent you the password reset link",
+    "successfullySent": "Password reset link sent successfully",
+    "backMain": "Go back"
 }
