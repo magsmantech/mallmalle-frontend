@@ -946,7 +946,7 @@ const Catalog: NextPage = () => {
       <HeadWrapperStyle>
         <TitileWrapper>
           <Heading>{category?.category_name}</Heading>
-          <Quantity>{productFilter.data.length} {t('product')}</Quantity>
+          <Quantity>{productFilter.data.length} {t('products')}</Quantity>
         </TitileWrapper>
         <FilterWrapper>
           <FilltersBox>
