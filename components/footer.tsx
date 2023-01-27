@@ -44,17 +44,29 @@ const Footer = () => {
                     email: subscribeEmail
                 });
                 setsubscribeEmail('');
-                setSnackMessage("იმეილი წარმატებით გაიგზავნა");
+                {i18next.language == 'en'?
+                setSnackMessage("Email successfully sent")
+                :
+                setSnackMessage("იმეილი წარმატებით გაიგზავნა")
+                }
                 setOpenSnack(true);
                 setsnackMsgStatus('success');
             } catch (error) {
-                setSnackMessage("გთხოვთ შეიყვანოთ სწორი მეილი");
+                {i18next.language == 'en'?
+                setSnackMessage("Please, add correct mail")
+                :
+                setSnackMessage("გთხოვთ, შეიყვანოთ სწორი მეილი.")
+                }
                 setOpenSnack(true);
                 setsnackMsgStatus('error');
             }
         }
         else {
-            setSnackMessage("გთხოვთ შეიყვანოთ სწორი მეილი");
+            {i18next.language == 'en'?
+            setSnackMessage("Please, add correct mail")
+            :
+            setSnackMessage("გთხოვთ, შეიყვანოთ სწორი მეილი.")
+            }
             setOpenSnack(true);
             setsnackMsgStatus('error');
         }
@@ -89,7 +101,7 @@ const Footer = () => {
                     </div>
                     </Language>
                     </FirstColumn>
-                    <FooterIconText className={styles.motto}>ამერიკული პროდუქტის ხელმისაწვდომობა საქართველოში</FooterIconText>
+                    <FooterIconText className={styles.motto}>{t('americanClothing')}</FooterIconText>
                     <SocialIconsWrapper className={styles.socials}>
                         <a href='https://facebook.com' target={"_blank"}>
                             <FbIcon />
@@ -106,45 +118,45 @@ const Footer = () => {
                     </SocialIconsWrapper>
                 </FooterColumn>
                 <FooterColumn className={styles.column}>
-                    <FooterListTitle className={styles.title}>პირობები</FooterListTitle>
+                    <FooterListTitle className={styles.title}>{t('terms')}</FooterListTitle>
                     {/* <FooterListItem className={styles.item} */}
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/terms-and-conditions">წესები და პირობები</FooterLink>
+                        <FooterLink href="/mallmalle/terms-and-conditions">{t('termsConditions')}</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
                         <FooterLink href="/mallmalle/faq">{t('faq')}</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/return-policy">დაბრუნების და გაცვლის პოლიტიკა</FooterLink>
+                        <FooterLink href="/mallmalle/return-policy">{t('returnPolicy')}</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/privacy-policy">კონფიდენციალურობა</FooterLink>
+                        <FooterLink href="/mallmalle/privacy-policy">{t('confidentiality')}</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/support">დახმარება</FooterLink>
+                        <FooterLink href="/mallmalle/support">{t('help')}</FooterLink>
                     </FooterListItem>
                 </FooterColumn>
 
                 <FooterColumn className={styles.column}>
-                    <FooterListTitle className={styles.title}>ჩვენს შესახებ</FooterListTitle>
+                    <FooterListTitle className={styles.title}>{t('aboutUs')}</FooterListTitle>
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/about-us">MallMalle-ს შესახებ</FooterLink>
+                        <FooterLink href="/mallmalle/about-us">{t('aboutMallmalle')}</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/contact">კონტაქტი</FooterLink>
+                        <FooterLink href="/mallmalle/contact">{t('contact')}</FooterLink>
                     </FooterListItem>
                 </FooterColumn>
 
                 <FooterColumn className={classNames({ [styles.column]: true, [styles.lastColumn]: true })}>
-                    <FooterListTitle className={styles.title}>სიახლეების გამოწერა</FooterListTitle>
+                    <FooterListTitle className={styles.title}>{t('subscribeOffers')}</FooterListTitle>
                     <InputWrapper>
-                        <IWBInput placeholder="ელ-ფოსტა" type='email' value={subscribeEmail} onChange={(e: any) => setsubscribeEmail(e.target.value)} />
-                        <IWBButton lowercase onClick={subscribePost} >გამოწერა</IWBButton>
+                        <IWBInput placeholder={t('email')} type='email' value={subscribeEmail} onChange={(e: any) => setsubscribeEmail(e.target.value)} />
+                        <IWBButton lowercase onClick={subscribePost} >{t('subscription')}</IWBButton>
                     </InputWrapper>
                 </FooterColumn>
             </FooterWrapper>
             <RightsReserved className={styles.rightsReserved}>
-                <div className={styles.rightsReservedTitle}>ყველა უფლება დაცულია</div>
+                <div className={styles.rightsReservedTitle}>{t('allRights')}</div>
             </RightsReserved>
             <Snackbar
                 open={openSnack}
