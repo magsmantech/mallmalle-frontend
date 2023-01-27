@@ -32,6 +32,9 @@ import Loader from "../../components/Loader";
 import { uploadUrl } from '../../features/api';
 import Raiting from '../../components/customStyle/Raiting';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 type ButtonProps = {
   secondary?: boolean;
@@ -366,6 +369,8 @@ const ProductDetails: NextPage = () => {
 
   const MainLoading = isDiscountsLoading || isRecommendedLoading;
 
+  const {t, i18n} = useTranslation();
+
   const { id } = router.query;
   console.log(id);
 
@@ -461,7 +466,11 @@ const ProductDetails: NextPage = () => {
 
   const _addToCart = async () => {
     if (!authData?.profile?.user) {
-      setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+          {i18next.language == "ge"?
+          setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ")
+          :
+          setSnackMessage("Please register to add to cart")
+          }
       setOpenSnack(true);
       setsnackMsgStatus('info');
       return;
@@ -474,13 +483,21 @@ const ProductDetails: NextPage = () => {
           quantity: 1
         });
         refetchCart();
-        setSnackMessage("პროდუქტი დაემატა კალათში!");
+          {i18next.language == "ge"?
+          setSnackMessage("პროდუქტი დაემატა კალათაში")
+          :
+          setSnackMessage("Product added in basket")
+          }
         setOpenSnack(true);
         setsnackMsgStatus('success');
         setClicked(true);
         setTimeout(() =>setClicked(false), 1000);
       } catch (error) {
-        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!");
+        {i18next.language == "ge"?
+        setSnackMessage("მოხდა შეცდომა, გთხოვთ სცადოთ მოგვიანებით!")
+        :
+        setSnackMessage("Error, please try again later")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('error');
       }
@@ -489,7 +506,11 @@ const ProductDetails: NextPage = () => {
 
   const _chooseSizeMessage = async () => {
         if(!canAddToCart){
-        setSnackMessage("გთხოვთ, აირჩიეთ ზომა და ფერი!");
+        {i18next.language == "ge"?
+        setSnackMessage("გთხოვთ, აირჩიეთ ზომა და ფერი!")
+        :
+        setSnackMessage("Please choose size and color")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('info');
         }
@@ -503,7 +524,11 @@ const ProductDetails: NextPage = () => {
     if (!authData?.profile?.user) {
       // alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
       setdisableFavoriteBtn(true)
-      setSnackMessage("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
+          {i18next.language == "ge"?
+          setSnackMessage("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ")
+          :
+          setSnackMessage("Please register to add to favourites")
+          }
       setOpenSnack(true);
       setsnackMsgStatus('info');
       return;
@@ -513,7 +538,11 @@ const ProductDetails: NextPage = () => {
         // alert(data.success || data.error || "პროდუქტი წარმატებით დაემატა ფავორიტებში");
         setdisableFavoriteBtn(true);
         refetchFavorites();
-        setSnackMessage("პროდუქტი წარმატებით დაემატა ფავორიტებში");
+          {i18next.language == "ge"?
+          setSnackMessage("პროდუქტი წარმატებით დაემატა ფავორიტებში")
+          :
+          setSnackMessage("Product successfully added in favourites")
+          }
         setOpenSnack(true);
         setsnackMsgStatus('success');
       });
@@ -598,7 +627,7 @@ const ProductDetails: NextPage = () => {
                 null
               )}
               <DetailCount>
-                {product?.views} ნახვა
+                {product?.views} {t('seen')}
               </DetailCount>
             </RevieStartWrapper>
             {/* <PriceWrapperStyle>
@@ -631,7 +660,7 @@ const ProductDetails: NextPage = () => {
             <SelectSizeWrapper>
               {sizes && !!sizes.length && sizeV && sizeVariantResult && (
                 <>
-                  <SelectSizeLabel>აირჩიე ზომა: </SelectSizeLabel>
+                  <SelectSizeLabel>{t('selectSize')}: </SelectSizeLabel>
                   <SizeSelector
                     sizes={sizeV.sizes}
                     onSelectedChange={(event: any) => _sizeSelected(event)}
@@ -646,7 +675,7 @@ const ProductDetails: NextPage = () => {
               }} disabled={!canAddToCart}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
                 <BagIconStyle />
-                კალათაში დამატება
+                {t('addInBasket')}
               </ButtonStyle>
 
               <AddCartButton secondary onClick={_showFavoriteFeedback} disabled={disableFavoriteBtn}>
@@ -655,7 +684,7 @@ const ProductDetails: NextPage = () => {
 
             </ButtonWrapper>
             <Subtitle>
-              დამატებითი ინფორმაცია
+            {t('additionalInformation')}
             </Subtitle>
             {product?.description && <Text>{ReactHtmlParser(product?.description)}</Text>}
           </DetailsWrapper>
@@ -676,7 +705,7 @@ const ProductDetails: NextPage = () => {
 
 
       <SectionTitle>
-        რეკომენდირებული
+      {t('recommended')}
       </SectionTitle>
       <Grid>
         {recommended.map((r, index) => (
