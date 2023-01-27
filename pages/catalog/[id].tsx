@@ -55,6 +55,9 @@ import ReactPaginate from 'react-paginate';
 import { CustomPaginationWrapper } from "../search";
 import Fonts from './../../styles/Fonts';
 import Raiting from "../../components/customStyle/Raiting";
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 
 const Heading = styled.h1`
@@ -547,6 +550,8 @@ const Item = ({ product }: { product: ProductData }) => {
     );
   };
 
+  const {t, i18n} = useTranslation();
+
 
   return (
     <>
@@ -602,7 +607,7 @@ const Item = ({ product }: { product: ProductData }) => {
               <BsStarFill size={"1.8rem"} color={"#22D5AE"} />
             </StartsWrapper> */}
             <Raiting raitingCount={product?.rating} />
-            <Count>{product.views} ნახვა</Count>
+            <Count>{product.views} {t('seen')}</Count>
           </div>
           {hovered && (
             null
@@ -799,11 +804,16 @@ const Catalog: NextPage = () => {
   const [startPrice, setStartPrice] = useState<string>(selectedPrices?.startValue ? selectedPrices?.startValue : "");
   const [endPrice, setEndPrice] = useState<string>(selectedPrices?.endValue ? selectedPrices?.endValue : "");
   const [sortBy, setsortBy] = useState<string>("");
+  const [sortByEn, setsortByEn] = useState<string>("");
   const [brandId, setbrandId] = useState<number>(0);
   const [openModal, setOpenModal] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [otherFilterName, setotherFilterName] = useState<string>();
+  const [otherFilterNameEn, setotherFilterNameEn] = useState<string>();
   const [category_id, setcategory_id] = useState<number>(0);
+
+  const {t, i18n} = useTranslation();
+
 
   // clear filters fields
   const clearFilterFields = () => {
@@ -813,6 +823,7 @@ const Catalog: NextPage = () => {
     setEndPrice("");
     setbrandId(0);
     setsortBy("");
+    setsortByEn("");
     setcategory_id(0);
   }
   // console.log(startPrice)
@@ -875,12 +886,41 @@ const Catalog: NextPage = () => {
     },
   ];
 
+  const sortByArrayEn = [
+    {
+      value: 'popularity',
+      label: 'popularity'
+    },
+    {
+      value: 'rating',
+      label: 'rating'
+    },
+    {
+      value: 'time',
+      label: 'time'
+    },
+    {
+      value: 'discount',
+      label: 'discount'
+    },
+    {
+      value: '',
+      label: 'all'
+    },
+  ];
+
   // update sortByTitle
   useEffect(() => {
     // sortBy title
     const sortByTitle = sortByArray.find(x => x.value === sortBy);
     setotherFilterName(sortByTitle?.label);
   }, [sortBy])
+
+  useEffect(() => {
+    // sortBy title
+    const sortByTitleEn = sortByArrayEn.find(x => x.value === sortByEn);
+    setotherFilterNameEn(sortByTitleEn?.label);
+  }, [sortByEn])
 
 
 
@@ -900,16 +940,17 @@ const Catalog: NextPage = () => {
       )}
 
       <Breadcrumbs>
-        მთავარი / კატეგორიები / {category?.category_name}
+      {t('main')} / {t('categories')} / {category?.category_name}
       </Breadcrumbs>
 
       <HeadWrapperStyle>
         <TitileWrapper>
           <Heading>{category?.category_name}</Heading>
-          <Quantity>{productFilter.data.length} პროდუქტი</Quantity>
+          <Quantity>{productFilter.data.length} {t('product')}</Quantity>
         </TitileWrapper>
         <FilterWrapper>
           <FilltersBox>
+            {i18next.language == "ge" ?
             <DropDown dropdownTitle={`${otherFilterName}`}>
               <RadioButton
                 id="low-id"
@@ -923,12 +964,27 @@ const Catalog: NextPage = () => {
                 value={sortBy}
               />
             </DropDown>
+            :
+            <DropDown dropdownTitle={`${otherFilterNameEn}`}>
+              <RadioButton
+                id="low-id"
+                onChange={(value) => [setsortByEn(value)]}
+                options={[
+                  ...sortByArrayEn.map((s, index) => ({
+                    label: s.label,
+                    value: s.value
+                  }))
+                ]}
+                value={sortByEn}
+              />
+            </DropDown>
+          }
           </FilltersBox>
 
 
           {categoryFilter?.brands ? (
             <FilltersBox>
-              <DropDown dropdownTitle="ბრენდი">
+              <DropDown dropdownTitle={t('brand')}>
                 <RadioButton
                   id=""
                   onChange={(value) => setbrandId(value)}
@@ -946,7 +1002,7 @@ const Catalog: NextPage = () => {
 
           <FilltersBox>
             <MoreFilterBtn onClick={() => setOpenModal(true)}>
-              მეტი ფილტრი
+            {t('moreFilters')}
               <MoreFilterIconStyle />
             </MoreFilterBtn>
           </FilltersBox>
@@ -959,7 +1015,7 @@ const Catalog: NextPage = () => {
 
               {categoryFilter?.categories ? (
                 <>
-                  <MediumTitle>კატეგორიები</MediumTitle>
+                  <MediumTitle>{t('categories')}</MediumTitle>
                   <FilterInnterWrapper>
                     <RadioButton
                       id={`category_id`}
@@ -978,7 +1034,7 @@ const Catalog: NextPage = () => {
 
               {categoryFilter?.color_variations ? (
                 <>
-                  <MediumTitle>ფერი</MediumTitle>
+                  <MediumTitle>{t('color')}</MediumTitle>
                   <FilterInnterWrapper>
                     <RadioButton
                       id="color-id"
@@ -997,7 +1053,7 @@ const Catalog: NextPage = () => {
 
               {categoryFilter?.size_variations ? (
                 <>
-                  <MediumTitle>ზომა</MediumTitle>
+                  <MediumTitle>{t('size')}</MediumTitle>
                   <FilterInnterWrapper>
                     <RadioButton
                       id="size-id"
@@ -1015,7 +1071,7 @@ const Catalog: NextPage = () => {
               ) : null}
 
               <SliderWrapperStyle>
-                <MediumTitle style={{ marginBottom: '25px' }}>ფასი</MediumTitle>
+                <MediumTitle style={{ marginBottom: '25px' }}>{t('price')}</MediumTitle>
                 <Slider onChange={(e: any) => setSelectedPrices(e)} />
               </SliderWrapperStyle>
 
@@ -1030,8 +1086,8 @@ const Catalog: NextPage = () => {
                 })}
               </FilterInnterWrapper> */}
 
-              <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
-              <BtnWithBorder onClick={() => setOpenModal(false)}>არჩევა</BtnWithBorder>
+              <BtnWithBorder onClick={clearFilterFields}>{t('remove')}</BtnWithBorder>
+              <BtnWithBorder onClick={() => setOpenModal(false)}>{t('select')}</BtnWithBorder>
             </Content>
           </MainFilterComponent>}
 
