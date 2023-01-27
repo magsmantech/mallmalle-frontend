@@ -16,6 +16,9 @@ import { SectionTitle } from '../cart';
 import config from "../../config.json";
 import { uploadUrl } from '../../features/api';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
     const router = useRouter();
@@ -28,6 +31,8 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
     const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile, isSuccess: isProfileSucces } = api.useProfileQuery(undefined);
     const { data: products, isLoading: isProductsLoading, refetch: refetchProducts, isSuccess: isProductsSucces } = api.useGetProductsQuery(undefined);
     const { data: myOrders, isLoading: isMyOrdersLoading, refetch: refetchMyOrders, isSuccess: isMyOrdersSucces } = api.useGetMyOrdersQuery(undefined);
+
+    const {t, i18n} = useTranslation();
 
     const items: itemType[] = [
         {
@@ -84,7 +89,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
         <>
             <OrderListWrapper >
                 <OrderListTopSideWrapper >
-                    <SectionTitleStyle>ყიდვის ისტორია</SectionTitleStyle>
+                    <SectionTitleStyle>{t('purchaseHistory')}</SectionTitleStyle>
 
                     {/* <OrderListTopSideInsideWrapper>
                         <ChipWrapper>
@@ -97,7 +102,7 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             <ChipTitle>გაუქმებული</ChipTitle>
                         </ChipWrapper>
                     </OrderListTopSideInsideWrapper> */}
-                    <SearchCount>სულ მოიძებნა: <SearchCountText>{orderDetail.order_items?.length} შეკვეთა</SearchCountText></SearchCount>
+                    <SearchCount>{t('totalFound')}: <SearchCountText>{orderDetail.order_items?.length} {t('orders')}</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
                 <Link href={{
                     pathname: '/profile',
@@ -107,14 +112,14 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                         <IconWrapper>
                             <BsArrowLeftStyle color={'#3A7BD5'} />
                         </IconWrapper>
-                        <span>უკან დაბრუნება</span>
+                        <span>{t('goBack')}</span>
                     </BackBtnStyle>
                 </Link>
                 <Headers>
-                    <HeaderItem>პროდუქტი</HeaderItem>
-                    <HeaderItem>რაოდენობა</HeaderItem>
-                    <HeaderItem>ფასი</HeaderItem>
-                    <HeaderItem>სტატუსი</HeaderItem>
+                    <HeaderItem>{t('product')}</HeaderItem>
+                    <HeaderItem>{t('quantity')}</HeaderItem>
+                    <HeaderItem>{t('price')}</HeaderItem>
+                    <HeaderItem>{t('status')}</HeaderItem>
                 </Headers>
 
 
@@ -128,8 +133,8 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                     <ItemImg src={uploadUrl(imgUrl[0])} />
                                     <ItemTextWrapper>
                                         <ItemName>{o.product.product_name}</ItemName>
-                                        <div><ItemLabel>ზომა:</ItemLabel><ItemValue> {o.variation.size_variation.size_name}</ItemValue></div>
-                                        <div><ItemLabel>ფერი:</ItemLabel> <ItemValue>{o.variation.color_variation.color_name}</ItemValue></div>
+                                        <div><ItemLabel>{t('size')}:</ItemLabel><ItemValue> {o.variation.size_variation.size_name}</ItemValue></div>
+                                        <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{o.variation.color_variation.color_name}</ItemValue></div>
                                     </ItemTextWrapper>
                                 </ItemWrapper>
 
@@ -146,11 +151,19 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             <BadgeWrapperStyle>
                                 <BadgeWrapperStyle>
                                     {/* started: 0 | success: 1 | error: 2 | in_progress: 3 */}
+                                    {i18next.language == "ge" ?
                                     <Badge
                                         color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
                                         backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
                                         {orderDetail.status === 1 ? "დადასტურებული" : orderDetail.status === 2 ? "გაუქმებული" : orderDetail.status === 3 ? "პროცესში" : orderDetail.status === 4 ? "გამოგზავნილი" : orderDetail.status === 5 ? "მიღებული" : "დასასრულები"}
                                     </Badge>
+                                    :
+                                    <Badge
+                                        color={orderDetail.status === 1 ? "#22D5AE" : orderDetail.status === 2 ? "rgba(213, 34, 34, 1)" : orderDetail.status === 3 ? "rgba(213, 213, 34, 1)" : "white"}
+                                        backgroundColor={orderDetail.status === 1 ? "rgba(34, 213, 174, .21)" : orderDetail.status === 2 ? "rgba(213, 34, 34, .21)" : orderDetail.status === 3 ? "rgba(213, 213, 34, .21)" : "gray"}>
+                                        {orderDetail.status === 1 ? "Confirmed" : orderDetail.status === 2 ? "Cancelled}" : orderDetail.status === 3 ? "In process" : orderDetail.status === 4 ? "Sent" : orderDetail.status === 5 ? "Received" : "Unfinished"}
+                                    </Badge>
+                                    }
                                 </BadgeWrapperStyle>
                             </BadgeWrapperStyle>
                             <ButtonWrapperStyle>

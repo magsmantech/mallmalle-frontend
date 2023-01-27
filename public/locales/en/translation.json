@@ -145,5 +145,7 @@
     "sales": "Sales",
     "products": "Products",
     "newly": "New",
-    "searchResults": "Search results"
+    "searchResults": "Search results",
+    "goBack": "Go back",
+    "status": "Status"
 }
