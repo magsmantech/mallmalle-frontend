@@ -46,10 +46,10 @@ const {t, i18n} = useTranslation();
   return (
     <>
       <SectionTitle style={{ marginBottom: "1.7rem", fontSize: "3.2rem" }}>
-        {t('search')}
+        {t('termsConditions')}
       </SectionTitle>
       <Breadcrumbs style={{ marginBottom: "3.2rem" }}>
-      {t('main')} / {t('search')}
+      {t('main')} / {t('termsConditions')}
       </Breadcrumbs>
       <div className={styles.column}>
         <span className={styles.item}>{t('termsConditions')}</span>
