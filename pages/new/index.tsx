@@ -626,12 +626,12 @@ const Discounts: NextPage = () => {
         <>
 
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
-            <BreadcrumbsStyle style={{ marginBottom: '1.0rem' }}>{t('main')} / {t('newly')}</BreadcrumbsStyle>
+            <BreadcrumbsStyle style={{ marginBottom: '1.0rem' }}>{t('main')} / {t('newArrivals')}</BreadcrumbsStyle>
 
             <HeadWrapperStyle>
 
                 <TopSideWrapper>
-                    <Heading>{t('newly')}</Heading>
+                    <Heading>{t('newArrivals')}</Heading>
                 </TopSideWrapper>
 
             </HeadWrapperStyle>

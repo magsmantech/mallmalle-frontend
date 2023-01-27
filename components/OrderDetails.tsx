@@ -17,6 +17,9 @@ import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert, Snackbar } from "@mui/material";
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 const CustomButton = styled.button`
     
     position: absolute;
@@ -533,6 +536,8 @@ const OrderDetails: React.FC<{
             addPrimaryAddressPost();
           };
 
+        const {t, i18n} = useTranslation();
+
         function UpdateProfileItem(props: Props) { //onClick={props.onHide}
             const [newAddress, setnewAddress] = useState();
 
@@ -540,7 +545,7 @@ const OrderDetails: React.FC<{
 
             const [updateStreet, setupdateStreet] = useState<string>(findAddress?.address_1 || "");
             const [updateCity, setupdateCity] = useState<string>(findAddress?.city || "");
-            const [updateCountry, setupdateCountry] = useState<string>("საქართველო");
+            const [updateCountry, setupdateCountry] = useState<string>("საქართველო/Georgia");
             const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
             const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
             const [updateFullName, setupdateFullName] = useState<string>(findAddress?.full_name || "");
@@ -562,14 +567,22 @@ const OrderDetails: React.FC<{
                         id: updateAddresId,
                         full_name: updateFullName
                     });
-                    setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა");
+                    {i18next.language == "ge"?
+                    setaddressUpdatedMsg("ინფორმაცია წარმატებით გაიგზავნა")
+                    :
+                    setSnackMessage("Informations sent successfully")
+                    }
                     console.log("contact form submit");
                     setaddressSubmitBtn(true);
                     // alert("form submited");
                     console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
                     console.log(Address);
                   } catch (error) {
-                    setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ");
+                    {i18next.language == "ge"?
+                    setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ")
+                    :
+                    setSnackMessage("Please try again")
+                    }
                     setaddressSubmitBtn(false);
                     console.log("login error", error);
                     alert("form not submited")
@@ -594,27 +607,27 @@ const OrderDetails: React.FC<{
                 >
                     <Modal.Header closeButton>
                         <Modal.Title id="contained-modal-title-vcenter-1">
-                            მისამართის ჩასწორება 
+                        {t('editAddress')}
                             {/* {updateAddresId} */}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <ModalContent>
-                            <UpdateInputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder={t('street')} value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
                             <TwoInputWrapper>
-                                <UpdateInputStyle type="text" placeholder="ქალაქი" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
-                                <UpdateInputStyle type="text" placeholder="ქვეყანა" value={updateCountry} />
+                                <UpdateInputStyle type="text" placeholder={t('city')} value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
+                                <UpdateInputStyle type="text" placeholder={t('country')} value={updateCountry} />
                             </TwoInputWrapper>
-                            <UpdateInputStyle type="text" placeholder="რეგიონი / რაიონი" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
-                            <UpdateInputStyle type="text" placeholder="Zip კოდი" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
-                            <UpdateInputStyle type="text" placeholder="მიმღების სახელი და გვარი" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder={t('region')} value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder={t('zipCode')} value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder={t('receiver')} value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
 
 
                             <AddressButton onClick={updateAddressPut}>
-                                ჩასწორება
+                            {t('edit')}
                             </AddressButton>
 
-                            <DeleteAddressBtn onClick={deleteSelectedAddress}>მისამართის წაშლა</DeleteAddressBtn>
+                            <DeleteAddressBtn onClick={deleteSelectedAddress}>{t('removeAddress')}</DeleteAddressBtn>
 
 
                         </ModalContent>
@@ -626,7 +639,11 @@ const OrderDetails: React.FC<{
         }
 
         const warningMessage = async () => {
-          setSnackMessage("სამზე მეტი მისამართის დამატება არ არის შესაძლებელი !");
+          {i18next.language == "ge"?
+          setSnackMessage("სამზე მეტი მისამართის დამატება არ არის შესაძლებელი !")
+          :
+          setSnackMessage("Can't add more than three addresses")
+          }
           setOpenSnack(true);
           setsnackMsgStatus('error');
         };
@@ -636,7 +653,7 @@ const OrderDetails: React.FC<{
 
             const [addAddressStreet, setAddAddressStreet] = useState<string>('');
             const [addAddressCity, setAddAddressCity] = useState<string>('');
-            const [addAddressCountry, setAddAddressCountry] = useState<string>('საქართველო');
+            const [addAddressCountry, setAddAddressCountry] = useState<string>('საქართველო/Georgia');
             const [addAddressState, setAddAddressState] = useState<string>('');
             const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
             const [addAddressFullName, setAddAddressFullName] = useState<string>('');
@@ -658,7 +675,11 @@ const OrderDetails: React.FC<{
                 });
         
                 // alert("form submited");
-                setSnackMessage("მისამართი წარმატებით დაემატა");
+                {i18next.language == "ge"?
+                setSnackMessage("მისამართი წარმატებით დაემატა")
+                :
+                setSnackMessage("Address successfuly added")
+                }
                 setOpenSnack(true);
                 setsnackMsgStatus('success');
                 window.location.reload();
@@ -667,7 +688,11 @@ const OrderDetails: React.FC<{
               } catch (error) {
         
                 // alert("form not submited")
-                setSnackMessage("ვერ მოხერხდა მისამართის დამატება!");
+                {i18next.language == "ge"?
+                setSnackMessage("ვერ მოხერხდა მისამართის დამატება!")
+                :
+                setSnackMessage("Couldnt add address")
+                }
                 setOpenSnack(true);
                 setsnackMsgStatus('error');
               }
@@ -683,22 +708,22 @@ const OrderDetails: React.FC<{
               >
                 <Modal.Header closeButton>
                   <Modal.Title id="add-address">
-                    ახალი მისამართის დამატება
+                  {t('addAddress')}
                   </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <ModalContent>
-                    <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
+                    <InputStyle type="text" placeholder={t('street')} value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
                     <TwoInputWrapper>
-                      <InputStyle type="text" placeholder="ქალაქი" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
-                      <InputStyle type="text" placeholder="ქვეყანა" value={addAddressCountry}/>
+                      <InputStyle type="text" placeholder={t('city')} value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
+                      <InputStyle type="text" placeholder={t('country')} value={addAddressCountry}/>
                     </TwoInputWrapper>
-                    <InputStyle type="text" placeholder="რეგიონი / რაიონი" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
-                    <InputStyle type="text" placeholder="Zip კოდი" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
-                    <InputStyle type="text" placeholder="მიმღების სახელი და გვარი" value={addAddressFullName} onChange={(e: any) => setAddAddressFullName(e.target.value)} />
+                    <InputStyle type="text" placeholder={t('region')} value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
+                    <InputStyle type="text" placeholder={t('zipCode')} value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
+                    <InputStyle type="text" placeholder={t('receiver')} value={addAddressFullName} onChange={(e: any) => setAddAddressFullName(e.target.value)} />
         
                     <AddressButton onClick={addNewAddress}>
-                      დამატება
+                    {t('add')}
                     </AddressButton>
         
                   </ModalContent>
@@ -722,7 +747,7 @@ const OrderDetails: React.FC<{
                     </div>
                 </HeaderStyle>
                 <div>
-        <AddressTitleStyle>მისამართი:</AddressTitleStyle>
+        <AddressTitleStyle>{t('address')}:</AddressTitleStyle>
                    
           {profile.profile?.addresses.map((a, index) => (
                             
@@ -734,7 +759,7 @@ const OrderDetails: React.FC<{
                             <AddressItemTextStyle >
                                 <div className={styles.city}>{a.city}</div>
                                 <div className={styles.address}>{a.address_1}</div>
-                                <div className={styles.zip}>ZIP კოდი: {a.zip}</div>
+                                <div className={styles.zip}>{t('zipCode')}: {a.zip}</div>
                             </AddressItemTextStyle>
 
 
@@ -748,11 +773,11 @@ const OrderDetails: React.FC<{
 
           {addresses?.length !=3 ? (
           <AddressButton onClick={() => setAddAddressModalShow(true)}>
-            მისამართის დამატება
+            {t('addAddress')}
           </AddressButton>
           ):
           <AddressButton onClick={ () => warningMessage()}>
-            მისამართის დამატება
+            {t('addAddress')}
           </AddressButton>}
           
           <AddAddress
@@ -785,7 +810,7 @@ const OrderDetails: React.FC<{
                 <div className={styles.paymentWrapper}>
 
                     <PaymentItemStyle >
-                        <span>სრული ღირებულება</span>
+                        <span>{t('totalPrice')}</span>
                         {Number(cart?.discount) ?
                         <OldPrice>₾ {cart?.withoutDiscount}</OldPrice>
                         :
@@ -793,31 +818,39 @@ const OrderDetails: React.FC<{
                         }
                     </PaymentItemStyle>
                         <PaymentItemStyle>
-                            <span>ფასდაკლება</span>
+                            <span>{t('discount')}</span>
                             <span >-₾ {Number(cart?.discount)}</span>
                         </PaymentItemStyle>
                     <PaymentItemStyle>
-                        <span>ტრანსპორტირება</span>
+                        <span>{t('transportation')}</span>
                         <span>₾ {shippingCost}</span>
                     </PaymentItemStyle>
 
                     <DividerStyle></DividerStyle>
 
                     <PaymentItemStyle >
-                        <span>ჯამი</span>
+                        <span>{t('sum')}</span>
                         <span>₾ {cart?.summary}</span>
                     </PaymentItemStyle>
                 </div>
 
                 <ButtonStyle onClick={async () => {
                     if (!selectedAddressId) {
-                      setSnackMessage("გთხოვთ, მონიშნოთ მიტანის მისამართი !");
+                      {i18next.language == "ge"?
+                      setSnackMessage("გთხოვთ, მონიშნოთ მიტანის მისამართი !")
+                      :
+                      setSnackMessage("Please choose delivery address")
+                      }
                       setOpenSnack(true);
                       setsnackMsgStatus('info');
                       return;
                     }
                     if (!primaryAddress) {
-                      setSnackMessage("გთხოვთ, დაამატოთ მიტანის მისამართი !");
+                      {i18next.language == "ge"?
+                      setSnackMessage("გთხოვთ, დაამატოთ მიტანის მისამართი !")
+                      :
+                      setSnackMessage("Please add delivery address")
+                      }
                       setOpenSnack(true);
                       setsnackMsgStatus('info');
                       return;
@@ -833,9 +866,9 @@ const OrderDetails: React.FC<{
                         const { redirect_url } = payment;
                         document.location.href = redirect_url;
                     } else {
-                        alert(response.address_id[0] ?? 'მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.');
+                        alert(response.address_id[0] ?? "Error occured");
                     }
-                }}>გადახდაზე გადასვლა</ButtonStyle>
+                }}>{t('goToCheckout')}</ButtonStyle>
             </ContainerStyle>
         )
     }
