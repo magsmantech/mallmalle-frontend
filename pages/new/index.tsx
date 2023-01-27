@@ -28,6 +28,9 @@ import { useRouter } from "next/router";
 import { Scrollbar } from '../../components/GlobalStyle';
 import ReactPaginate from 'react-paginate';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const Heading = styled.h1`
     color: var(--text-color);
@@ -524,6 +527,7 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
     const { data: productById, isLoading: isProductByIdLoading, refetch: refetchProductById } = api.useGetProductByIdQuery(productID);
     const [hovered, setHovered] = useState(false);
 
+    const {t, i18n} = useTranslation();
 
 
     const dispatch = useDispatch();
@@ -567,7 +571,7 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
                     onClick={() => alert("selected")}
                     onMouseOver={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
-                >კალათაში დამატება</ItemButton>}
+                >{t('addInBasket')}</ItemButton>}
                 {hovered && <ItemBackground />}
             </ItemWrapper>
             </Link>
@@ -614,18 +618,20 @@ const Discounts: NextPage = () => {
         setCurrentPage(event.selected + 1)
     };
 
+    const {t, i18n} = useTranslation();
 
 
-    return MainLoader ? <Loader /> : !newAdded ? (<span>მოიძებნა 0 პროდუქტი</span>) : (
+
+    return MainLoader ? <Loader /> : !newAdded ? (<span>{t('totalFound')} 0 {t('products')}</span>) : (
         <>
 
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
-            <BreadcrumbsStyle style={{ marginBottom: '1.0rem' }}>მთავარი / ახალდამატებული</BreadcrumbsStyle>
+            <BreadcrumbsStyle style={{ marginBottom: '1.0rem' }}>{t('main')} / {t('newly')}</BreadcrumbsStyle>
 
             <HeadWrapperStyle>
 
                 <TopSideWrapper>
-                    <Heading>ახალდამატებული</Heading>
+                    <Heading>{t('newly')}</Heading>
                 </TopSideWrapper>
 
             </HeadWrapperStyle>
