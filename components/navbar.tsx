@@ -30,6 +30,7 @@ import Loader from './Loader';
 import { Cart, Favorite } from '../domain/shop';
 import UsFlag from '../public/icons/react-icons/usFlag';
 import GeoFlag from '../public/icons/react-icons/geoFlag';
+import i18next from 'i18next';
 
 
 
@@ -47,14 +48,18 @@ const Navbar: React.FC<{
 
         const [checked, setChecked] = useState(false);
         const { loggedIn } = useSelector((state: RootState) => state.auth);
-        const [languageGeo, setLanguageGeo] = useState(true);
+
+        const toggleLanguage = async () => {
+            {i18next.language == 'en' ? i18next.changeLanguage('ge') : i18next.changeLanguage('en')}
+              window.location.reload();
+          };
 
         return (
             <>
                 <Nav className={styles.wrapper}>
                     <MenuIcon onClick={() => onSidebarOpen()} />
                     {/* <AiOutlineMenu size={'3.2rem'} onMouseOver={() => onSidebarOpen()} style={{ cursor: 'pointer', marginRight: '1.6rem' }} /> */}
-                    {languageGeo ?
+                    {i18next.language == 'en' ?
                     <Link href='/'><HeaderLogoTag src='/assets/logo.svg' className={styles.logo} /></Link>
                     : 
                     <Link href='/'><HeaderLogoTagGeo src='/assets/mallmalleGeo.png' className={styles.logo} /></Link>
@@ -64,10 +69,14 @@ const Navbar: React.FC<{
                         <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
                     </LanguageSwitcherWrapper> */}
                     <Language>
-                    {languageGeo ?
-                    <div onClick={()=>setLanguageGeo(false)}><UsFlagStyle /></div>
-                    : <div onClick={()=>setLanguageGeo(true)}><GeoFlagStyle /></div>
+
+                    <div onClick={toggleLanguage}>
+                    {i18next.language == 'en' ?
+                        <GeoFlagStyle />
+                        :
+                        <UsFlagStyle />
                     }
+                    </div>
                     </Language>
                     {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
                     {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}

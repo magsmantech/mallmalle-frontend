@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
 import { Provider } from 'react-redux';
 import { store } from '../state/store';
+import '../i18n'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

@@ -16,10 +16,13 @@ import Fonts from '../styles/Fonts';
 import LanguageSwitcher from './language-switcher';
 import UsFlag from '../public/icons/react-icons/usFlag';
 import GeoFlag from '../public/icons/react-icons/geoFlag';
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 
 const Footer = () => {
 
+    const {t, i18n} = useTranslation();
     const [subscribeEmail, setsubscribeEmail] = useState<string>('');
     const [subscribe, { isLoading: isSubscribeLoading }] = api.useSubscribeMutation();
 
@@ -29,6 +32,11 @@ const Footer = () => {
 
     const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
+    const toggleLanguage = async () => {
+        {i18next.language == 'en' ? i18next.changeLanguage('ge') : i18next.changeLanguage('en')}
+          window.location.reload();
+      };
+      
     const subscribePost = async () => {
         if (emailRegex.test(subscribeEmail)) {
             try {
@@ -53,7 +61,6 @@ const Footer = () => {
 
     };
 
-    const [languageGeo, setLanguageGeo] = useState(true);
     
 
     return (
@@ -61,19 +68,25 @@ const Footer = () => {
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
                     <FirstColumn>
-                    {languageGeo ?
+                    {i18next.language == 'en' ?
                     <FooterMainIcon src={'/assets/mallmalle.png'} className={styles.logo} />
-                    : 
+                    :null
+                    }
+                    {i18next.language == 'ge' ?
                     <HeaderLogoTag src={'/assets/mallmalleGeoBlack.png'} className={styles.logo} />
+                    :null
                     }
                     {/* <LanguageSwitcherWrapper>
                                 <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
                     </LanguageSwitcherWrapper> */}
                     <Language>
-                    {languageGeo ?
-                    <div onClick={()=>setLanguageGeo(false)}><UsFlagStyle /></div>
-                    : <div onClick={()=>setLanguageGeo(true)}><GeoFlagStyle /></div>
+                    <div onClick={toggleLanguage}>
+                    {i18next.language != 'ge' ?
+                        <GeoFlagStyle />
+                        :
+                        <UsFlagStyle />
                     }
+                    </div>
                     </Language>
                     </FirstColumn>
                     <FooterIconText className={styles.motto}>ამერიკული პროდუქტის ხელმისაწვდომობა საქართველოში</FooterIconText>
@@ -99,7 +112,7 @@ const Footer = () => {
                         <FooterLink href="/mallmalle/terms-and-conditions">წესები და პირობები</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
-                        <FooterLink href="/mallmalle/faq">ხშირად დასმული კითხვები</FooterLink>
+                        <FooterLink href="/mallmalle/faq">{t('faq')}</FooterLink>
                     </FooterListItem>
                     <FooterListItem>
                         <FooterLink href="/mallmalle/return-policy">დაბრუნების და გაცვლის პოლიტიკა</FooterLink>
@@ -337,23 +350,7 @@ const InputWrapper = styled(IWBWrapper)`
                 }
         }
 `;
-const LanguageSwitcherWrapper = styled.div`
-    display: none;
-    ${Responsive.mobile}{
-        display: block;
-        width: 10px;
-        margin-top: 5px;
-        margin-left: 80px;
-        z-index: 10;
-    }
-`;
-const LanguageSwitcherStyle = styled(LanguageSwitcher)`
-    z-index: 10;
 
-    ${Responsive.laptop}{
-        font-size: 12px;
-    }
-`;
 const FirstColumn = styled.div`
         display: flex;
 `;
