@@ -25,6 +25,8 @@ import ToyIcon from '../public/icons/react-icons/sidebar-icons/toy';
 import Responsive from '../config/Responsive';
 import router from 'next/router';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 
 
@@ -185,14 +187,16 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
         
     };
 
+    const {t, i18n} = useTranslation();
+
 
     const PromoItem = ({ imageUrl = '/assets/testt.png' }: PromoItemProps) => {
         return (<>
             <Link href={'/discounts'}>
                 <PromoItemBackground onClick={() => onSidebarClose()} className={styles.promoItemBackground} style={{ backgroundImage: `url(${imageUrl})` }}>
                     <div className={styles.promoItemText}>
-                        <PromoItemTextSale className={styles.promoItemTextSale}>ფასდაკლება</PromoItemTextSale>
-                        <PromoItemTextTime className={styles.promoItemTextTime}>03:12:34 საათი</PromoItemTextTime>
+                        <PromoItemTextSale className={styles.promoItemTextSale}>{t('sale')}</PromoItemTextSale>
+                        <PromoItemTextTime className={styles.promoItemTextTime}>03:12:34 {t('hours')}</PromoItemTextTime>
                     </div>
                     <div className={styles.promoItemOverlay}></div>
                 </PromoItemBackground>
@@ -273,7 +277,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const DetailMenu = () => {
         return (<DetailMenuStyle>
             <SubmenuTitle className={styles.detailMenuTitle}>
-                შემოთავაზებული კატეგორიები
+                {t('offeredCategories')}
             </SubmenuTitle>
             <Divider></Divider>
             <div >
@@ -308,7 +312,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                         </CloseBtnWrapper>
                     </SideBarTopSideWrapper>
                     <div className={styles.content}>
-                        <SideBarTitle className={styles['content-title']}>კატეგორიები</SideBarTitle>
+                        <SideBarTitle className={styles['content-title']}>{t('categories')}</SideBarTitle>
                         <HideInMobile>
                             <SidebarItems />
                         </HideInMobile>
@@ -341,7 +345,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
 
                         <div className={styles.content}>
                             <SubmenuTitle className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
-                            <SideBarSubMenuTitle className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
+                            <SideBarSubMenuTitle className={styles.submenuSubtitle}>{t('selectCategory')}</SideBarSubMenuTitle>
                             <SubmenuItems />
                         </div>
                     </SideBarWrapper>}
@@ -370,7 +374,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                 </CloseBtnWrapper>
                             </div>
                             <SubmenuTitle style={{marginBottom: "10px"}} className={styles.submenuTitle}>{selectedItemTitle}</SubmenuTitle>
-                            <SideBarSubMenuTitle style={{fontSize: '16px'}} className={styles.submenuSubtitle}>აირჩიე კატეგორია</SideBarSubMenuTitle>
+                            <SideBarSubMenuTitle style={{fontSize: '16px'}} className={styles.submenuSubtitle}>{t('selectCategory')}</SideBarSubMenuTitle>
                             <SidebarItemWrapper className={styles.itemsContainer}>
                                 {subMenuItems.map((item: any, index: number) =>
                                     <Link href={'/catalog/' + item.id} key={index}>
