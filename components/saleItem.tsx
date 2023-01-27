@@ -6,6 +6,10 @@ import styles from '../styles/Home.module.css';
 import Responsive from "../config/Responsive";
 import { useRouter } from 'next/router';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
+
 type Props = {
     imageUrl: string,
     style?: {[p: string]: string | number},
@@ -24,6 +28,8 @@ const SaleItem = ({ imageUrl, id, style, big=false, gradient=false }: Props) => 
         [styles.gradientOverlay]: gradient,
         
     });
+
+    const {t, i18n} = useTranslation();
 
     return (
         <>
@@ -44,7 +50,7 @@ const SaleItem = ({ imageUrl, id, style, big=false, gradient=false }: Props) => 
                         <FiPercent size={big? '3.2rem': '2.0rem'}/>
                     </div>
                 </div>
-                <span className={styles.labelText}>ფასდაკლება</span>
+                <span className={styles.labelText}>{t('sale')}</span>
             </div>
             </div>
         </>);
