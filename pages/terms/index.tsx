@@ -5,6 +5,9 @@ import Responsive from '../../config/Responsive';
 
 import { Breadcrumbs } from "../../components/styled/breadcrumbs";
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 const Grid = styled.div`
   /* display: grid; */
@@ -38,22 +41,24 @@ export const SectionTitle = styled.div`
 
 
 const Home: NextPage = () => {
+const {t, i18n} = useTranslation();
+
   return (
     <>
       <SectionTitle style={{ marginBottom: "1.7rem", fontSize: "3.2rem" }}>
-        წესები და პირობები
+        {t('search')}
       </SectionTitle>
       <Breadcrumbs style={{ marginBottom: "3.2rem" }}>
-        მთავარი / წესები და პირობები
+      {t('main')} / {t('search')}
       </Breadcrumbs>
       <div className={styles.column}>
-        <span className={styles.item}>წესები და პირობები</span>
-        <span className={styles.item}>ხშირად დასმული კითხვები</span>
-        <span className={styles.item}>დაბრუნების და გაცვლის პოლიტიკა</span>
-        <span className={styles.item}>კონფიდენციალურობა</span>
-        <span className={styles.item}>დახმარება</span>
-        <span className={styles.item}>MallMalle-ს შესახებ</span>
-        <span className={styles.item}>კონტაქტი</span>
+        <span className={styles.item}>{t('termsConditions')}</span>
+        <span className={styles.item}>{t('faq')}</span>
+        <span className={styles.item}>{t('returnPolicy')}</span>
+        <span className={styles.item}>{t('confidentiality')}</span>
+        <span className={styles.item}>{t('help')}</span>
+        <span className={styles.item}>{t('aboutMallmalle')}</span>
+        <span className={styles.item}>{t('contact')}</span>
       </div>
     </>
   );
