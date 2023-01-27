@@ -15,7 +15,8 @@ import { removeFromFavorite } from '../services/checkout-services';
 import { useRouter } from 'next/router';
 import { Alert, Snackbar } from "@mui/material";
 
-
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 
 const Favorites: React.FC<{}> = ({ }) => {
@@ -41,6 +42,7 @@ const Favorites: React.FC<{}> = ({ }) => {
 
     const [openModal, setOpenModal] = useState(false);
 
+    const {t, i18n} = useTranslation();
 
 
     return isFavoritesLoading ? <Loader /> : !favorite ? (<span>Not Fount Favorites</span>) : (
@@ -104,7 +106,7 @@ const Favorites: React.FC<{}> = ({ }) => {
 
 
 
-                    <FavoriteCount>სულ მოიძებნა: <span>{favorite.length} რჩეული</span></FavoriteCount>
+                    <FavoriteCount>{t('totalFound')}: <span>{favorite.length} {t('favourite')}</span></FavoriteCount>
                 </TopSideWrapper>
 
                 <Grid>
@@ -128,19 +130,23 @@ const Favorites: React.FC<{}> = ({ }) => {
                                 {/* TODO image from api */}
                                 <CartButton
                                     onClick={() => router.push(`/detail/${f.product.id}`)}
-                                >დეტალურად ნახვა</CartButton>
+                                >{t('seeInDetails')}</CartButton>
                                 <CartButtonDelete onClick={async () => {
                                         const result = await removeFromFavorite({
                                             productId: f.product.id,
                                         // variationId: item.variation_id,
                                         });
                                         await refetchFavorites();
-                                        setSnackMessage("პროდუქტი წარმატებით წაიშალა ფავორიტებიდან");
+                                        {i18next.language == 'en' ?
+                                        setSnackMessage("Product successfully removed from the favourites")
+                                        :
+                                        setSnackMessage("პროდუქტი წარმატებით წაიშალა ფავორიტებიდან")
+                                        }
                                         setOpenSnack(true);
                                         setsnackMsgStatus('success');
                                         // console.log('removeFromCart result:', result);
                                     }}
-                                >ფავორიტებიდან წაშლა</CartButtonDelete>
+                                >{t('removeFromFavourites')}</CartButtonDelete>
                             </ItemWrapper>
                         )
                     })}
