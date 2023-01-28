@@ -905,7 +905,7 @@ const Search: NextPage = () => {
             <HeadWrapperStyle>
 
                 <TopSideWrapper>
-                    <Heading>{t('searchResults')}</Heading>
+                    <Heading>ძებნის შედეგები</Heading>
                     <Quantity>{searchResults.total} {t('products')}</Quantity>
                 </TopSideWrapper>
                 <FilterWrapper>
