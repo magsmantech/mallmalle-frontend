@@ -575,6 +575,9 @@ const Item = ({ imgSrc, id, view, raiting, name, price, oldPrice, discountValue 
         }))
     }
 
+    const {t, i18n} = useTranslation();
+
+
     return (
 
         <>
