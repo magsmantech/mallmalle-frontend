@@ -862,23 +862,23 @@ const Search: NextPage = () => {
     const sortByArrayEn = [
         {
             value: 'popularity',
-            label: 'popularity'
+            label: 'Popularity'
         },
         {
             value: 'rating',
-            label: 'rating'
+            label: 'Rating'
         },
         {
             value: 'time',
-            label: 'time'
+            label: 'Time'
         },
         {
             value: 'discount',
-            label: 'discount'
+            label: 'Discount'
         },
         {
             value: '',
-            label: 'all'
+            label: 'All'
         },
     ];
 
