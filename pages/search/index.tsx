@@ -31,9 +31,6 @@ import Fonts from '../../styles/Fonts';
 import Raiting from '../../components/customStyle/Raiting';
 import Slider from '../../components/slider';
 
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
-
 const Heading = styled.h1`
     color: var(--text-color);
     font-size: 44px;
@@ -575,9 +572,6 @@ const Item = ({ imgSrc, id, view, raiting, name, price, oldPrice, discountValue 
         }))
     }
 
-    const {t, i18n} = useTranslation();
-
-
     return (
 
         <>
@@ -607,7 +601,7 @@ const Item = ({ imgSrc, id, view, raiting, name, price, oldPrice, discountValue 
                 <PriceTitleStyle className={styles.child}><Title >{name}</Title></PriceTitleStyle>
                 <div style={{ display: 'flex', alignItems: 'center' }} className={styles.child}>
                     <Raiting raitingCount={raiting} />
-                    <Count>{view} {t('seen')}</Count>
+                    <Count>{view} ნახვა</Count>
                 </div>
 
                 {hovered && <ItemButton
@@ -615,7 +609,7 @@ const Item = ({ imgSrc, id, view, raiting, name, price, oldPrice, discountValue 
                     onClick={() => alert("selected")}
                     onMouseOver={() => setHovered(true)}
                     onMouseLeave={() => setHovered(false)}
-                >{t('addInBasket')}</ItemButton>}
+                >კალათაში დამატება</ItemButton>}
                 {hovered && <ItemBackground />}
             </ItemWrapper>
             </Link>
@@ -779,15 +773,10 @@ const Search: NextPage = () => {
     const [startPrice, setStartPrice] = useState<string>(selectedPrices?.startValue ? selectedPrices?.startValue : "");
     const [endPrice, setEndPrice] = useState<string>(selectedPrices?.endValue ? selectedPrices?.endValue : "");
     const [sortBy, setsortBy] = useState<string>("");
-    const [sortByEn, setsortByEn] = useState<string>("");
     const [brandId, setbrandId] = useState<number>(0);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [otherFilterName, setotherFilterName] = useState<string>();
-    const [otherFilterNameEn, setotherFilterNameEn] = useState<string>();
     const [category_id, setcategory_id] = useState<number>(0);
-
-    const {t, i18n} = useTranslation();
-
 
     // reset current page
     useEffect(() => {
@@ -859,29 +848,6 @@ const Search: NextPage = () => {
         },
     ];
 
-    const sortByArrayEn = [
-        {
-            value: 'popularity',
-            label: 'Popularity'
-        },
-        {
-            value: 'rating',
-            label: 'Rating'
-        },
-        {
-            value: 'time',
-            label: 'Time'
-        },
-        {
-            value: 'discount',
-            label: 'Discount'
-        },
-        {
-            value: '',
-            label: 'All'
-        },
-    ];
-
     // update sortByTitle
     useEffect(() => {
         // sortBy title
@@ -889,24 +855,18 @@ const Search: NextPage = () => {
         setotherFilterName(sortByTitle?.label);
     }, [sortBy])
 
-    useEffect(() => {
-        // sortBy title
-        const sortByTitleEn = sortByArrayEn.find(x => x.value === sortByEn);
-        setotherFilterNameEn(sortByTitleEn?.label);
-    }, [sortByEn])
-
-    return MainLoader ? <Loader /> : !searchResults ? (<span>{t('totalFound')} 0 {t('products')}</span>) : (
+    return MainLoader ? <Loader /> : !searchResults ? (<span>მოიძებნა 0 პროდუქტი</span>) : (
         <>
 
             {openFilters && <div className={styles.overlay} onClick={() => setOpenFilters(false)}></div>}
             {/* {openFilters && <FilterSideBar onClose={() => setOpenFilters(false)} onEnter={() => setOpenFilters(false)} />} */}
-            <Breadcrumbs style={{ marginBottom: '2.0rem' }}>{t('main')} / {t('categories')} / {t('search')}</Breadcrumbs>
+            <Breadcrumbs style={{ marginBottom: '2.0rem' }}>მთავარი / კატეგორიები / ძებნა</Breadcrumbs>
 
             <HeadWrapperStyle>
 
                 <TopSideWrapper>
                     <Heading>ძებნის შედეგები</Heading>
-                    <Quantity>{searchResults.total} {t('products')}</Quantity>
+                    <Quantity>{searchResults.total} პროდუქტი</Quantity>
                 </TopSideWrapper>
                 <FilterWrapper>
 
@@ -950,7 +910,6 @@ const Search: NextPage = () => {
                         </DropDown>
                     </FilltersBox> */}
                     <FilltersBox>
-                    {i18next.language != "en" ?
                         <DropDown dropdownTitle={`${otherFilterName}`}>
                             <RadioButton
                                 id="low-id"
@@ -964,26 +923,11 @@ const Search: NextPage = () => {
                                 value={sortBy}
                             />
                         </DropDown>
-                            :
-                        <DropDown dropdownTitle={`${otherFilterNameEn}`}>
-                            <RadioButton
-                                id="low-id"
-                                onChange={(value) => [setsortByEn(value)]}
-                                options={[
-                                    ...sortByArrayEn.map((s, index) => ({
-                                        label: s.label,
-                                        value: s.value
-                                    }))
-                                ]}
-                                value={sortByEn}
-                            />
-                        </DropDown>
-                    }
                     </FilltersBox>
 
                     {getFilters?.data.brands ? (
                         <FilltersBox>
-                            <DropDown dropdownTitle={t('brand')}>
+                            <DropDown dropdownTitle="ბრენდი">
                                 <RadioButton
                                     id=""
                                     onChange={(value) => setbrandId(value)}
@@ -1002,7 +946,7 @@ const Search: NextPage = () => {
 
                     <FilltersBox>
                         <MoreFilterBtn onClick={() => setOpenModal(true)}>
-                        {t('moreFilters')}
+                            მეტი ფილტრი
                             <MoreFilterIconStyle />
                         </MoreFilterBtn>
                     </FilltersBox>
@@ -1014,7 +958,7 @@ const Search: NextPage = () => {
 
                             {getFilters?.data.categories ? (
                                 <>
-                                    <MediumTitle>{t('categories')}</MediumTitle>
+                                    <MediumTitle>კატეგორიები</MediumTitle>
                                     <FilterInnterWrapper>
                                         <RadioButton
                                             id={`category_id_${getFilters?.data.categories.map(c => c.id)}`}
@@ -1033,7 +977,7 @@ const Search: NextPage = () => {
 
                             {getFilters?.data.color_variations ? (
                                 <>
-                                    <MediumTitle>{t('color')}</MediumTitle>
+                                    <MediumTitle>ფერი</MediumTitle>
                                     <FilterInnterWrapper>
                                         <RadioButton
                                             id="color-id"
@@ -1052,7 +996,7 @@ const Search: NextPage = () => {
 
                             {getFilters?.data.size_variations ? (
                                 <>
-                                    <MediumTitle>{t('size')}</MediumTitle>
+                                    <MediumTitle>ზომა</MediumTitle>
                                     <FilterInnterWrapper>
                                         <RadioButton
                                             id="size-id"
@@ -1073,12 +1017,12 @@ const Search: NextPage = () => {
 
 
                             <SliderWrapperStyle>
-                                <MediumTitle style={{ marginBottom: '25px' }}>{t('price')}</MediumTitle>
+                                <MediumTitle style={{ marginBottom: '25px' }}>ფასი</MediumTitle>
                                 <Slider onChange={(e: any) => setSelectedPrices(e)} />
                             </SliderWrapperStyle>
 
-                            <BtnWithBorder onClick={clearFilterFields}>{t('remove')}</BtnWithBorder>
-                            <BtnWithBorder onClick={() => setOpenModal(false)}>{t('select')}</BtnWithBorder>
+                            <BtnWithBorder onClick={clearFilterFields}>გასუფთავება</BtnWithBorder>
+                            <BtnWithBorder onClick={() => setOpenModal(false)}>არჩევა</BtnWithBorder>
                         </Content>
                     </MainFilterComponent>}
                 </FilterWrapper>
