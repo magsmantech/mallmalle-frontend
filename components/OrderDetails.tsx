@@ -581,7 +581,7 @@ const OrderDetails: React.FC<{
                     {i18next.language == "ge"?
                     setaddressUpdatedMsg("გთხოვთ სცადოთ თავიდან ")
                     :
-                    setSnackMessage("Please try again")
+                    setSnackMessage("Please try again ")
                     }
                     setaddressSubmitBtn(false);
                     console.log("login error", error);

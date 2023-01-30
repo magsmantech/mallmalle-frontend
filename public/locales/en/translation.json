@@ -150,5 +150,7 @@
     "status": "Status",
     "pleaseCheck": "Please check your e-mail, we've sent you the password reset link",
     "successfullySent": "Password reset link sent successfully",
-    "backMain": "Go back"
+    "backMain": "Go back",
+    "changePassword": "Change password",
+    "mobilePhone": "Mobile phone"
 }

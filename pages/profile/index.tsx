@@ -33,6 +33,9 @@ import { Alert, Snackbar } from "@mui/material";
 import dayjs from "dayjs";
 import { WindowSharp } from "@mui/icons-material";
 require('dayjs/locale/ka');
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 
 
 type TabItemProps = {
@@ -550,6 +553,7 @@ const PersonalInfo = () => {
   const [modalShow, setModalShow] = useState(false);
   const [addAddressModalShow, setAddAddressModalShow] = useState(false);
 
+  const {t, i18n} = useTranslation();
 
   const makeAddressPrimary = (event: { currentTarget: { id: any; }; }) => {
     console.log(event.currentTarget.id);
@@ -582,14 +586,22 @@ const PersonalInfo = () => {
       await changePassword({ currentPassword: currentPassword, newPassword: newPassword })
       .then((res) => {
         console.log(res)
-        setSnackMessage("პაროლი წარმატებით შეიცვალა");
+        {i18next.language == "ge"?
+        setSnackMessage("პაროლი წარმატებით შეიცვალა")
+        :
+        setSnackMessage("Password successfully changed")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('success');
         setcurrentPassword("")
         setnewPassword("")
       }).catch((err) => {
         console.log(err)
-        setSnackMessage("გთხოვთ სცადოთ თავიდან !");
+        {i18next.language == "ge" ?
+        setSnackMessage("გთხოვთ სცადოთ თავიდან ")
+        :
+        setSnackMessage("Please try again ")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('error');
       })
@@ -607,7 +619,7 @@ const PersonalInfo = () => {
 
     const [updateStreet, setupdateStreet] = useState<string>(findAddress?.address_1 || "");
     const [updateCity, setupdateCity] = useState<string>(findAddress?.city || "");
-    const [updateCountry, setupdateCountry] = useState<string>("საქართველო");
+    const [updateCountry, setupdateCountry] = useState<string>("საქართველო/Georgia");
     const [updateState, setupdateState] = useState<string>(findAddress?.state || "");
     const [updateZipCode, setupdateZipCode] = useState<string>(findAddress?.zip || "");
     const [updateFullName, setupdateFullName] = useState<string>(findAddress?.full_name || "");
@@ -632,7 +644,11 @@ const PersonalInfo = () => {
         });
         setaddressSubmitBtn(true);
         // alert("form submited");
-        setSnackMessage("მისამართი წარმატები განახლდა");
+        {i18next.language == "ge"?
+        setSnackMessage("მისამართი წარმატებით განახლდა")
+        :
+        setSnackMessage("Address successfully updated")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('success');
         console.log(updateStreet + " " + updateCountry + " " + updateState + " " + updateCity + " " + updateZipCode + " " + updateAddresId);
@@ -641,7 +657,11 @@ const PersonalInfo = () => {
         setaddressSubmitBtn(false);
         console.log("login error", error);
         // alert("form not submited")
-        setSnackMessage("ვერ მოხერხდა მისამართის განახლება");
+        {i18next.language == "ge"?
+        setSnackMessage("ვერ მოხერხდა მისამართის განახლება!")
+        :
+        setSnackMessage("Couldnt update address")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('error');
       }
@@ -669,10 +689,11 @@ const PersonalInfo = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            მისამართის ჩასწორება {updateAddresId}
+          {t('editAddress')} {updateAddresId}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {i18next.language == "ge" ?
           <ModalContent>
             <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
             <TwoInputWrapper>
@@ -691,6 +712,26 @@ const PersonalInfo = () => {
 
 
           </ModalContent>
+          :
+          <ModalContent>
+            <InputStyle type="text" placeholder="Street" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+            <TwoInputWrapper>
+              <InputStyle type="text" placeholder="City" value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
+              <InputStyle type="text" placeholder="Country" value={updateCountry}/>
+            </TwoInputWrapper>
+            <InputStyle type="text" placeholder="Region" value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+            <InputStyle type="text" placeholder="Zip code" value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+            <InputStyle type="text" placeholder="Receiver" value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+
+            <AddressButton onClick={updateAddressPut}>
+            {t('edit')}
+            </AddressButton>
+
+            <DeleteAddressBtn onClick={deleteSelectedAddress}>{t('removeAddress')}</DeleteAddressBtn>
+
+
+          </ModalContent>
+          }
         </Modal.Body>
 
 
@@ -704,7 +745,7 @@ const PersonalInfo = () => {
 
     const [addAddressStreet, setAddAddressStreet] = useState<string>('');
     const [addAddressCity, setAddAddressCity] = useState<string>('');
-    const [addAddressCountry, setAddAddressCountry] = useState<string>('საქართველო');
+    const [addAddressCountry, setAddAddressCountry] = useState<string>('საქართველო/Georgia');
     const [addAddressState, setAddAddressState] = useState<string>('');
     const [addAddressZipCode, setAddAddressZipCode] = useState<string>('');
     const [addFullName, setAddFullName] = useState<string>('');
@@ -727,7 +768,11 @@ const PersonalInfo = () => {
 
         // window.location.reload();
         // alert("form submited");
-        setSnackMessage("მისამართი წარმატებით დაემატა");
+        {i18next.language == "ge"?
+        setSnackMessage("მისამართი წარმატებით დაემატა")
+        :
+        setSnackMessage("Addressed successfully added")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('success');
 
@@ -735,7 +780,11 @@ const PersonalInfo = () => {
       } catch (error) {
 
         // alert("form not submited")
-        setSnackMessage("ვერ მოხერხდა მისამართის დამატება!");
+        {i18next.language == "ge"?
+        setSnackMessage("ვერ მოხერხდა მისამართის დამატება!")
+        :
+        setSnackMessage("Couldn't add address")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('error');
       }
@@ -751,10 +800,11 @@ const PersonalInfo = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="add-address">
-            ახალი მისამართის დამატება
+          {t('addAddress')}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {i18next.language == "ge" ?
           <ModalContent>
             <InputStyle type="text" placeholder="ქუჩის სახელი / კორპუსი / სადარბაზო / ბინა" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
             <TwoInputWrapper>
@@ -770,13 +820,34 @@ const PersonalInfo = () => {
             </AddressButton>
 
           </ModalContent>
+          :
+          <ModalContent>
+            <InputStyle type="text" placeholder="Street" value={addAddressStreet} onChange={(e: any) => setAddAddressStreet(e.target.value)} />
+            <TwoInputWrapper>
+              <InputStyle type="text" placeholder="City" value={addAddressCity} onChange={(e: any) => setAddAddressCity(e.target.value)} />
+              <InputStyle type="text" placeholder="Country" value={addAddressCountry}/>
+            </TwoInputWrapper>
+            <InputStyle type="text" placeholder="Region" value={addAddressState} onChange={(e: any) => setAddAddressState(e.target.value)} />
+            <InputStyle type="text" placeholder="Zip code" value={addAddressZipCode} onChange={(e: any) => setAddAddressZipCode(e.target.value)} />
+            <InputStyle type="text" placeholder="Receiver" value={addFullName} onChange={(e: any) => setAddFullName(e.target.value)} />
+
+            <AddressButton onClick={addNewAddress}>
+            {t('add')}
+            </AddressButton>
+
+          </ModalContent>
+          }
         </Modal.Body>
       </BootstrapModalWrapper>
     );
   }
 
   const warningMessage = async () => {
-        setSnackMessage("სამზე მეტი მისამართის დამატება არ არის შესაძლებელი !");
+        {i18next.language?
+        setSnackMessage("სამზე მეტი მისამართის დამატება არ არის შესაძლებელი !")
+        :
+        setSnackMessage("Can't add more than three addresses")
+        }
         setOpenSnack(true);
         setsnackMsgStatus('error');
   };
@@ -800,14 +871,20 @@ const PersonalInfo = () => {
               <UserName className={styles.name}>
                 {profile.profile?.user.first_name} {profile.profile?.user.last_name}
               </UserName>
+              {i18next.language == "ge" ?
               <OrderNo className={styles.orderNo}>
-                რეგისტრაციის დრო: {dayjs(profile.profile?.user.created_at).locale('ka').format('DD / MMMM / YYYY')} წელი
+              {t('registrationDate')}: {dayjs(profile.profile?.user.created_at).locale('ka').format('DD / MMMM / YYYY')} წელი
               </OrderNo>
+              :
+              <OrderNo className={styles.orderNo}>
+              {t('registrationDate')}: {dayjs(profile.profile?.user.created_at).locale('en').format('DD / MMMM / YYYY')} Year
+              </OrderNo>
+              }
             </div>
           </HeaderStyle>
           <LogOutStyle onClick={_logOut} className={styles.logout}>
             <IoLogOutStyle />
-            <span>გასვლა</span>
+            <span>{t('logOut')}</span>
           </LogOutStyle>
         </GridItem>
         <GridItem
@@ -831,22 +908,29 @@ const PersonalInfo = () => {
             className={styles.addressTitle}
 
           >
-            პირადი ინფორმაცია
+            {t('personalInformation')}
           </AddressTitle>
           <LabelText className={styles.labels}>
-            ელ-ფოსტა
+            {t('email')}
           </LabelText>
           <InputWrapper >
+          {i18next.language == "ge" ?
             <InputModified
-              placeholder="ელ-ფოსტა"
+            placeholder="ელ-ფოსტა"
+            defaultValue={profile.profile?.user.email}
+            />
+            :
+            <InputModified
+              placeholder="E-mail"
               defaultValue={profile.profile?.user.email}
             />
+          }
             <InputIconWrapper>
               <EmailIconStyle />
             </InputIconWrapper>
           </InputWrapper>
           <LabelText className={styles.labels}>
-            მობილური ტელეფონი
+          {t('mobilePhone')}
           </LabelText>
           <InputWrapper>
             <InputModified
@@ -865,16 +949,24 @@ const PersonalInfo = () => {
             className={styles.addressTitle}
 
           >
-            პაროლის შეცვლა
+            {t('changePassword')}
           </ChangePassTitle>
           <InputWrapper >
+          {i18next.language == "ge" ?
             <InputModified placeholder="ძველი პაროლი" value={currentPassword} onChange={(e: any) => setcurrentPassword(e.target.value)}  />
+            :
+            <InputModified placeholder="Old password" value={currentPassword} onChange={(e: any) => setcurrentPassword(e.target.value)}  />
+          }
             <InputIconWrapper>
               <UnlockIconStyle />
             </InputIconWrapper>
           </InputWrapper>
           <InputWrapper>
+          {i18next.language == "ge" ?
             <InputModified placeholder="ახალი პაროლი" value={newPassword} onChange={(e: any) => setnewPassword(e.target.value)} />
+            :
+            <InputModified placeholder="New password" value={newPassword} onChange={(e: any) => setnewPassword(e.target.value)} />
+        }
             <InputIconWrapper> 
               <UnlockIconStyle />
             </InputIconWrapper>
@@ -889,7 +981,7 @@ const PersonalInfo = () => {
           <ButtonStyle onClick={changePasswordPost} disabled={currentPassword.trim().length <= 0 || newPassword.trim().length <= 0 ? true : false} >შეცვლა</ButtonStyle>
         </GridItem>
         <GridItem className={styles.gridItem}>
-          <AddressTitle className={styles.addressTitle}>მისამართი:</AddressTitle>
+          <AddressTitle className={styles.addressTitle}>{t('address')}:</AddressTitle>
 
           {profile.profile?.addresses.map((a, index) => (
             <AddressItem className={styles.addressItem}>
@@ -904,7 +996,7 @@ const PersonalInfo = () => {
                 <AddressStyle className={styles.address}>
                   {a.address_1}
                 </AddressStyle>
-                <ZipCodeStyle className={styles.zip}>ZIP კოდი: {a.zip}</ZipCodeStyle>
+                <ZipCodeStyle className={styles.zip}>{t('zipCode')}: {a.zip}</ZipCodeStyle>
               </AddressItemText>
 
             </AddressItem>
@@ -917,11 +1009,11 @@ const PersonalInfo = () => {
           />
           {addresses?.length != 3 ? (
           <AddressButton onClick={() => setAddAddressModalShow(true)}>
-            მისამართის დამატება
+            {t('addAddress')}
           </AddressButton>
           ):
           <AddressButton onClick={ () => warningMessage()}>
-            მისამართის დამატება
+            {t('addAddress')}
           </AddressButton>}
 
           <AddAddress
@@ -992,23 +1084,45 @@ const Profile: NextPage = () => {
 
 
   const tabTitles = ["პროფილი", "ყიდვის ისტორია", "რჩეულები",];
+  const tabTitlesEn = ["Profile", "Purchase history", "Favourites",];
+
 
   const tabIndicators = ["", " / ყიდვის ისტორია", " / რჩეულები", ""];
+  const tabIndicatorsEn = ["", " / Purchase history", " / Favourites", ""];
+
+
 
   const sectionTitles = [
     "პროფილი",
     "ყიდვის ისტორია",
     "რჩეულები",
   ];
+  const sectionTitlesEn = [
+    "Profile",
+    "Purchase history",
+    "Favourites"
+  ];
 
   return (
     <>
+      {i18next.language == "ge" ?
       <SectionTitleStyle>
         {sectionTitles[tabIndex]}
       </SectionTitleStyle>
+      :
+      <SectionTitleStyle>
+        {sectionTitlesEn[tabIndex]}
+      </SectionTitleStyle>
+      }
+      {i18next.language == "ge" ?
       <BreadcrumbsStyle>
         მთავარი / ჩემი პროფილი{tabIndicators[tabIndex]}
       </BreadcrumbsStyle>
+      :
+      <BreadcrumbsStyle>
+        Main / My Profile{tabIndicatorsEn[tabIndex]}
+      </BreadcrumbsStyle>
+      }
       {loadPage ? (
         <div className={styles.tabsWrapper}>
           <TabsWrapperStyle
@@ -1016,6 +1130,7 @@ const Profile: NextPage = () => {
             onSelect={(index) => setTabIndex(index)}
             style={{ width: "100%" }}
           >
+            {i18next.language == "ge" ?
             <TabItemList className={styles.tabList}>
               {tabTitles.map((item, i) => (
                 <TabStyle key={i}>
@@ -1023,6 +1138,15 @@ const Profile: NextPage = () => {
                 </TabStyle>
               ))}
             </TabItemList>
+            :
+            <TabItemList className={styles.tabList}>
+              {tabTitlesEn.map((item, i) => (
+                <TabStyle key={i}>
+                  <TabItem selected={tabIndex === i}>{item}</TabItem>
+                </TabStyle>
+              ))}
+            </TabItemList>
+            }
             <DividerStyle className={styles.divider}></DividerStyle>
 
             <div className={styles.tabPanels}>

@@ -10,6 +10,8 @@ import Responsive from "../config/Responsive"
 import { Order, } from '../domain/shop';
 import api from "../features/api";
 import Loader from "./Loader";
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 
 
@@ -63,6 +65,8 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
     const [statusID, setStatusID] = useState<number>(999);
 
+    const {t, i18n} = useTranslation();
+
     return isMyOrdersLoading ? (
         <Loader />
     ) : !myOrders ? (
@@ -73,25 +77,25 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                 <OrderListTopSideWrapper >
                     <OrderListTopSideInsideWrapper>
                         <ChipWrapper color={statusID === 1 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(1)}>
-                            <ChipTitle>დადასტურებული</ChipTitle>
+                        <ChipTitle>{t('confirmed')}</ChipTitle>
                         </ChipWrapper>
                         <ChipWrapper color={statusID === 3 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(3)}>
-                            <ChipTitle>პროცესში</ChipTitle>
+                            <ChipTitle>{t('inProcess')}</ChipTitle>
                         </ChipWrapper>
                         <ChipWrapper color={statusID === 2 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(2)}>
-                            <ChipTitle>გაუქმებული</ChipTitle>
+                            <ChipTitle>{t('cancelled')}</ChipTitle>
                         </ChipWrapper>
                         <ChipWrapper color={statusID === 4 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(4)}>
-                            <ChipTitle>გამოგზავნილი</ChipTitle>
+                            <ChipTitle>{t('sent')}</ChipTitle>
                         </ChipWrapper>
                         <ChipWrapper color={statusID === 5 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(5)}>
-                            <ChipTitle>მიღებული</ChipTitle>
+                            <ChipTitle>{t('received')}</ChipTitle>
                         </ChipWrapper>
                         <ChipWrapper color={statusID === 999 ? "#CBF5EC" : '#F2F2F2'} onClick={() => setStatusID(999)}>
-                            <ChipTitle>ყველა</ChipTitle>
+                            <ChipTitle>{t('all')}</ChipTitle>
                         </ChipWrapper>
                     </OrderListTopSideInsideWrapper>
-                    <SearchCount>სულ მოიძებნა: <SearchCountText>{myOrders.length} შეკვეთა</SearchCountText></SearchCount>
+                    <SearchCount>{t('totalFound')}: <SearchCountText>{myOrders.length} {t('orders')}</SearchCountText></SearchCount>
                 </OrderListTopSideWrapper>
 
                 {/* <Headers>
@@ -109,8 +113,12 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                             background: filteredStatus.status === 1 ? "rgba(34, 213, 174, .21)" : filteredStatus.status === 2 ? "rgba(213, 34, 34, .21)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, .21)" : filteredStatus.status === 4 ? "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)" : filteredStatus.status === 5 ? "rgba(34,139,34,0.63)" : "rgba(0,139,139,0.6)",
                             color: filteredStatus.status === 1 ? "#22D5AE" : filteredStatus.status === 2 ? "rgba(213, 34, 34, 1)" : filteredStatus.status === 3 ? "rgba(213, 213, 34, 1)" : filteredStatus.status === 4 ? "22D5AE" : filteredStatus.status === 5 ? "22D5AE" : "white"
                         }}>
+                            {i18next.language == "ge" ?
                             <StatusDiv>{filteredStatus.status === 1 ? "დადასტურებული" : filteredStatus.status === 2 ? "გაუქმებული" : filteredStatus.status === 3 ? "პროცესში" : filteredStatus.status === 4 ? "გამოგზავნილი" : filteredStatus.status === 5 ? "მიღებული" : "დაუსრულებელი"}</StatusDiv>
-                            <Money>თანხა: </Money>
+                            :
+                            <StatusDiv>{filteredStatus.status === 1 ? "Confirmed" : filteredStatus.status === 2 ? "Cancelled" : filteredStatus.status === 3 ? "In procees" : filteredStatus.status === 4 ? "Sent" : filteredStatus.status === 5 ? "Received" : "Unfinished"}</StatusDiv>
+                            }
+                            <Money>{t('total')}: </Money>
                             <MoneyCount>{filteredStatus.discounted_sub_total} ₾</MoneyCount>
                         </OrderWrapper>
                     </Link>
@@ -124,8 +132,12 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                 background: o.status === 1 ? "rgba(34, 213, 174, .21)" : o.status === 2 ? "rgba(213, 34, 34, .21)" : o.status === 3 ? "rgba(213, 213, 34, .21)" : o.status === 4 ? "linear-gradient(45deg, #22d2af 0%, #3885d1 100%)" : o.status === 5 ? "rgba(34,139,34,0.63)" : "rgba(0,139,139,0.6)",
                                 color: o.status === 1 ? "#22D5AE" : o.status === 2 ? "rgba(213, 34, 34, 1)" : o.status === 3 ? "rgba(213, 213, 34, 1)" : o.status === 4 ? "22D5AE" : o.status === 5 ? "22D5AE" : "white"
                             }}>
+                                {i18next.language == "ge" ?
                                 <StatusDiv>{o.status === 1 ? "დადასტურებული" : o.status === 2 ? "გაუქმებული" : o.status === 3 ? "პროცესში" : o.status === 4 ? "გამოგზავნილი" : o.status === 5 ? "მიღებული" : "დაუსრულებელი"}</StatusDiv>
-                                <Money>თანხა: </Money>
+                                :
+                                <StatusDiv>{o.status === 1 ? "Confirmed" : o.status === 2 ? "Cancelled" : o.status === 3 ? "In process" : o.status === 4 ? "Sent" : o.status === 5 ? "Received" : "Unfinished"}</StatusDiv>
+                                }
+                                <Money>{t('total')}: </Money>
                                 <MoneyCount>{o.discounted_sub_total} ₾</MoneyCount>
                             </OrderWrapper>
                         </Link>

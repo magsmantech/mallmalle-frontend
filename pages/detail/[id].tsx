@@ -611,7 +611,7 @@ const ProductDetails: NextPage = () => {
             {i18next.language == "ge" ?
               <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
               :
-              <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name_en}</span>
+              <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
             }
             </Breadcrumbs>
             <Title>{product?.product_name}</Title>
