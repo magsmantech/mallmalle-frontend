@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import styled from 'styled-components';
 
 
 type Props = {
@@ -44,17 +45,21 @@ const SaleItem = ({ imageUrl, id, style, big=false, gradient=false }: Props) => 
             }}>
             <img src={imageUrl} className={styles.saleItemImg}/>    
             <div className={styles.gradient}></div>
-            <div className={styles.label}>
+            <SaleText className={styles.label}>
                 <div className={styles.iconBackgroundSecond}>
                     <div className={styles.iconBackgroundFirst}>
                         <FiPercent size={big? '3.2rem': '2.0rem'}/>
                     </div>
                 </div>
                 <span className={styles.labelText}>{t('sale')}</span>
-            </div>
+            </SaleText>
             </div>
         </>);
 }
+
+const SaleText = styled.div`
+   padding-right: 130px!important;
+`;
 
 export default SaleItem;
 
