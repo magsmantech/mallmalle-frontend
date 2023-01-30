@@ -597,6 +597,9 @@ const OrderDetails: React.FC<{
                 // window.location.reload();
             }
 
+        const {t, i18n} = useTranslation();
+
+
             return  (
 
                 <BootstrapModalWrapper
@@ -612,15 +615,16 @@ const OrderDetails: React.FC<{
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                      {i18next.language == "ge" ?
                         <ModalContent>
-                            <UpdateInputStyle type="text" placeholder={t('street')} value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder="ქუჩა" value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
                             <TwoInputWrapper>
-                                <UpdateInputStyle type="text" placeholder={t('city')} value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
-                                <UpdateInputStyle type="text" placeholder={t('country')} value={updateCountry} />
+                                <UpdateInputStyle type="text" placeholder='ქალაქი' value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
+                                <UpdateInputStyle type="text" placeholder='ქვეყანა' value={updateCountry} />
                             </TwoInputWrapper>
-                            <UpdateInputStyle type="text" placeholder={t('region')} value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
-                            <UpdateInputStyle type="text" placeholder={t('zipCode')} value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
-                            <UpdateInputStyle type="text" placeholder={t('receiver')} value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder='რეგიონი' value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder='საფოსტო კოდი' value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder='მიმღების სახელი და გვარი' value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
 
 
                             <AddressButton onClick={updateAddressPut}>
@@ -631,6 +635,27 @@ const OrderDetails: React.FC<{
 
 
                         </ModalContent>
+                        :
+                        <ModalContent>
+                            <UpdateInputStyle type="text" placeholder='street' value={updateStreet} onChange={(e: any) => setupdateStreet(e.target.value)} />
+                            <TwoInputWrapper>
+                                <UpdateInputStyle type="text" placeholder='City' value={updateCity} onChange={(e: any) => setupdateCity(e.target.value)} />
+                                <UpdateInputStyle type="text" placeholder='Country' value={updateCountry} />
+                            </TwoInputWrapper>
+                            <UpdateInputStyle type="text" placeholder='Region' value={updateState} onChange={(e: any) => setupdateState(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder='Zip code' value={updateZipCode} onChange={(e: any) => setupdateZipCode(e.target.value)} />
+                            <UpdateInputStyle type="text" placeholder='Receiver' value={updateFullName} onChange={(e: any) => setupdateFullName(e.target.value)} />
+
+
+                            <AddressButton onClick={updateAddressPut}>
+                            {t('edit')}
+                            </AddressButton>
+
+                            <DeleteAddressBtn onClick={deleteSelectedAddress}>{t('removeAddress')}</DeleteAddressBtn>
+
+
+                        </ModalContent>
+                       }
                     </Modal.Body>
 
 
