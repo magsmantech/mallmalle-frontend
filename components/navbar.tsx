@@ -331,8 +331,9 @@ const Language = styled.div`
         width: 30px;
         margin-left: 20px;
         align-items: center;
+    //footer georgian flag bug fix
     ${Responsive.mobile} {
-        display: none;
+        margin-top: -1000px;   
     }
 `;
 
