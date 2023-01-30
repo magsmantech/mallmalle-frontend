@@ -939,13 +939,23 @@ const Catalog: NextPage = () => {
         ></div>
       )}
 
+      {i18next.language == "ge" ?
       <Breadcrumbs>
       {t('main')} / {t('categories')} / {category?.category_name}
       </Breadcrumbs>
+      :
+      <Breadcrumbs>
+      {t('main')} / {t('categories')} / {category?.category_name_en}
+      </Breadcrumbs>
+      }
 
       <HeadWrapperStyle>
         <TitileWrapper>
+          {i18next.language == "ge" ?
           <Heading>{category?.category_name}</Heading>
+          :
+          <Heading>{category?.category_name_en}</Heading>
+          }
           <Quantity>{productFilter.data.length} {t('products')}</Quantity>
         </TitileWrapper>
         <FilterWrapper>
