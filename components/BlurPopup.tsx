@@ -20,7 +20,7 @@ const BlurPopup: React.FC<{
 
         return close === true ? null : (
             <Wrapper>
-                <Scrollbar hide={true} />
+                {/* <Scrollbar hide={true} /> */}
                 <BlurStyle onClick={() => setClose(true)} />
                 <Content>
                     <BoldMessage>{boldMessage}</BoldMessage>
