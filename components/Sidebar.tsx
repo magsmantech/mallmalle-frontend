@@ -176,7 +176,12 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
     const mouseEnterItem = (index: number) => {
         const items = categories[index]?.childrens;
         const title = categories[index]?.category_name;
-        setSelectedItemTitle(title);
+        const titleEn = categories[index]?.category_name_en;
+        {i18next.language == "ge" ? 
+        setSelectedItemTitle(title)
+        :
+        setSelectedItemTitle(titleEn)
+        }
         if (!items) {
             setSubMenuItems([]);
             return;
@@ -241,7 +246,11 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                 {/* <IoWoman size={'2.5rem'} className={item.color} /> */}
                                 <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not found icon"}`} alt="item icon" />
                             </SidebarItemIconWrapper>
+                            {i18next.language == "ge" ?
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                            :
+                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name_en}</SideBarItemTitle>
+                            }
                         </SidebarItem>
                     </Link>
                 )}
@@ -264,8 +273,11 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                 {/* <FaTshirt size={'2.5rem'} className={item.color} /> */}
                                 <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                             </SidebarItemIconWrapper>
-
+                            {i18next.language == "ge" ?
                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                            :
+                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name_en}</SideBarItemTitle>
+                            }
                         </div>
                     </Link>
                 )}
@@ -280,6 +292,7 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                 {t('offeredCategories')}
             </SubmenuTitle>
             <Divider></Divider>
+            {i18next.language == "ge" ?
             <div >
                 {detailMenuItems.map((item: any, index: number) =>
                     <Link href={'/catalog/' + item.id} key={index}>
@@ -291,6 +304,19 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                     </Link>
                 )}
             </div>
+            :
+            <div >
+                {detailMenuItems.map((item: any, index: number) =>
+                    <Link href={'/catalog/' + item.id} key={index}>
+                        <MainTittleStyle
+                            onClick={() => onSidebarClose()}
+                            className={styles.detailMenuitem}>
+                            {item.category_name_en}
+                        </MainTittleStyle>
+                    </Link>
+                )}
+            </div>
+            }
             {/* <Button>ყველა კატეგორია</Button> */}
             <div className={styles.promoItemsWrapper}>
                 <PromoItem></PromoItem>
@@ -328,8 +354,12 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                             <SidebarItemIconWrapper className={styles.iconWrapper}>
                                                 <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not founc icon"}`} alt="item icon" />
                                             </SidebarItemIconWrapper>
+                                            {i18next.language == "ge" ?
                                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
-                                        </SidebarItem>
+                                            :
+                                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name_en}</SideBarItemTitle>
+                                            }
+                                            </SidebarItem>
                                     </div>
                                 )}
                         </SidebarItemWrapper>
@@ -384,8 +414,11 @@ const Sidebar = ({ onSidebarClose, categories }: Props) => {
                                             <SidebarItemIconWrapper className={styles.iconWrapper}>
                                                 <img className={styles.iconImgWrapper} src={uploadUrl + `${item.icon ? item.icon : "not found icon"}`} alt="item icon" />
                                             </SidebarItemIconWrapper>
-
+                                            {i18next.language == "ge" ?
                                             <SideBarItemTitle className={styles.itemTitle}>{item.category_name}</SideBarItemTitle>
+                                            :
+                                            <SideBarItemTitle className={styles.itemTitle}>{item.category_name_en}</SideBarItemTitle>
+                                            }
                                         </div>
                                     </Link>
                                 )}
