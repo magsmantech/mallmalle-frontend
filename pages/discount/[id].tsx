@@ -694,7 +694,15 @@ const ProductDetails: NextPage = () => {
             <Subtitle>
             {t('additionalInformation')}
             </Subtitle>
+            {i18next.language == "ge" ?
+            <>
             {product?.description && <Text>{ReactHtmlParser(product?.description)}</Text>}
+            </>
+            :
+            <>
+            {product?.description_en && <Text>{ReactHtmlParser(product?.description_en)}</Text>}
+            </>
+            }
           </DetailsWrapper>
         </DetailMainWrapper>
         <Snackbar

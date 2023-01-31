@@ -126,6 +126,7 @@ export type ProductData = {
   "max_price_discounted": number;
   "low_price_discounted": number;
   "product_name_en": string;
+  "description_en": string | null;
 }
 
 export type Product = {
