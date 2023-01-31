@@ -965,7 +965,7 @@ const Auth: NextPage = () => {
 
             <Title>{t('registration')}</Title>
             <Text>
-            {t('offeredCategories')}
+            {t('enterCredentials')}
             </Text>
             <form onSubmit={formik.handleSubmit}>
               <FormLayout>
