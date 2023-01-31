@@ -474,6 +474,7 @@ const SideBarWrapper = styled.div`
         }
         ${Responsive.mobile} {
             padding: 45px 24px;
+            height: 1500px;
         }
         ${Responsive.laptop} {
             width: 70vw;
@@ -569,6 +570,9 @@ const BackgroundShadow = styled.div`
     width: 100%;
         ${Responsive.tablet} {
             /* background-color: red; */
+        }
+        ${Responsive.mobile} {
+            position: fixed;
         }
 `;
 
