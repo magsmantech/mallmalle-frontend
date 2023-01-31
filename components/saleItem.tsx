@@ -59,9 +59,6 @@ const SaleItem = ({ imageUrl, id, style, big=false, gradient=false }: Props) => 
 
 const SaleText = styled.div`
    padding-right: 130px!important;
-   ${Responsive.mobile}{
-    padding-right: 30px!important;
-    }
 `;
 
 export default SaleItem;
