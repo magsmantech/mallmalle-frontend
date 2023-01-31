@@ -10,6 +10,9 @@ import { Breadcrumbs } from "../../components/styled/breadcrumbs";
 import ReactHtmlParser from "html-react-parser";
 import Responsive from "../../config/Responsive";
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 const Grid = styled.div`
   /* display: grid; */
   /* row-gap: 5.0rem; */
@@ -74,6 +77,9 @@ const TextPage: NextPage = () => {
 
   const { data, isLoading: isPageLoading } = api.useGetPageQuery(slug as string);
   const page = data?.data;
+  
+  const {t, i18n} = useTranslation();
+
   return isPageLoading ? (
     <span>იტვირთება..</span>
   ) : !page ? (
@@ -81,16 +87,16 @@ const TextPage: NextPage = () => {
     ) : (
     <>
       <SectionTitle style={{ marginBottom: "1.7rem", fontSize: "3.2rem" }}>
-        წესები და პირობები
+      {t('termsConditions')}
       </SectionTitle>
 
       <BreadcrumbsStyle style={{ marginBottom: "3.2rem" }}>
-        მთავარი / {page.title}
+      {t('main')} / {i18next.language == "ge" ? <>{page.title}</> : <>{page.title_en}</> }
       </BreadcrumbsStyle>
 
       {/* <Title style={{ marginBottom: "1.6rem" }}>{page.title}</Title> */}
 
-      {page.text && <Text>{ReactHtmlParser(page.text)}</Text>}
+      {page.text_en && <Text>{ReactHtmlParser(page.text_en)}</Text>}
 
       {/* <div className={styles.column}>
                 <span className={styles.item}>წესები და პირობები</span>

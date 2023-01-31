@@ -5,6 +5,8 @@ export type Page = {
   "text": string;// "<p>კონტაქტის ტექსტი</p>\r\n<p>&nbsp;</p>",
   "created_at": string;// "2022-05-10T08:58:00.000000Z",
   "updated_at": string;// "2022-05-10T13:33:30.000000Z",
+  "title_en": string;
+  "text_en": string;
 }
 
 export const roundToCents = (amount: number | undefined) => {
