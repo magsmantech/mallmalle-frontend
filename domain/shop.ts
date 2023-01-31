@@ -87,6 +87,7 @@ export type FilteredCategories = {
   id: number;
   category_name: string;
   icon: string;
+  category_name_en: string;
 }
 export type FilteredSizeVariations = {
   id: number;
@@ -96,6 +97,7 @@ export type FilteredColorVariations = {
   id: number;
   color_name: string;
   color: string;
+  color_name_en: string;
 }
 
 export type Subscribe = {
@@ -197,6 +199,7 @@ export type ColorVariation = {
   "id": 1;
   "color_name": string;// "წითელი";
   "color": string;// "#ff0000"
+  "color_name_en": string;
 };
 export type ProductVariation = {
   "id": number;// 3
@@ -491,6 +494,7 @@ export type Filters = {
         id: number;
         category_name: string;
         icon: string;
+        category_name_en: string;
       }
     ];
     size_variations: [
@@ -504,6 +508,7 @@ export type Filters = {
         id: number;
         color_name: string;
         color: string;
+        color_name_en: string;
       }
     ];
     brands: [

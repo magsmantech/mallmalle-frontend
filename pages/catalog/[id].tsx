@@ -1031,6 +1031,7 @@ const Catalog: NextPage = () => {
                 <>
                   <MediumTitle>{t('categories')}</MediumTitle>
                   <FilterInnterWrapper>
+                    {i18next.language == "ge" ?
                     <RadioButton
                       id={`category_id`}
                       onChange={(value) => setcategory_id(value)}
@@ -1042,6 +1043,19 @@ const Catalog: NextPage = () => {
                       ]}
                       value={category_id}
                     />
+                    :
+                    <RadioButton
+                      id={`category_id`}
+                      onChange={(value) => setcategory_id(value)}
+                      options={[
+                        ...categoryFilter.categories.map((c, index) => ({
+                          label: c.category_name_en,
+                          value: c.id
+                        })),
+                      ]}
+                      value={category_id}
+                    />
+                    }
                   </FilterInnterWrapper>
                 </>
               ) : null}
@@ -1050,6 +1064,7 @@ const Catalog: NextPage = () => {
                 <>
                   <MediumTitle>{t('color')}</MediumTitle>
                   <FilterInnterWrapper>
+                    {i18next.language == "ge" ?
                     <RadioButton
                       id="color-id"
                       onChange={(value) => setcolorVariationID(value)}
@@ -1061,6 +1076,19 @@ const Catalog: NextPage = () => {
                       ]}
                       value={colorVariationID}
                     />
+                    :
+                    <RadioButton
+                      id="color-id"
+                      onChange={(value) => setcolorVariationID(value)}
+                      options={[
+                        ...categoryFilter.color_variations.map((colorV, index) => ({
+                          label: colorV.color_name_en,
+                          value: colorV.id
+                        }))
+                      ]}
+                      value={colorVariationID}
+                    />
+                    }
                   </FilterInnterWrapper>
                 </>
               ) : null}
