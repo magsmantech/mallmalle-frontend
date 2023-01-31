@@ -80,13 +80,10 @@ const Footer = () => {
             <FooterWrapper className={styles.wrapper}>
                 <FooterColumn className={styles.column}>
                     <FirstColumn>
-                    {i18next.language == 'en' ?
+                    {i18next.language == "ge" ?
+                    <FooterGeoIcon src={'/assets/mallmalleGeoBlack.png'} className={styles.logo} />
+                    :
                     <FooterMainIcon src={'/assets/mallmalle.png'} className={styles.logo} />
-                    :null
-                    }
-                    {i18next.language == 'ge' ?
-                    <HeaderLogoTag src={'/assets/mallmalleGeoBlack.png'} className={styles.logo} />
-                    :null
                     }
                     {/* <LanguageSwitcherWrapper>
                                 <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
@@ -392,13 +389,21 @@ const Language = styled.div`
         align-items: center;
     }
 `;
-const HeaderLogoTag = styled.img`
+const FooterGeoIcon = styled.img`
+    width: 230px;
+    height: 170px;
+    margin-top: -45px;
+    margin-left: -5px;
+    margin-bottom: -45px;
         ${Responsive.mobile}{
             width: 220px;
             margin-right: -5px;
             height: 170px;
             margin-top: -60px;
             margin-bottom: -50px;
+        }
+        ${Responsive.laptop}{
+            width: 200px;
         }
 `;
 
