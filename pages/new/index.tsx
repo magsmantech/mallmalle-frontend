@@ -564,7 +564,11 @@ const Item = ({ imgSrc, id, discountValue }: any) => {
                     </PriceWrapperStyle>
                 ))} */}
 
+                {i18next.language == "ge" ?
                 <PriceTitleStyle className={styles.child}><Title >{productById.product_name}</Title></PriceTitleStyle>
+                :
+                <PriceTitleStyle className={styles.child}><Title >{productById.product_name_en}</Title></PriceTitleStyle>
+                }
 
                 {hovered && <ItemButton
                     className={styles.child}

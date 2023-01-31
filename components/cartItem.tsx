@@ -31,7 +31,11 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
     <ItemWrapper style={{ ...style }}>
       <ItemImg src={uploadUrl(imgUrl[0])} />
       <ItemTextWrapper>
+        {i18next.language == "ge" ?
         <ItemName>{product.product_name} {productItem[0].id}</ItemName>
+        :
+        <ItemName>{product.product_name_en} {productItem[0].id}</ItemName>
+        }
         <div><ItemLabel>{t('size')}:</ItemLabel> <ItemValue>{productItem[0].size_variation.size_name}</ItemValue></div>
         <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name}</ItemValue></div>
       </ItemTextWrapper>

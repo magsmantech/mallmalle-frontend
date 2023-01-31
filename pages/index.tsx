@@ -93,6 +93,7 @@ const Home: NextPage = () => {
       {t('offers')}</SectionTitle>
 
       {/* offers */}
+      {i18next.language == "ge" ?
       <DiscountItemContainerStyle>
         {DashboardData.data.offers.map((o, index) => {
           return (
@@ -108,6 +109,23 @@ const Home: NextPage = () => {
           )
         })}
       </DiscountItemContainerStyle>
+      :
+      <DiscountItemContainerStyle>
+        {DashboardData.data.offers.map((o, index) => {
+          return (
+            <DiscountItem
+              key={index}
+              name={o.product_name_en}
+              id={o.id}
+              price={o.discount.length >= 1 ? o.low_price_discounted : o.lowest_price}
+              oldPrice={o.discount.length >= 1 ? o.lowest_price : null}
+              currency="gel"
+              imageUrl={uploadUrl(o.decoded_images[0])}
+            />
+          )
+        })}
+      </DiscountItemContainerStyle>
+      }
       {/* offers */}
 
       <MiddleContainer className={styles.middleContainer}>
@@ -119,6 +137,7 @@ const Home: NextPage = () => {
       <SectionTitle onClick={() => {router.push(`/new`);}} className={styles.sectionTitle}>{t('newArrivals')}</SectionTitle>
 
       {/* new products */}
+      {i18next.language == "ge" ?
       <ItemsContainerStyle>
         {DashboardData.data.newAdded.slice(0, 12).map((n, index) => {
           return (
@@ -134,6 +153,23 @@ const Home: NextPage = () => {
           )
         })}
       </ItemsContainerStyle>
+      :
+      <ItemsContainerStyle>
+        {DashboardData.data.newAdded.slice(0, 12).map((n, index) => {
+          return (
+            <Item
+              key={index}
+              name={n.product_name_en}
+              id={n.id}
+              price={n.discount.length >= 1 ? n.low_price_discounted : n.lowest_price}
+              oldPrice={n.discount.length >= 1 ? n.lowest_price : null}
+              currency="gel"
+              imageUrl={uploadUrl(n.decoded_images[0])}
+            />
+          )
+        })}
+      </ItemsContainerStyle>
+      }
       {/* new products */}
 
 

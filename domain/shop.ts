@@ -71,6 +71,7 @@ export type Category = {
   category_name: string;// "ქალი"
   icon: string | null;// null
   childrens?: Category[] | null;
+  category_name_en: string;
 }
 export type Brands = {
   brand_name: string;
@@ -124,6 +125,7 @@ export type ProductData = {
   "rating": number;
   "max_price_discounted": number;
   "low_price_discounted": number;
+  "product_name_en": string;
 }
 
 export type Product = {
@@ -348,6 +350,7 @@ export type OrderProduct = {
   "decoded_images": [] | string;
   rating: number;
   views: number;
+  product_name_en: string;
 }
 export type Order = {
   id: number;
@@ -388,6 +391,7 @@ export type NewAdded = {
   highest_price: string;
   max_price_discounted: number;
   low_price_discounted: number;
+  product_name_en: string;
 }
 
 export type Offers = {
@@ -402,6 +406,7 @@ export type Offers = {
   highest_price: string;
   max_price_discounted: number;
   low_price_discounted: number;
+  product_name_en: string;
 }
 
 export type DashboardData = {
@@ -422,6 +427,7 @@ export type Recommended = {
   lowest_price: string;
   highest_price: string;
   discount: Discount[];
+  product_name_en: string;
 }
 export type FilteredProduct = {
   current_page: number;
@@ -447,6 +453,7 @@ export type FilteredProductData = {
   decoded_images: [] | string;
   lowest_price: string;
   highest_price: string;
+  product_name_en: string;
 }
 export type FilteredProductLinks = {
   url: string;

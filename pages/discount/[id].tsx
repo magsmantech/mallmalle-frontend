@@ -620,10 +620,14 @@ const ProductDetails: NextPage = () => {
               {i18next.language == "ge" ?
               <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
               :
-              <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name}</span>
+              <span style={{ fontWeight: 500 }}> {product?.categories?.[0]?.category_name_en}</span>
               }
             </BreadcrumbsStyle>
+            {i18next.language == "ge" ?
             <Title>{product?.product_name}</Title>
+            :
+            <Title>{product?.product_name_en}</Title>
+            }
             <RevieStartWrapper>
               {product?.rating ? (
                 <Raiting raitingCount={product?.rating} />
@@ -714,6 +718,7 @@ const ProductDetails: NextPage = () => {
       <Grid>
         {recommended.map((r, index) => (
           <GridChild key={index}>
+            {i18next.language == "ge" ?
             <Item
               id={r.id}
               name={r.product_name}
@@ -722,6 +727,16 @@ const ProductDetails: NextPage = () => {
               currency="gel"
               imageUrl={uploadUrl(r.decoded_images[0])}
             />
+            :
+            <Item
+              id={r.id}
+              name={r.product_name_en}
+              price={r.lowest_price}
+              oldPrice={''}
+              currency="gel"
+              imageUrl={uploadUrl(r.decoded_images[0])}
+            />
+          }
           </GridChild>
         ))}
       </Grid>

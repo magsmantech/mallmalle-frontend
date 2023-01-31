@@ -126,7 +126,11 @@ const Favorites: React.FC<{}> = ({ }) => {
                         // console.log("first " + imgUrl);
                         return (
                             <ItemWrapper key={index}>
+                                {i18next.language == "ge" ?
                                 <Item name={f.product.product_name} id={f.product.id} price={f.product.lowest_price} oldPrice='' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>
+                                :
+                                <Item name={f.product.product_name_en} id={f.product.id} price={f.product.lowest_price} oldPrice='' currency='gel' imageUrl={uploadUrl(imgUrl[0])}></Item>
+                                }
                                 {/* TODO image from api */}
                                 <CartButton
                                     onClick={() => router.push(`/detail/${f.product.id}`)}

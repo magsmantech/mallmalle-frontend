@@ -592,7 +592,11 @@ const Item = ({ product }: { product: ProductData }) => {
             className={styles.child}
 
           >
+            {i18next.language == "ge" ?
             <Title>{product.product_name}</Title>
+            :
+            <Title>{product.product_name_en}</Title>
+            }
             {/* / შავი ზედა... */}
           </ItemTitleStyle>
           <div

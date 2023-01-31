@@ -1084,13 +1084,12 @@ const Search: NextPage = () => {
                 </FilterWrapper>
             </HeadWrapperStyle>
 
-
+            {i18next.language == "ge" ?
             <Grid style={{ marginBottom: "80px" }}>
                 {searchResults?.data.length < 1 ? (<SearchCount></SearchCount>) : (
                     searchResults.data.map((p, index) => {
 
                         // console.log(p.discount[0]?.value)
-
                         return (
                             <Item key={index}
                                 id={p.id}
@@ -1105,6 +1104,28 @@ const Search: NextPage = () => {
                     })
                 )}
             </Grid>
+            :
+            <Grid style={{ marginBottom: "80px" }}>
+                {searchResults?.data.length < 1 ? (<SearchCount></SearchCount>) : (
+                    searchResults.data.map((p, index) => {
+
+                        // console.log(p.discount[0]?.value)
+
+                        return (
+                            <Item key={index}
+                                id={p.id}
+                                price={p.discount.length >= 1 ? p.low_price_discounted : p.lowest_price}
+                                oldPrice={p.discount.length >= 1 ? p.lowest_price : null}
+                                view={p.views}
+                                name={p.product_name_en}
+                                discountValue={p.discount[0]?.value}
+                                raiting={p.rating}
+                                imgSrc={uploadUrl(p.decoded_images[0])}></Item>
+                        )
+                    })
+                )}
+            </Grid>
+            }
 
 
             <CustomPaginationWrapper>

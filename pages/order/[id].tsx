@@ -132,7 +132,11 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
                                 <ItemWrapper>
                                     <ItemImg src={uploadUrl(imgUrl[0])} />
                                     <ItemTextWrapper>
+                                        {i18next.language == "ge" ?
                                         <ItemName>{o.product.product_name}</ItemName>
+                                        :
+                                        <ItemName>{o.product.product_name_en}</ItemName>
+                                        }
                                         <div><ItemLabel>{t('size')}:</ItemLabel><ItemValue> {o.variation.size_variation.size_name}</ItemValue></div>
                                         <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{o.variation.color_variation.color_name}</ItemValue></div>
                                     </ItemTextWrapper>
