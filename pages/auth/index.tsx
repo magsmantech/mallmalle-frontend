@@ -1022,7 +1022,7 @@ const Auth: NextPage = () => {
                 <IconWrapper><EyeIcon width={'2.62rem'} /></IconWrapper>
               </PasswordInputWrapper> */}
                 <PasswordInputWrapperTest
-                  placeholder={t('offeredCategories')}
+                  placeholder={t('password')}
                   id="password"
                   name="password"
                   value={formik.values.password}
