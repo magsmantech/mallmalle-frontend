@@ -56,10 +56,20 @@ const Subtitle = styled.span`
   font-family: "helvetica";
 `;
 
-const Text = styled.span`
+const Text = styled.div`
   color: var(--text-color);
-  font-size: 1.8rem;
+  font-size: 1.25rem;
   font-family: "helvetica";
+  span, li {
+    font-family: "helvetica" !important;
+    color: #333;
+  }
+  li {
+    margin-bottom: 1rem!important;
+  }
+  p {
+    margin-bottom: 1rem;
+  }
     ${Responsive.laptop}{
       font-size: 20px;
     }
@@ -95,7 +105,7 @@ const TextPage: NextPage = () => {
       </BreadcrumbsStyle>
 
       {/* <Title style={{ marginBottom: "1.6rem" }}>{page.title}</Title> */}
-      {page.text_en && <div dangerouslySetInnerHTML={{ __html: i18next.language == "ge" ? page.text : page.text_en }} />}
+      {page.text_en && <Text dangerouslySetInnerHTML={{ __html: i18next.language == "ge" ? page.text : page.text_en }} />}
 
       {/* {page.text_en && <Text>{ReactHtmlParser(i18next.language == "ge" ? page.text : page.text_en)}</Text>} */}
 
