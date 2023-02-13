@@ -74,7 +74,7 @@ const Navbar: React.FC<{
                     <Language>
 
                     <div onClick={toggleLanguage}>
-                    {i18next.language == 'en' ?
+                    {i18next.language === 'ge' ?
                         <GeoFlagStyle />
                         :
                         <UsFlagStyle />

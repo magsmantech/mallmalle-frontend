@@ -87,7 +87,7 @@ const TextPage: NextPage = () => {
     ) : (
     <>
       <SectionTitle style={{ marginBottom: "1.7rem", fontSize: "3.2rem" }}>
-      {t('termsConditions')}
+      {i18next.language == "ge" ? <>{page.title}</> : <>{page.title_en}</> }
       </SectionTitle>
 
       <BreadcrumbsStyle style={{ marginBottom: "3.2rem" }}>
@@ -95,8 +95,9 @@ const TextPage: NextPage = () => {
       </BreadcrumbsStyle>
 
       {/* <Title style={{ marginBottom: "1.6rem" }}>{page.title}</Title> */}
+      {page.text_en && <div dangerouslySetInnerHTML={{ __html: i18next.language == "ge" ? page.text : page.text_en }} />}
 
-      {page.text_en && <Text>{ReactHtmlParser(page.text_en)}</Text>}
+      {/* {page.text_en && <Text>{ReactHtmlParser(i18next.language == "ge" ? page.text : page.text_en)}</Text>} */}
 
       {/* <div className={styles.column}>
                 <span className={styles.item}>წესები და პირობები</span>
