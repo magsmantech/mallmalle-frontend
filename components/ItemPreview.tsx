@@ -9,14 +9,48 @@ type TabImageProps = {
 
 type Props = {
     images: string[],
+    mainImage: string,
+    setMainImage: () => void
 };
 
+const ItemPreview = ({ images, mainImage, setMainImage }: Props) => {
+
+    const [selected, setSelected] = useState(0);
+
+    const _imageSelected = (index: number, imageString: string) => {
+        setSelected(index);
+        setMainImage(imageString)
+    }
+    return (
+        <>
+            <Wrapper>
+                <TabsWrapper>
+                    {images.map((image, index) =>
+                        <TabImage 
+                          src={images.length <= 1 ? image : uploadUrl(image)} 
+                          key={index} 
+                          selected={index === selected} 
+                          onClick={() => _imageSelected(index, image)} />
+                    )}
+                </TabsWrapper>
+                <ImageWrapperDiv>
+                    <SelectedImage 
+                      src={mainImage ? 'https://mallmalle-images.s3.eu-central-1.amazonaws.com/' + mainImage : uploadUrl(images[selected])} />
+                </ImageWrapperDiv>
+            </Wrapper>
+        </>
+    )
+}
+
+export default ItemPreview;
+
+
 const Wrapper = styled.div`
-    display: flex;
-    height: 100%;
-        ${Responsive.mobile} {
-            flex-direction: column-reverse;
-        }
+  display: flex;
+  height: 100%;
+    ${Responsive.mobile} {
+        flex-direction: column-reverse;
+    }
 `;
 
 
@@ -78,29 +112,3 @@ const ImageWrapperDiv = styled.div`
     width: 100%;
     height: 100%;
 `;
-
-
-const ItemPreview = ({ images }: Props) => {
-
-    const [selected, setSelected] = useState(0);
-
-    const _imageSelected = (index: number) => {
-        setSelected(index);
-    }
-    return (
-        <>
-            <Wrapper>
-                <TabsWrapper>
-                    {images.map((image, index) =>
-                        <TabImage src={images.length <= 1 ? image : uploadUrl(image)} key={index} selected={index === selected} onClick={() => _imageSelected(index)} />
-                    )}
-                </TabsWrapper>
-                <ImageWrapperDiv>
-                    <SelectedImage src={images.length <= 1 ? images[selected] : uploadUrl(images[selected])} />
-                </ImageWrapperDiv>
-            </Wrapper>
-        </>
-    )
-}
-
-export default ItemPreview;

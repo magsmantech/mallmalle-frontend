@@ -39,156 +39,7 @@ import i18next from 'i18next';
 type ButtonProps = {
   secondary?: boolean;
 };
-const Section = styled.section`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-    ${Responsive.tablet}{
-      flex-direction: column;
-    }
-    ${Responsive.mobile}{
-      flex-direction: column;
-    }
-`;
-const DetailMainWrapper = styled.div`
-  flex-basis: 40%;
-  margin-left: 45px;
-    ${Responsive.tablet} {
-      flex-basis: 100%;
-      margin-left: 150px;
-      margin-top: 30px;
-    }
-    ${Responsive.mobile}{
-      margin-left: 0px;
-      margin-top: 25px;
-    }
-    ${Responsive.laptop}{
-      margin-left: 30px;
-    }
-`;
-const DetailsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
-const ItemPreviewWrapper = styled.div`
-  flex-basis: 60%;
-  ${Responsive.tablet} {
-    flex-basis: 100%;
-  }
-  ${Responsive.laptop} {
-    margin-top: 5px;
-  }
-`;
-
-const Title = styled.h1`
-  color: var(--text-color);
-  font-size: 44px;
-  font-family: fira-go;
-    ${Responsive.mobile}{
-      font-size: 32px;
-    }
-    ${Responsive.laptop} {
-      font-size: 29px;
-      margin-top: -4px;
-    }
-`;
-
-const Price = styled(Title)`
-  font-size: 44px;
-  margin-right: 15px;
-  &::before {
-    content: "";
-  }
-  ${Responsive.mobile}{
-    font-size: 32px;
-  }
-  ${Responsive.laptop}{
-    font-size: 28px;
-    margin-top: -8px;
-  }
-`;
-
-const OldPrice = styled(Price)`
-  font-size: 24px;
-  margin-top: 2px;
-  opacity: 0.4;
-  text-decoration: line-through;
-    ${Responsive.mobile}{
-      font-size: 18px;
-      margin-top: 5px;
-    }
-    ${Responsive.laptop}{
-      margin-top: -10px;
-      font-size: 16px;
-    }
-`;
-
-const Label = styled.span`
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 700;
-  font-family: "helvetica";
-  margin-bottom: 25px;
-    ${Responsive.mobile}{
-      font-size: 14px;
-      margin-bottom: 17px;
-    }
-`;
-const SelectSizeLabel = styled.div`
-  color: var(--text-color);
-  font-size: 16px;
-  font-weight: 700;
-  font-family: "helvetica";
-  margin-bottom: 25px;
-    ${Responsive.mobile}{
-        font-size: 14px;
-        margin-bottom: 17px;
-      }
-      ${Responsive.laptop}{
-        font-size: 11px;
-      }
-`;
-
-const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4rem;
-  grid-gap: 10px;
-  width: 100%;
-  margin-bottom: 40px;
-      ${Responsive.mobile}{
-        display: flex;
-        justify-content: space-between;
-          button {
-            &:first-child {
-              width: 100%;
-            }
-          }
-      }
-      ${Responsive.laptop}{
-        height: 35px;
-          button {
-            &:first-child {
-              width: 100%;
-              height: 100%;
-            }
-          }
-        margin-top: -15px;
-      }
-`;
-
-const BreadcrumbsStyle = styled(Breadcrumbs)`
-    ${Responsive.laptop}{
-        margin-top: 4px;
-        font-size: 11px;
-      }
-`;
-const ButtonStyle = styled(Button)`
-    ${Responsive.laptop}{
-        height: 50px!important;
-        border-radius: 10px;
-      }
-`;
 // const Button = styled.button`
 //   display: inline-flex;
 //   height: 8.0rem;
@@ -204,151 +55,6 @@ const ButtonStyle = styled(Button)`
 //   cursor: pointer;
 // `;
 
-const Subtitle = styled.span`
-  color: var(--text-color);
-  font-weight: bold;
-  font-size: 18px;
-  font-family: "helvetica";
-  margin-bottom: 20px;
-  ${Responsive.laptop}{
-    font-size: 12px;
-    margin-bottom: 5px;
-    font-weight: bolder;
-  }
-`;
-
-const Text = styled.span`
-  color: var(--text-color);
-  font-size: 18px;
-  margin-bottom: 15px;
-  font-family: "helvetica";
-  ${Responsive.laptop} {
-    font-size: 12px;
-    font-weight: 400;
-  }
-`;
-
-const SectionTitle = styled.div`
-  color: var(--text-color);
-  font-family: "BPG WEB 002 CAPS";
-  /* text-transform: uppercase;
-  font-feature-settings: "case" on; */
-  font-size: 24px;
-  margin-top: 140px;
-  :hover{
-    cursor: pointer;
-  }
-      ${Responsive.mobile}{
-        margin-top: 50px;
-      }
-`;
-
-const Grid = styled.section`
-  margin-top: 50px;
-  overflow-x: scroll;
-  padding-bottom: 20px;
-  border-radius: 14px;
-  display: flex;
-`;
-const GridChild = styled.div`
-  margin: 0px 30px;
-  min-width: 280px;
-      &:first-child {
-        margin-left: 0px;
-      }
-      &:last-child {
-        margin-right: 0px;
-      }
-    ${Responsive.tablet} {
-      min-width: 250px;
-      margin: 0px 20px;
-    }
-    ${Responsive.mobile} {
-      min-width: 170px;
-      margin: 0px 10px;
-    }
-    ${Responsive.laptop} {
-      min-width: 155px;
-    }
-`;
-
-const RevieStartWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  ${Responsive.laptop} {
-    margin-top: 12px;
-  }
-`;
-const DetailCount = styled(Count)`
-  font-size: 16px;
-  margin-left: 15px;
-  line-height: 15px;
-  margin-top: 2px;
-  font-family: ${Fonts.FiraGORegular};
-    ${Responsive.mobile}{
-      margin-left: 10px;
-    }
-    ${Responsive.laptop}{
-      margin-left: 8px;
-      font-size: 10px;
-      margin-top: -2px;
-      font-weight: 400;
-    }
-`;
-const PriceWrapperStyle = styled.div`
-  display: flex;
-  margin-bottom: 35px;
-`;
-const SelectSizeWrapper = styled.div`
-  margin-top: 35px;
-  margin-bottom: 44px;
-    ${Responsive.mobile}{
-      margin-bottom: 25px;
-      margin-top: 25px;
-    }
-    ${Responsive.laptop}{
-      margin-top: 20px;
-    }
-`;
-const BagIconStyle = styled(BagIcon)`
-  width: 30px;
-  margin-right: 25px;
-    ${Responsive.mobile}{
-      width: 25px;
-      margin-right: 10px;
-    }
-    ${Responsive.laptop}{
-      width: 20px;
-    }
-`;
-const BsBookmarkPlusFillStyle = styled(BsBookmarkPlusFill)`
-  width: 26px;
-  height: 25px;
-  ${Responsive.laptop}{
-    width: 18px;
-    height: 18px;
-  }
-`;
-const AddCartButton = styled(Button)`
-  width: 77px;
-  height: 77px;
-    ${Responsive.mobile}{
-      min-width: 64px;
-      height: 64px;
-    }
-    ${Responsive.laptop}{
-      width: 52px;
-      height: 52px;
-      border-radius: 9px;
-    }
-`;
-
-
-
-
-
 const ProductDetails: NextPage = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -356,6 +62,7 @@ const ProductDetails: NextPage = () => {
   const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<ProductVariationDetail[]>([]);
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
+  const [mainImage, setMainImage] = useState('')
 
   const [disableFavoriteBtn, setdisableFavoriteBtn] = useState(false);
 
@@ -556,8 +263,10 @@ const ProductDetails: NextPage = () => {
 
 
   const _colorSelected = (e: any) => {
-    // console.log('color selected:', e);
+    const image:any = product?.variants.find(item => item.id === e)?.sizes[0].image
     setSelectedColorId(e);
+    setMainImage(image)
+    console.log(e, image, 'Aba es ra aris?')
     setSelectedSizeId(undefined);
   };
 
@@ -593,7 +302,10 @@ const ProductDetails: NextPage = () => {
     <>
       <Section>
         <ItemPreviewWrapper>
-          <ItemPreview images={images} />
+          <ItemPreview 
+            images={images} 
+            mainImage={mainImage}
+            setMainImage={setMainImage} />
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>
@@ -754,3 +466,295 @@ const ProductDetails: NextPage = () => {
   );
 };
 export default ProductDetails;
+
+const Section = styled.section`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+    ${Responsive.tablet}{
+      flex-direction: column;
+    }
+    ${Responsive.mobile}{
+      flex-direction: column;
+    }
+`;
+const DetailMainWrapper = styled.div`
+  flex-basis: 40%;
+  margin-left: 45px;
+    ${Responsive.tablet} {
+      flex-basis: 100%;
+      margin-left: 150px;
+      margin-top: 30px;
+    }
+    ${Responsive.mobile}{
+      margin-left: 0px;
+      margin-top: 25px;
+    }
+    ${Responsive.laptop}{
+      margin-left: 30px;
+    }
+`;
+const DetailsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ItemPreviewWrapper = styled.div`
+  flex-basis: 60%;
+  ${Responsive.tablet} {
+    flex-basis: 100%;
+  }
+  ${Responsive.laptop} {
+    margin-top: 5px;
+  }
+`;
+
+const Title = styled.h1`
+  color: var(--text-color);
+  font-size: 44px;
+  font-family: fira-go;
+    ${Responsive.mobile}{
+      font-size: 32px;
+    }
+    ${Responsive.laptop} {
+      font-size: 29px;
+      margin-top: -4px;
+    }
+`;
+
+const Price = styled(Title)`
+  font-size: 44px;
+  margin-right: 15px;
+  &::before {
+    content: "";
+  }
+  ${Responsive.mobile}{
+    font-size: 32px;
+  }
+  ${Responsive.laptop}{
+    font-size: 28px;
+    margin-top: -8px;
+  }
+`;
+
+const OldPrice = styled(Price)`
+  font-size: 24px;
+  margin-top: 2px;
+  opacity: 0.4;
+  text-decoration: line-through;
+    ${Responsive.mobile}{
+      font-size: 18px;
+      margin-top: 5px;
+    }
+    ${Responsive.laptop}{
+      margin-top: -10px;
+      font-size: 16px;
+    }
+`;
+
+const Label = styled.span`
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "helvetica";
+  margin-bottom: 25px;
+    ${Responsive.mobile}{
+      font-size: 14px;
+      margin-bottom: 17px;
+    }
+`;
+const SelectSizeLabel = styled.div`
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "helvetica";
+  margin-bottom: 25px;
+    ${Responsive.mobile}{
+        font-size: 14px;
+        margin-bottom: 17px;
+      }
+      ${Responsive.laptop}{
+        font-size: 11px;
+      }
+`;
+
+const ButtonWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 4rem;
+  grid-gap: 10px;
+  width: 100%;
+  margin-bottom: 40px;
+      ${Responsive.mobile}{
+        display: flex;
+        justify-content: space-between;
+          button {
+            &:first-child {
+              width: 100%;
+            }
+          }
+      }
+      ${Responsive.laptop}{
+        height: 35px;
+          button {
+            &:first-child {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        margin-top: -15px;
+      }
+`;
+
+const BreadcrumbsStyle = styled(Breadcrumbs)`
+    ${Responsive.laptop}{
+        margin-top: 4px;
+        font-size: 11px;
+      }
+`;
+const ButtonStyle = styled(Button)`
+    ${Responsive.laptop}{
+        height: 50px!important;
+        border-radius: 10px;
+      }
+`;
+
+const Subtitle = styled.span`
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 18px;
+  font-family: "helvetica";
+  margin-bottom: 20px;
+  ${Responsive.laptop}{
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-weight: bolder;
+  }
+`;
+
+const Text = styled.span`
+  color: var(--text-color);
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-family: "helvetica";
+  ${Responsive.laptop} {
+    font-size: 12px;
+    font-weight: 400;
+  }
+`;
+
+const SectionTitle = styled.div`
+  color: var(--text-color);
+  font-family: "BPG WEB 002 CAPS";
+  /* text-transform: uppercase;
+  font-feature-settings: "case" on; */
+  font-size: 24px;
+  margin-top: 140px;
+  :hover{
+    cursor: pointer;
+  }
+      ${Responsive.mobile}{
+        margin-top: 50px;
+      }
+`;
+
+const Grid = styled.section`
+  margin-top: 50px;
+  overflow-x: scroll;
+  padding-bottom: 20px;
+  border-radius: 14px;
+  display: flex;
+`;
+const GridChild = styled.div`
+  margin: 0px 30px;
+  min-width: 280px;
+      &:first-child {
+        margin-left: 0px;
+      }
+      &:last-child {
+        margin-right: 0px;
+      }
+    ${Responsive.tablet} {
+      min-width: 250px;
+      margin: 0px 20px;
+    }
+    ${Responsive.mobile} {
+      min-width: 170px;
+      margin: 0px 10px;
+    }
+    ${Responsive.laptop} {
+      min-width: 155px;
+    }
+`;
+
+const RevieStartWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  ${Responsive.laptop} {
+    margin-top: 12px;
+  }
+`;
+const DetailCount = styled(Count)`
+  font-size: 16px;
+  margin-left: 15px;
+  line-height: 15px;
+  margin-top: 2px;
+  font-family: ${Fonts.FiraGORegular};
+    ${Responsive.mobile}{
+      margin-left: 10px;
+    }
+    ${Responsive.laptop}{
+      margin-left: 8px;
+      font-size: 10px;
+      margin-top: -2px;
+      font-weight: 400;
+    }
+`;
+const PriceWrapperStyle = styled.div`
+  display: flex;
+  margin-bottom: 35px;
+`;
+const SelectSizeWrapper = styled.div`
+  margin-top: 35px;
+  margin-bottom: 44px;
+    ${Responsive.mobile}{
+      margin-bottom: 25px;
+      margin-top: 25px;
+    }
+    ${Responsive.laptop}{
+      margin-top: 20px;
+    }
+`;
+const BagIconStyle = styled(BagIcon)`
+  width: 30px;
+  margin-right: 25px;
+    ${Responsive.mobile}{
+      width: 25px;
+      margin-right: 10px;
+    }
+    ${Responsive.laptop}{
+      width: 20px;
+    }
+`;
+const BsBookmarkPlusFillStyle = styled(BsBookmarkPlusFill)`
+  width: 26px;
+  height: 25px;
+  ${Responsive.laptop}{
+    width: 18px;
+    height: 18px;
+  }
+`;
+const AddCartButton = styled(Button)`
+  width: 77px;
+  height: 77px;
+    ${Responsive.mobile}{
+      min-width: 64px;
+      height: 64px;
+    }
+    ${Responsive.laptop}{
+      width: 52px;
+      height: 52px;
+      border-radius: 9px;
+    }
+`;

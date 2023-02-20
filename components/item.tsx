@@ -20,6 +20,60 @@ type PriceProps = {
   currency?: string;
 };
 
+const CurrencyMap: any = {
+  gel: "₾",
+  usd: "$",
+};
+
+const getCcySymbol = (ccy: string): string => {
+  return ccy && CurrencyMap[ccy] ? CurrencyMap[ccy] : ccy;
+};
+
+const SaleItem = ({
+  imageUrl,
+  id,
+  style,
+  price,
+  oldPrice,
+  name,
+  currency = "gel",
+}: Props) => {
+  const wrapperClasses = classNames({
+    [styles.itemImage]: true,
+  });
+
+  const changeLocation = ()=>{
+    window.location.replace(`/detail/${id}`);
+ }
+  return (
+    <>
+        <Link href={`/detail/${id}`}>
+          <a>
+            {/* <ItemImage backgroundImage={imageUrl}></ItemImage> */}
+            <ProductItemImgWrapper className={styles.productItemImgWrapper}>
+              <img src={imageUrl} className={styles.productItemImg} />
+            </ProductItemImgWrapper>
+            <ProductTextWrapper>
+              <Price currency={currency}>
+                {price} {CurrencyMap[currency]}
+              </Price>
+              <Price old currency={currency}>
+                {oldPrice == null ? null : (
+                  <>
+                    {oldPrice} {CurrencyMap[currency]}
+                  </>
+                )}
+              </Price>
+            </ProductTextWrapper>
+            <Title>{name}</Title>
+          </a>
+        </Link>
+    </>
+  );
+};
+
+export default SaleItem;
+
 const Span = styled.span`
   /* font-family: 'BPG WEB 002 Caps'; */
   /* font-weight: bold; */
@@ -97,54 +151,3 @@ const ProductTextWrapper = styled.div`
       margin: 5px 0px;
     }
 `;
-
-const CurrencyMap: any = {
-  gel: "₾",
-  usd: "$",
-};
-
-const getCcySymbol = (ccy: string): string => {
-  return ccy && CurrencyMap[ccy] ? CurrencyMap[ccy] : ccy;
-};
-
-const SaleItem = ({
-  imageUrl,
-  id,
-  style,
-  price,
-  oldPrice,
-  name,
-  currency = "gel",
-}: Props) => {
-  const wrapperClasses = classNames({
-    [styles.itemImage]: true,
-  });
-  const changeLocation = ()=>{
-    window.location.replace(`/detail/${id}`);
- }
-  return (
-    <>
-        <Wrapper onClick={changeLocation}>
-          {/* <ItemImage backgroundImage={imageUrl}></ItemImage> */}
-          <ProductItemImgWrapper className={styles.productItemImgWrapper}>
-            <img src={imageUrl} className={styles.productItemImg} />
-          </ProductItemImgWrapper>
-          <ProductTextWrapper>
-            <Price currency={currency}>
-              {price} {CurrencyMap[currency]}
-            </Price>
-            <Price old currency={currency}>
-              {oldPrice == null ? null : (
-                <>
-                  {oldPrice} {CurrencyMap[currency]}
-                </>
-              )}
-            </Price>
-          </ProductTextWrapper>
-          <Title>{name}</Title>
-        </Wrapper>
-    </>
-  );
-};
-
-export default SaleItem;

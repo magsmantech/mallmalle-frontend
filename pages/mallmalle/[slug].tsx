@@ -62,7 +62,7 @@ const Text = styled.div`
   font-family: "helvetica";
   span, li {
     font-family: "helvetica" !important;
-    color: #333;
+    /* color: #333; */
   }
   li {
     margin-bottom: 1rem!important;

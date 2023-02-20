@@ -72,14 +72,13 @@ const Navbar: React.FC<{
                         <LanguageSwitcherStyle languages={[ 'EN', 'GEO']} />
                     </LanguageSwitcherWrapper> */}
                     <Language>
-
-                    <div onClick={toggleLanguage}>
-                    {i18next.language === 'ge' ?
-                        <GeoFlagStyle />
-                        :
-                        <UsFlagStyle />
-                    }
-                    </div>
+                      <div onClick={toggleLanguage}>
+                        {i18next.language === 'ge' ?
+                            <GeoFlagStyle />
+                            :
+                            <UsFlagStyle />
+                        }
+                      </div>
                     </Language>
                     {/* <div className={styles.ItemWrappers}><Toggle on="₾" off="$" onCheckChange={(val: boolean) => setChecked(val)} checked={checked} /></div> */}
                     {/* <Link href='/auth'><BiUser size={"3.2rem"} color={"white"} style={{ cursor: 'pointer', marginLeft: '2.4rem' }} /></Link> */}
@@ -327,14 +326,15 @@ const GeoFlagStyle = styled(GeoFlag)`
     }
 `;
 const Language = styled.div`
-        display: block;
-        width: 30px;
-        margin-left: 20px;
-        align-items: center;
+  display: block;
+  width: 30px;
+  margin-left: 20px;
+  align-items: center;
+  cursor: pointer;
     //footer georgian flag bug fix
-    ${Responsive.mobile} {
-        margin-top: -1000px;   
-    }
+  ${Responsive.mobile} {
+    margin-top: -1000px;   
+  }
 `;
 
 export default Navbar

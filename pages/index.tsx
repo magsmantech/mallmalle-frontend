@@ -90,7 +90,8 @@ const Home: NextPage = () => {
       </DividerWrapperStyle>
 
       <SectionTitle onClick={() => {router.push(`/discounts`);}} className={styles.sectionTitle}>
-      {t('offers')}</SectionTitle>
+        {t('offers')}
+      </SectionTitle>
 
       {/* offers */}
       {i18next.language == "ge" ?
@@ -134,7 +135,11 @@ const Home: NextPage = () => {
         ))}
       </MiddleContainer>
 
-      <SectionTitle onClick={() => {router.push(`/new`);}} className={styles.sectionTitle}>{t('newArrivals')}</SectionTitle>
+      <SectionTitle 
+        onClick={() => {router.push(`/new`)}} 
+        className={styles.sectionTitle}>
+          {t('newArrivals')}
+      </SectionTitle>
 
       {/* new products */}
       {i18next.language == "ge" ?
