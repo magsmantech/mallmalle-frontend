@@ -206,17 +206,26 @@ export type ColorVariation = {
   "color_name_en": string;
 };
 export type ProductVariation = {
-  "id": number;// 3
-  "product_id": number;// 1
-  "title": string;// "ტანის სამოსი XL";
-  "price": string;// "1";
-  "image": string;// "product-variations\/March2022\/NoFhETlt3HhYNfqKehv6.webp";
-  "quantity": number;// 5
-  "product_sku": string | null;
-  "size_variation": SizeVariation;
-  "color_variation": ColorVariation;
-  "images_decoded": string[]
+  id: number;
+  product_id: number;
+  color_name: string;
+  title: string;
+  price: string;
+  quantity: number;
+  product_sku: string | null;
+  title_en: string;
+  views: number;
+  images_decoded: string[];
+  size_variation: VarSize;
+  color: string;
+  color_variation: VariationColors;
+  sizes: VariationSize[];
 };
+
+export type VarSize = {
+  id: number;
+  size_name: string;
+}
 
 /**
  * 
@@ -353,6 +362,7 @@ export type OrderProduct = {
   updated_at: string;
   variation_id: number;
   quantity: number;
+  main_image: string;
   product: OrderProduct;
   max_price_discounted: number;
   low_price_discounted: number;
@@ -394,6 +404,7 @@ export type NewAdded = {
   created_at: string;
   description: string;
   images: [] | string;
+  main_image: string;
   decoded_images: [] | string;
   discount: Discount[] | [];
   lowest_price: string;

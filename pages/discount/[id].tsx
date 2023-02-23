@@ -398,14 +398,15 @@ const ProductDetails: NextPage = () => {
           const sizesArray = data.variations.map(
             (item: any) => item.size_variation
           );
-          const imagesArray = data.variations.map((item: any) => item.image);
           setColors(colorsArray);
           setSizes(sizesArray);
-          setImages([...images, ...imagesArray]);
+          
           // auto-select first color
           _colorSelected(colorsArray[0]?.id);
           console.log('colorsArray', colorsArray);
-
+          setImages((prevState) => (
+            [...data.variations[0].images_decoded]
+          ));
           return;
         }
         if (data.images) {
@@ -602,7 +603,7 @@ const ProductDetails: NextPage = () => {
     <>
       <Section>
         <ItemPreviewWrapper>
-          <ItemPreview images={images} />
+          <ItemPreview images={images} mainImage="asd" setMainImage={() => {}} />
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>

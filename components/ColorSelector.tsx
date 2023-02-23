@@ -10,7 +10,7 @@ type Props = {
     gap?: string;
     style?: { [s: string]: any },
     onColorSelected?: Function,
-    defaultSelected?: string | number;
+    defaultSelected?: number | null;
 };
 
 type ItemProps = {
@@ -67,7 +67,7 @@ const Item = styled.div`
         }
 `;
 
-const ColorSelector = ({ colors, style = {}, small, gap, onColorSelected, defaultSelected = 0 }: Props) => {
+const ColorSelector = ({ colors, style = {}, small, gap, onColorSelected, defaultSelected }: Props) => {
 
     const [selected, setSelected] = useState(defaultSelected);
 

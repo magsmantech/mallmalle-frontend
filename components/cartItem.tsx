@@ -36,7 +36,7 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
         :
         <ItemName>{product.product_name_en} {productItem[0].id}</ItemName>
         }
-        <div><ItemLabel>{t('size')}:</ItemLabel> <ItemValue>{productItem[0].size_variation.size_name}</ItemValue></div>
+        <div><ItemLabel>{t('size')}:</ItemLabel> <ItemValue>{ productItem[0].size_variation.size_name }</ItemValue></div>
         {i18next.language == "ge" ?
         <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name}</ItemValue></div>
         :
