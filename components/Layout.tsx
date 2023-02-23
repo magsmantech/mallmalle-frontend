@@ -131,14 +131,21 @@ export default function Layout({ children }: any) {
       {showFeedback && <Feedback className={feedbackClasses} />}
       {openSidebar && <Sidebar onSidebarClose={_closeSidebar} categories={categories} />}
 
-      {isCartLoading || isFavoritesLoading ? <Loader /> : !cart || !favorites ? (<span>Not Found</span>) : (
+      {/* {isCartLoading || isFavoritesLoading ? <Loader /> : !cart || !favorites ? (<span>Not Found</span>) : (
 
         <Navbar
           cart={cart}
           favorite={favorites}
           onSidebarOpen={_openSidebar}
           displayName={displayName}
-        />)}
+        />)} */}
+
+        {isCartLoading || isFavoritesLoading ? <Loader /> : <Navbar
+          cart={cart}
+          favorite={favorites}
+          onSidebarOpen={_openSidebar}
+          displayName={displayName}
+        /> }
 
       <h1>{cart?.items?.length}</h1>
       <CategoriesContext.Provider value={categories}>

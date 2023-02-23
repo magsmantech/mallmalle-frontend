@@ -70,11 +70,11 @@ const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: 
     return (
         <>
             <Wrapper style={{...style}}>
-                {sizes?.map((s, i)=>
-                    <Item key={i}
-                        selected={selected===s.id}
-                        onClick={()=>_sizeSelected(s.id)}>
-                        {s.size_variation.size_name}
+                {sizes?.map((item, index)=>
+                    <Item key={index}
+                        selected={selected===item.id}
+                        onClick={()=>_sizeSelected(item.id)}>
+                        {item.size_variation.size_name}
                     </Item>
                 )}
             </Wrapper>

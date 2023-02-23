@@ -1127,7 +1127,7 @@ const Search: NextPage = () => {
                                 name={p.product_name}
                                 discountValue={p.discount[0]?.value}
                                 raiting={p.rating}
-                                imgSrc={uploadUrl(p.decoded_images[0])}></Item>
+                                imgSrc={uploadUrl(p.main_image)}></Item>
                         )
                     })
                 )}
@@ -1148,7 +1148,7 @@ const Search: NextPage = () => {
                                 name={p.product_name_en}
                                 discountValue={p.discount[0]?.value}
                                 raiting={p.rating}
-                                imgSrc={uploadUrl(p.decoded_images[0])}></Item>
+                                imgSrc={uploadUrl(p.main_image)}></Item>
                         )
                     })
                 )}

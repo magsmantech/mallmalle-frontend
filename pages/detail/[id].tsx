@@ -63,6 +63,8 @@ const ProductDetails: NextPage = () => {
   const [sizes, setSizes] = useState<ProductVariationDetail[]>([]);
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
   const [mainImage, setMainImage] = useState('')
+  const [variationId, setVariationId] = useState(null)
+  // const [se]
 
   const [disableFavoriteBtn, setdisableFavoriteBtn] = useState(false);
 
@@ -103,19 +105,31 @@ const ProductDetails: NextPage = () => {
         const { data } = res;
         setProduct(data);
         //
+        setVariationId(data.variations[0].id)
+        const imagesArray = data.variations
+          .filter((item: any) => item.id === 63)[0].images_decoded;
+
+        
+
         if (data?.variations?.length) {
+
+          console.log(imagesArray, variationId)
+          setImages((prevState) => (
+            [...data.variations[0].images_decoded]
+          ));
+          
           const colorsArray = data.variations.map(
             (item: any) => item.color_variation
           );
           const sizesArray = data.variations.map(
             (item: any) => item.size_variation
           );
-          const imagesArray = data.variations.map((item: any) => item.image);
+          
           setColors(colorsArray);
           setSizes(sizesArray);
-          setImages([...images, ...imagesArray]);
+          
           // auto-select first color
-          _colorSelected(colorsArray[0]?.id);
+          // _colorSelected(colorsArray[0]?.id);
           // console.log('colorsArray', colorsArray);
 
           return;
@@ -141,7 +155,17 @@ const ProductDetails: NextPage = () => {
       .catch((err) => {
         // console.log(err);
       });
-  }, [id]);
+  }, [id])
+
+  useEffect(() => {
+    if(variationId) {
+      const images: any = product?.variations.find(item => item.id === variationId)?.images_decoded
+      const sizes: any = product?.variations.find(item => item.id === variationId)?.size_variation
+      setImages(images)
+      setSelectedColorId(variationId)
+      setSizes(sizes)
+    }
+  }, [variationId])
 
   const _addToCart = async () => {
     if (!authData?.profile?.user) {
@@ -196,41 +220,6 @@ const ProductDetails: NextPage = () => {
     }
 };
 
-
-  // const _showFeedback = () => {
-  //   if (!authData?.profile?.user) {
-  //     // alert("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
-  //     setSnackMessage("კალათაში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
-  //     setOpenSnack(true);
-  //     setsnackMsgStatus('info');
-  //     return;
-  //   }
-  //   // console.log("test", product);
-  //   // dispatch(
-  //   //   showFeedback({ show: true }),
-  //   // );
-  //   if (product?.variants) {
-  //     console.log(selectedColorId, selectedSizeId);
-  //     const variation = product?.variants?.find(
-  //       (item: any) =>
-  //       (item.color_variation.id =
-  //         selectedColorId && item.size_variation.id === selectedSizeId)
-  //     );
-  //     console.log('var', variation);
-  //     if (product && variation) {
-  //       // TODO use api.getAddToCartMutation()
-  //       addToCart(product.id, variation.id, 1).then(({ data }) => {
-  //         // alert(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
-  //         refetchCart();
-  //         setSnackMessage(data.success || data.error || "მოხდა შეცდომა. გთხოვთ, სცადოთ მოგვიანებით.");
-  //         setOpenSnack(true);
-  //         setsnackMsgStatus(data.success ? 'success' : data.error ? "error" : "info");
-  //       });
-  //     }
-  //   }
-  // };
-
-
   const _showFavoriteFeedback = () => {
     if (!authData?.profile?.user) {
       // alert("ფავორიტებში დასამატებლად, გთხოვთ დარეგისტრირდეთ.");
@@ -263,9 +252,11 @@ const ProductDetails: NextPage = () => {
 
 
   const _colorSelected = (e: any) => {
+    setVariationId(e)
     const image:any = product?.variants.find(item => item.id === e)?.sizes[0].image
     setSelectedColorId(e);
     setMainImage(image)
+    
     console.log(e, image, 'Aba es ra aris?')
     setSelectedSizeId(undefined);
   };
@@ -302,10 +293,10 @@ const ProductDetails: NextPage = () => {
     <>
       <Section>
         <ItemPreviewWrapper>
-          <ItemPreview 
+          {product && <ItemPreview 
             images={images} 
             mainImage={mainImage}
-            setMainImage={setMainImage} />
+            setMainImage={setMainImage} />}
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>
@@ -366,8 +357,8 @@ const ProductDetails: NextPage = () => {
               <>
                 {/* <Label>აირჩიე ფერი: </Label> */}
                 <ColorSelector
-                  colors={product?.variants}
-                  defaultSelected={colors[0]?.id}
+                  colors={product?.variations}
+                  defaultSelected={variationId}
                   gap={"20px"}
                   onColorSelected={(event: any) => _colorSelected(event)}
                 />
@@ -433,7 +424,6 @@ const ProductDetails: NextPage = () => {
         </Alert>
       </Snackbar>
 
-
       <SectionTitle onClick={() => {router.push(`/discounts`);}}>
       {t('recommended')}
       </SectionTitle>
@@ -447,7 +437,7 @@ const ProductDetails: NextPage = () => {
               id={r.id}
               oldPrice={''}
               currency="gel"
-              imageUrl={uploadUrl(r.decoded_images[0])}
+              imageUrl={uploadUrl(r.main_image)}
             />
             :
             <Item
@@ -456,7 +446,7 @@ const ProductDetails: NextPage = () => {
               id={r.id}
               oldPrice={''}
               currency="gel"
-              imageUrl={uploadUrl(r.decoded_images[0])}
+              imageUrl={uploadUrl(r.main_image)}
             />
           }
           </GridChild>

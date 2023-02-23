@@ -122,6 +122,7 @@ export type ProductData = {
   "discount": Discount[];
   "categories": Category[];
   "decoded_images": [] | string;
+  "main_image": string;
   "lowest_price": string;
   "highest_price": string;
   "views": number;
@@ -155,6 +156,7 @@ export type Discount = {
   "value": number;// 10
   "background_image": string;// "discounts\/March2022\/9wS4Qsr9kTWivOi0OZjs.png";
   "on_slider": 1 | 0;
+  "main_image": string;
   "decoded_images": [] | string;
   "created_at": Date;// "2022-03-08T15: 54: 26.000000Z";
   "updated_at": Date;// "2022-03-08T15: 54: 26.000000Z";
@@ -213,6 +215,7 @@ export type ProductVariation = {
   "product_sku": string | null;
   "size_variation": SizeVariation;
   "color_variation": ColorVariation;
+  "images_decoded": string[]
 };
 
 /**

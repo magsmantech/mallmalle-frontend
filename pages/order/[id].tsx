@@ -124,13 +124,13 @@ const OrdersList: React.FC<{ userInfo: Order }> = ({ userInfo }) => {
 
 
                 {orderDetail.order_items.map((o, index) => {
-                    var imgUrl = o.product.decoded_images;
+                    var imgUrl = o.product.main_image;
 
                     return (
                         <ItemFlexWrapper key={index}>
                             <ItemWrapperStyle>
                                 <ItemWrapper>
-                                    <ItemImg src={uploadUrl(imgUrl[0])} />
+                                    <ItemImg src={uploadUrl(imgUrl)} />
                                     <ItemTextWrapper>
                                         {i18next.language == "ge" ?
                                         <ItemName>{o.product.product_name}</ItemName>

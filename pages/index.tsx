@@ -105,10 +105,11 @@ const Home: NextPage = () => {
               price={o.discount.length >= 1 ? o.low_price_discounted : o.lowest_price}
               oldPrice={o.discount.length >= 1 ? o.lowest_price : null}
               currency="gel"
-              imageUrl={uploadUrl(o.decoded_images[0])}
+              imageUrl={uploadUrl(o.main_image)}
             />
           )
         })}
+        
       </DiscountItemContainerStyle>
       :
       <DiscountItemContainerStyle>
@@ -121,11 +122,13 @@ const Home: NextPage = () => {
               price={o.discount.length >= 1 ? o.low_price_discounted : o.lowest_price}
               oldPrice={o.discount.length >= 1 ? o.lowest_price : null}
               currency="gel"
-              imageUrl={uploadUrl(o.decoded_images[0])}
+              imageUrl={uploadUrl(o.main_image)}
             />
           )
         })}
+        {/* {JSON.stringify(DashboardData.data.offers)} */}
       </DiscountItemContainerStyle>
+      
       }
       {/* offers */}
 
@@ -153,7 +156,7 @@ const Home: NextPage = () => {
               price={n.discount.length >= 1 ? n.low_price_discounted : n.lowest_price}
               oldPrice={n.discount.length >= 1 ? n.lowest_price : null}
               currency="gel"
-              imageUrl={uploadUrl(n.decoded_images[0])}
+              imageUrl={uploadUrl(n.main_image)}
             />
           )
         })}
@@ -169,7 +172,7 @@ const Home: NextPage = () => {
               price={n.discount.length >= 1 ? n.low_price_discounted : n.lowest_price}
               oldPrice={n.discount.length >= 1 ? n.lowest_price : null}
               currency="gel"
-              imageUrl={uploadUrl(n.decoded_images[0])}
+              imageUrl={uploadUrl(n.main_image)}
             />
           )
         })}

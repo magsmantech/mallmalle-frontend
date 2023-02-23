@@ -12,7 +12,7 @@ import { BsBookmark } from "react-icons/bs";
 
 import Image from 'next/image'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 // import IconWrapper from '../utilities/IconWrapper';
 import User from '../public/icons/react-icons/user';
@@ -47,14 +47,23 @@ const Navbar: React.FC<{
 }) => {
 
         const [checked, setChecked] = useState(false);
+        const [isLoading, setIsLoading] = useState(false);
         const { loggedIn } = useSelector((state: RootState) => state.auth);
 
         const toggleLanguage = async () => {
-            {i18next.language == 'en' ? i18next.changeLanguage('ge') : i18next.changeLanguage('en')}
-              window.location.reload();
+            // window.location.reload();
+            setIsLoading(true)
+            i18next.language == 'en' ? i18next.changeLanguage('ge') : i18next.changeLanguage('en')
           };
 
         const {t, i18n} = useTranslation();
+
+        useEffect(() => {
+            const interval = setTimeout(() => setIsLoading(false), 1500)
+            return () => {
+                clearTimeout(interval)
+            }
+        }, [isLoading])
 
 
         return (
@@ -109,28 +118,37 @@ const Navbar: React.FC<{
                             {/* <BsBookmark size={"3.2rem"} color={"white"} /> */}
                             <BookmarkIcon />
                             <ItemLabel>{t('favourites')}</ItemLabel>
-                            {loggedIn === false ? null : (
+                            {/* {loggedIn === false ? null : (
                                 favorite.length <= 0 ? null : favorite.length == undefined ? null : (
                                     <FavoriteCount>{favorite.length}</FavoriteCount>
                                 )
-                            )}
+                            )} */}
+                            {/* {JSON.stringify(favorite)} */}
+
+                            {loggedIn ? (
+                                favorite && favorite.length ? (
+                                    <FavoriteCount>{favorite.length}</FavoriteCount>
+                                ) : null
+                            ) : null}
                         </ItemWrapper>
                     </Link>
                     {/* } */}
-                    {loggedIn === false ? null : (
+                    {loggedIn === true ? (
                         <Link href='/cart'>
                             <ItemWrapper >
                                 {/* <AiOutlineShoppingCart size={"3.2rem"} color={"white"} /> */}
                                 <CartIconStyle />
                                 <ItemLabel>{t('cart')}</ItemLabel>
-                                {loggedIn === true ? (
-                                    cart.items?.length <= 0 || cart.items?.length == undefined ? null : (<CountLenght>{cart.items?.length}</CountLenght>)
-                                ) : null}
+                                { cart && cart.items ? 
+                                 (<CountLenght>{cart.items?.length}</CountLenght>)
+                                 : null}
+                                {/* {JSON.stringify(cart)} */}
                             </ItemWrapper>
                         </Link>
-                    )}
+                    ) : null}
 
                 </Nav>
+                {isLoading && <Loader />}
                 <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
             </>
         )
@@ -230,7 +248,15 @@ const ItemWrapper = styled.div`
     cursor: pointer;
     padding: 0px 5px;
     margin: 0px 4px;
-
+    transition: all 300ms;
+    svg {
+        transform: scale(1);
+        transform-origin: top left;
+        transition: all 300ms;
+    }
+    &:hover svg {
+        transform: scale(.6);
+    }
     &:last-child {
         margin-right: -11px;
     }

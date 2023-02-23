@@ -25,7 +25,7 @@ const ItemPreview = ({ images, mainImage, setMainImage }: Props) => {
         <>
             <Wrapper>
                 <TabsWrapper>
-                    {images.map((image, index) =>
+                    {images?.map((image, index) =>
                         <TabImage 
                           src={images.length <= 1 ? image : uploadUrl(image)} 
                           key={index} 

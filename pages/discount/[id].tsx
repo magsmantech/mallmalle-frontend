@@ -733,7 +733,7 @@ const ProductDetails: NextPage = () => {
               price={r.lowest_price}
               oldPrice={''}
               currency="gel"
-              imageUrl={uploadUrl(r.decoded_images[0])}
+              imageUrl={uploadUrl(r.main_image)}
             />
             :
             <Item
@@ -742,7 +742,7 @@ const ProductDetails: NextPage = () => {
               price={r.lowest_price}
               oldPrice={''}
               currency="gel"
-              imageUrl={uploadUrl(r.decoded_images[0])}
+              imageUrl={uploadUrl(r.main_image)}
             />
           }
           </GridChild>

@@ -638,7 +638,7 @@ const Discounts: NextPage = () => {
             <Grid style={{ marginBottom: "80px" }}>
                 {discountOffer.data.offers.map((d, index) => (
                     <div>
-                        <Item key={index} id={d.id} imgSrc={uploadUrl(d.decoded_images[0])}></Item>
+                        <Item key={index} id={d.id} imgSrc={uploadUrl(d.main_image)}></Item>
                     </div>
                 ))}
 

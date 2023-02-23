@@ -15,7 +15,7 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
   //   selectedColor,
   // } = calculateProductPrices(item.product, variation_id);
 
-  var imgUrl = item.product.decoded_images;
+  var imgUrl = item.product.main_image;
   // console.log("first " + imgUrl);
 
   // console.log(variation_id)
@@ -29,7 +29,7 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
 
   return (
     <ItemWrapper style={{ ...style }}>
-      <ItemImg src={uploadUrl(imgUrl[0])} />
+      <ItemImg src={uploadUrl(imgUrl)} />
       <ItemTextWrapper>
         {i18next.language == "ge" ?
         <ItemName>{product.product_name} {productItem[0].id}</ItemName>
