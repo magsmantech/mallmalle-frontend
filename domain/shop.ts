@@ -436,6 +436,7 @@ export type Recommended = {
   lowest_price: string;
   highest_price: string;
   discount: Discount[];
+  main_image: string;
   product_name_en: string;
 }
 export type FilteredProduct = {
@@ -525,10 +526,18 @@ export type Filters = {
   }
 }
 
+export type VariationColors = {
+  id: number;
+  color: string;
+  color_name: string;
+  color_name_en: string;
+}
+
 export type ProductVariationDetail = {
   id: number;
   color_name: string;
   color: string;
+  color_variation: VariationColors;
   sizes: VariationSize[];
 }
 

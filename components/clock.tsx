@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Responsive from "../config/Responsive";
 import styles from "../styles/Home.module.css";
-import Fonts from './../styles/Fonts';
+import Fonts from '../styles/Fonts';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 

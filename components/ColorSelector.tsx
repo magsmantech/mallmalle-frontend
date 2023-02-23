@@ -26,18 +26,18 @@ type WrapperProps = {
 const Wrapper = styled.div`
     display: flex;
     align-items: center;
-    & > div {
+     & > div {
         margin-right: ${(props: WrapperProps) => props.gap ?? '1.0rem'};
     }
     & > div:last-child {
         margin-right: 0;
     }
-    ${Responsive.laptop}{
+    /* ${Responsive.laptop} {
         margin-top: -15px;
         & > div {
             margin-right: 0.8rem};
         }
-    }
+    } */
 `;
 
 const Item = styled.div`
