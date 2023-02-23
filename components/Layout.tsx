@@ -140,7 +140,7 @@ export default function Layout({ children }: any) {
           displayName={displayName}
         />)} */}
 
-        {isCartLoading || isFavoritesLoading ? <Loader /> : <Navbar
+        {isCartLoading || isFavoritesLoading || !cart || !favorites ? <Loader /> : <Navbar
           cart={cart}
           favorite={favorites}
           onSidebarOpen={_openSidebar}

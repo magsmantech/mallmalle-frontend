@@ -410,6 +410,7 @@ export type Offers = {
   description: string;
   images: [] | string;
   decoded_images: [] | string;
+  main_image: string;
   discount: Discount[];
   lowest_price: string;
   highest_price: string;

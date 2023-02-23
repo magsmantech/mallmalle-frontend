@@ -10,7 +10,7 @@ type TabImageProps = {
 type Props = {
     images: string[],
     mainImage: string,
-    setMainImage: () => void
+    setMainImage: Function
 };
 
 const ItemPreview = ({ images, mainImage, setMainImage }: Props) => {

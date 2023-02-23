@@ -23,7 +23,7 @@ const SidebarFilter: React.FC<{
         return (
             <Wrapper>
                 <Shadow onClick={() => openModal(false)} />
-                <Scrollbar hide={true} />
+                {/* <Scrollbar hide={true} /> */}
                 <Content>
                     <InnerContent>
                         <MediumTitle>კატეგორიები</MediumTitle>

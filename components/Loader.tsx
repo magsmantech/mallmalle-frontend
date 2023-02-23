@@ -6,7 +6,7 @@ import Fonts from './../styles/Fonts';
 const Loader: React.FC = () => {
     return (
         <Wrapper>
-            <Scrollbar hide={true} />
+            {/* <Scrollbar hide={true} /> */}
             <Content>
                 <LoaderValue>m</LoaderValue>
                 <LoaderValue>a</LoaderValue>
