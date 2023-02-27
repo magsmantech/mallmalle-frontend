@@ -27,7 +27,7 @@ const ItemPreview = ({ images, mainImage, setMainImage }: Props) => {
                 <TabsWrapper>
                     {images?.map((image, index) =>
                         <TabImage 
-                          src={images.length <= 1 ? image : uploadUrl(image)} 
+                          src={uploadUrl(image)} 
                           key={index} 
                           selected={index === selected} 
                           onClick={() => _imageSelected(index, image)} />
@@ -48,6 +48,7 @@ export default ItemPreview;
 const Wrapper = styled.div`
   display: flex;
   height: 100%;
+  gap: 20px;
     ${Responsive.mobile} {
         flex-direction: column-reverse;
     }
@@ -55,8 +56,8 @@ const Wrapper = styled.div`
 
 
 const TabImage = styled.img`
-  width: 130px;
-  height: 130px;
+  width: 100%;
+  /* height: 130px; */
   border-radius: 14px;
   object-fit: cover;
   object-position: center;
@@ -73,8 +74,9 @@ const TabImage = styled.img`
 const TabsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    width: 20%;
     gap: 25px;
-    margin-right: 20px;
+    /* margin-right: 20px; */
         ${Responsive.mobile} {
             flex-direction: row;
             overflow-y: scroll;
@@ -89,8 +91,8 @@ const TabsWrapper = styled.div`
 `;
 const SelectedImage = styled.img`
   width: 100%;
-  height: 100%;
-  max-height: 730px;
+  /* height: 100%; */
+  /* max-height: 730px; */
   border-radius: 14px;
   object-fit: cover;
   object-position: center;
@@ -103,12 +105,15 @@ const SelectedImage = styled.img`
         }
     }
     ${Responsive.laptop} {
-        max-height: 485px;
-        width: 660px;
+        /* max-height: 485px; */
+        width: 100%;
         border-radius: 10px;
     }
 `;
 const ImageWrapperDiv = styled.div`
-    width: 100%;
+    width: 80%;
     height: 100%;
+    @media(max-width: 768px) {
+        width: 100%;
+    }
 `;

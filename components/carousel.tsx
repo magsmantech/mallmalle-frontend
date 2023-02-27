@@ -3,7 +3,7 @@ import { Navigation, Pagination, Autoplay, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from '../styles/Carousel.module.css';
 import styled from 'styled-components';
-// import Clock from './Clock'
+import Clock from './Clock'
 
 // Import Swiper styles
 import 'swiper/css';
@@ -81,7 +81,7 @@ const Carousel = ({ images = [] }: Props) => {
             <Background className="background" backgroundImage={uploadUrl(o.background_image)}>
               <SlideText >
                 <SliderTitle>{t('sale')}</SliderTitle>
-                {/* <Clock itemDate={o.expire_date} /> */}
+                <Clock itemDate={o.expire_date} />
 
               </SlideText>
             </Background>

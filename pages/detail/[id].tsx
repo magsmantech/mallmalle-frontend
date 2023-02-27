@@ -353,18 +353,18 @@ const ProductDetails: NextPage = () => {
 
             {/* <h1>{selectedColorId}</h1> */}
 
-            {colors && !!colors.length && product?.variants && (
+            
               <>
                 {/* <Label>აირჩიე ფერი: </Label> */}
-                <ColorSelector
+               {product && product.variations && <ColorSelector
                   colors={product?.variations}
                   defaultSelected={variationId}
                   gap={"20px"}
                   onColorSelected={(event: any) => _colorSelected(event)}
-                />
+                />}
 
               </>
-            )}
+            
             {/* <h1>{selectedSizeId}</h1> */}
 
 
@@ -424,7 +424,7 @@ const ProductDetails: NextPage = () => {
         </Alert>
       </Snackbar>
 
-      {/* {JSON.stringify(product)} */}
+      {JSON.stringify(product)}
 
       <SectionTitle onClick={() => {router.push(`/discounts`);}}>
       {t('recommended')}
@@ -471,7 +471,7 @@ const Section = styled.section`
     }
 `;
 const DetailMainWrapper = styled.div`
-  flex-basis: 40%;
+  flex-basis: 45%;
   margin-left: 45px;
     ${Responsive.tablet} {
       flex-basis: 100%;
