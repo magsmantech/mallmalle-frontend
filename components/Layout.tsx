@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import { getCategories } from '../services/category-services';
 import api from '../features/api';
 import Loader from './Loader';
+import Head from 'next/head'
 // import { isLoggedIn } from '../services/auth-services';
 
 
@@ -126,6 +127,9 @@ export default function Layout({ children }: any) {
 
   return (
     <>
+    <Head>
+      <title>Mallmalle</title>
+    </Head>
       {/* {openSidebar && <div className={styles['sidebar-overlay-global']} onClick={_closeSidebar}></div>} */}
       {showFeedback && feedbackType === 'info' && <div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
       {showFeedback && <Feedback className={feedbackClasses} />}

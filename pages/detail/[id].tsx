@@ -424,7 +424,7 @@ const ProductDetails: NextPage = () => {
         </Alert>
       </Snackbar>
 
-      {JSON.stringify(product)}
+      {/* {JSON.stringify(product)} */}
 
       <SectionTitle onClick={() => {router.push(`/discounts`);}}>
       {t('recommended')}
