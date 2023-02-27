@@ -363,6 +363,7 @@ const ProductDetails: NextPage = () => {
   const [selectedSizeId, setSelectedSizeId] = useState<any>(undefined);
 
   const [product, setProduct] = useState<ProductData | null>(null);
+  const [mainImage, setMainImage] = useState('')
 
   const [clicked, setClicked] = useState<any>(undefined);
 
@@ -553,7 +554,9 @@ const ProductDetails: NextPage = () => {
 
   const _colorSelected = (e: any) => {
     console.log('color selected:', e);
+    const image:any = product?.variants.find(item => item.id === e)?.sizes[0].image
     setSelectedColorId(e);
+    setMainImage(image)
     setSelectedSizeId(undefined);
   };
 
@@ -603,7 +606,10 @@ const ProductDetails: NextPage = () => {
     <>
       <Section>
         <ItemPreviewWrapper>
-          <ItemPreview images={images} mainImage="asd" setMainImage={() => {}} />
+          <ItemPreview 
+            images={images} 
+            mainImage={mainImage} 
+            setMainImage={setMainImage} />
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>
@@ -658,7 +664,7 @@ const ProductDetails: NextPage = () => {
               <>
                 {/* <Label>აირჩიე ფერი: </Label> */}
                 <ColorSelector
-                  colors={product?.variants}
+                  colors={product?.variations}
                   defaultSelected={colors[0]?.id}
                   gap={"20px"}
                   onColorSelected={(event: any) => _colorSelected(event)}
