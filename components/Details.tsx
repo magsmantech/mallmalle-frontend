@@ -49,7 +49,7 @@ const ProductDetails = () => {
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
   const [mainImage, setMainImage] = useState('')
   const [variationId, setVariationId] = useState(null)
-  // const [se]
+  const [isDisabled, setIsDisabled] = useState(false)
 
   const [disableFavoriteBtn, setdisableFavoriteBtn] = useState(false);
 
@@ -87,12 +87,21 @@ const ProductDetails = () => {
         setImages(data.variants[0].sizes[0].images_decoded)
         setSizes((prevState) => [...sizes, ...data.variants[0].sizes])
         setVariationId(data.variants[0].id)
-       
+        // setSelectedSizeId(data.variants[0].id)
       })
       .catch((err) => {
         console.log(err);
       });
   }, [id])
+
+  useEffect(() => {
+    if(variationId && selectedSizeId) {
+      setIsDisabled(true)
+    } else {
+      setIsDisabled(false)
+    }
+
+  }, [variationId, selectedSizeId])
 
   
 
@@ -138,7 +147,7 @@ const ProductDetails = () => {
   };
 
   const _chooseSizeMessage = async () => {
-    if(!canAddToCart){
+    if(!isDisabled){
     {i18next.language == "ge"?
     setSnackMessage("გთხოვთ, აირჩიეთ ზომა და ფერი!")
     :
@@ -309,8 +318,8 @@ const ProductDetails = () => {
             <ButtonWrapper onClick={_chooseSizeMessage}>
               {/* onClick={_showFeedback} */}
               <Button onClick={_addToCart} style={{
-                ...(!canAddToCart ? { filter: 'grayscale(1)' } : {}), ...(clicked ? { filter: 'grayscale(1)' } : {}),
-              }} disabled={!canAddToCart}>
+                ...(!isDisabled ? { filter: 'grayscale(1)' } : {}), ...(clicked ? { filter: 'grayscale(1)' } : {}),
+              }} disabled={!isDisabled}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
                 <BagIconStyle />
                 {t('addInBasket')}
