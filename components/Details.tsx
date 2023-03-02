@@ -303,6 +303,7 @@ const ProductDetails = () => {
                 <>
                   <SelectSizeLabel>{t('selectSize')}: </SelectSizeLabel>
                   <SizeSelector
+                    defaultSelected={selectedSizeId}
                     sizes={sizes}
                     onSelectedChange={(event: any) => _sizeSelected(event)}
                   />

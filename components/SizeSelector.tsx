@@ -19,7 +19,7 @@ type ItemProps = {
     selected: boolean,
 };
 
-const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: Props) => {
+const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected }: Props) => {
 
     const [selected, setSelected] = useState(defaultSelected);
 
@@ -37,7 +37,7 @@ const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: 
                 {sizes && Array.isArray(sizes) && sizes.map((item, index) => (
                     // index
                     <Item key={index}
-                        selected={selected === item.id}
+                        selected={defaultSelected === item.id}
                         onClick={() =>_sizeSelected(item.id)}>
                         {item.size_variation && item.size_variation.size_name}
                     </Item>
