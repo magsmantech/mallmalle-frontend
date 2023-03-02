@@ -563,6 +563,7 @@ export type VariationSize = {
   product_sku: string;
   views: number;
   size_variation: SizeV;
+  images_decoded: string[];
 }
 export type SizeV = {
   id: number;

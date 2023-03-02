@@ -4,7 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ItemPreview from "./ItemPreview";
-import SizeSelector, { SizeType } from "./SizeSelector";
+import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
 import {
   BsBookmarkPlusFill,
@@ -23,7 +23,7 @@ import { getProductDetailsById } from "./../services/products-service";
 import config from "./../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "./../interfaces/products";
-import { Product, ProductData, ProductVariationDetail, VariationSize } from "./../domain/shop";
+import { Product, ProductData, ProductVariationDetail, SizeV, VariationSize } from "./../domain/shop";
 import { addToCart, addToFavorite } from "./../services/checkout-services";
 import api, { uploadUrl } from "./../features/api";
 import Responsive from "./../config/Responsive";
@@ -40,27 +40,12 @@ type ButtonProps = {
   secondary?: boolean;
 };
 
-// const Button = styled.button`
-//   display: inline-flex;
-//   height: 8.0rem;
-//   background-image: ${(props: ButtonProps) => props.secondary ? 'none' : 'linear-gradient(to right, #22D5AE, #3A7BD5)'};
-//   /* background-color: ${(props: ButtonProps) => props.secondary ? 'white' : 'none'} */
-//   background-color: white;
-//   align-items: center;
-//   justify-content: center;
-//   color: ${({ secondary }: ButtonProps) => secondary ? '#424F60' : 'white'};
-//   font-size: 2.0rem;
-//   border: ${({ secondary }: ButtonProps) => secondary ? '.2rem solid rgba(0, 0, 0, 0.08)' : 'none'};
-//   border-radius: 1.4rem;
-//   cursor: pointer;
-// `;
-
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
   const [images, setImages] = useState<string[]>([]);
-  const [sizes, setSizes] = useState<ProductVariationDetail[]>([]);
+  const [sizes, setSizes] = useState<VariationSize[]>([]);
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
   const [mainImage, setMainImage] = useState('')
   const [variationId, setVariationId] = useState(null)
@@ -74,10 +59,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState<ProductData | null>(null);
 
   const { id } = router.query;
-  // console.log(id);
-
-  // const { originalPrice, finalPrice, hasDiscount } = calculateProductPrices(product, selectedSizeId);
-  // console.log(product, product?.variations);
+  
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
 
@@ -101,71 +83,19 @@ const ProductDetails = () => {
 
     getProductDetailsById(+id)
       .then((res) => {
-        // console.log(res);
         const { data } = res;
         setProduct(data);
-        //
-        setVariationId(data.variations[0].id)
-        const imagesArray = data.variations
-          .filter((item: any) => item.id === 63)[0].images_decoded;
-
-        
-
-        if (data?.variations?.length) {
-
-          console.log(imagesArray, variationId)
-          setImages((prevState) => (
-            [...data.variations[0].images_decoded]
-          ));
-          
-          const colorsArray = data.variations.map(
-            (item: any) => item.color_variation
-          );
-          const sizesArray = data.variations.map(
-            (item: any) => item.size_variation
-          );
-          
-          setColors(colorsArray);
-          setSizes(sizesArray);
-          
-          // auto-select first color
-          // _colorSelected(colorsArray[0]?.id);
-          // console.log('colorsArray', colorsArray);
-
-          return;
-        }
-        if (data.images) {
-          const parsedImages = JSON.parse(data.images);
-          // console.log(parsedImages);
-          const imagesArray = parsedImages.map(
-            (image: string) => image
-          );
-
-          const singleImageArray = parsedImages.map(
-            (image: string) => config.imagesEndpoint + image
-          );
-
-          {imagesArray.length == 1 ? (
-          setImages([...images, ...singleImageArray])
-          ) : 
-          setImages([...images, ...imagesArray]);
-          }
-        }
+        setImages(data.variants[0].sizes[0].images_decoded)
+        setSizes((prevState) => [...sizes, ...data.variants[0].sizes])
+        setVariationId(data.variants[0].id)
+       
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
       });
   }, [id])
 
-  useEffect(() => {
-    if(variationId) {
-      const images: any = product?.variations.find(item => item.id === variationId)?.images_decoded
-      const sizes: any = product?.variations.find(item => item.id === variationId)?.size_variation
-      setImages(images)
-      setSelectedColorId(variationId)
-      setSizes(sizes)
-    }
-  }, [variationId])
+  
 
   const _addToCart = async () => {
     if (!authData?.profile?.user) {
@@ -251,13 +181,18 @@ const ProductDetails = () => {
   };
 
 
-  const _colorSelected = (e: any) => {
-    setVariationId(e)
-    const image:any = product?.variants.find(item => item.id === e)?.sizes[0].image
-    setSelectedColorId(e);
+  const _colorSelected = (id: any) => {
+    setVariationId(id)
+    console.log(id)
+    const image:any = product?.variants.find(item => item.id === id)?.sizes[0].image
+    const images:any = product?.variants.find(item => item.id === id)?.sizes[0].images_decoded
+    const sizesArray:any = product?.variants.find(item => item.id === id)?.sizes
+    console.log(sizesArray, 'dedis trakizmi')
+    setImages(images)
+    setSizes(sizesArray)
+    setSelectedColorId(id);
     setMainImage(image)
     
-    console.log(e, image, 'Aba es ra aris?')
     setSelectedSizeId(undefined);
   };
 
@@ -273,10 +208,6 @@ const ProductDetails = () => {
 
   const canAddToFavorite = typeof (selectedColorId) !== 'undefined' && typeof (selectedSizeId) !== 'undefined';
 
-  // const { data: allCategories, isLoading: isAllCategoriesLoading } = api.useGetCategoriesQuery(undefined);
-
-  // const categoryParents = product?.categories?.length > 0 && findCategoryAndParents(product?.categories?.[0]);
-
 
 
   const sizeVariantResult = product?.variants.filter(x => x.id === selectedColorId);
@@ -286,8 +217,6 @@ const ProductDetails = () => {
   const forPrice = sizeV?.sizes?.filter(x => x.id === selectedSizeId);
 
   const mainPrice = forPrice ? forPrice[0]?.price : null;
-
-
 
   return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
@@ -356,8 +285,8 @@ const ProductDetails = () => {
             
               <>
                 {/* <Label>აირჩიე ფერი: </Label> */}
-               {product && product.variations && <ColorSelector
-                  colors={product?.variations}
+               {product && product.variants && <ColorSelector
+                  colors={product?.variants}
                   defaultSelected={variationId}
                   gap={"20px"}
                   onColorSelected={(event: any) => _colorSelected(event)}
@@ -370,11 +299,11 @@ const ProductDetails = () => {
 
 
             <SelectSizeWrapper>
-              {sizes && !!sizes.length && sizeV && sizeVariantResult && (
+              {sizes && (
                 <>
                   <SelectSizeLabel>{t('selectSize')}: </SelectSizeLabel>
                   <SizeSelector
-                    sizes={sizeV.sizes}
+                    sizes={sizes}
                     onSelectedChange={(event: any) => _sizeSelected(event)}
                   />
                 </>
@@ -424,7 +353,7 @@ const ProductDetails = () => {
         </Alert>
       </Snackbar>
 
-      {/* {JSON.stringify(product)} */}
+      {JSON.stringify(product)}
 
       <SectionTitle onClick={() => {router.push(`/discounts`);}}>
       {t('recommended')}

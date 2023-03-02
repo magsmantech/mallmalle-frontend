@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import Responsive from '../config/Responsive';
-import { VariationSize } from '../domain/shop';
+import { VariationSize, SizeV } from '../domain/shop';
 
 export type SizeType = {
     id: number,
@@ -18,6 +18,36 @@ type Props = {
 type ItemProps = {
     selected: boolean,
 };
+
+const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: Props) => {
+
+    const [selected, setSelected] = useState(defaultSelected);
+
+    const _sizeSelected = (index: number) => {
+        setSelected(index);
+        if (onSelectedChange) {
+            onSelectedChange(index);
+        }
+    }
+
+
+    return (
+        <>
+            <Wrapper style={{...style}}>
+                {sizes && Array.isArray(sizes) && sizes.map((item, index) => (
+                    // index
+                    <Item key={index}
+                        selected={selected === item.id}
+                        onClick={() =>_sizeSelected(item.id)}>
+                        {item.size_variation && item.size_variation.size_name}
+                    </Item>
+                ))}
+            </Wrapper>
+        </>
+    )
+}
+
+export default SizeSelector;
 
 const Wrapper = styled.div`
     display: flex;
@@ -54,32 +84,3 @@ const Item = styled.div`
             font-size: 18px;
         }
 `;
-
-const SizeSelector = ({ sizes, style={}, onSelectedChange, defaultSelected=0 }: Props) => {
-
-    const [selected, setSelected] = useState(defaultSelected);
-
-    const _sizeSelected = (index: number) => {
-        setSelected(index);
-        if (onSelectedChange) {
-            onSelectedChange(index);
-        }
-    }
-
-
-    return (
-        <>
-            <Wrapper style={{...style}}>
-                {sizes?.map((item, index)=>
-                    <Item key={index}
-                        selected={selected===item.id}
-                        onClick={()=>_sizeSelected(item.id)}>
-                        {item.size_variation.size_name}
-                    </Item>
-                )}
-            </Wrapper>
-        </>
-    )
-}
-
-export default SizeSelector;

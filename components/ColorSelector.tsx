@@ -82,10 +82,10 @@ const ColorSelector = ({ colors, style = {}, small, gap, onColorSelected, defaul
             <Wrapper style={{ ...style }} gap={gap}>
                 {colors?.map((item, i) =>
                     <Item key={i}
-                        selected={selected === item.id}
+                        selected={defaultSelected === item.id}
                         onClick={() => _colorSelected(item.id)}
                         small={small}
-                        color={item.color_variation.color} />
+                        color={item.color} />
                 )}
 
             </Wrapper>
