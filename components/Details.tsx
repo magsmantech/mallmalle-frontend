@@ -183,11 +183,9 @@ const ProductDetails = () => {
 
   const _colorSelected = (id: any) => {
     setVariationId(id)
-    console.log(id)
     const image:any = product?.variants.find(item => item.id === id)?.sizes[0].image
     const images:any = product?.variants.find(item => item.id === id)?.sizes[0].images_decoded
     const sizesArray:any = product?.variants.find(item => item.id === id)?.sizes
-    console.log(sizesArray, 'dedis trakizmi')
     setImages(images)
     setSizes(sizesArray)
     setSelectedColorId(id);
@@ -197,7 +195,6 @@ const ProductDetails = () => {
   };
 
   const _sizeSelected = (e: any) => {
-    // console.log('size selected:', e);
     setSelectedSizeId(e);
   };
 
@@ -353,8 +350,6 @@ const ProductDetails = () => {
           {snackMessage}
         </Alert>
       </Snackbar>
-
-      {JSON.stringify(product)}
 
       <SectionTitle onClick={() => {router.push(`/discounts`);}}>
       {t('recommended')}
