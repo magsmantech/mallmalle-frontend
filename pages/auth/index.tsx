@@ -872,7 +872,6 @@ const Auth: NextPage = () => {
 
     const onSubmit = async (values: FormikValues) => {
       setLoading(true);
-      console.log(values);
       const { firstName, lastName, phone, email, password } = values;
       AuthService.register({ firstName, lastName, phone, email, password })
         .then((res: RegisterResponse) => {
@@ -883,6 +882,7 @@ const Auth: NextPage = () => {
           const jwt = AuthService.decodeJwt();
           console.log(data, jwt);
           setLoading(false);
+          window.location.replace("/profile?tab=profile");
         })
         .catch((err) => {
           setLoading(false);
