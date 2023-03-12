@@ -74,15 +74,19 @@ const TabImage = styled.img`
 const TabsWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 20%;
+    width: 10%;
     gap: 25px;
     /* margin-right: 20px; */
         ${Responsive.mobile} {
+            width:100%;
             flex-direction: row;
             overflow-y: scroll;
             padding-bottom: 7px;
             margin-right: 0px;
             margin-top: 12px;
+            img{
+                width:20%;
+            }
         }
         ${Responsive.laptop} {
             margin-right: 15px;
