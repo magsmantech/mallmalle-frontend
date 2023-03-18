@@ -529,11 +529,12 @@ const Catalog: NextPage = () => {
 
 
           {categoryFilter?.brands ? (
-            <FilltersBox>
-              <DropDown dropdownTitle={t('brand')}>
+            <FilltersBox className="brandsFilter">
+              <DropDown dropdownTitle={t('brand')} >
                 <RadioButton
                   id=""
                   onChange={(value) => setbrandId(value)}
+                  onClick={(value) => { brandId && brandId == value && setbrandId(0) }}
                   options={[
                     ...categoryFilter?.brands.map((brandV, index) => ({
                       label: brandV.brand_name,

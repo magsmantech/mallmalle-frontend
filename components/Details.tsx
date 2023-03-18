@@ -588,7 +588,6 @@ const Grid = styled.section`
   overflow-x: scroll;
   padding-bottom: 20px;
   border-radius: 14px;
-  max-width:100%;
   display: flex;
 `;
 const GridChild = styled.div`

@@ -1,0 +1,4 @@
+.brandsFilter .dropdown-menu{
+    overflow-y:scroll;
+    height:300px;
+}

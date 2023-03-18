@@ -14,6 +14,7 @@ const RadioButton: React.FC<{
     options,
     value,
     onChange,
+    onClick,
     required = false,
     style
 }) => {
@@ -28,6 +29,7 @@ const RadioButton: React.FC<{
                             checked={o.value === value}
                             required={required}
                             onChange={() => onChange(o.value)}
+                            onClick={() => onClick(o.value)}
                             disabled={o.disabled || false}
                         />
                         <Label htmlFor={`${id}-${o.value}`}>{o.label}</Label>
