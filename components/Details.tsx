@@ -85,7 +85,8 @@ const ProductDetails = () => {
         const { data } = res;
         setProduct(data);
         setImages(data.variants[0].sizes[0].images_decoded)
-        setSizes((prevState) => [...sizes, ...data.variants[0].sizes])
+        //setSizes((prevState) => [...sizes, ...data.variants[0].sizes])
+        setSizes(data.variants[0].sizes)
         setVariationId(data.variants[0].id)
         // setSelectedSizeId(data.variants[0].id)
       })
