@@ -94,13 +94,10 @@ const TabsWrapper = styled.div`
       
 `;
 const SelectedImage = styled.img`
-  width: 100%;
-  /* height: 100%; */
-  /* max-height: 730px; */
+  max-width: 100%;
+max-height:calc(100vh - 180px);
   border-radius: 14px;
-  object-fit: cover;
-  object-position: center;
-  box-sizing: border-box;
+
     ${Responsive.mobile} {
         min-height: 400px;
         margin-right: 15px;
