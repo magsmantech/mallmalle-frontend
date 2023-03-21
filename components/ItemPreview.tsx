@@ -107,7 +107,7 @@ max-height:calc(100vh - 180px);
     }
     ${Responsive.laptop} {
         /* max-height: 485px; */
-        width: 100%;
+        max-width: 100%;
         border-radius: 10px;
     }
 `;

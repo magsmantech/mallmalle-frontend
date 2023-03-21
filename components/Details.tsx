@@ -405,7 +405,7 @@ const Section = styled.section`
     }
 `;
 const DetailMainWrapper = styled.div`
-  flex-basis: 45%;
+  flex-basis: 100%;
   margin-left: 45px;
     ${Responsive.tablet} {
       flex-basis: 100%;
@@ -508,7 +508,7 @@ const ButtonWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 4rem;
   grid-gap: 10px;
-  width: 100%;
+  width: 84%;
   margin-bottom: 40px;
       ${Responsive.mobile}{
         display: flex;
