@@ -510,6 +510,7 @@ const ButtonWrapper = styled.div`
   grid-gap: 10px;
   width: 84%;
   margin-bottom: 40px;
+  
       ${Responsive.mobile}{
         display: flex;
         justify-content: space-between;
