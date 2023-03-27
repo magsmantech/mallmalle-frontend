@@ -3,7 +3,7 @@ import styles from "../styles/Home.module.css";
 import Carousel from "../components/carousel";
 import SaleItem from "../components/saleItem";
 import Item from "../components/item";
-import ArrowTop from "../public/icons/react-icons/arrow-top";
+
 import { getDashboardData } from "../services/dashboard-services";
 import router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -181,9 +181,7 @@ const Home: NextPage = () => {
       {/* new products */}
 
 
-      <div className={styles.scrollToTopButton} onClick={_scrollToTop}>
-        <ArrowTop className={styles.scrollButtonIcon} />
-      </div>
+   
     </>
   );
 };

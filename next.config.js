@@ -20,5 +20,5 @@ module.exports = {
         "@next/next/link-passhref": "off"
 
     }
-  },
+  }
 }

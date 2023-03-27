@@ -43,6 +43,7 @@ type ButtonProps = {
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
   const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<VariationSize[]>([]);

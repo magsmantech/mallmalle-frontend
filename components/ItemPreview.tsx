@@ -76,6 +76,9 @@ const TabsWrapper = styled.div`
     flex-direction: column;
     width: 10%;
     gap: 25px;
+    ${Responsive.laptop} {
+        width:90px;
+    }
     /* margin-right: 20px; */
         ${Responsive.mobile} {
             width:100%;
