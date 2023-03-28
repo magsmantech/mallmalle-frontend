@@ -319,8 +319,8 @@ const CartScreen: NextPage = () => {
             if(filterWithVariant)
               price = parseFloat(filterWithVariant[0].price);
             let discount = 0;
-            console.log('---')
-            if(product){
+            console.log('-')
+            if(product && product.discount){
               discount = product.discount.length > 0 ? price * product.discount[0]?.value / 100 : 0;
             }
             const productDiscount = discount ? price - discount : price;
