@@ -314,20 +314,12 @@ const CartScreen: NextPage = () => {
           {cart?.items?.map((item, i) => {
             const { product } = item;
             const variantID = item.variation_id;
-            console.log('-----------------');
-            console.log(product)
-            console.log(variantID);
             const filterWithVariant = item?.product?.variations?.filter(x => x.id === variantID);
-            console.log(filterWithVariant);
             let price = 0;
             if(filterWithVariant)
               price = parseFloat(filterWithVariant[0].price);
             const discount = product && product?.discount?.length >= 1 ? price * product.discount[0]?.value / 100 : null;
             const productDiscount = discount ? price - discount : price;
-
-
-            // mainPrice * product.discount[0]?.value / 100
-            console.log(productDiscount)
 
             return (
               <FlexRowWrapper key={i}>
