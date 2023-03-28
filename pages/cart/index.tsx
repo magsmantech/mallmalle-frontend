@@ -314,7 +314,7 @@ const CartScreen: NextPage = () => {
           {cart?.items?.map((item, i) => {
             const { product } = item;
             const variantID = item.variation_id;
-            const filterWithVariant = item.product.variations.filter(x => x.id === variantID);
+            const filterWithVariant = item.product.variations?.filter(x => x.id === variantID);
             const price = parseFloat(filterWithVariant[0].price);
             const discount = product.discount.length >= 1 ? price * product.discount[0]?.value / 100 : null;
             const productDiscount = discount ? price - discount : price;
