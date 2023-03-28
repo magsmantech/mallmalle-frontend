@@ -313,6 +313,8 @@ const CartScreen: NextPage = () => {
           <Divider />
           {cart?.items?.filter((item)=>item.product).map((item, i) => {
             const { product } = item;
+            console.log('---')
+            console.log(product)
             const variantID = item.variation_id;
             const filterWithVariant = item?.product?.variations?.filter(x => x.id === variantID);
             let price = 0;
