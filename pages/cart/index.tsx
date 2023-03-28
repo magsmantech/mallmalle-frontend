@@ -345,13 +345,13 @@ const CartScreen: NextPage = () => {
                 <PriceHorizontalWrapper>
                   <PriceWrapperStyle>
 
-                    {product.discount && product.discount.length >= 1 ? (
+                    {product && product.discount && product.discount.length >= 1 ? (
                       <Price>{'₾ ' + productDiscount}</Price>
                     ) : (
                       <Price>{'₾ ' + price}</Price>
                     )}
 
-                    {product.discount && product.discount.length >= 1 ? (
+                    {product && product.discount && product.discount.length >= 1 ? (
                       <OldPrice>₾ {price}</OldPrice>
                     ) : null}
 
