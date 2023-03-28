@@ -316,10 +316,12 @@ const CartScreen: NextPage = () => {
             const variantID = item.variation_id;
             console.log('-----------------');
             console.log(variantID);
-            const filterWithVariant = item.product.variations?.filter(x => x.id === variantID);
+            const filterWithVariant = item?.product?.variations?.filter(x => x.id === variantID);
             console.log(filterWithVariant);
-            const price = parseFloat(filterWithVariant[0].price);
-            const discount = product.discount.length >= 1 ? price * product.discount[0]?.value / 100 : null;
+            let price = 0;
+            if(filterWithVariant.length > 0)
+              price = parseFloat(filterWithVariant[0].price);
+            const discount = product?.discount?.length >= 1 ? price * product.discount[0]?.value / 100 : null;
             const productDiscount = discount ? price - discount : price;
 
 
