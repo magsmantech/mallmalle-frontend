@@ -311,7 +311,7 @@ const CartScreen: NextPage = () => {
             <HeaderItem>{t('price')}</HeaderItem>
           </FlexRow>
           <Divider />
-          {cart?.items?.map((item, i) => {
+          {cart?.items?.filter((item)=>item.product).map((item, i) => {
             const { product } = item;
             const variantID = item.variation_id;
             const filterWithVariant = item?.product?.variations?.filter(x => x.id === variantID);
