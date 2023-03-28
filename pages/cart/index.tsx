@@ -321,9 +321,6 @@ const CartScreen: NextPage = () => {
             let discount = 0;
             
             if(product && Array.isArray(product.discount)){
-              console.log('----')
-              console.log(product)
-              console.log(product.discount)
               discount = product.discount.length > 0 ? price * product.discount[0]?.value / 100 : 0;
             }
             const productDiscount = discount ? price - discount : price;
@@ -348,13 +345,13 @@ const CartScreen: NextPage = () => {
                 <PriceHorizontalWrapper>
                   <PriceWrapperStyle>
 
-                    {product.discount.length >= 1 ? (
+                    {product.discount && product.discount.length >= 1 ? (
                       <Price>{'₾ ' + productDiscount}</Price>
                     ) : (
                       <Price>{'₾ ' + price}</Price>
                     )}
 
-                    {product.discount.length >= 1 ? (
+                    {product.discount && product.discount.length >= 1 ? (
                       <OldPrice>₾ {price}</OldPrice>
                     ) : null}
 
