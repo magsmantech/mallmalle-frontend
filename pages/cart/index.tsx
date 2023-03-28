@@ -315,6 +315,7 @@ const CartScreen: NextPage = () => {
             const { product } = item;
             const variantID = item.variation_id;
             console.log('-----------------');
+            console.log(product)
             console.log(variantID);
             const filterWithVariant = item?.product?.variations?.filter(x => x.id === variantID);
             console.log(filterWithVariant);
