@@ -15,7 +15,7 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
   //   selectedColor,
   // } = calculateProductPrices(item.product, variation_id);
 
-  var imgUrl = item.product.main_image;
+  var imgUrl = item?.product?.main_image;
   // console.log("first " + imgUrl);
 
   // console.log(variation_id)
@@ -32,15 +32,15 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
       <ItemImg src={uploadUrl(imgUrl)} />
       <ItemTextWrapper>
         {i18next.language == "ge" ?
-        <ItemName>{product.product_name} {productItem[0].id}</ItemName>
+        <ItemName>{product?.product_name} {productItem[0].id}</ItemName>
         :
-        <ItemName>{product.product_name_en} {productItem[0].id}</ItemName>
+        <ItemName>{product?.product_name_en} {productItem[0].id}</ItemName>
         }
         <div><ItemLabel>{t('size')}:</ItemLabel> <ItemValue>{ productItem[0]?.size_variation?.size_name }</ItemValue></div>
         {i18next.language == "ge" ?
-        <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name}</ItemValue></div>
+        <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0]?.color_variation.color_name}</ItemValue></div>
         :
-        <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0].color_variation.color_name_en}</ItemValue></div>
+        <div><ItemLabel>{t('color')}:</ItemLabel> <ItemValue>{productItem[0]?.color_variation.color_name_en}</ItemValue></div>
         }
       </ItemTextWrapper>
     </ItemWrapper>
