@@ -228,7 +228,7 @@
   border: .6rem solid #D5FFF7;
   position: fixed;
   right: 4.0rem;
-  bottom: 4.0rem;
+  bottom: 40px;
   z-index: 3;
   cursor: pointer;
 

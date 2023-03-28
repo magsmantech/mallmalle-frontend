@@ -19,9 +19,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
 
         <div className={styles.scrollToTopButton} onClick={_scrollToTop}>
-        <ArrowTop className={styles.scrollButtonIcon} />
-        <Facebook />
-      </div>
+          <ArrowTop className={styles.scrollButtonIcon} />       
+        </div>
+      <Facebook />
       </Layout>
     </Provider>
   );
