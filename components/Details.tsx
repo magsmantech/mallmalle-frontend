@@ -139,9 +139,9 @@ const ProductDetails = () => {
         }).catch((error) => {
           if(error.response.data.error == "You can't add more quantity, product out of stock"){
             {i18next.language == "ge"?
-            setSnackMessage("ხელმისაწვდომი რაოდენობა: ")
+            setSnackMessage("ხელმისაწვდომი რაოდენობა: "+error.response.data.quantity)
             :
-            setSnackMessage("Error, You can't add more quantity, product out of stock")
+            setSnackMessage("Available quantity: "+error.response.data.quantity)
             }
             setOpenSnack(true);
             setsnackMsgStatus('error');
