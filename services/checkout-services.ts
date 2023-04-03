@@ -7,7 +7,7 @@ export const getBag = async () => {
     return await apiCall('bag', 'GET');
 }
 
-export const addToCart = (productId: number, variationId: number, quantity: number) => {
+export const addToCart = (productId: number, variationId: any, quantity: number) => {
     return apiCall(`bag?product_id=${productId}&variation_id=${variationId}&quantity=${quantity}`, 'POST');
 }
 
@@ -19,8 +19,8 @@ export const removeFromFavorite = (productId: number) => {
     return apiCall(`user/favorites/remove/${productId}`, 'DELETE');
 }
 
-export const updateQuantity = (productId: number, quantity: number) => {
-    return apiCall(`/bag/${productId}?quantity=${quantity}`, 'PUT');
+export const updateQuantity = (cartItemId: number, quantity: number) => {
+    return apiCall(`bag/${cartItemId}?quantity=${quantity}`, 'PUT');
 }
 
 export const removeFromCart = (productId: number, variationId: number) => {

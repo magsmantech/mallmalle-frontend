@@ -16,17 +16,17 @@ import { Count } from "../pages/catalog/[id]";
 import { Breadcrumbs } from "./styled/breadcrumbs";
 import Button from "./styled/button";
 import { useDispatch } from "react-redux";
-import { showFeedback } from "./../features/feedbackSlice";
-import BagIcon from "./../public/icons/react-icons/bag";
+import { showFeedback } from "../features/feedbackSlice";
+import BagIcon from "../public/icons/react-icons/bag";
 import { useRouter } from "next/router";
-import { getProductDetailsById } from "./../services/products-service";
-import config from "./../config.json";
+import { getProductDetailsById } from "../services/products-service";
+import config from "../config.json";
 import ReactHtmlParser from "html-react-parser";
-import { ColorType } from "./../interfaces/products";
-import { Product, ProductData, ProductVariationDetail, SizeV, VariationSize } from "./../domain/shop";
-import { addToCart, addToFavorite } from "./../services/checkout-services";
-import api, { uploadUrl } from "./../features/api";
-import Responsive from "./../config/Responsive";
+import { ColorType } from "../interfaces/products";
+import { Product, ProductData, ProductVariationDetail, SizeV, VariationSize } from "../domain/shop";
+import { addToCart, addToFavorite } from "../services/checkout-services";
+import api, { uploadUrl } from "../features/api";
+import Responsive from "../config/Responsive";
 import { Alert, Snackbar } from "@mui/material";
 import Loader from "./Loader";
 import Fonts from "../styles/Fonts";
@@ -34,11 +34,10 @@ import Raiting from './customStyle/Raiting';
 
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
-
-
 type ButtonProps = {
   secondary?: boolean;
 };
+
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -63,7 +62,7 @@ const ProductDetails = () => {
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
 
-  const [addToCart, { isLoading: isAddToCartLoading }] = api.useAddToCartMutation();
+  //const [addToCart, { isLoading: isAddToCartLoading }] = api.useAddToCartMutation(undefined);
 
   const { data: authData, isLoading: isUserLoading } = api.useProfileQuery(undefined);
 
@@ -120,21 +119,33 @@ const ProductDetails = () => {
     }
     if (product && product.variants) {
       try {
-        await addToCart({
-          productId: product.id,
-          variationId: selectedSizeId,
-          quantity: 1
+        await addToCart(product.id, selectedSizeId ? selectedSizeId : 'undefined',1).then(({data}) =>{          
+          if(data.error){
+            
+          }else{
+            {i18next.language == "ge"?
+            setSnackMessage("პროდუქტი დაემატა კალათში!")
+            :
+            setSnackMessage("Product added to basket")
+            }
+            setOpenSnack(true);
+            setsnackMsgStatus('success');
+            setClicked(true);
+            setTimeout(() =>setClicked(false), 1000);
+          }          
+        }).catch((error) => {
+          if(error.response.data.error == "You can't add more quantity, product out of stock"){
+            {i18next.language == "ge"?
+            setSnackMessage("მითითებული რაოდენობა არ არის საწყობში")
+            :
+            setSnackMessage("Error, You can't add more quantity, product out of stock")
+            }
+            setOpenSnack(true);
+            setsnackMsgStatus('error');
+          }
         });
         refetchCart();
-        {i18next.language == "ge"?
-        setSnackMessage("პროდუქტი დაემატა კალათში!")
-        :
-        setSnackMessage("Product added to basket")
-        }
-        setOpenSnack(true);
-        setsnackMsgStatus('success');
-        setClicked(true);
-        setTimeout(() =>setClicked(false), 1000);
+        
 
       } catch (error) {
         {i18next.language == "ge"?

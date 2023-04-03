@@ -124,12 +124,13 @@ const Favorites: React.FC<{}> = ({ }) => {
                     {favorite.map((f, index) => {
                         var imgUrl = f.product.main_image;
                         // console.log("first " + imgUrl);
+                        console.log(f.product)
                         return (
                             <ItemWrapper key={index}>
                                 {i18next.language == "ge" ?
-                                    <Item name={f.product.product_name} id={f.product.id} price={f.product.lowest_price} oldPrice='' currency='gel' imageUrl={uploadUrl(imgUrl)}></Item>
+                                    <Item name={f.product.product_name} id={f.product.id} price={f?.product?.discount?.length >= 1 ? f?.product?.low_price_discounted : f?.product?.lowest_price} oldPrice={f?.product?.discount?.length >= 1 ? f?.product?.lowest_price : null} currency='gel' imageUrl={uploadUrl(imgUrl)}></Item>
                                 :
-                                    <Item name={f.product.product_name_en} id={f.product.id} price={f.product.lowest_price} oldPrice='' currency='gel' imageUrl={uploadUrl(imgUrl)}></Item>
+                                    <Item name={f.product.product_name_en} id={f.product.id} price={f?.product?.discount?.length >= 1 ? f?.product?.low_price_discounted : f?.product?.lowest_price} oldPrice={f?.product?.discount?.length >= 1 ? f?.product?.lowest_price : null} currency='gel' imageUrl={uploadUrl(imgUrl)}></Item>
                                 }
                                 {/* TODO image from api */}
                                 <CartButton

@@ -61,7 +61,7 @@ const ItemWrapper = styled.div`
 `;
 const Quantity: React.FC<{
     value: number;
-    onChange: (newValue: number) => void;
+    onChange: (newValue: number, setQuantity: any) => void;
     maxAllowed?: number;
 }> = ({
     value,
@@ -74,7 +74,7 @@ const Quantity: React.FC<{
 
     const setNewQuantityValue = (newQuantity: number) => {
         setQuantity(newQuantity);
-        onChange(newQuantity);
+        onChange(newQuantity,setQuantity);
     }
 
     useEffect(() => {

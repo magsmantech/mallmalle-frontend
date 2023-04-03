@@ -20,7 +20,8 @@ import {
 } from "../../components/styled/Chips";
 import Link from "next/link";
 import Button from "../../components/styled/button";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
+
 import {
   Wrapper,
   Item as RadioItem,
@@ -58,11 +59,6 @@ import Raiting from "../../components/customStyle/Raiting";
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 
-
-
-
-
-
 const Item = ({ product }: { product: ProductData }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -83,7 +79,6 @@ const Item = ({ product }: { product: ProductData }) => {
   };
 
   const {t, i18n} = useTranslation();
-
 
   return (
     <>
@@ -171,7 +166,6 @@ type FilterSideBarProps = {
   onEnter: Function;
 };
 
-
 const Catalog: NextPage = () => {
 
   const router = useRouter();
@@ -181,7 +175,7 @@ const Catalog: NextPage = () => {
 
   // console.log(asPath)
 
-  const category_id_str = asPath.substring(asPath.lastIndexOf('/') + 1);
+  const category_id_str = id?.toString(); //asPath.substring(asPath.lastIndexOf('/') + 1);
 
   const [showHideLoader, setshowHideLoader] = useState(false);
 
@@ -280,11 +274,24 @@ const Catalog: NextPage = () => {
   const [pageIndex, setPageIndex] = useState<number>(0);
 
   const context = useContext(CategoriesContext);
-  // console.log(context);
 
 
-  // const category = findCategoryInAllCategories(+id, allCategories || []);
-  // const categoryWithParents = findCategoryAndParents(id, allCategories);
+  const [selectedPrices, setSelectedPrices] = useState<any>("");
+  const [sizeVariationID, setsizeVariationID] = useState<number>(0);
+  const [colorVariationID, setcolorVariationID] = useState<number>(0);
+  const [startPrice, setStartPrice] = useState<string>(selectedPrices?.startValue ? selectedPrices?.startValue : "");
+  const [endPrice, setEndPrice] = useState<string>(selectedPrices?.endValue ? selectedPrices?.endValue : "");
+  const [sortBy, setsortBy] = useState<string>("");
+  const [sortByEn, setsortByEn] = useState<string>("");
+  const [brandId, setbrandId] = useState<number>(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [otherFilterName, setotherFilterName] = useState<string>();
+  const [otherFilterNameEn, setotherFilterNameEn] = useState<string>();
+  const [category_id, setcategory_id] = useState<number>(0);
+
+
+
 
   // @ts-ignore
   const category = findCategoryNode(+id, context)?.category;
@@ -334,20 +341,6 @@ const Catalog: NextPage = () => {
   }, [id, context]);
 
 
-  const [selectedPrices, setSelectedPrices] = useState<any>("");
-  const [sizeVariationID, setsizeVariationID] = useState<number>(0);
-  const [colorVariationID, setcolorVariationID] = useState<number>(0);
-  const [startPrice, setStartPrice] = useState<string>(selectedPrices?.startValue ? selectedPrices?.startValue : "");
-  const [endPrice, setEndPrice] = useState<string>(selectedPrices?.endValue ? selectedPrices?.endValue : "");
-  const [sortBy, setsortBy] = useState<string>("");
-  const [sortByEn, setsortByEn] = useState<string>("");
-  const [brandId, setbrandId] = useState<number>(0);
-  const [openModal, setOpenModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [otherFilterName, setotherFilterName] = useState<string>();
-  const [otherFilterNameEn, setotherFilterNameEn] = useState<string>();
-  const [category_id, setcategory_id] = useState<number>(0);
-
   const {t, i18n} = useTranslation();
 
 
@@ -372,9 +365,10 @@ const Catalog: NextPage = () => {
   }, [selectedPrices])
 
 
+
   // filter data with category id and other props
   const { data: productFilter, isLoading: isProductFilteLoading, refetch: refetchProductFilte } = api.useProductFilterQuery({
-    category_id: category_id_str,
+    category_id: category_id_str ? category_id_str : '',
     start_price: startPrice,
     end_price: endPrice,
     color_variation_id: colorVariationID,
@@ -386,11 +380,42 @@ const Catalog: NextPage = () => {
   });
 
   // filter fields with category id
-  const { data: categoryFilter, isLoading: isCategoryFilterLoading, refetch: refetchCategoryFilter } = api.useCategoryFilterQuery(category_id_str);
-
+  const { data: categoryFilter, isLoading: isCategoryFilterLoading, refetch: refetchCategoryFilter } = api.useCategoryFilterQuery(category_id_str ? category_id_str : '');
+  
   // update filters
   useEffect(() => {
-    refetchProductFilte();
+    refetchProductFilte();    
+    let slug = asPath.split("?")[0];
+    slug += '?';
+    let filters = '';
+    if(sortBy){
+      filters += '&sortBy='+sortBy;
+    }
+    if(brandId){
+      filters += '&brand='+brandId;
+    }
+    if(category_id){
+      filters += '&cat='+category_id;
+    }
+    if(colorVariationID){
+      filters += '&color='+colorVariationID;
+    }
+    if(sizeVariationID){
+      filters += '&size='+sizeVariationID;
+    }
+    if(startPrice){
+      filters += '&start='+endPrice;
+    }
+    if(endPrice){
+      filters += '&end='+endPrice;
+    }
+    if(filters && filters[0] == '&'){
+      filters = filters.substring(1);
+    }
+    slug += filters;
+    if(filters)
+      router.push(slug, undefined, { shallow: true });
+
   }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
 
   // pagination page changer
@@ -465,6 +490,40 @@ const Catalog: NextPage = () => {
 
 
 
+ useEffect(() => {
+  let args = window.location.href.split('?')[1];
+ if(id){
+  if(args){
+   let filtr = args.split('&');
+
+    setsortBy('');
+    setbrandId(0);
+    setcategory_id(0);
+    setcolorVariationID(0);
+    setsizeVariationID(0);
+    setStartPrice('');
+    setEndPrice('');
+   for(let i=0; i<filtr.length;i++ ){
+     let kw = filtr[i].split('=');
+     if(kw[0] == 'sortBy'){
+       setsortBy(kw[1]);
+     }else if(kw[0] == 'brand'){
+       setbrandId(parseInt(kw[1]));
+     }else if(kw[0] == 'cat'){
+       setcategory_id(parseInt(kw[1]));
+     }else if(kw[0] == 'color'){
+       setcolorVariationID(parseInt(kw[1]));
+     }else if(kw[0] == 'size'){
+       setsizeVariationID(parseInt(kw[1]));
+     }else if(kw[0] == 'start'){
+       setStartPrice(kw[1]);
+     }else if(kw[0] == 'end'){
+       setEndPrice(kw[1]);
+     }
+    }
+   }
+ }
+}, [router.query])
 
   return MainLoading ? <Loader /> : !productFilter ? (<span>not found product by category</span>) : (
     <>
@@ -500,7 +559,7 @@ const Catalog: NextPage = () => {
             <DropDown dropdownTitle={`${otherFilterName}`}>
               <RadioButton
                 id="low-id"
-                onChange={(value) => [setsortBy(value)]}
+                onChange={(value) => setsortBy(value)}
                 options={[
                   ...sortByArray.map((s, index) => ({
                     label: s.label,
@@ -813,7 +872,7 @@ const Img = styled.div`
   height: 540px;
   background-image: ${(props: { backgroundImage: string }) =>
     `url(${props.backgroundImage})`};
-  background-size: 105%;
+  background-size: 100%;
   background-repeat: no-repeat;
 
   transition: all 150ms ease-in-out;
@@ -822,11 +881,8 @@ const Img = styled.div`
   position: relative;
   
   &:hover {
-    background-size: 110%;
+    transform:scale(1.1)
   }
-
-  background-position: center center;
-  background-size: cover;
   ${Respinsive.laptop} {
     height: 300px;
     width: 250px;

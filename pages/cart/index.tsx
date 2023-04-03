@@ -8,7 +8,7 @@ import OrderDetails from "../../components/OrderDetails";
 import { Breadcrumbs } from "../../components/styled/breadcrumbs";
 
 import CloseIcon from "../../public/icons/react-icons/close";
-import { getBag } from "../../services/checkout-services";
+import { getBag,updateQuantity } from "../../services/checkout-services";
 import { useEffect, useState } from "react";
 import { Cart, CartItem } from "../../domain/shop";
 import api from "../../features/api";
@@ -272,7 +272,7 @@ const CartScreen: NextPage = () => {
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
   const { data: profile, isLoading: isProfileLoading, refetch: refetchProfile } = api.useProfileQuery(undefined);
 
-  const [updateQuantity, { isLoading: isUpdateQuantityLoading }] = api.useUpdateQuantityMutation();
+  //const [updateQuantity, { isLoading: isUpdateQuantityLoading }] = api.useUpdateQuantityMutation();
 
   const [removeFromCart, { isLoading: isRemoveFromCartLoading }] = api.useRemoveFromCartMutation();
 
@@ -313,8 +313,7 @@ const CartScreen: NextPage = () => {
           <Divider />
           {cart?.items?.filter((item)=>item.product).map((item, i) => {
             const { product } = item;
-            console.log('---')
-            console.log(product)
+   
             const variantID = item.variation_id;
             const filterWithVariant = item?.product?.variations?.filter(x => x.id === variantID);
             let price = 0;
@@ -335,13 +334,22 @@ const CartScreen: NextPage = () => {
                   </ItemWrapper>
                 </DetailLink>
                 <QuantityWrapper>
-                  <Quantity value={item.quantity} onChange={async (newQuantity) => {
-                    const result = await updateQuantity({
-                      cartItemId: item.id,
-                      quantity: newQuantity,
-                    });
-                    // console.log('updateQuantity result:', result);
-                    await refetchCart();
+                  <Quantity  value={item.quantity} onChange={async (newQuantity,set) => {
+                    await updateQuantity(item.id,newQuantity).then((data) =>{ 
+            
+                      item.quantity = newQuantity                      
+                    }).catch((error) => {
+                      if(error && error?.response?.data?.error == "You can't add more quantity, product out of stock"){
+                        {i18next.language == "ge"?
+                        setSnackMessage("მითითებული რაოდენობა არ არის საწყობში")
+                        :
+                        setSnackMessage("Error, You can't add more quantity, product out of stock")
+                        }
+                        setOpenSnack(true);
+                        setsnackMsgStatus('error');
+                        set(item.quantity)
+                      }
+                    });          
                   }} />
                 </QuantityWrapper>
                 <PriceHorizontalWrapper>
@@ -371,7 +379,6 @@ const CartScreen: NextPage = () => {
                     }
                     setOpenSnack(true);
                     setsnackMsgStatus('success');
-                    // console.log('removeFromCart result:', result);
                   }}
                   />
                 </PriceHorizontalWrapper>
