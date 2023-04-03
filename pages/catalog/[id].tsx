@@ -413,9 +413,11 @@ const Catalog: NextPage = () => {
       filters = filters.substring(1);
     }
     slug += filters;
-    if(filters)
+    console.log('-----------')
+    console.log(filters)
+    if(filters){
       router.push(slug, undefined, { shallow: true });
-
+    }
   }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
 
   // pagination page changer
@@ -521,6 +523,8 @@ const Catalog: NextPage = () => {
        setEndPrice(kw[1]);
      }
     }
+   }else{
+    setsortBy('')
    }
  }
 }, [router.query])
