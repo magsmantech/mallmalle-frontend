@@ -48,6 +48,7 @@ const ProductDetails = () => {
   const [sizes, setSizes] = useState<VariationSize[]>([]);
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
   const [mainImage, setMainImage] = useState('')
+  const [selected, setSelected] = useState(0)
   const [variationId, setVariationId] = useState(null)
   const [isDisabled, setIsDisabled] = useState(false)
 
@@ -85,6 +86,8 @@ const ProductDetails = () => {
         const { data } = res;
         setProduct(data);
         setImages(data.variants[0].sizes[0].images_decoded)
+        setMainImage(data.variants[0].sizes[0].images_decoded[0])
+        setSelected(0)
         //setSizes((prevState) => [...sizes, ...data.variants[0].sizes])
         setSizes(data.variants[0].sizes)
         setVariationId(data.variants[0].id)
@@ -136,7 +139,7 @@ const ProductDetails = () => {
         }).catch((error) => {
           if(error.response.data.error == "You can't add more quantity, product out of stock"){
             {i18next.language == "ge"?
-            setSnackMessage("მითითებული რაოდენობა არ არის საწყობში")
+            setSnackMessage("ხელმისაწვდომი რაოდენობა: ")
             :
             setSnackMessage("Error, You can't add more quantity, product out of stock")
             }
@@ -211,6 +214,7 @@ const ProductDetails = () => {
     setSizes(sizesArray)
     setSelectedColorId(id);
     setMainImage(image)
+
     
     setSelectedSizeId(undefined);
   };
@@ -243,7 +247,9 @@ const ProductDetails = () => {
           {product && <ItemPreview 
             images={images} 
             mainImage={mainImage}
-            setMainImage={setMainImage} />}
+            setMainImage={setMainImage}
+            selected={selected}
+            setSelected={setSelected} />}
         </ItemPreviewWrapper>
         <DetailMainWrapper>
           <DetailsWrapper>

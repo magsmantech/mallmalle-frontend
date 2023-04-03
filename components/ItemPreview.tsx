@@ -10,12 +10,12 @@ type TabImageProps = {
 type Props = {
     images: string[],
     mainImage: string,
-    setMainImage: Function
+    selected:number,
+    setMainImage: Function,
+    setSelected:Function
 };
 
-const ItemPreview = ({ images, mainImage, setMainImage }: Props) => {
-
-    const [selected, setSelected] = useState(0);
+const ItemPreview = ({ images, mainImage, setMainImage, selected, setSelected }: Props) => {
 
     const _imageSelected = (index: number, imageString: string) => {
         setSelected(index);
