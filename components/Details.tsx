@@ -129,7 +129,7 @@ const ProductDetails = () => {
             {i18next.language == "ge"?
             setSnackMessage("პროდუქტი დაემატა კალათში!")
             :
-            setSnackMessage("Product added to basket")
+            setSnackMessage("Product added to the cart")
             }
             setOpenSnack(true);
             setsnackMsgStatus('success');
