@@ -423,7 +423,7 @@ const Section = styled.section`
     }
 `;
 const DetailMainWrapper = styled.div`
-  flex-basis: 100%;
+  flex-basis: 90%;
   margin-left: 45px;
     ${Responsive.tablet} {
       flex-basis: 100%;

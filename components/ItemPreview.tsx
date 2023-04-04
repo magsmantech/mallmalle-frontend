@@ -115,7 +115,7 @@ max-height:calc(100vh - 180px);
     }
 `;
 const ImageWrapperDiv = styled.div`
-    width: 80%;
+    width: 95%;
     height: 100%;
     @media(max-width: 768px) {
         width: 100%;
