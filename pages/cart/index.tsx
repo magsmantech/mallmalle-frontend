@@ -393,7 +393,7 @@ const CartScreen: NextPage = () => {
         <Snackbar
           open={openSnack}
           anchorOrigin={{
-            vertical: "bottom",
+            vertical: "top",
             horizontal: "right"
           }}
           autoHideDuration={5000}
