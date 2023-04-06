@@ -20,7 +20,7 @@ import {
 } from "../../components/styled/Chips";
 import Link from "next/link";
 import Button from "../../components/styled/button";
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 
 import {
   Wrapper,
@@ -60,6 +60,7 @@ import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 
 const Item = ({ product }: { product: ProductData }) => {
+
   const [hovered, setHovered] = useState(false);
 
   const imgSrc = product?.images?.length
@@ -167,7 +168,7 @@ type FilterSideBarProps = {
 };
 
 const Catalog: NextPage = () => {
-
+  const myGrid = useRef(null);
   const router = useRouter();
 
   const { id } = router.query;
@@ -308,6 +309,7 @@ const Catalog: NextPage = () => {
       .then(([filtersResp, dataResp]) => {
         // console.log(filtersResp);
         setshowHideLoader(true);
+        setCurrentPage(1);
         const {
           data: { color_variations },
         } = filtersResp;
@@ -413,9 +415,8 @@ const Catalog: NextPage = () => {
       filters = filters.substring(1);
     }
     slug += filters;
-    console.log('-----------')
-    console.log(filters)
     if(filters){
+      setCurrentPage(1);
       router.push(slug, undefined, { shallow: true });
     }
   }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
@@ -423,6 +424,7 @@ const Catalog: NextPage = () => {
   // pagination page changer
   const handlePageClick = (event: any) => {
     setCurrentPage(event.selected + 1)
+    myGrid.current.scrollIntoView({behavior: 'smooth', block: 'center'});
   };
 
   // sortBy array 
@@ -505,6 +507,8 @@ const Catalog: NextPage = () => {
     setsizeVariationID(0);
     setStartPrice('');
     setEndPrice('');
+    
+
    for(let i=0; i<filtr.length;i++ ){
      let kw = filtr[i].split('=');
      if(kw[0] == 'sortBy'){
@@ -548,7 +552,7 @@ const Catalog: NextPage = () => {
       </Breadcrumbs>
       }
 
-      <HeadWrapperStyle>
+      <HeadWrapperStyle ref={myGrid}>
         <TitileWrapper>
           {i18next.language == "ge" ?
           <Heading>{category?.category_name}</Heading>
@@ -734,7 +738,7 @@ const Catalog: NextPage = () => {
       </HeadWrapperStyle>
 
 
-      <Grid>
+      <Grid >
         {productFilter.data.map((product, index) => (
           <Item
             product={product}
@@ -750,6 +754,7 @@ const Catalog: NextPage = () => {
           onPageChange={handlePageClick}
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
+          forcePage={currentPage-1}
           pageCount={productFilter.links.length - 2}//add page count and remove prev & next buttons
         // previousLabel="< previous"
         />
