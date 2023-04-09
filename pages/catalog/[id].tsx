@@ -168,7 +168,7 @@ type FilterSideBarProps = {
 };
 
 const Catalog: NextPage = () => {
-  const myGrid = useRef(null);
+  const myGrid = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   const { id } = router.query;
@@ -424,7 +424,7 @@ const Catalog: NextPage = () => {
   // pagination page changer
   const handlePageClick = (event: any) => {
     setCurrentPage(event.selected + 1)
-    myGrid.current.scrollIntoView({behavior: 'smooth', block: 'center'});
+    myGrid?.current?.scrollIntoView({behavior: 'smooth', block: 'center'});
   };
 
   // sortBy array 
