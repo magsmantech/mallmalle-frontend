@@ -7,6 +7,7 @@ import {
 } from "react-icons/bs";
 import styled from "styled-components";
 import styles from "../../styles/Catalog.module.css";
+import Head from "next/head";
 
 import {
   Wrapper as Pagination,
@@ -410,16 +411,32 @@ const Catalog: NextPage = () => {
     }
     if(endPrice){
       filters += '&end='+endPrice;
+    } 
+    if(filters && filters[0] == '&'){
+      filters = filters.substring(1);
+    }
+    slug += filters;
+    if(filters){    
+      router.push(slug, undefined, { shallow: true });
+    }
+  }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
+
+  useEffect(() => {
+    refetchProductFilte();    
+    let slug = asPath.split("?")[0];
+    slug += '?';
+    let filters = '';
+    if(currentPage > 1){
+      filters += '&page='+currentPage;
     }
     if(filters && filters[0] == '&'){
       filters = filters.substring(1);
     }
     slug += filters;
-    if(filters){
-      setCurrentPage(1);
+    if(filters){    
       router.push(slug, undefined, { shallow: true });
     }
-  }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
+  }, [currentPage])
 
   // pagination page changer
   const handlePageClick = (event: any) => {
@@ -507,6 +524,7 @@ const Catalog: NextPage = () => {
     setsizeVariationID(0);
     setStartPrice('');
     setEndPrice('');
+    setCurrentPage(1);
     
 
    for(let i=0; i<filtr.length;i++ ){
@@ -525,16 +543,27 @@ const Catalog: NextPage = () => {
        setStartPrice(kw[1]);
      }else if(kw[0] == 'end'){
        setEndPrice(kw[1]);
+     }else if(kw[0] == 'page'){
+       setCurrentPage(parseInt(kw[1]));
      }
     }
    }else{
-    setsortBy('')
+    setsortBy('');
+    setCurrentPage(1);
    }
  }
 }, [router.query])
 
   return MainLoading ? <Loader /> : !productFilter ? (<span>not found product by category</span>) : (
     <>
+    <Head>
+      {/* Tell the browser to never restore the scroll position on load */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `history.scrollRestoration = "manual"`,
+        }}
+      />
+    </Head>
       {openFilters && (
         <div
           className={styles.overlay}
