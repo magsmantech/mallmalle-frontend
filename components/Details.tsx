@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { showFeedback } from "../features/feedbackSlice";
 import BagIcon from "../public/icons/react-icons/bag";
 import { useRouter } from "next/router";
-import { getProductDetailsById } from "../services/products-service";
+import { getProductDetailsById,getRecommended } from "../services/products-service";
 import config from "../config.json";
 import ReactHtmlParser from "html-react-parser";
 import { ColorType } from "../interfaces/products";
@@ -43,11 +43,12 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
-  const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(id);
+  //const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(id);
   const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<VariationSize[]>([]);
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
   const [mainImage, setMainImage] = useState('')
+  const [recommended, setRecommended] = useState([{'product_name':'','lowest_price':'','id':0,'main_image':'','product_name_en':''}])
   const [selected, setSelected] = useState(0)
   const [variationId, setVariationId] = useState(null)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -73,7 +74,7 @@ const ProductDetails = () => {
   
   const [clicked, setClicked] = useState<any>(undefined);
   
-  const MainLoading = isRecommendedLoading || isFavoritesLoading || isCartLoading;
+  const MainLoading = isFavoritesLoading || isCartLoading;
 
   const {t, i18n} = useTranslation();
 
@@ -96,6 +97,16 @@ const ProductDetails = () => {
       .catch((err) => {
         console.log(err);
       });
+
+
+
+      getRecommended(+id).then((res)=>{
+        const {data} = res;
+        setRecommended(data.data);
+      });
+
+
+
   }, [id])
 
   useEffect(() => {

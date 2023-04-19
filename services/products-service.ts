@@ -13,6 +13,10 @@ export const getProductDetailsById = (id: number) => {
     return apiCall('product/'+ id);
 }
 
+export const getRecommended = (id: number) => {
+    return apiCall('recommended/'+ id);
+}
+
 
 // export const getProductsByColor = async (color: string) => {
 //     try {
