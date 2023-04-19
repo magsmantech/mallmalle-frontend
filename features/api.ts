@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Address, Cart, CartItem, Category, Product, User, Order, Page, Favorite, ProductData, Search, OrderDetails, Discount, UpdatePassword, DashboardData, FilteredCategory, Subscribe, Recommended, FilteredProduct, FilterWithProps, DiscountWithPagination, Filters, DeliveryPrice } from '../domain/shop'
 import { getToken } from '../state/store';
+import { Argument } from 'classnames';
 
 const config = require('../config.json');
 
@@ -322,9 +323,9 @@ const api = createApi({
     // get recommendes
     // 
     // 
-    getRecommended: builder.query<Recommended[], undefined>({
-      query: (_arg) => ({
-        url: `recommended`,
+    getRecommended: builder.query<Recommended[],Argument>({
+      query: (product_id) => ({
+        url: `recommended/${product_id}`,
         method: 'GET',
       })
     }),

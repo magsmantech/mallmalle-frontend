@@ -42,8 +42,8 @@ type ButtonProps = {
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(undefined);
+  const { id } = router.query;
+  const { data: recommended = [], isLoading: isRecommendedLoading, refetch: refetchRecommended } = api.useGetRecommendedQuery(id);
   const [images, setImages] = useState<string[]>([]);
   const [sizes, setSizes] = useState<VariationSize[]>([]);
   const [colors, setColors] = useState<ProductVariationDetail[]>([]);
@@ -58,7 +58,7 @@ const ProductDetails = () => {
   const [selectedSizeId, setSelectedSizeId] = useState<any>(undefined);
 
   const [product, setProduct] = useState<ProductData | null>(null);
-  const { id } = router.query;
+ 
   
   const { data: favorites, isLoading: isFavoritesLoading, refetch: refetchFavorites } = api.useGetFavoritesQuery(undefined);
   const { data: cart, isLoading: isCartLoading, refetch: refetchCart } = api.useGetCartQuery(undefined);
