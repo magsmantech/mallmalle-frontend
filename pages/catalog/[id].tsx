@@ -391,8 +391,11 @@ const Catalog: NextPage = () => {
     let slug = asPath.split("?")[0];
     slug += '?';
     let filters = '';
-    if(sortBy){
-      filters += '&sortBy='+sortBy;
+    if(sortBy || sortByEn){
+      if(sortBy)
+        filters += '&sortBy='+sortBy;
+      else 
+        filters += '&sortBy='+sortByEn;
     }
     if(brandId){
       filters += '&brand='+brandId;
@@ -419,7 +422,7 @@ const Catalog: NextPage = () => {
     if(filters){    
       router.push(slug, undefined, { shallow: true });
     }
-  }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy])
+  }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy,sortByEn])
 
   useEffect(() => {
     refetchProductFilte();    
@@ -471,7 +474,7 @@ const Catalog: NextPage = () => {
   const sortByArrayEn = [
     {
       value: 'popularity',
-      label: 'popularity'
+      label: 'Popularity'
     },
     {
       value: 'rating',
@@ -479,7 +482,7 @@ const Catalog: NextPage = () => {
     },
     {
       value: 'time',
-      label: 'Time'
+      label: 'Newly added'
     },
     {
       value: 'discount',
