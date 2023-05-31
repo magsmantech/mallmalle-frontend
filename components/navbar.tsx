@@ -50,6 +50,9 @@ const Navbar: React.FC<{
         const [isLoading, setIsLoading] = useState(false);
         const { loggedIn } = useSelector((state: RootState) => state.auth);
 
+
+        
+
         const toggleLanguage = async () => {
             // window.location.reload();
             setIsLoading(true)
@@ -150,6 +153,7 @@ const Navbar: React.FC<{
                 </Nav>
                 {isLoading && <Loader />}
                 <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
+                <div className='testing'>{(i18next.language == 'en') ? 'Welcome to the testing mode!' : 'მოგესალმებით ტესტირების რეჟიმში!'}</div>
             </>
         )
     }
