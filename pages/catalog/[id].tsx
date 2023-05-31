@@ -310,7 +310,8 @@ const Catalog: NextPage = () => {
       .then(([filtersResp, dataResp]) => {
         // console.log(filtersResp);
         setshowHideLoader(true);
-        setCurrentPage(1);
+       
+        //  setCurrentPage(1);
         const {
           data: { color_variations },
         } = filtersResp;
@@ -425,6 +426,7 @@ const Catalog: NextPage = () => {
   }, [sizeVariationID, colorVariationID, startPrice, endPrice, category_id, brandId, sortBy,sortByEn])
 
   useEffect(() => {
+    console.log('here---')
     refetchProductFilte();    
     let slug = asPath.split("?")[0];
     slug += '?';

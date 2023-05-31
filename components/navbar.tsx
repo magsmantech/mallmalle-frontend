@@ -153,7 +153,7 @@ const Navbar: React.FC<{
                 </Nav>
                 {isLoading && <Loader />}
                 <HoriontalFixedLine className={styles.curve}></HoriontalFixedLine>
-                <div className='testing'>{(i18next.language == 'en') ? 'Welcome to the testing mode!' : 'მოგესალმებით ტესტირების რეჟიმში!'}</div>
+                <div className='testing'>{(i18next.language == 'en') ? 'Welcome to the testing mode!' : 'ვებ გვერდი მუშაობს სატესტო რეჟიმში'}</div>
             </>
         )
     }
