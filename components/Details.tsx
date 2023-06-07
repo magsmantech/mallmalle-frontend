@@ -256,7 +256,7 @@ const ProductDetails = () => {
     <>
     <Head>
         {product && <meta property="og:title" content={product?.product_name}/>}
-        {product && <meta property="og:image" content={"https://mallmalle.com/"+mainImage} />}
+        {product && <meta property="og:image" content={"https://mallmalle-images.s3.eu-central-1.amazonaws.com/"+mainImage} />}
     </Head>
       <Section>
         <ItemPreviewWrapper>
