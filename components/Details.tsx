@@ -255,7 +255,7 @@ const ProductDetails = () => {
   return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
     <Head>
-        {product && <meta property="og:title" content={product.name}/>}
+        {product && <meta property="og:title" content={product?.product_name}/>}
         {product && <meta property="og:image" content={"https://mallmalle.com/"+mainImage} />}
     </Head>
       <Section>
