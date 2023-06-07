@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import ItemPreview from "./ItemPreview";
 import SizeSelector from "./SizeSelector";
 import ColorSelector from "./ColorSelector";
+import Head from "next/head";
 import {
   BsBookmarkPlusFill,
   BsFillCartPlusFill,
@@ -253,6 +254,10 @@ const ProductDetails = () => {
 
   return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
+    <Head>
+        {product && <meta property="og:title" content={product.name}/>}
+        {product && <meta property="og:image" content={"https://mallmalle.com/"+mainImage} />}
+    </Head>
       <Section>
         <ItemPreviewWrapper>
           {product && <ItemPreview 
