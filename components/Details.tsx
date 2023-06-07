@@ -252,6 +252,8 @@ const ProductDetails = () => {
 
   const mainPrice = forPrice ? forPrice[0]?.price : null;
 
+  const sold_out = i18next.language == "ge" ? <Button  disabled>პროდუქტი არ არის მარაგში</Button> : <Button disabled>Product Sold Out</Button>
+
   return MainLoading ? <Loader /> : !recommended ? (<span>not found Recommended</span>) : (
     <>
     <Head>
@@ -352,13 +354,15 @@ const ProductDetails = () => {
             </SelectSizeWrapper>
             <ButtonWrapper onClick={_chooseSizeMessage}>
               {/* onClick={_showFeedback} */}
-              <Button onClick={_addToCart} style={{
+              
+              { selectedSizeId && product && product?.variations?.find(item => item.id == selectedSizeId)?.quantity == 0 ? sold_out : <Button onClick={_addToCart} style={{
                 ...(!isDisabled ? { filter: 'grayscale(1)' } : {}), ...(clicked ? { filter: 'grayscale(1)' } : {}),
               }} disabled={!isDisabled}>
                 {/* <BsFillCartPlusFill size={'3.0rem'} style={{ marginRight: '2.4rem' }} /> */}
                 <BagIconStyle />
                 {t('addInBasket')}
-              </Button>
+              </Button> }
+              
 
               <AddCartButton secondary onClick={_showFavoriteFeedback} disabled={disableFavoriteBtn}>
                 <BsBookmarkPlusFillStyle />
