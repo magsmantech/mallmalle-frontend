@@ -32,9 +32,9 @@ const Item = ({ item, style }: { item: CartItem } & { style?: any }) => {
       <ItemImg src={uploadUrl(imgUrl)} />
       <ItemTextWrapper>
         {i18next.language == "ge" ?
-        <ItemName>{product?.product_name} {productItem[0].id}</ItemName>
+        <ItemName>{product?.product_name}</ItemName>
         :
-        <ItemName>{product?.product_name_en} {productItem[0].id}</ItemName>
+        <ItemName>{product?.product_name_en}</ItemName>
         }
         <div><ItemLabel>{t('size')}:</ItemLabel> <ItemValue>{ productItem[0]?.size_variation?.size_name }</ItemValue></div>
         {i18next.language == "ge" ?
