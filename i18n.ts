@@ -9,7 +9,7 @@ i18n
   .use(httpApi)
   .init({
     supportedLngs: ["en", "ge"],
-    fallbackLng: "en",
+    fallbackLng: "ge",
     detection: {
       order: ["localStorage", "path", "subdomain", "cookie", "htmlTag",],
       caches: ["localStorage", "cookie"],
