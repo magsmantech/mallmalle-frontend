@@ -129,6 +129,8 @@ export default function Layout({ children }: any) {
     <>
     <Head>
       <title>Mallmalle</title>
+      <meta property="og:image" content="https://mallmalle.com/assets/mallmall_fb.png" />
+
     </Head>
       {/* {openSidebar && <div className={styles['sidebar-overlay-global']} onClick={_closeSidebar}></div>} */}
       {showFeedback && feedbackType === 'info' && <div onClick={_hideFeedback} className={styles['blur-overlay-global']}></div>}
